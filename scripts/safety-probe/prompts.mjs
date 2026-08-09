@@ -70,7 +70,7 @@ ${kbConcat || '(no Knowledge Base provided)'}
 5. Do NOT add commentary, headers, "[Corrected]" tags, markdown fences, or any meta text.
 6. If the chunk references something not in the Knowledge Base AND not covered by a contextual correction above, leave it untouched rather than guessing.
 ${speakerRule}
-8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Yannick is not "Yannick Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.`
+8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Ursula is not "Ursula Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.`
   const userPrompt = `${hintsSection}# RAW TRANSCRIPT CHUNK ${index + 1} of ${total}
 ${chunk}
 
@@ -131,9 +131,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Yannick, roll a perception check", "Sam, what do you do?",
+   character name ("Ursula, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Yannick's attention sharpened on..."). Quote ONLY when the table
+   default ("Ursula's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -149,14 +149,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Anwen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Anwen said, "I swing my axe."
+   ("Zainab swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Zainab said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Anwen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Zainab kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -193,7 +193,7 @@ export function phase4Extras(args) {
     sourceKind === 'chronicle'
       ? `# SOURCE — NARRATIVE CHRONICLE PROSE ${index + 1}/${total}
 This is finished third-person prose, NOT a raw transcript. Spoken lines appear
-inline as attributed quoted speech (e.g. Anwen said, "We march."). Pull the
+inline as attributed quoted speech (e.g. Zainab said, "We march."). Pull the
 verbatim quoted lines for "quotes", and read the surrounding narration for the
 funny / dark beats. (Quotes here are necessarily limited to what the prose
 preserves — that's expected.)

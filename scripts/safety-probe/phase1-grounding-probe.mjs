@@ -55,11 +55,11 @@ const repoRoot = path.resolve(__dirname, '..', '..')
 // Synthetic chunk with the trigger phrase + enough context that a
 // well-behaved model can infer it's a name being hunted. Mirrors the
 // shape of a real Whisper-transcribed line.
-const SYNTHETIC_CHUNK = `[Yannick (Magnus)] Right, so we're tracking the necromancer. Camille, what was the name again?
-[Camille (Sipho)] He's called more than vain. The temple records called him that. He's the one who raised the dead at the Ashen Pass.
-[Yannick (Magnus)] Alright. More than vain. Got it.
-[Anwen (Tadeo)] How are we even meant to find a guy named that.
-[Camille (Sipho)] We follow the trail of corpses. Easy.`
+const SYNTHETIC_CHUNK = `[Ursula (Perpetua)] Right, so we're tracking the necromancer. Eamon, what was the name again?
+[Eamon (Nikolai)] He's called more than vain. The temple records called him that. He's the one who raised the dead at the Ashen Pass.
+[Ursula (Perpetua)] Alright. More than vain. Got it.
+[Zainab (Adaeze)] How are we even meant to find a guy named that.
+[Eamon (Nikolai)] We follow the trail of corpses. Easy.`
 
 async function loadKeys() {
   const res = await fetch('http://127.0.0.1:5173/api/provider-keys')

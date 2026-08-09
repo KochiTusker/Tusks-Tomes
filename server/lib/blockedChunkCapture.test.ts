@@ -70,7 +70,7 @@ describe('captureBlockedChunk', () => {
     const bigPrompt = [
       'Multi-line content.',
       '[Dungeon Master (DM)] The orc charges. Roll for initiative.',
-      '[Niamh (Meera)] 36 damage. Critical hit.',
+      '[Cassian (Katarzyna)] 36 damage. Critical hit.',
       // Embed UTF-8 (the speaker-detach markers) — these MUST survive.
       '«1» content with marker glyph «2» second line',
       'A'.repeat(8000), // bulk

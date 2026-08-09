@@ -5,7 +5,7 @@ describe('detachSpeakers', () => {
   it('replaces every bracketed speaker line with a numbered marker', () => {
     const input = [
       '[Dungeon Master (DM)] So the orc charges at you.',
-      '[Bilal (Delphine)] I dodge and counter.',
+      '[Lakshmi (Olamide)] I dodge and counter.',
       '[Dungeon Master (DM)] Roll d20.',
     ].join('\n')
     const result = detachSpeakers(input)
@@ -16,7 +16,7 @@ describe('detachSpeakers', () => {
       '«3» Roll d20.',
     ])
     expect(result.speakersByMarker.get(1)).toBe('[Dungeon Master (DM)]')
-    expect(result.speakersByMarker.get(2)).toBe('[Bilal (Delphine)]')
+    expect(result.speakersByMarker.get(2)).toBe('[Lakshmi (Olamide)]')
     expect(result.speakersByMarker.get(3)).toBe('[Dungeon Master (DM)]')
   })
 
@@ -24,7 +24,7 @@ describe('detachSpeakers', () => {
     const input = [
       '[Dungeon Master (DM)] You enter the cave.',
       '(scene break — the party rests)',
-      '[Bilal (Delphine)] How long until dawn?',
+      '[Lakshmi (Olamide)] How long until dawn?',
     ].join('\n')
     const result = detachSpeakers(input)
     expect(result.attached).toBe(true)
@@ -36,7 +36,7 @@ describe('detachSpeakers', () => {
     // Line 2 had no bracket → no entry in the map.
     expect(result.speakersByMarker.has(2)).toBe(false)
     expect(result.speakersByMarker.get(1)).toBe('[Dungeon Master (DM)]')
-    expect(result.speakersByMarker.get(3)).toBe('[Bilal (Delphine)]')
+    expect(result.speakersByMarker.get(3)).toBe('[Lakshmi (Olamide)]')
   })
 
   it('returns attached=false and the input verbatim when no line has a bracket', () => {
@@ -54,11 +54,11 @@ describe('detachSpeakers', () => {
   })
 
   it('tolerates content brackets in dialogue body (only the leading bracket is the speaker)', () => {
-    const input = '[Bilal (Delphine)] I cast [Fireball] at the dragon.'
+    const input = '[Lakshmi (Olamide)] I cast [Fireball] at the dragon.'
     const result = detachSpeakers(input)
     expect(result.attached).toBe(true)
     expect(result.stripped).toBe('«1» I cast [Fireball] at the dragon.')
-    expect(result.speakersByMarker.get(1)).toBe('[Bilal (Delphine)]')
+    expect(result.speakersByMarker.get(1)).toBe('[Lakshmi (Olamide)]')
   })
 
   it('does not match a bracketed line that has no body after the bracket', () => {
@@ -75,7 +75,7 @@ describe('reattachSpeakers', () => {
   it('round-trips a clean detach (model preserved every marker exactly)', () => {
     const input = [
       '[Dungeon Master (DM)] So the orc charges at you.',
-      '[Bilal (Delphine)] I dodge and counter.',
+      '[Lakshmi (Olamide)] I dodge and counter.',
     ].join('\n')
     const detached = detachSpeakers(input)
     // Simulate a grounding pass that left markers + bodies as-is.
@@ -88,7 +88,7 @@ describe('reattachSpeakers', () => {
   it('round-trips when the grounder corrected the body text but kept the markers', () => {
     const input = [
       '[Dungeon Master (DM)] So the ork chargess at you.',
-      '[Bilal (Delphine)] I dogde and conter.',
+      '[Lakshmi (Olamide)] I dogde and conter.',
     ].join('\n')
     const detached = detachSpeakers(input)
     // Pretend the grounder fixed the typos in the bodies.
@@ -99,7 +99,7 @@ describe('reattachSpeakers', () => {
     const result = reattachSpeakers(grounded, detached)
     expect(result.transcript).toBe(
       '[Dungeon Master (DM)] So the orc charges at you.\n' +
-        '[Bilal (Delphine)] I dodge and counter.',
+        '[Lakshmi (Olamide)] I dodge and counter.',
     )
     expect(result.dropoutRate).toBe(0)
   })
@@ -107,7 +107,7 @@ describe('reattachSpeakers', () => {
   it('reports dropout when the model dropped a marker (line passes through unbracketed)', () => {
     const input = [
       '[Dungeon Master (DM)] Line one.',
-      '[Bilal (Delphine)] Line two.',
+      '[Lakshmi (Olamide)] Line two.',
       '[Dungeon Master (DM)] Line three.',
     ].join('\n')
     const detached = detachSpeakers(input)

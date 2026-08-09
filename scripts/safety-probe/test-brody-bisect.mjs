@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The previous Free/Paid probe showed: Yannick's chunk blocks on ALL three
+// The previous Free/Paid probe showed: Ursula's chunk blocks on ALL three
 // Gemini tiers (Free Flash, Paid Flash, Paid Pro). So the trigger is the
 // content itself, not the endpoint's T&S threshold.
 //
@@ -39,16 +39,16 @@ const SAFETY_SETTINGS = [
 // If you re-run this against a fresh block, DO NOT paste the real chunk in.
 // Write an equivalent, or point the probe at a file outside the repo.
 const LINE_SUSPECT = `0:11:43.730,0:11:45.590
-[Yannick (Magnus)] and I do it in the most gay way possible obviously`
+[Ursula (Perpetua)] and I do it in the most gay way possible obviously`
 
 const LINE_SUPLEX = `0:11:35.720,0:11:37.880
 [Dungeon Master (DM)] He hoists you up and drops you with a suplex`
 
 const LINE_KNOCKED_PRONE = `0:11:39.630,0:11:41.470
-[Yannick (Magnus)] so once he's knocked prone I want to do this bit`
+[Ursula (Perpetua)] so once he's knocked prone I want to do this bit`
 
 const LINE_TONGUE = `0:11:41.470,0:11:43.730
-[Yannick (Magnus)] I stand over him and stick my tongue out at the crowd`
+[Ursula (Perpetua)] I stand over him and stick my tongue out at the crowd`
 
 // The full chunk, assembled from the cues above plus filler turns.
 const FULL = `0:11:35.000,0:11:35.720
@@ -61,22 +61,22 @@ const FULL = `0:11:35.000,0:11:35.720
 [Dungeon Master (DM)] Hard
 
 0:11:38.470,0:11:39.630
-[Yannick (Magnus)] right ok so what I want is
+[Ursula (Perpetua)] right ok so what I want is
 
 0:11:39.630,0:11:41.470
-[Yannick (Magnus)] so once he's knocked prone I want to do this bit
+[Ursula (Perpetua)] so once he's knocked prone I want to do this bit
 
 0:11:41.470,0:11:43.730
-[Yannick (Magnus)] I stand over him and stick my tongue out at the crowd
+[Ursula (Perpetua)] I stand over him and stick my tongue out at the crowd
 
 0:11:43.730,0:11:45.590
-[Yannick (Magnus)] and I do it in the most gay way possible obviously
+[Ursula (Perpetua)] and I do it in the most gay way possible obviously
 
 0:11:46.620,0:11:47.480
 [Dungeon Master (DM)] Yeah go on then
 
 0:11:48.060,0:11:48.580
-[Yannick (Magnus)] um
+[Ursula (Perpetua)] um
 
 0:11:48.080,0:11:50.700
 [Dungeon Master (DM)] That's two hype points for the crowd work`
@@ -91,82 +91,82 @@ const NEUTRAL_BEFORE = `0:08:00.000,0:08:03.000
 [Dungeon Master (DM)] The wrestling ring is set up. The crowd is buzzing.
 
 0:08:03.000,0:08:05.000
-[Yannick (Magnus)] I want to enter to my theme music. Star Spangled Pentagon power.
+[Ursula (Perpetua)] I want to enter to my theme music. Star Spangled Pentagon power.
 
 0:08:05.000,0:08:07.000
 [Dungeon Master (DM)] Confetti rains down. The pyrotechnics fire.
 
 0:08:07.000,0:08:09.000
-[Farida (Thandiwe)] This is the big match. Tonight Stardust faces the Underminer.
+[Mireille (Cormac)] This is the big match. Tonight Stardust faces the Underminer.
 
 0:08:09.000,0:08:12.000
-[Ngozi (Dagny)] Last week's championship was a real spectacle. The crowd loved it.
+[Hiroko (Xiomara)] Last week's championship was a real spectacle. The crowd loved it.
 
 0:08:12.000,0:08:14.000
-[Yannick (Magnus)] I'm gonna start with a low-risk jab. Just feeling him out.
+[Ursula (Perpetua)] I'm gonna start with a low-risk jab. Just feeling him out.
 
 0:08:14.000,0:08:16.000
 [Dungeon Master (DM)] Roll a d20 for the jab attack.
 
 0:08:16.000,0:08:18.000
-[Yannick (Magnus)] Twelve plus three. Fifteen total.
+[Ursula (Perpetua)] Twelve plus three. Fifteen total.
 
 0:08:18.000,0:08:20.000
 [Dungeon Master (DM)] The Underminer blocks. You lose a hype point.
 
 0:08:20.000,0:08:22.000
-[Yannick (Magnus)] Damn it. I'll try to grapple him next round.
+[Ursula (Perpetua)] Damn it. I'll try to grapple him next round.
 
 0:08:22.000,0:08:25.000
-[Farida (Thandiwe)] You need five hype points to attempt a pin. Build it up.
+[Mireille (Cormac)] You need five hype points to attempt a pin. Build it up.
 
 0:08:25.000,0:08:28.000
-[Ngozi (Dagny)] The crowd's getting louder. They love a comeback story.
+[Hiroko (Xiomara)] The crowd's getting louder. They love a comeback story.
 
 0:08:28.000,0:08:30.000
 [Dungeon Master (DM)] The Underminer hits the ropes for momentum.
 
 0:08:30.000,0:08:33.000
-[Yannick (Magnus)] I'll counter with a shoulder tackle. Roll the d20.
+[Ursula (Perpetua)] I'll counter with a shoulder tackle. Roll the d20.
 
 0:08:33.000,0:08:35.000
 [Dungeon Master (DM)] Eighteen. You knock him down. Two hype points.
 
 0:08:35.000,0:08:38.000
-[Ngozi (Dagny)] The arena's getting electric. Star Spangled signs everywhere.
+[Hiroko (Xiomara)] The arena's getting electric. Star Spangled signs everywhere.
 
 0:08:38.000,0:08:41.000
-[Yannick (Magnus)] I want to climb the turnbuckle for an elbow drop.
+[Ursula (Perpetua)] I want to climb the turnbuckle for an elbow drop.
 
 0:08:41.000,0:08:43.000
 [Dungeon Master (DM)] You climb, but he rolls away. Roll for landing.
 
 0:08:43.000,0:08:46.000
-[Yannick (Magnus)] Six. Ouch. I crash into the mat.
+[Ursula (Perpetua)] Six. Ouch. I crash into the mat.
 
 0:08:46.000,0:08:48.000
-[Farida (Thandiwe)] Big mistake. The Underminer's back on his feet.
+[Mireille (Cormac)] Big mistake. The Underminer's back on his feet.
 
 0:08:48.000,0:08:51.000
 [Dungeon Master (DM)] He launches into a clothesline. Roll to defend.
 
 0:08:51.000,0:08:53.000
-[Yannick (Magnus)] Nineteen. I duck under it.
+[Ursula (Perpetua)] Nineteen. I duck under it.
 
 0:08:53.000,0:08:56.000
-[Ngozi (Dagny)] The crowd's chanting Stardust's name now. The mood has shifted.
+[Hiroko (Xiomara)] The crowd's chanting Stardust's name now. The mood has shifted.
 
 0:08:56.000,0:08:58.000
 [Dungeon Master (DM)] Good. The Underminer is winded from missing.
 
 0:08:58.000,0:09:01.000
-[Yannick (Magnus)] I want to seize the moment. Going for a body slam.
+[Ursula (Perpetua)] I want to seize the moment. Going for a body slam.
 
 0:09:01.000,0:09:04.000
 [Dungeon Master (DM)] Roll. The crowd is on its feet.
 
 0:09:04.000,0:09:06.000
-[Yannick (Magnus)] Sixteen plus three. Nineteen.
+[Ursula (Perpetua)] Sixteen plus three. Nineteen.
 
 0:09:06.000,0:09:09.000
 [Dungeon Master (DM)] You lift him over your head. The audience gasps.`
@@ -175,46 +175,46 @@ const NEUTRAL_AFTER = `0:11:50.700,0:11:53.000
 [Dungeon Master (DM)] The crowd is roaring. The Underminer staggers up.
 
 0:11:53.000,0:11:55.000
-[Yannick (Magnus)] I want to follow up with another suplex while he's dazed.
+[Ursula (Perpetua)] I want to follow up with another suplex while he's dazed.
 
 0:11:55.000,0:11:57.000
 [Dungeon Master (DM)] Roll for the second attempt.
 
 0:11:57.000,0:11:59.000
-[Yannick (Magnus)] Eight. That's not great.
+[Ursula (Perpetua)] Eight. That's not great.
 
 0:11:59.000,0:12:01.000
 [Dungeon Master (DM)] He reverses. You're on your back now.
 
 0:12:01.000,0:12:03.000
-[Farida (Thandiwe)] He's playing to the audience. Soaking in the boos.
+[Mireille (Cormac)] He's playing to the audience. Soaking in the boos.
 
 0:12:03.000,0:12:06.000
-[Ngozi (Dagny)] The crowd's split. Half cheering Stardust, half jeering.
+[Hiroko (Xiomara)] The crowd's split. Half cheering Stardust, half jeering.
 
 0:12:06.000,0:12:08.000
-[Yannick (Magnus)] I'll kip up to my feet and dust myself off.
+[Ursula (Perpetua)] I'll kip up to my feet and dust myself off.
 
 0:12:08.000,0:12:10.000
 [Dungeon Master (DM)] Smooth move. The judges note your style.
 
 0:12:10.000,0:12:13.000
-[Ngozi (Dagny)] This is the biggest match Pentagon has seen this season.
+[Hiroko (Xiomara)] This is the biggest match Pentagon has seen this season.
 
 0:12:13.000,0:12:15.000
-[Farida (Thandiwe)] You've still got three hype points. Build it up to five.
+[Mireille (Cormac)] You've still got three hype points. Build it up to five.
 
 0:12:15.000,0:12:18.000
 [Dungeon Master (DM)] The Underminer paces the ring, taunting the crowd.
 
 0:12:18.000,0:12:20.000
-[Yannick (Magnus)] I'll go for a running clothesline.
+[Ursula (Perpetua)] I'll go for a running clothesline.
 
 0:12:20.000,0:12:22.000
 [Dungeon Master (DM)] Roll. The crowd is chanting.
 
 0:12:22.000,0:12:24.000
-[Yannick (Magnus)] Seventeen. I connect.
+[Ursula (Perpetua)] Seventeen. I connect.
 
 0:12:24.000,0:12:26.000
 [Dungeon Master (DM)] He's down. Four hype points now.`

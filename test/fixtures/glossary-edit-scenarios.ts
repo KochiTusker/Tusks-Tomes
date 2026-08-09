@@ -17,12 +17,12 @@ import type { GlossaryDocument } from '@/lib/glossary'
 export const GLOSSARY_AT_PAUSE: GlossaryDocument = {
   version: 1,
   safeReplacements: [
-    { from: 'broady', to: 'Yannick' },
-    { from: 'kazle', to: 'Anwen' },
+    { from: 'broady', to: 'Ursula' },
+    { from: 'kazle', to: 'Zainab' },
   ],
   contextualHints: [
     {
-      canonical: 'Yannick',
+      canonical: 'Ursula',
       commonMishears: ['Broady', 'Brodie'],
       notes: 'Halfling rogue.',
     },
@@ -35,22 +35,22 @@ export const GLOSSARY_AT_PAUSE: GlossaryDocument = {
 export const GLOSSARY_AT_RESUME: GlossaryDocument = {
   version: 1,
   safeReplacements: [
-    { from: 'broady', to: 'Yannick' },
-    { from: 'kazle', to: 'Anwen' },
-    { from: 'broogo', to: 'Niamh' }, // NEW: another safe replacement
+    { from: 'broady', to: 'Ursula' },
+    { from: 'kazle', to: 'Zainab' },
+    { from: 'broogo', to: 'Cassian' }, // NEW: another safe replacement
   ],
   contextualHints: [
     {
-      canonical: 'Yannick',
+      canonical: 'Ursula',
       commonMishears: ['Broady', 'Brodie'],
       notes: 'Halfling rogue.',
     },
     {
-      canonical: 'Niamh',
-      commonMishears: ['Brewgo', 'Broogo', 'Niamh'],
+      canonical: 'Cassian',
+      commonMishears: ['Brewgo', 'Broogo', 'Cassian'],
       // 500-char block guarantees the preGround output diverges if applied.
       notes:
-        'Niamh is a half-orc barbarian recruited from the slums of Waterdeep. He carries a greataxe inherited from his grandfather, who fought in the wars of the southern reaches. Common mishearings include Brewgo and Broogo. Always treat any mention of a half-orc warrior with a greataxe as a probable Niamh reference even if the transcript spells it differently. Niamh speaks in short sentences and rarely uses complex vocabulary. He is fiercely loyal to Yannick despite their cultural differences.',
+        'Cassian is a half-orc barbarian recruited from the slums of Waterdeep. He carries a greataxe inherited from his grandfather, who fought in the wars of the southern reaches. Common mishearings include Brewgo and Broogo. Always treat any mention of a half-orc warrior with a greataxe as a probable Cassian reference even if the transcript spells it differently. Cassian speaks in short sentences and rarely uses complex vocabulary. He is fiercely loyal to Ursula despite their cultural differences.',
     },
   ],
 }
@@ -63,7 +63,7 @@ export const TRANSCRIPT_FOR_DRIFT_TEST = (() => {
   const lines: string[] = []
   // Realistic-ish dialogue that will be affected by the glossary above:
   // mishearings ("broady", "broogo") get replaced via preGround.
-  const speakers = ['Anwen', 'Yannick', 'Niamh', 'Ngozi', 'Farida']
+  const speakers = ['Zainab', 'Ursula', 'Cassian', 'Hiroko', 'Mireille']
   for (let i = 0; i < 240; i++) {
     const speaker = speakers[i % speakers.length]
     // Sprinkle the mishearings the glossary will replace.

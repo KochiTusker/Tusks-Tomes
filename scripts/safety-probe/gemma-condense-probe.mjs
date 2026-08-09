@@ -3,13 +3,13 @@
 // where it doesn't need to follow structured-output rules. Compare with
 // Gemini 2.5 Flash + Gemini 3.x preview models we're not using yet.
 
-const CHRONICLE = `The pre-game chatter was a familiar cacophony. Yannick steered the table back to order while Farida made his political opinions known. The Dungeon Master's voice boomed across the arena: "Welcome to the main event! Tonight, we are throwing out the rule books. We are setting the tree on fire! Prepare yourselves for a colossal, textbook-shattering tag team collision!"
+const CHRONICLE = `The pre-game chatter was a familiar cacophony. Ursula steered the table back to order while Mireille made his political opinions known. The Dungeon Master's voice boomed across the arena: "Welcome to the main event! Tonight, we are throwing out the rule books. We are setting the tree on fire! Prepare yourselves for a colossal, textbook-shattering tag team collision!"
 
 The Underminer and Rock Blesnar emerged first, representing the CCW machine. Six hundred pounds of pure unmitigated hostility. The crowd booed as the champions climbed into the ring.
 
-Then Stardust and Pentagon emerged from pyrotechnics. Yannick, as Stardust, played to the kids in the front row. Ngozi, as Pentagon, launched himself into a backflip, sparks flying around him on cue.
+Then Stardust and Pentagon emerged from pyrotechnics. Ursula, as Stardust, played to the kids in the front row. Hiroko, as Pentagon, launched himself into a backflip, sparks flying around him on cue.
 
-The match began with Yannick attempting a low-risk jab on the Underminer. He rolled poorly. The Underminer blocked and immediately launched into a suplex — but rolled a one. Yannick reversed, hoisting the Underminer up and slamming him down onto the mat. He performed a mocking gesture, sticking his tongue out at the crowd in the most provocative way possible. The crowd roared. Two hype points. He needed five to attempt a pin.
+The match began with Ursula attempting a low-risk jab on the Underminer. He rolled poorly. The Underminer blocked and immediately launched into a suplex — but rolled a one. Ursula reversed, hoisting the Underminer up and slamming him down onto the mat. He performed a mocking gesture, sticking his tongue out at the crowd in the most provocative way possible. The crowd roared. Two hype points. He needed five to attempt a pin.
 
 Feeling the momentum, Stardust went for another suplex. He rolled a two. The Underminer reversed and sent him tumbling. The Underminer turned his back on the downed Stardust, playing to the booing crowd, cupping a hand to his ear to drink in their hatred. Pentagon, watching from the corner, asked the DM if he could tag in.`
 
