@@ -127,6 +127,12 @@
       "  Front-load the words someone actually types. They search",
       "  'dnd transcriber free' — not 'session chronicler', which is the",
       "  project's own vocabulary and nobody else's.",
+      "  The current value deliberately departs from that and leads with the",
+      "  brand: a considered trade of some ranking signal for a title that",
+      "  reads as the project's own. It is not an oversight — the keyword tail",
+      "  is what keeps the page rankable for anything but its own name, so",
+      "  keep a descriptive tail if you edit it, and do not shorten to the",
+      "  bare brand.",
       "",
       "landing.description — not a ranking factor, purely a click factor. It is",
       "  the two lines under the headline, so it should answer 'is this the",
@@ -149,7 +155,7 @@
     ],
 
     "landing": {
-      "title": "Free D&D Session Transcriber & Recap Generator | Tusk's Tomes",
+      "title": "Tusk's Tomes — AI D&D Session Recap & Chronicle Generator",
       "description": "Turn a D&D, Pathfinder or TTRPG session recording — or a YouTube transcript — into a narrative chronicle and a Discord-ready recap. Free, open source, runs locally."
     },
 

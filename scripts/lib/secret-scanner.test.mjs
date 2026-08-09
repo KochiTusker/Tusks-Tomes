@@ -58,6 +58,34 @@ describe('checkForbiddenFilenames — dev-only doc blocking (forever-rule)', () 
   })
 })
 
+describe('checkForbiddenFilenames — private-name scanner data files', () => {
+  // These hold real people's names and the placeholder assignment map. The
+  // content layer that scans for those names deliberately EXEMPTS
+  // .private-names (see SELF_REFERENTIAL in private-names.mjs), so a
+  // force-add would otherwise pass both the ignore file and the content
+  // scan. The filename rule is the only thing standing there.
+  it.each(['.private-names', '.name-pool', '.name-rotation.json'])('flags %s', (file) => {
+    const findings = checkForbiddenFilenames([file])
+    expect(findings.length).toBe(1)
+    expect(findings[0].layer).toBe('filename')
+    expect(findings[0].detail).toMatch(/never commit/)
+  })
+
+  it('flags them in a nested path, not just at the repo root', () => {
+    const findings = checkForbiddenFilenames(['some/dir/.private-names'])
+    expect(findings.length).toBe(1)
+  })
+
+  // The load-bearing negative case. The templates are tracked and ship
+  // publicly — they hold only comments and `# Firstname` placeholders. If a
+  // future edit drops the `$` anchors, these start being blocked and the
+  // release build silently loses its documentation of the format.
+  it('does NOT flag the tracked .example templates', () => {
+    const findings = checkForbiddenFilenames(['.private-names.example', '.name-pool.example'])
+    expect(findings).toEqual([])
+  })
+})
+
 describe('checkForbiddenFilenames — credential-bearing filenames', () => {
   const positives = [
     ['.env', 'env'],

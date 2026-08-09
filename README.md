@@ -11,8 +11,11 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Whisper add-on](https://img.shields.io/badge/Audio-add--on-7c3aed.svg)](AddOns.md)
 [![GitHub last commit](https://img.shields.io/github/last-commit/KochiTusker/Tusks-Tomes?color=8B6F2C)](https://github.com/KochiTusker/Tusks-Tomes/commits/main)
+[![Website](https://img.shields.io/badge/Website-tusks--tomes-8B6F2C)](https://kochitusker.github.io/Tusks-Tomes/)
 
 *Like a personal scribe for your D&D table — paste a transcript or drop a Craig recording, walk away, wake up to a chronicle.*
+
+**🌐 [Tusk's Tomes website and documentation](https://kochitusker.github.io/Tusks-Tomes/)** — what it does, what it costs, and how to install it.
 
 <p>
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" target="_blank"><img src="https://img.shields.io/badge/Share_Feedback-Google_Form-4285F4?style=for-the-badge&logo=googleforms&logoColor=white" alt="Share feedback via Google Form" height="50" /></a>
@@ -236,6 +239,10 @@ Drop all three side-by-side on disk (e.g. `Documents/Tusks-Tomes/`, `Documents/T
 
 ## 📚 Documentation
 
+Every page below is also published, searchable and cross-linked, on the
+**[Tusk's Tomes documentation site](https://kochitusker.github.io/Tusks-Tomes/docs/)** — easier to read
+and to search than the rendered markdown here.
+
 The full docs live under [`docs/`](docs/) so this page stays readable. Headline destinations:
 
 | Getting started | Using it | Reference |
@@ -248,7 +255,7 @@ The full docs live under [`docs/`](docs/) so this page stays readable. Headline 
 | [Audio Transcription](docs/add-ons/audio-transcription.md) | [FAQ](docs/faq.md) | [Security](.github/SECURITY.md) |
 | [Local LLMs](docs/add-ons/local-llm.md) | [Chronicle Reforge](docs/reforge.md) | |
 | [Chronicle Personas](docs/add-ons/personas.md) | | |
-| [Claude Code (Player)](docs/add-ons/claude-code.md) | | |
+| [Claude Code (subscription)](docs/add-ons/claude-code.md) | | |
 
 Project meta: [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE)
 

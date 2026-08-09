@@ -45,6 +45,23 @@ const FORBIDDEN_FILE_PATTERNS = [
   { re: /(^|\/)service-account.*\.json$/i, label: "service-account JSON" },
   { re: /(^|\/)gcp-key.*\.json$/i, label: "GCP service-account key" },
   { re: /(^|\/)aws-credentials$/i, label: "AWS credentials file" },
+  // Private-name scanner data files. These hold real people's names and the
+  // map of which placeholder currently stands in for which — they must never
+  // be committed to ANY repo, dev included.
+  //
+  // Why a filename rule rather than relying on .gitignore: the content layer
+  // that scans for these names deliberately exempts .private-names itself
+  // (see SELF_REFERENTIAL in scripts/lib/private-names.mjs — a denylist is a
+  // list of the names by definition, so scanning it would flag every line).
+  // That exemption means a force-add (`git add -f`) would slip past both the
+  // ignore file and the content scan. This closes that gap: the file is
+  // refused by name, so no content inspection is needed.
+  //
+  // Anchored with `$` so the tracked, publishable templates — which contain
+  // only comments and `# Firstname` placeholders — still pass.
+  { re: /(^|\/)\.private-names$/i, label: ".private-names (real people's names — never commit)" },
+  { re: /(^|\/)\.name-pool$/i, label: ".name-pool (rotation pool — never commit)" },
+  { re: /(^|\/)\.name-rotation\.json$/i, label: ".name-rotation.json (placeholder assignment map — never commit)" },
   // Dev-only repository guidance — must never reach the public release.
   // These files are intentionally tracked in the dev repo so contributors
   // and Claude Code sessions load them, but the orphan release commit

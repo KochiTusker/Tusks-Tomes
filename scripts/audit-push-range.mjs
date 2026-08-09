@@ -19,6 +19,7 @@
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { dedupeFindings, runAllChecks } from "./lib/secret-scanner.mjs";
+import { checkFastForward } from "./lib/fast-forward-guard.mjs";
 
 const LAYER_LABELS = {
   filename: "Filename heuristic",
@@ -29,6 +30,7 @@ const LAYER_LABELS = {
   path: "Local-filesystem path",
   speaker: "Player name in speaker tag",
   "private-name": "REAL PERSON'S NAME",
+  "fast-forward": "Breaks the in-app updater",
 };
 
 const ZERO_SHA = "0000000000000000000000000000000000000000";
@@ -76,6 +78,11 @@ for (const line of refLines) {
     gitleaksMissing = true;
   }
 }
+
+// Fast-forward guard — pushes to `refs/heads/main` ONLY. The logic lives in
+// scripts/lib/fast-forward-guard.mjs so it can be unit-tested against a fake
+// git runner; see that file for why it exists and why gh-pages is exempt.
+blocking.push(...checkFastForward(refLines, (args) => spawnSync("git", args).status ?? 1));
 
 // Rotation freshness — pushes to `refs/heads/main` ONLY.
 //
