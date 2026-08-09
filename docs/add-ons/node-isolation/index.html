@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add-on isolation — Node and Python sandboxing rules — Tusk's Tomes</title>
+<meta name="description" content="← Back to add-on README · Also lives at the same path in Tusk's Vault so both repos enforce the same contract.">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/node-isolation/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Add-on isolation — Node and Python sandboxing rules — Tusk's Tomes">
+<meta property="og:description" content="← Back to add-on README · Also lives at the same path in Tusk's Vault so both repos enforce the same contract.">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/node-isolation/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Add-on isolation — Node and Python sandboxing rules — Tusk's Tomes">
+<meta name="twitter:description" content="← Back to add-on README · Also lives at the same path in Tusk's Vault so both repos enforce the same contract.">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Add-on isolation — Node and Python sandboxing rules",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/node-isolation/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Add-on isolation — Node and Python sandboxing rules",
+  "description": "← Back to add-on README · Also lives at the same path in Tusk's Vault so both repos enforce the same contract.",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/node-isolation/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/setup/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Add-ons</h2>
+<ul><li><a href="/Tusks-Tomes/docs/add-ons/node-isolation/" aria-current="page">Add-on isolation — Node and Python sandboxing rules</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/">Add-ons — optional capabilities you can install in one click</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/audio-transcription/">Audio Transcription add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/personas/">Chronicle Personas Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code (your subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/codex/">Codex (your ChatGPT subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/obsidian-vault/">Obsidian Vault Lore (read-only)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/whisper-cpp/">whisper.cpp bridge — bring your own build</a></li></ul>
+<h2>Tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/diagnose/">Diagnosis bundles for Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify — local code-graph for Claude Code</a></li></ul>
+<h2>Guides</h2>
+<ul><li><a href="/Tusks-Tomes/docs/beginner-guide/">Beginner's guide — setting this up with no terminal experience</a></li>
+<li><a href="/Tusks-Tomes/docs/reforge/">Chronicle Reforge — redo the later phases on a different model</a></li>
+<li><a href="/Tusks-Tomes/docs/configuration/">Configuration &amp; file structure</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/workflows/">Getting a session in — three ways</a></li>
+<li><a href="/Tusks-Tomes/docs/is-this-safe/">How safe is this? What it installs, and what could go wrong</a></li>
+<li><a href="/Tusks-Tomes/docs/comparison/">How this compares to the alternatives</a></li>
+<li><a href="/Tusks-Tomes/docs/known-bugs/">Known bugs and limitations</a></li>
+<li><a href="/Tusks-Tomes/docs/providers/">LLM providers — picking one, getting a key, going offline</a></li>
+<li><a href="/Tusks-Tomes/docs/privacy/">Privacy &amp; security</a></li>
+<li><a href="/Tusks-Tomes/docs/architecture/">Project Architecture: Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/faq/">Questions I get asked, and a few I asked myself</a></li>
+<li><a href="/Tusks-Tomes/docs/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/security-quickref/">Security quick reference</a></li>
+<li><a href="/Tusks-Tomes/docs/audio-to-chronicle/">Session audio to a lore-grounded chronicle</a></li>
+<li><a href="/Tusks-Tomes/docs/setup/">Setup — getting Tusk's Tomes running</a></li>
+<li><a href="/Tusks-Tomes/docs/roadmap/">Tusk's Tomes — Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/vault/">Tusk's Vault — the sibling project (coming soon)</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li>
+<li><a href="/Tusks-Tomes/docs/walkthrough/">Walkthrough — your first session, end to end</a></li>
+<li><a href="/Tusks-Tomes/docs/pricing/">What it costs to run</a></li>
+<li><a href="/Tusks-Tomes/docs/dependencies/">What you need installed</a></li>
+<li><a href="/Tusks-Tomes/docs/use-cases/">Who this is actually for</a></li>
+<li><a href="/Tusks-Tomes/docs/youtube-transcript-to-chronicle/">YouTube transcript to a lore-grounded chronicle</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Add-on isolation — Node and Python sandboxing rules</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#why-this-matters">🔒 Why this matters</a></li><li><a href="#the-python-pattern-reference-implementation">🐍 The Python pattern (reference implementation)</a></li><li><a href="#the-node-pattern-the-rule-for-new-add-ons">📦 The Node pattern (the rule for new add-ons)</a></li><li><a href="#external-binaries-ollama-lm-studio-ffmpeg">🛠️ External binaries (Ollama, LM Studio, ffmpeg, …)</a></li><li><a href="#what-an-add-on-must-never-do">🚫 What an add-on must never do</a></li><li><a href="#verification-checklist-for-a-new-add-on-pr">✅ Verification checklist for a new add-on PR</a></li><li><a href="#related">📚 Related</a></li></ul></aside>
+    <article class="prose">
+<h1>Add-on isolation — Node and Python sandboxing rules</h1>
+<p>← Back to <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/add-ons/README.md" rel="noopener">add-on README</a> · Also lives at <a href="https://github.com/KochiTusker/Tusks-Vault/blob/main/docs/add-ons/node-isolation.md" rel="noopener">the same path in Tusk's Vault</a> so both repos enforce the same contract.</p>
+<blockquote>
+<p><strong>The promise to the user:</strong> installing an add-on must never change anything outside this repo's working directory. Uninstalling must remove every byte the install wrote. The host computer's Python, Node, PATH, registry, and home directory stay untouched.</p>
+</blockquote>
+<hr>
+<details class="docs-section">
+<summary><h2 id="why-this-matters">🔒 Why this matters</h2></summary>
+<div class="docs-section-body">
+<p>The audience for Tusk's Tomes and Tusk's Vault is GMs and players, not sysadmins. We can't assume:</p>
+<ul>
+<li>A specific Python version is on the user's PATH (or that the user is willing to install one).</li>
+<li>A specific Node version is on the user's PATH (we ship one via <code>engines</code> in <code>package.json</code>, but the user's system Node might be older or newer).</li>
+<li>The user is comfortable running a system-wide <code>npm install</code> that pulls 200 MB of transitive deps.</li>
+<li>The user can recover if an install corrupts their <code>%APPDATA%</code> or their system Python's <code>site-packages</code>.</li>
+</ul>
+<p>So: <strong>every add-on owns its own dependency tree, in a folder beneath this repo, and never touches global state.</strong> Python via venv (already implemented for the Whisper add-on); Node via a per-add-on <code>package.json</code> + isolated <code>node_modules</code> (the pattern this doc enforces for the next add-on that needs Node deps).</p>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="the-python-pattern-reference-implementation">🐍 The Python pattern (reference implementation)</h2></summary>
+<div class="docs-section-body">
+<p>The audio-transcription add-on (Whisper + Craig) is the canonical Python example. The pattern:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Step</th><th>Where it lives</th><th>What it touches</th></tr></thead><tbody><tr><td>Setup script</td><td><code>scripts/whisper/setup.ps1</code> (Windows), <code>scripts/whisper/setup.sh</code> (POSIX)</td><td>The user's system Python is <em>read</em> (for <code>python -m venv</code>) but never mutated.</td></tr><tr><td>Venv created</td><td><code>vendor/python-venv/</code> — inside this repo</td><td>One directory; uninstall deletes it.</td></tr><tr><td>Python deps installed</td><td><code>vendor/python-venv/Lib/site-packages/</code></td><td>Isolated. The user's global <code>site-packages</code> is untouched.</td></tr><tr><td>Bootstrap probe</td><td><code>server/whisper/bootstrap.ts</code> spawns the venv's Python to <code>import faster_whisper</code></td><td>If venv is missing or the import fails, <code>whisperStatus()</code> reports <code>ready: false</code> and the UI surfaces a clear error.</td></tr><tr><td>Marker file</td><td><code>{configDir}/addons.json</code></td><td>Per-user config dir (<code>%APPDATA%\tusks-tomes\Config\</code> on Windows — Roaming; <code>~/.config/tusks-tomes/</code> on Linux; <code>~/Library/Application Support/tusks-tomes/</code> on macOS), one line per add-on.</td></tr><tr><td>Uninstall</td><td><code>fs.rm('vendor/python-venv', { recursive: true, force: true })</code> + removes the marker</td><td>Idempotent.</td></tr></tbody></table>
+<p><strong>State written outside the repo on install:</strong> exactly one entry in <code>{configDir}/addons.json</code>. Nothing else. No PATH change, no registry entry, no env var, no symlink, no home-directory dotfile.</p>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="the-node-pattern-the-rule-for-new-add-ons">📦 The Node pattern (the rule for new add-ons)</h2></summary>
+<div class="docs-section-body">
+<p><strong>No Node-installing add-on exists in either repo yet.</strong> When the first one is built, it MUST follow this layout — non-negotiable. Reviewers should reject PRs that don't.</p>
+<h3 id="directory-shape">Directory shape</h3>
+<pre><code>vendor/
+  python-venv/                        ← existing: Python venv for the Whisper addon
+  addons/
+    &#x3C;addon-name>/                     ← new: one directory per Node addon
+      package.json                    ← the add-on's *own* deps, not host's
+      package-lock.json
+      node_modules/                   ← isolated, gitignored
+      index.mjs                       ← entrypoint loaded by the host
+      README.md                       ← user-facing notes for this addon
+</code></pre>
+<h3 id="install-in-addondefinitioninstall">Install (in <code>AddonDefinition.install</code>)</h3>
+<p>The add-on's <code>install(emit)</code> callback runs <code>npm install</code> with <code>--prefix</code> pointed at the add-on directory. Use the existing log-emitter so progress streams to the AddonsManager UI.</p>
+<pre><code class="language-ts">// Pseudocode — see server/addons/registry.ts for the AddonDefinition shape.
+async install(emit) {
+  const addonDir = path.join(REPO_ROOT, 'vendor', 'addons', '&#x3C;addon-name>')
+  await fs.mkdir(addonDir, { recursive: true })
+  await writePackageJson(addonDir, /* manifest */)
+  return spawnNpm(['install', '--prefix', addonDir, '--no-audit', '--no-fund'], emit)
+}
+</code></pre>
+<p><strong>Crucially:</strong></p>
+<ul>
+<li><code>--prefix</code> ensures <code>node_modules</code> is created under <code>vendor/addons/&#x3C;addon-name>/</code>, not the host repo's root <code>node_modules</code>.</li>
+<li><code>--no-audit --no-fund</code> keeps the log quiet and avoids network calls beyond the registry.</li>
+<li>The host repo's <code>package.json</code> is never edited by the add-on. If a dep already exists in the host (e.g., shared Express middleware), the add-on still vendors its own copy — duplicated bytes are the price of guaranteed isolation.</li>
+</ul>
+<h3 id="load-in-addondefinitionregisterroutes">Load (in <code>AddonDefinition.registerRoutes</code>)</h3>
+<p>The host server loads the add-on entrypoint via dynamic import from the add-on directory:</p>
+<pre><code class="language-ts">registerRoutes(app) {
+  const entry = path.join(REPO_ROOT, 'vendor', 'addons', '&#x3C;addon-name>', 'index.mjs')
+  // Use a file:// URL so the import resolver doesn't try to walk node_modules.
+  void import(pathToFileURL(entry).href).then(mod => mod.register(app))
+}
+</code></pre>
+<p><code>node</code> resolves the add-on's own <code>require</code>/<code>import</code> calls against its own <code>node_modules</code> because Node's algorithm walks up from the file's directory — landing on <code>vendor/addons/&#x3C;addon-name>/node_modules</code> before the host's root. The add-on cannot accidentally see host deps.</p>
+<h3 id="uninstall">Uninstall</h3>
+<pre><code class="language-ts">async uninstall() {
+  await fs.rm(path.join(REPO_ROOT, 'vendor', 'addons', '&#x3C;addon-name>'), {
+    recursive: true,
+    force: true,
+  })
+}
+</code></pre>
+<p>One <code>fs.rm</code> call deletes the entire add-on tree. The marker in <code>{configDir}/addons.json</code> is removed by the host's existing uninstall flow.</p>
+<h3 id="gitignore">Gitignore</h3>
+<p>Add <code>vendor/addons/*/node_modules/</code> to the repo <code>.gitignore</code> so add-on caches don't leak into git.</p>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="external-binaries-ollama-lm-studio-ffmpeg">🛠️ External binaries (Ollama, LM Studio, ffmpeg, …)</h2></summary>
+<div class="docs-section-body">
+<p>Add-ons that depend on an <em>external program</em> the user installs separately (Ollama, LM Studio, Unsloth via uv, ffmpeg, …) follow a thinner contract:</p>
+<ul>
+<li><strong>The add-on does not install the binary.</strong> Period. The user installs Ollama from <code>ollama.com/download</code> themselves.</li>
+<li><strong>The add-on probes for the binary</strong> via HTTP (<code>localhost:11434/api/tags</code> for Ollama) or version check (<code>ffmpeg -version</code>). If the probe fails, the add-on's <code>isReady()</code> returns <code>false</code> and the UI shows a friendly "Install Ollama from … to enable" panel.</li>
+<li><strong>The add-on writes a marker file</strong> (<code>{configDir}/&#x3C;name>.enabled</code>) so install/uninstall has the same shape as the heavier add-ons. The marker is opt-in metadata, not a precondition.</li>
+</ul>
+<p>The existing local-llm-addon (<code>server/addons/registry.ts:81-114</code>) is the reference for this pattern.</p>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="what-an-add-on-must-never-do">🚫 What an add-on must never do</h2></summary>
+<div class="docs-section-body">
+<p>These are blockers on PR review:</p>
+<ol>
+<li>Run <code>npm install &#x3C;pkg></code> against the host repo's root (no <code>--prefix</code>).</li>
+<li><code>pip install</code> outside <code>vendor/python-venv/</code>.</li>
+<li>Modify the user's PATH, environment variables, or shell rc files.</li>
+<li>Write to <code>~/.config</code>, <code>~/.local/share</code>, <code>%APPDATA%</code>, <code>%LOCALAPPDATA%</code>, or any per-user data dir outside the canonical <code>{configDir}</code> (which is already managed by <code>env-paths</code> in <code>server/appData.ts</code>).</li>
+<li>Add a Windows registry entry.</li>
+<li>Edit the host's <code>package.json</code> or <code>requirements.txt</code>.</li>
+<li>Download a binary into <code>/usr/local/bin</code>, <code>C:\Program Files</code>, or anywhere on the system PATH.</li>
+<li>Symlink anything outside the repo working tree.</li>
+<li>Run any operation that requires sudo / admin elevation. (If your add-on needs admin, redesign it.)</li>
+<li>Use <code>child_process.spawn(cmd, args, { shell: true })</code> with un-quoted args — see <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/src/server/util/updater.ts" rel="noopener">DEP0190 fix</a> for the cmd.exe-quoting helper.</li>
+</ol>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="verification-checklist-for-a-new-add-on-pr">✅ Verification checklist for a new add-on PR</h2></summary>
+<div class="docs-section-body">
+<p>Before merging an add-on PR, the reviewer runs through these:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Fresh clone on a clean Windows VM that has Node 20 + Python 3.11 + nothing else. App starts and the new add-on shows up as "not installed."</li>
+<li class="task-list-item"><input type="checkbox" disabled> Clicking <em>Install</em> in the AddonsManager succeeds. Log stream shows the install running.</li>
+<li class="task-list-item"><input type="checkbox" disabled> After install, the only new bytes on disk are inside the repo working tree + at most one line added to <code>{configDir}/addons.json</code>. (Spot-check with <code>git status</code> and a recursive diff of <code>{configDir}</code>.)</li>
+<li class="task-list-item"><input type="checkbox" disabled> System Python's <code>site-packages</code> is unchanged. System Node's globals (<code>npm ls -g</code>) are unchanged.</li>
+<li class="task-list-item"><input type="checkbox" disabled> PATH, env vars, registry entries: unchanged.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Clicking <em>Uninstall</em> removes the entire <code>vendor/addons/&#x3C;name>/</code> tree (or <code>vendor/python-venv/</code> for Python add-ons) and the marker in <code>addons.json</code>.</li>
+<li class="task-list-item"><input type="checkbox" disabled> After uninstall, <em>re-installing</em> works (idempotent).</li>
+<li class="task-list-item"><input type="checkbox" disabled> The add-on's <code>isReady()</code> returns the correct value on every state (not-installed, installed-but-pending-restart, fully-active).</li>
+</ul>
+</div>
+</details>
+<hr>
+<details class="docs-section">
+<summary><h2 id="related">📚 Related</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/add-ons/README.md" rel="noopener">add-on system overview</a> — the AddonsManager UI + lifecycle</li>
+<li><a href="/Tusks-Tomes/docs/add-ons/audio-transcription/">audio-transcription add-on</a> — the reference Python implementation</li>
+<li><a href="/Tusks-Tomes/docs/add-ons/local-llm/">local-llm add-on</a> — the reference external-binary implementation</li>
+<li><code>server/addons/registry.ts</code> — <code>AddonDefinition</code> type definition</li>
+<li><code>server/addons/loader.ts</code> — host-side install/uninstall machinery</li>
+<li><code>scripts/whisper/setup.ps1</code> / <code>scripts/whisper/setup.sh</code> — canonical Python isolation scripts</li>
+</ul>
+</div>
+</details>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/add-ons/node-isolation.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+</body>
+</html>

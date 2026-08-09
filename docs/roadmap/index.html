@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tusk's Tomes — Roadmap — Tusk's Tomes</title>
+<meta name="description" content="A running list of what's shipped, what's coming next, what the community has suggested, and what's been considered and declined. Updated as the Tusker…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/roadmap/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Tusk's Tomes — Roadmap — Tusk's Tomes">
+<meta property="og:description" content="A running list of what's shipped, what's coming next, what the community has suggested, and what's been considered and declined. Updated as the Tusker…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/roadmap/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tusk's Tomes — Roadmap — Tusk's Tomes">
+<meta name="twitter:description" content="A running list of what's shipped, what's coming next, what the community has suggested, and what's been considered and declined. Updated as the Tusker…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Tusk's Tomes — Roadmap",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/roadmap/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Tusk's Tomes — Roadmap",
+  "description": "A running list of what's shipped, what's coming next, what the community has suggested, and what's been considered and declined. Updated as the Tusker…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/roadmap/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/setup/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Add-ons</h2>
+<ul><li><a href="/Tusks-Tomes/docs/add-ons/node-isolation/">Add-on isolation — Node and Python sandboxing rules</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/">Add-ons — optional capabilities you can install in one click</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/audio-transcription/">Audio Transcription add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/personas/">Chronicle Personas Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code (your subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/codex/">Codex (your ChatGPT subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/obsidian-vault/">Obsidian Vault Lore (read-only)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/whisper-cpp/">whisper.cpp bridge — bring your own build</a></li></ul>
+<h2>Tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/diagnose/">Diagnosis bundles for Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify — local code-graph for Claude Code</a></li></ul>
+<h2>Guides</h2>
+<ul><li><a href="/Tusks-Tomes/docs/beginner-guide/">Beginner's guide — setting this up with no terminal experience</a></li>
+<li><a href="/Tusks-Tomes/docs/reforge/">Chronicle Reforge — redo the later phases on a different model</a></li>
+<li><a href="/Tusks-Tomes/docs/configuration/">Configuration &amp; file structure</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/workflows/">Getting a session in — three ways</a></li>
+<li><a href="/Tusks-Tomes/docs/is-this-safe/">How safe is this? What it installs, and what could go wrong</a></li>
+<li><a href="/Tusks-Tomes/docs/comparison/">How this compares to the alternatives</a></li>
+<li><a href="/Tusks-Tomes/docs/known-bugs/">Known bugs and limitations</a></li>
+<li><a href="/Tusks-Tomes/docs/providers/">LLM providers — picking one, getting a key, going offline</a></li>
+<li><a href="/Tusks-Tomes/docs/privacy/">Privacy &amp; security</a></li>
+<li><a href="/Tusks-Tomes/docs/architecture/">Project Architecture: Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/faq/">Questions I get asked, and a few I asked myself</a></li>
+<li><a href="/Tusks-Tomes/docs/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/security-quickref/">Security quick reference</a></li>
+<li><a href="/Tusks-Tomes/docs/audio-to-chronicle/">Session audio to a lore-grounded chronicle</a></li>
+<li><a href="/Tusks-Tomes/docs/setup/">Setup — getting Tusk's Tomes running</a></li>
+<li><a href="/Tusks-Tomes/docs/roadmap/" aria-current="page">Tusk's Tomes — Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/vault/">Tusk's Vault — the sibling project (coming soon)</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li>
+<li><a href="/Tusks-Tomes/docs/walkthrough/">Walkthrough — your first session, end to end</a></li>
+<li><a href="/Tusks-Tomes/docs/pricing/">What it costs to run</a></li>
+<li><a href="/Tusks-Tomes/docs/dependencies/">What you need installed</a></li>
+<li><a href="/Tusks-Tomes/docs/use-cases/">Who this is actually for</a></li>
+<li><a href="/Tusks-Tomes/docs/youtube-transcript-to-chronicle/">YouTube transcript to a lore-grounded chronicle</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Tusk's Tomes — Roadmap</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#contents">📚 Contents</a></li><li><a href="#whats-coming-next">🔜 What's coming next</a></li><li><a href="#community-suggested-features">💡 Community-suggested features</a></li><li><a href="#how-to-suggest-a-feature">🗣️ How to suggest a feature</a></li><li><a href="#recently-shipped">✅ Recently shipped</a></li><li><a href="#wont-do-and-why">🙅 Won't do (and why)</a></li><li><a href="#developer-notes">🛠️ Developer notes</a></li><li><a href="#completed-work">Completed work</a></li><li><a href="#what-this-roadmap-explicitly-does-not-include">What this roadmap explicitly does NOT include</a></li><li><a href="#security-hardening-prioritised-before-any-public-release">Security &amp; hardening — prioritised before any public release</a></li><li><a href="#quality-of-life-backlog">Quality-of-life backlog</a></li><li><a href="#ui-direction-fantasy-dd-theming">UI direction — fantasy / D&amp;D theming</a></li><li><a href="#animation-ideas">Animation ideas</a></li><li><a href="#project-conventions-binding-for-future-work">Project conventions (binding for future work)</a></li><li><a href="#glossary-of-terms">Glossary of terms</a></li><li><a href="#future-work-speculative-not-authorised-for-autonomous-pickup">Future work (speculative — not authorised for autonomous pickup)</a></li></ul></aside>
+    <article class="prose">
+<h1>🗺️ Tusk's Tomes — Roadmap</h1>
+<p>A running list of what's shipped, what's coming next, what the community
+has suggested, and what's been considered and declined. Updated as the
+Tusker community grows.</p>
+<blockquote>
+<p><strong>Want a feature?</strong> Drop it in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a>
+or <a href="https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose" rel="noopener">open a feature request</a>
+— see <a href="#-how-to-suggest-a-feature">How to suggest a feature</a> below for
+what makes a great suggestion. Every idea gets read; the most-upvoted
+ones move up this list.</p>
+</blockquote>
+<hr>
+<details class="docs-section">
+<summary><h2 id="contents">📚 Contents</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li><a href="#-whats-coming-next">What's coming next</a> — actively prioritised backlog</li>
+<li><a href="#-community-suggested-features">Community-suggested features</a> — ideas from the feedback form and GitHub</li>
+<li><a href="#-how-to-suggest-a-feature">How to suggest a feature</a></li>
+<li><a href="#-recently-shipped">Recently shipped</a></li>
+<li><a href="#-wont-do-and-why">Won't do (Player)</a> — politely declined, with reasoning</li>
+<li><a href="#-developer-notes">Developer notes</a> — decision log, security audit, QoL backlog, theming + animation specs</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="whats-coming-next">🔜 What's coming next</h2></summary>
+<div class="docs-section-body">
+<p>The active backlog — items on deck for the next handful of releases.
+Order is loose; community demand can promote things.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Community Discord server</strong> — a shared home for Tusk's Tomes and <a href="https://github.com/KochiTusker/Tusks-Vault" rel="noopener">Tusk's Vault</a>. Setup help, feature-idea voting, chronicle showcase, dev talk. Will spin up once there's enough signalled interest via the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a> — the form has a "would you join a community Discord?" question, and a yes there is the trigger.</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>GPU transcription for non-NVIDIA cards</strong> — currently impossible to ship as a one-click add-on, and worth recording why so it isn't re-investigated from scratch. <code>faster-whisper</code> (CTranslate2) implements only CUDA and CPU, so AMD, Intel Arc and Apple GPUs go unused. A survey of the alternatives in August 2026 found: <strong>whisper.cpp</strong> ships CPU, BLAS (still CPU) and CUDA builds — its Vulkan backend exists in source but is in <em>no</em> release asset; <strong>sherpa-onnx</strong> ships CPU and CUDA only, no DirectML; <strong>Const-me/Whisper</strong> genuinely does use any DirectX 11 GPU via DirectCompute and ships a 0.4 MB CLI, but has had no release since July 2023. So the only ready-made vendor-agnostic option is unmaintained. Re-open if any of these ships a Vulkan or DirectML release asset, or if hosting a self-built, signed Vulkan binary becomes worth the publisher burden. Note that whisper.cpp would still be attractive purely for dropping the Python 3.10–3.12 requirement and the ~2 GB PyTorch install — the sidecar already sits behind a stable JSON contract (<code>{segments, durationMs, language}</code>, see <code>server/whisper/invoke.ts</code>), so a second engine is a bootstrap + invoke path rather than a rewrite.</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>More provider options — Kimi, DeepSeek and Grok</strong> — add these alongside the existing Gemini / Claude / OpenAI cloud keys. DeepSeek and Kimi are attractive on price-per-token for the mechanical phases; Grok is being looked at for the narrative phase. Each needs the usual work: a provider adapter, chunk-size row, rate-limit handling, and a probe target list.</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>YouTube SRT/VTT parser</strong> — sister formats to <code>.sbv</code>, same caption-repair pipeline</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Whisper diarisation for single-track audio</strong> — recover speaker labels via pyannote when there's no per-speaker source</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>In-PDF image OCR</strong> — handle scanned session notes and handwritten lore</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Tusk's Tomes Launcher</strong> — standalone Electron version manager (separate from the app); lets non-technical users download, install, switch versions, repair, and clean-reinstall from a desktop GUI; Windows installer via Inno Setup; distributed as a £1 Patreon convenience item (core app stays MIT/free on GitHub); Mac/Linux parity is a follow-on roadmap item</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>In-browser audio trim</strong> — clip out pre-game small-talk before transcription</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Live push-to-Vault on chronicle finalise</strong> — today's flow is filesystem-based; make it event-driven</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Retrieval instead of whole-KB concat, for very large lore archives</strong> — today every chunk's prompt carries the entire knowledge base. With a 100k-character KB and 13 transcript chunks per phase that is ~1.3M characters of input per phase, which works but is wasteful. Embedding the KB once and retrieving the top-K relevant passages per chunk makes the cost constant regardless of archive size. Deferred because most lore archives sit comfortably under 200k characters and Gemini's context caching already captures most of the saving without an embedding pipeline. When it does land, retrieval has to run locally — a bundled embedding model or an in-context scheme — because an embedding API we pay for would break the no-hosted-services rule. Re-open when someone turns up with a KB that genuinely does not fit in context.</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Verified Linux and macOS support</strong> — the stack (Node, Vite, Express, React) is cross-platform and the POSIX launcher scripts exist, but neither OS has actually been run end to end here, so the docs say "untested" rather than "supported". Closing this means a real run on each: launcher, Whisper setup, config paths, and the add-on install flow. No per-OS forks — one codebase or it does not ship.</li>
+</ul>
+<p>The accessibility goal stays paramount: <strong>every "installer" / "launcher" / "in-app" item above is in service of making Tusk's Tomes usable by people who have never cloned a Git repository.</strong></p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="community-suggested-features">💡 Community-suggested features</h2></summary>
+<div class="docs-section-body">
+<p>Ideas raised via the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a>,
+GitHub issues, or 1:1 with users. Status tags indicate where each one
+sits today.</p>
+<blockquote>
+<p><strong>Maintainer note</strong>: this section is where the maintainers log
+suggestions as they come in. If a suggestion is missing, the
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a>
+is the fastest way to surface it — it probably just hasn't been
+logged yet. A "researching" tag isn't a deferral; most items sit
+there while scope and fit get worked out.</p>
+</blockquote>
+<h3 id="under-active-consideration">🟢 Under active consideration</h3>
+
+<p><em>(No items logged yet — yours could be the first. Submit via the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a>.)</em></p>
+<h3 id="researching-needs-scoping">🔵 Researching — needs scoping</h3>
+
+<p><em>(Empty for now.)</em></p>
+<h3 id="parked-waiting-on-something">🟡 Parked — waiting on something</h3>
+
+<p><em>(Empty for now.)</em></p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="how-to-suggest-a-feature">🗣️ How to suggest a feature</h2></summary>
+<div class="docs-section-body">
+<p>Three paths, all good — pick whichever feels lighter:</p>
+<ol>
+<li><strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">Feedback form</a></strong> — fastest, lowest friction. Half-formed ideas welcome. (A community Discord is on the roadmap; until then, this is the out-of-band channel.)</li>
+<li><strong><a href="https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose" rel="noopener">Open a feature request</a></strong> — best for ideas that need a paper trail or that you want others to upvote.</li>
+<li><strong>Open a PR</strong> — if you've already built it. For larger changes, sketch the design in the feedback form first to avoid wasted work.</li>
+</ol>
+<p><strong>What makes a great suggestion:</strong></p>
+<ul>
+<li><strong>The use case in your own words.</strong> "As a DM running long sessions, I want to…" beats "we should add X".</li>
+<li><strong>Why the existing flow doesn't already cover it.</strong> (Sometimes it does and the feature is just hard to find — that's good info too.)</li>
+<li><strong>A rough sketch of the UX.</strong> Even one sentence on where it'd live (which tab, what the button says).</li>
+<li><strong>Whether you'd help build it.</strong> Not required, but if you would, say so.</li>
+</ul>
+<p><strong>Heuristics for what fits:</strong></p>
+<ul>
+<li>✅ Things that strengthen the <strong>local-first, no-account, no-telemetry</strong> stance</li>
+<li>✅ Things that make Tusk's Tomes <strong>easier for non-developers</strong> to install / use</li>
+<li>✅ Things that <strong>integrate with tools DMs already use</strong> (VTTs, lore wikis, recording bots)</li>
+<li>✅ Things that <strong>improve chronicle quality</strong> without burning more LLM tokens</li>
+<li>❌ Things that require a cloud account</li>
+<li>❌ Things that require telemetry or phone-home</li>
+<li>❌ Things that lock features behind a paywall</li>
+</ul>
+<p>If your idea doesn't pass the heuristics but you think it should, <strong>say so</strong> — these aren't laws, they're priors. Community feedback shifts them.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="recently-shipped">✅ Recently shipped</h2></summary>
+<div class="docs-section-body">
+<p>The headline ship-it items, newest first. For the full code-level
+history see <code>git log</code>.</p>
+<ul>
+<li><strong>Codex add-on</strong> — route phases through a signed-in OpenAI Codex CLI and draw on that plan's allowance instead of metered API credit. Mirrors the Claude Code add-on and is fully independent of it; exhausting the allowance pauses the run rather than failing it.</li>
+<li><strong>Guided routing presets</strong> — a preset ladder (maximum quality → balanced → measured hybrid → free) with measured cost savings shown against the Pro-tier baseline, behind an "Advanced routing" toggle for anyone who wants the per-phase controls directly.</li>
+<li><strong>Cross-provider routing within one run</strong> — previously listed as won't-do. Per-phase routing now carries an explicit (provider, tier, model) tuple, so Claude can run phase 1 while Gemini runs phase 3 and OpenAI runs phase 4.</li>
+<li><strong>Obsidian Vault lore source</strong> — point Tomes at an existing Obsidian vault and ground chronicles against those notes, read-only. Includes a vault CLAUDE.md generator; the context toggle is off by default.</li>
+<li><strong>Claude Code add-on</strong> — same idea as the Codex add-on, against a signed-in Claude Code CLI.</li>
+<li><strong>Chronicle Reforge</strong> — re-run a finished chronicle through a different model or persona without re-running the whole pipeline.</li>
+<li><strong>Dynamic model dropdowns for every provider</strong> — "Probe models" now covers Gemini Paid, Gemini Free, Claude and OpenAI, and local backends list their own models. Dropdowns mark each entry verified or unverified based on what the key can actually call.</li>
+<li><strong>Settings + Tome of Lore reorganisation</strong> — collapsible sections with persisted state, a sticky section rail, and inline help popovers.</li>
+<li><strong>Cost optimisation pass</strong> — Budget mode preset in Hybrid Routing + Phase 3/6 prompt-cache extension + (provider, model-tier)-keyed chunk sizes + Flash rate-limit tier wiring. A 3hr session on Pro that cost ~£3 now lands around ~£0.70 on Flash with caching.</li>
+<li><strong>Free-tier resilience</strong> — rate-limit dialog (stop / slow-down 3× / pause-and-save / fallback) + on-disk run checkpoints (<code>/api/runs/*</code>) + Resume banner above the Chronicle tab. Partial Markdown export at any pipeline phase. Hitting a free-tier daily quota mid-3hr-session is now a non-event.</li>
+<li><strong>Whisper opt-in install</strong> — Whisper is no longer in the default <code>npm run setup</code> path. Audio Transcription is opt-in via Settings → Add-ons. Users who only paste transcripts no longer need Python.</li>
+<li><strong>Chronicle Personas add-on</strong> — six character preset narrators + an editor for your own. Phases 1/2/4 stay neutral; persona affects only the prose phases.</li>
+<li><strong>Privacy scrub + in-app self-updater</strong> — Settings → Updates → Apply</li>
+<li><strong>Tusk's Vault pairing</strong> — auto-detect sibling install + one-click Send-to-Vault</li>
+<li><strong>GUI overhaul</strong> — deep void violet arcane theme with dramatic animations</li>
+<li><strong>Chronicle auto-save</strong> — every finished chronicle lands at <code>Sessions/&#x3C;campaign>/&#x3C;file>.md</code></li>
+<li><strong>Multitrack upload pipeline</strong> — Craig zip ingest, chunked auto-stitching, staged batch uploads</li>
+<li><strong>Live Discord transcription via faster-whisper</strong> — sidecar with CUDA auto-detection</li>
+<li><strong>Six-phase pipeline</strong> — cleanup → ground → narrate → curate (+ optional polish + condense)</li>
+<li><strong>Encrypted-at-rest keystore</strong> — AES-256-GCM, machine-bound scrypt key</li>
+<li><strong>Multi-provider LLM abstraction</strong> — Claude / OpenAI / Gemini / Claude Code / Codex / Ollama / LM Studio / Unsloth, with Hybrid Mode</li>
+<li><strong>Cross-platform first-time-setup script</strong> — <code>setup.bat</code> / <code>setup.sh</code> with dependency checks</li>
+<li><strong>Vestigial Discord-bot code removal</strong> — the in-app voice-channel bot path is gone (Craig handles recording externally). Old <code>BotPanel.tsx</code>, <code>server/bot/</code>, and <code>DISCORD_SETUP.md</code> retired.</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="wont-do-and-why">🙅 Won't do (and why)</h2></summary>
+<div class="docs-section-body">
+<p>These were proposed (some publicly, some internally) and considered.
+Each was declined for a specific reason; <strong>re-open the discussion if
+your situation invalidates the reasoning</strong> — these aren't permanent.</p>
+<ul>
+<li><strong>Two-pass chronicle (structured extraction → narrative).</strong> The existing <code>phase3Chronicle</code> with <code>priorTail</code> continuity already produces NotebookLM-grade output without the round-trip cost.</li>
+<li><strong>Dedicated humor-extraction pass.</strong> <code>phase4Extras</code> already extracts jests, gore, and quotes with kind classification.</li>
+<li><strong>Lore → structured glossary compilation via one-time cloud Tier-3 call.</strong> The existing KB concat works for all frontier providers; the extra cost isn't justified.</li>
+<li><strong>9-test capability probe for local models.</strong> Replaced with a 2-test mini-probe (structured JSON + grounding fidelity). The longer probe was slower without producing better routing decisions.</li>
+<li><strong>NVIDIA Parakeet / Canary-Qwen as alternative transcription engines.</strong> <code>faster-whisper</code> large-v3 with <code>int8_float16</code> was chosen for better community support, faster install, and fewer GPU memory edge cases. Worth noting what that comparison did <em>not</em> cover: whisper.cpp was never evaluated, and <code>faster-whisper</code>'s CUDA-only backend is the reason AMD and Intel GPUs get no acceleration at all. That gap is now a backlog item rather than a settled decision.</li>
+<li><strong>Live streaming transcription from a bot in voice channels.</strong> The in-app bot path is retired; Craig handles recording. Post-session batch transcription is more accurate and simpler.</li>
+<li><strong>Fully lazy add-ons (code only downloaded on Install click).</strong> Considered an architecture where add-on source — server modules and React UI alike — lived outside the public clone and downloaded on Install via sha256-verified tarballs from GitHub Releases, with the SPA loading add-on UI as separate Vite chunks. Goal: a fresh clone ships zero add-on code, single source of truth stays in the canonical repo. Spiked the colocation pass (all three add-ons reorganised under <code>server/addons/&#x3C;name>/</code> + <code>src/components/addons/&#x3C;name>/</code> + <code>src/lib/addons/&#x3C;name>/</code>, tests green) and then declined the rest. The Python venv — the only large disk footprint at ~1.5 GB — is <em>already</em> lazy via the Whisper opt-in card; the remaining JS/TS savings would be ~120 KB built + ~5,500 LOC source, which doesn't justify the architectural surface (Vite library-mode chunks, importmap for externalised React, dynamic SPA loader, tarball pipeline, sha256 verification, postinstall sandbox, release-script exclusion logic). Re-open if a future add-on with substantial native deps changes the disk-footprint calculus.</li>
+<li><strong>API keys stored in <code>.env</code> for end-user distribution.</strong> Keys go into an encrypted file managed via GUI — <code>.env</code> is a developer convenience only.</li>
+<li><strong>Cloud account / sign-in.</strong> Tusk's Tomes is local-first by design. No accounts, ever.</li>
+<li><strong>Telemetry / usage analytics.</strong> None, ever. The maintainer learns about usage via the feedback form (and, once it exists, the community Discord), not phone-home.</li>
+<li><strong>Subscription / paid tier for the chronicler.</strong> MIT-licensed and free forever. Buy Me a Coffee exists for supporters, but no feature is paywalled. Note: a convenience installer distributed via Patreon (the Tusk's Tomes Launcher) is not a paywall — it is a paid shortcut to something anyone can do for free from the GitHub repo.</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="developer-notes">🛠️ Developer notes</h2></summary>
+<div class="docs-section-body">
+<p>The rest of this document is the technical decision log — security
+audit findings, QoL backlog with file references, theming + animation
+specs, project conventions, and a glossary of pipeline terms. Useful
+if you're contributing code; safe to skip otherwise.</p>
+<h3 id="original-roadmap-history">Original roadmap history</h3>
+<p>The original 16 numbered steps shipped. For the current shape of the
+system, read <a href="/Tusks-Tomes/docs/architecture/">architecture.md</a>. The remainder of this
+file is a <strong>decision log + binding conventions + prioritised backlog</strong>.</p>
+<p>Since the original roadmap was written:</p>
+<ul>
+<li>The in-app <strong>Discord voice-channel bot is retired</strong>. Recording happens
+externally (Craig Bot is the recommended recorder); the app is a pure
+post-processor that consumes multi-track zips / loose WAVs. The
+defunct bot UI + server code is still in the repo but no longer
+rendered (<code>server/bot/client.ts</code>, <code>voiceCapture.ts</code>, <code>commands.ts</code>,
+<code>BotPanel.tsx</code>, <code>src/lib/bot.ts</code>, the <code>/api/bot/*</code> routes); see
+§"Code cleanup" below for the removal plan.</li>
+<li>The <strong>Phase 5 (Polish, local-only)</strong> and <strong>Phase 6 (Condense)</strong> passes
+shipped.</li>
+<li>Finished chronicles <strong>auto-save</strong> to
+<code>&#x3C;repo>/Sessions/&#x3C;campaign>/Silence Beyond the Sea - &#x3C;campaign> - Session &#x3C;n>.md</code>
+via <code>POST /api/chronicle/save</code>.</li>
+<li>The five-step provider abstraction matured to support <strong>Gemini Paid /
+Free tier escalation</strong> at run start.</li>
+</ul>
+<h3 id="binding-engineering-principles">Binding engineering principles</h3>
+<p>Folded in from the old <code>milestones.md</code>, which was retired once most of
+what it planned had shipped. Two of its seven milestones are still live
+and now sit in the backlog above (retrieval, and verified Linux/macOS
+support); the rest were either delivered or abandoned. The abandoned one
+is worth naming explicitly: that file described the goal as a
+<strong>one-time-purchase desktop tool</strong> with offline licence-key enforcement.
+That is not the project. Tusk's Tomes is MIT-licensed and free, and the
+"Won't do" section above records that decision.</p>
+<p>These constraints still bind, whatever you are working on:</p>
+<ol>
+<li>
+<p><strong>Provider isolation.</strong> Anything provider-specific stays inside its
+own module under <code>src/lib/providers/</code>. The pipeline only ever calls
+<code>generate(req, opts)</code> through the <code>LLMProvider</code> interface. Do not
+sprinkle a vendor's SDK types across the pipeline.</p>
+</li>
+<li>
+<p><strong>Tier-based model selection.</strong> Phases declare a tier; the provider
+resolves it to a concrete model ID. Never hardcode a model ID in the
+pipeline, and keep model lists dynamic or config-driven — when the
+next model generation ships, a user should pick it from a dropdown
+rather than wait for a release.</p>
+</li>
+<li>
+<p><strong>No services we host.</strong> localStorage, the config directory, and the
+local Express server are the entire persistence story. No database we
+run, no API we pay for per user, no phone-home. This is what makes
+the free-forever position sustainable rather than a promise that
+quietly expires.</p>
+</li>
+<li>
+<p><strong>Do not outgrow the laptop.</strong> Every stage must run on a moderate
+consumer machine. If the knowledge base grows past what fits, that is
+what retrieval is for; output length is already handled by chunking.</p>
+</li>
+<li>
+<p><strong>Mature content stays.</strong> These are adult tabletop sessions. Safety
+thresholds stay permissive wherever a provider allows it, and where
+one cannot be tuned that way, say so plainly in the provider docs
+rather than quietly sanitising someone's game.</p>
+</li>
+</ol>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="completed-work">Completed work</h2></summary>
+<div class="docs-section-body">
+<p>The shipped surface delivers:</p>
+<ol>
+<li>A <strong>multi-track upload pipeline</strong> that ingests Craig zips / loose
+audio, lays the session out per speaker, and transcribes it offline
+with <code>faster-whisper</code>. Result: a speaker-tagged SBV one click away
+from refinement.</li>
+<li>A <strong>persistence layer + GUI editor</strong> for the glossary and speaker
+mappings.</li>
+<li>A <strong>multi-provider abstraction</strong> (Gemini / Claude / OpenAI / local)
+with per-provider model profiles and <strong>single-active-provider</strong>
+selection at run start.</li>
+<li>An <strong>encrypted local key store</strong> with a GUI for entering and
+managing API keys.</li>
+<li><strong>Hybrid Mode</strong> that detects local LLMs (Ollama / LM Studio /
+llama-server / Unsloth) and routes individual phases to them based
+on a 2-test capability probe.</li>
+<li><strong>Six-phase pipeline</strong> (1 ground → 2 audit → DM clarifications → 3
+chronicle → 5 polish [local only] → 4 extras → 6 condense).</li>
+<li><strong>Chronicle auto-save</strong> to disk as Markdown in a repo-relative,
+git-ignored <code>Sessions/</code> tree.</li>
+</ol>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="what-this-roadmap-explicitly-does-not-include">What this roadmap explicitly does NOT include</h2></summary>
+<div class="docs-section-body">
+<p>These were proposed in an external <code>discord_transcriber_roadmap_v2_3.md</code>
+draft and rejected after analysis. Re-justify against this list before
+re-opening any of them:</p>
+<ul>
+<li><strong>Two-pass chronicle (structured extraction → narrative).</strong> Existing
+<code>phase3Chronicle</code> with <code>priorTail</code> continuity already produces
+NotebookLM-grade output.</li>
+<li><strong>Dedicated humor extraction pass.</strong> <code>phase4Extras</code> already extracts
+jests, gore, and quotes with kind classification.</li>
+<li><strong>Lore → structured glossary compilation via a one-time cloud Tier-3
+call.</strong> The existing KB concat works for all frontier providers.</li>
+<li><strong>9-test capability probe for local models.</strong> Replaced with a 2-test
+mini-probe (structured JSON + grounding fidelity).</li>
+<li><strong>NVIDIA Parakeet / Canary-Qwen as alternative transcription
+engines.</strong> <code>faster-whisper</code> large-v3 with <code>int8_float16</code> is the
+single chosen engine.</li>
+<li><strong>Live streaming transcription from a bot in voice channels.</strong> The
+bot path is retired; Craig handles recording. Post-session batch
+transcription is more accurate and simpler.</li>
+<li><del><strong>Cross-provider routing within one run</strong></del> — <strong>decision reversed, and
+shipped.</strong> Per-phase routing now carries an explicit (provider, tier, model)
+tuple, so Claude can run Phase 1 while Gemini runs Phase 3. Kept here as a
+record that the original call was wrong. See <code>src/lib/routing.ts</code>.</li>
+<li><strong>Python-style <code>src/</code> tree with <code>providers/</code>, <code>router/</code>, etc.</strong> This
+project is TypeScript. The Python sidecar is scoped to
+<code>faster-whisper</code> invocation only.</li>
+<li><strong>API keys in <code>.env</code> for end-user distribution.</strong> Keys go into an
+encrypted file managed via GUI. (See P1-3 below about removing the
+<code>PAID_</code> Vite env prefix for the same reason.)</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="security-hardening-prioritised-before-any-public-release">Security &#x26; hardening — prioritised before any public release</h2></summary>
+<div class="docs-section-body">
+<p>A deep audit against OWASP Top 10 and MITRE ATT&#x26;CK was completed. Full
+findings on file; the <strong>fix-list</strong> below is what to act on.</p>
+<h3 id="p0-fix-before-running-on-any-network-you-dont-fully-control">P0 — fix before running on any network you don't fully control</h3>
+<ol>
+<li><strong><code>server/index.ts:495</code></strong> — <code>httpServer.listen(PORT, …)</code> defaults to
+binding <code>0.0.0.0</code>. Add the host argument: <code>listen(PORT, '127.0.0.1', …)</code>.
+Update the log line to match. (OWASP A01; MITRE T1133.)</li>
+<li><strong><code>server/api/providerKeys.ts</code></strong> — <code>GET /api/provider-keys</code> returns
+decrypted Gemini/Claude/OpenAI keys with no auth. Gate behind
+<code>req.ip === '127.0.0.1' || req.ip === '::1'</code> as defence-in-depth
+even after P0-1. (OWASP A07; MITRE T1552.001.)</li>
+<li><strong>Path traversal in session id params</strong> — <code>server/api/sessions.ts:40, 116</code>, <code>server/api/upload.ts:108, 132, 146</code>,
+<code>server/api/transcribe.ts:11, 21</code>. Validate <code>:id</code> against a UUID
+regex (<code>/^[A-Za-z0-9_-]{8,64}$/</code>) at every router that joins
+<code>sessionId</code> into a filesystem path. (OWASP A01; MITRE T1485.)</li>
+<li><strong>SSRF in <code>/api/local-llm/probe</code></strong> — <code>server/api/probe.ts:21</code> and
+<code>server/localProbe/runner.ts:94</code> accept an arbitrary <code>baseUrl</code> and
+<code>fetch</code> it server-side, returning the response body in errors.
+Reuse <code>validateLocalBaseUrl</code> (<code>server/index.ts:131</code>) which is already
+applied correctly to <code>/api/local/list-models</code> and
+<code>/api/local/generate</code>. (OWASP A10.)</li>
+<li><strong>DNS-rebinding</strong> — <code>Host</code> header is never validated. Add a small
+middleware that 403s anything outside <code>localhost</code>, <code>127.0.0.1</code>,
+<code>[::1]</code> (plus the declared port). (OWASP A05.)</li>
+</ol>
+<h3 id="p1-before-next-public-release">P1 — before next public release</h3>
+<ol start="6">
+<li><strong>Browser-side SDKs hold plaintext keys.</strong>
+<code>src/lib/providers/claude.ts:104</code> and
+<code>src/lib/providers/openai.ts:77</code> initialise with
+<code>dangerouslyAllowBrowser: true</code>. Any XSS exfils every key. Long-term
+fix: move every cloud LLM call server-side and drop the keys from
+the browser entirely. (OWASP A02 / A07.)</li>
+<li><strong>Drop <code>PAID_</code> from <code>envPrefix</code> in <code>vite.config.ts:10</code>.</strong> Vite
+inlines <code>PAID_GEMINI_API_KEY</code> into the production bundle, which is
+the wrong place for a paid-tier key now that the keystore exists.
+Keep <code>VITE_</code> only; remove the seeded read for <code>PAID_</code> from the
+keystore boot path.</li>
+<li><strong>Security headers.</strong> Add <code>helmet</code> (or hand-rolled
+<code>X-Content-Type-Options: nosniff</code>, <code>Referrer-Policy: no-referrer</code>,
+a minimal CSP scoped to the SPA's actual fetch surface).</li>
+<li><strong>Chronicle save belt-and-braces.</strong> <code>server/api/chronicle.ts</code>'s
+sanitiser is safe in practice but add a final
+<code>path.resolve(absPath).startsWith(REPO_ROOT + sep + 'Sessions' + sep)</code>
+check before writing.</li>
+</ol>
+<h3 id="p2-hygiene">P2 — hygiene</h3>
+<ol start="10">
+<li><strong>Keystore passphrase layer.</strong> <code>server/crypto/keyStore.ts</code> derives
+its KEK from machine identity only; the author explicitly labels
+this obfuscation. Offer an optional user passphrase on top, or
+delegate to the OS keychain (DPAPI / Keychain / libsecret).</li>
+<li><strong>Replace unmaintained <code>pdf-parse@1.1.1</code></strong> with <code>pdfjs-dist</code> or
+similar maintained library.</li>
+<li><strong>Structured logger + redaction.</strong> Today errors <code>console.error</code> raw
+stacks; nothing strips key material from error response bodies.</li>
+<li><strong>Dependency advisory gate.</strong> Add <code>npm audit --omit=dev</code> to CI;
+treat ≥ High as a release blocker.</li>
+</ol>
+<h3 id="repo-cleanliness-for-publishing">Repo cleanliness for publishing</h3>
+<p>Verified clean as of this writing:</p>
+<ul>
+<li>No committed <code>.env</code> / <code>.env.*</code> (only <code>.env.example</code>, all values blank).</li>
+<li>No hardcoded API keys, tokens, or passwords in tracked files
+(<code>sk-ant-…</code>, <code>AIza…</code>, <code>ghp_…</code>, etc. all return zero hits).</li>
+<li>No personal identifiers in tracked files.</li>
+<li><code>vendor/</code>, <code>dist/</code>, <code>dist-server/</code>, <code>node_modules/</code>, <code>Sessions/</code>,
+<code>sessions/</code>, <code>*.log</code>, <code>*-err.txt</code>, <code>*-out.json</code> all in <code>.gitignore</code>
+and not tracked.</li>
+<li><code>server/localProbe/fixtures.ts</code> carries synthetic D&#x26;D names only.</li>
+</ul>
+<p>Pre-emptive additions to <code>.gitignore</code>: <code>.idea/</code>, <code>.vscode/</code>,
+<code>coverage/</code>, <code>.env.local</code> (the <code>.env*.local</code> glob already covers it but
+explicit listing helps future readers).</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="quality-of-life-backlog">Quality-of-life backlog</h2></summary>
+<div class="docs-section-body">
+<p>Concrete items found while auditing the current code. Each is a
+specific change at a specific surface.</p>
+<h3 id="qol-1-upload-state-persistence-across-tab-switches-user-flagged">QoL-1 — Upload-state persistence across tab switches  <em>(user-flagged)</em></h3>
+<p><strong>Symptom:</strong> the user uploads a Craig zip in the Bot tab, sees the
+speaker-assignment table, switches to another tab to check the KB or
+Settings, then switches back — and the entire upload preview is gone.
+They have to drag the file in again.</p>
+<p><strong>Root cause:</strong> <code>UploadPanel</code>'s state (<code>phase</code>, <code>entries</code>, <code>extracted</code>,
+<code>uploadFraction</code>, …) lives in component-local <code>useState</code>. Radix Tabs
+unmounts inactive <code>&#x3C;TabsContent></code> by default, so the entire component
+is destroyed on every tab switch. The <code>App.tsx:48</code> comment already
+acknowledges this exact behaviour for <code>RefinementTool</code>.</p>
+<p><strong>Two viable fixes:</strong></p>
+<ul>
+<li><strong>(a) <code>forceMount</code> on Bot / Sessions tabs.</strong> Pass <code>forceMount</code> to
+Radix's <code>&#x3C;Tabs.Content></code> for the surfaces that hold long-lived work.
+Cheapest fix — keeps the React state alive because the panel stays in
+the DOM (hidden via <code>data-state</code> + CSS). Drawback: no localStorage
+durability across reloads.</li>
+<li><strong>(b) Lift in-flight upload state to a context provider</strong> at
+<code>App.tsx</code> and rehydrate from <code>/api/sessions/:id/live</code> on mount. More
+refactor but survives a hard reload mid-transcription.</li>
+</ul>
+<p>Recommendation: <strong>(a) immediately</strong>, <strong>(b) as a follow-up</strong> once we
+know the user reaches for it after refreshes too. The <code>File</code> objects
+in <code>entries</code> can't be re-hydrated from disk, so (b) only covers the
+post-upload <code>transcribing</code> / <code>ready</code> phases.</p>
+<h3 id="qol-2-merge-sessions-into-the-bot-tab-user-flagged">QoL-2 — Merge Sessions into the Bot tab  <em>(user-flagged)</em></h3>
+<p>The Bot tab is currently the <em>upload</em> surface and the Sessions tab is
+the <em>historical session list</em>. They're the same conceptual workflow,
+split awkwardly across two tabs:</p>
+<ul>
+<li>Bot → "I'm starting a new session"</li>
+<li>Sessions → "I'm continuing/reviewing an existing session"</li>
+</ul>
+<p>Proposed layout:</p>
+<pre><code>Bot tab → renamed to "Sessions"
+  ├─ New session card (the current UploadPanel)
+  └─ Past sessions list (the current SessionsList)
+</code></pre>
+<p>The list of past sessions sits below the upload card; clicking one
+expands the same <code>LiveTranscript</code> view the post-upload flow already
+uses. A subtle visual divider (use the existing <code>.ornament</code> class)
+separates "new" from "past". Drop the standalone Sessions tab from
+<code>App.tsx</code>.</p>
+<h3 id="qol-3-rename-the-bot-tab">QoL-3 — Rename the Bot tab</h3>
+<p>Even without QoL-2, "Bot" is a misleading label now that the upload
+panel sits there. Rename to <strong>Sessions</strong> (preferred — sets up QoL-2)
+or <strong>Recordings</strong>. Update <code>App.tsx:92-94</code>.</p>
+<h3 id="qol-4-remove-vestigial-discord-bot-code-shipped">QoL-4 — Remove vestigial Discord bot code ✅ <em>(shipped)</em></h3>
+<p>Now done. The bot code, <code>DISCORD_SETUP.md</code>, and the dependency cleanup
+all landed. Kept for historical reference of what was removed:</p>
+<ul>
+<li><code>server/bot/client.ts</code>, <code>commands.ts</code>, <code>consent.ts</code>,
+<code>voiceCapture.ts</code>, <code>speakerDiscovery.ts</code>.</li>
+<li><code>server/api/bot.ts</code> + the <code>app.use('/api/bot', botRouter())</code> line in
+<code>server/index.ts</code>.</li>
+<li><code>src/components/BotPanel.tsx</code>, <code>src/lib/bot.ts</code>.</li>
+<li><code>DISCORD_SETUP.md</code>.</li>
+<li>The <code>discord</code> slot in the keystore schema
+(<code>server/crypto/keyStore.ts</code>).</li>
+<li>The <code>discord.js</code>, <code>@discordjs/voice</code>, <code>@discordjs/opus</code>,
+<code>prism-media</code>, <code>@stablelib/xchacha20poly1305</code>, <code>@noble/ciphers</code>
+dependencies in <code>package.json</code>.</li>
+</ul>
+<p><strong>Keep</strong>: <code>server/bot/sessionManifest.ts</code> (the upload pipeline uses it
+as the manifest schema owner) — rename to <code>server/sessions/manifest.ts</code>
+in the same change, fix imports.</p>
+<p>This is mostly tree-shake; the win is reduced attack surface (six fewer
+dependencies, fewer endpoints) and clearer architecture.</p>
+<h3 id="qol-5-kill-the-statecampaign-statesessionnumber-zombie-fields">QoL-5 — Kill the <code>state.campaign</code> / <code>state.sessionNumber</code> zombie fields</h3>
+<p><code>useRefinementState</code> exposes <code>setCampaign</code> / <code>setSessionNumber</code> actions
+that nothing in the UI ever calls; <code>state.campaign</code> is always <code>''</code> and
+<code>state.sessionNumber</code> is always <code>1</code>. The chronicle-save wiring already
+read directly from the Header's <code>LS_CAMPAIGN</code> / <code>LS_SESSION</code>. Drop the
+dead fields from <code>RefinementState</code> and the matching actions; the
+ChronicleView, Phase 6 prompt, and download filename then have a
+single source of truth.</p>
+<h3 id="qol-6-readme-discordsetup-cleanup-shipped">QoL-6 — README + DISCORD_SETUP cleanup ✅ <em>(shipped)</em></h3>
+<p><code>DISCORD_SETUP.md</code> is gone. The README no longer walks through any bot
+setup; the Craig path lives in <a href="/Tusks-Tomes/docs/add-ons/">AddOns.md</a> +
+<a href="/Tusks-Tomes/docs/add-ons/audio-transcription/">docs/add-ons/audio-transcription.md</a>.</p>
+<h3 id="qol-7-surface-the-chronicle-save-path-in-the-success-toast">QoL-7 — Surface the chronicle save path in the success toast</h3>
+<p>The chronicle save toast already shows the relative path; clicking it
+should open the containing folder via a tiny <code>/api/chronicle/open</code>
+endpoint that uses <code>child_process.exec('explorer / open / xdg-open', absPath)</code>. Quality-of-life equivalent of "Show in Finder" on Mac.</p>
+<h3 id="qol-8-top-bar-active-session-indicator">QoL-8 — Top-bar "Active session" indicator</h3>
+<p>When a session is mid-transcription (live queue is draining), surface
+that in the Header — a small pulsing rune + "Whisper · 47 / 132
+utterances". One click jumps to the new Sessions tab and scrolls to the
+in-flight session. Reuses the existing <code>/api/sessions/:id/live</code> poll.</p>
+<h3 id="qol-9-phase-by-phase-replay-from-the-sessions-list">QoL-9 — Phase-by-phase replay from the Sessions list</h3>
+<p>Every Sessions row should expose <strong>Send to Refinement</strong>, <strong>Re-run
+Phase 6 only</strong>, and <strong>Open chronicle .md</strong> actions. Right now the
+"send to refinement" affordance only lives inside the LiveTranscript
+component; surface it as a row-level button so the user doesn't have
+to expand the session first.</p>
+<h3 id="qol-10-cost-dashboard">QoL-10 — Cost dashboard</h3>
+<p><code>Usage</code> is already returned by every cloud provider call. Aggregate
+across runs into <code>{cacheDir}/usage.json</code> and surface a simple per-month
+total in Settings → Providers. Mentioned in the legacy Future Work
+list; promoting it because the data is already there.</p>
+<h3 id="qol-11-drag-and-reorder-the-upload-chunk-list">QoL-11 — Drag-and-reorder the upload chunk list</h3>
+<p><code>UploadPanel.tsx:158</code> moves chunks one row at a time via up/down
+arrows. For 4× hour-long Craig zips this is fine; for >6 chunks it's
+tedious. Add HTML5 drag-and-drop reorder.</p>
+<h3 id="qol-12-dm-question-rich-text">QoL-12 — DM-question rich text</h3>
+<p>The DMQuestionsModal currently expects single-line text answers. Some
+clarifications need paragraphs ("In Session 12 Az actually used the
+Cloak before the trap, here's the full beat: …"). Swap the input for a
+small textarea.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="ui-direction-fantasy-dd-theming">UI direction — fantasy / D&#x26;D theming</h2></summary>
+<div class="docs-section-body">
+<p>The brand already commits to a chronicler-with-gold-accents tone
+(Cinzel display, Fondamento script, brass + tide colour palette,
+parchment cream foreground on abyssal navy). The polish below extends
+that without rewriting the design system.</p>
+<h3 id="t-1-illuminated-capitals-on-the-chronicle">T-1 — Illuminated capitals on the chronicle</h3>
+<p>The first letter of each Phase 3 paragraph should render as a Cinzel
+2.5em drop cap with a soft gold radial behind it — the look of an
+illuminated manuscript. CSS-only via <code>.chronicle-prose p:first-letter</code>.</p>
+<h3 id="t-2-parchment-background-option">T-2 — Parchment background option</h3>
+<p>Add a togglable "parchment" theme variant: replace the abyssal navy
+with an aged-paper texture (subtle paper-fibre SVG) and shift the
+foreground to a warm sepia. Toggle lives in Settings → Display.
+Defaults to the existing dark theme.</p>
+<h3 id="t-3-ornamental-section-dividers">T-3 — Ornamental section dividers</h3>
+<p>The existing <code>.ornament</code> class draws a brass line with a centred gap;
+replace the gap with a small heraldic glyph (a tusk + open book,
+matching the existing <code>TuskLogo</code> SVG) sized to ~14px. Use it between
+"Chronicle" / "Jests" / "Gore" / "Quotes" sections in the chronicle
+view.</p>
+<h3 id="t-4-phase-glyphs">T-4 — Phase glyphs</h3>
+<p>Replace the generic <code>Loader2</code> spinner per phase with a phase-specific
+icon:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Phase</th><th>Glyph</th></tr></thead><tbody><tr><td>1</td><td>A quill nib drawing a circle</td></tr><tr><td>2</td><td>A magnifier over runes</td></tr><tr><td>3</td><td>An open tome with a flame</td></tr><tr><td>5</td><td>A polishing cloth over a sigil</td></tr><tr><td>4</td><td>Three coins (jests / gore / quotes)</td></tr><tr><td>6</td><td>A scroll with a tied ribbon</td></tr></tbody></table>
+<p>Render as inline SVG so the gold colour pulls from <code>var(--color-gold)</code>.</p>
+<h3 id="t-5-tab-pill-style">T-5 — Tab pill style</h3>
+<p>The current TabsList is a flat muted rectangle. Replace with <strong>engraved
+brass plates</strong> — each pill gets a 1px inset gold ridge, the active pill
+gets a soft inner glow. Pure CSS via the existing <code>.arcane-card</code> /
+inset shadow pattern.</p>
+<h3 id="t-6-header-rework">T-6 — Header rework</h3>
+<p>Re-render the Header as a <strong>banner across the top</strong> — left edge: the
+tusk sigil inside an embossed roundel; centre: the wordmark; right
+edge: a small wax-seal motif holding the active campaign + session
+number. Currently it's three loose elements separated by flex gaps.</p>
+<h3 id="t-7-sigil-watermark-in-the-background">T-7 — Sigil watermark in the background</h3>
+<p>A very faint (~3% opacity) tusk-and-book sigil tiled in the body
+background at low contrast, similar to a printed letterhead. CSS
+<code>background-image: url(/sigil.svg); background-size: 240px; opacity: 0.03</code>.</p>
+<h3 id="t-8-chronicle-title-rendered-as-a-hand-lettered-banner">T-8 — Chronicle title rendered as a hand-lettered banner</h3>
+<p>When the chronicle finishes, render
+<code>{campaign} — Session {n}</code> in Fondamento with a subtle gold underline
+flourish (an SVG that draws under the text). Live preview of how a
+title page would look.</p>
+<h3 id="t-9-dice-themed-loader">T-9 — Dice-themed loader</h3>
+<p>Replace the generic spinner during long phases with a <strong>rolling d20</strong>
+SVG. Cycles through faces every 60ms, matches the Cinzel + gold tone,
+reads as flavour rather than chrome.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="animation-ideas">Animation ideas</h2></summary>
+<div class="docs-section-body">
+<p>CSS-first wherever possible; reach for Framer Motion only when state
+transitions need orchestration. All animations honour
+<code>prefers-reduced-motion</code> (already wired in <code>src/index.css</code>).</p>
+<h3 id="a-1-page-turn-between-major-phases">A-1 — Page-turn between major phases</h3>
+<p>When the pipeline transitions idle → in-progress → done, wrap the
+top-level branch in <code>AnimatePresence</code> with a horizontal 3D rotateY
+that suggests a manuscript page turning. ~400ms, ease-in-out. Already
+have <code>motion</code> in deps.</p>
+<h3 id="a-2-ink-bleed-reveal-for-chronicle-text">A-2 — Ink-bleed reveal for chronicle text</h3>
+<p>When the chronicle lands, the prose fades in with a soft left-to-right
+mask — like ink soaking into paper. <code>mask-image</code> with a moving
+gradient + <code>animation: 1.2s ease-out</code>.</p>
+<h3 id="a-3-quill-write-title">A-3 — Quill-write title</h3>
+<p>The chronicle title types itself in a hand-lettered Fondamento, one
+character every ~40ms, capped at 1.5s total. Skip on
+<code>prefers-reduced-motion</code>.</p>
+<h3 id="a-4-stagger-fade-for-jests-gore-quotes">A-4 — Stagger-fade for jests / gore / quotes</h3>
+<p>When the Extras tab opens, its list items cascade in 60ms apart,
+0px → 0px + 4px upward translate. Already have <code>motion</code> —
+<code>&#x3C;motion.li initial={{...}} transition={{ delay: i*0.06 }}></code>.</p>
+<h3 id="a-5-phase-progress-rune-pulse">A-5 — Phase-progress rune pulse</h3>
+<p>The spinner during a phase pulses a faint gold halo behind the phase
+glyph (from T-4) on a 1.6s sine — slow enough to read as "alive", not
+"alert". Pure CSS: <code>@keyframes rune-pulse { 50% { box-shadow: 0 0 24px gold/0.4 } }</code>.</p>
+<h3 id="a-6-sigil-flourish-on-chronicle-save">A-6 — Sigil flourish on chronicle save</h3>
+<p>When <code>/api/chronicle/save</code> returns success, the success toast's icon
+is the tusk sigil drawing itself via SVG stroke-dashoffset animation
+(0.8s). Sells the "tome was written" beat.</p>
+<h3 id="a-7-upload-drop-zone-shimmer">A-7 — Upload drop-zone shimmer</h3>
+<p>When the user drags files over the upload zone, the dashed border
+animates as a moving brass-gradient (CSS <code>background-position</code>).
+Currently it just changes colour.</p>
+<h3 id="a-8-dm-question-card-flip">A-8 — DM-question card flip</h3>
+<p>The DMQuestionsModal's per-question card flips with a Y-axis rotate
+(160ms) when answered — visual confirmation that the answer landed
+before the next card slides in.</p>
+<h3 id="a-9-tab-indicator-slide">A-9 — Tab indicator slide</h3>
+<p>A 1px gold underline slides between active tab triggers via
+<code>layoutId="tab-indicator"</code> in Framer Motion. Currently the active tab
+state is purely a colour change.</p>
+<h3 id="a-10-toast-brass-slide-in">A-10 — Toast brass slide-in</h3>
+<p>The sonner toast already slides; replace the slide with an "unfurl"
+keyframe that scales the toast x-axis from 0 → 1 (350ms, ease-out),
+suggesting a small scroll unrolling.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="project-conventions-binding-for-future-work">Project conventions (binding for future work)</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li><strong>Language:</strong> TypeScript everywhere except the Whisper sidecar
+(Python). No Python in <code>src/</code> or <code>server/</code>.</li>
+<li><strong>Indentation:</strong> match surrounding code (2 spaces).</li>
+<li><strong>Paths:</strong> use absolute imports via the <code>@/</code> alias configured in
+<code>tsconfig.json</code> and <code>vite.config.ts</code>.</li>
+<li><strong>No new top-level frameworks.</strong> Stick with React 19, Express 4,
+Vite 6. No Next, no Redux, no Zustand.</li>
+<li><strong>Persistent state goes to disk, not localStorage.</strong> localStorage is
+reserved for ephemeral UI state. Disk state lives in the platform
+app-data directory (see below).</li>
+<li><strong>Express routes for new persistent state.</strong> The React app talks to
+disk through the Express API, not by reaching into the filesystem
+from the browser.</li>
+<li><strong>One cloud provider per pipeline run.</strong> If the user has multiple
+API keys configured, the <code>ProviderSelectModal</code> at run start forces
+selection.</li>
+<li><strong>No emojis in code or docs unless explicitly requested.</strong></li>
+<li><strong>Don't add error handling for impossible cases.</strong> Validate at
+boundaries (user input, file IO, network), trust internal types.</li>
+<li><strong>No comments that explain what code does</strong> — only why, and only
+when non-obvious.</li>
+<li><strong>Animations honour <code>prefers-reduced-motion</code>.</strong> Every new keyframe
+added under <code>@layer components</code> in <code>src/index.css</code> is silenced by
+the existing media query.</li>
+</ul>
+<h3 id="app-data-directory">App data directory</h3>
+<p>Cross-platform paths via the <code>env-paths</code> npm package:</p>
+<pre><code class="language-ts">import envPaths from 'env-paths'
+const paths = envPaths('tusks-tomes', { suffix: '' })
+// paths.config — settings, glossary, speakers, profiles, routing, providers.enc
+// paths.data   — recordings, transcripts
+// paths.cache  — capability probe results
+</code></pre>
+<p>Resolves to:</p>
+<ul>
+<li>Windows: <code>%APPDATA%\tusks-tomes\</code></li>
+<li>macOS: <code>~/Library/Application Support/tusks-tomes/</code></li>
+<li>Linux: <code>~/.config/tusks-tomes/</code></li>
+</ul>
+<p>All persistent files live under these roots. <code>server/appData.ts</code>
+exposes the canonical accessor functions.</p>
+<p>The project was previously named "Silence Beyond the Sea" and used the
+env-paths key <code>silence-beyond-the-sea</code>. <code>migrateLegacyAppData()</code> runs
+at server boot and moves any pre-rename trees into the new locations
+exactly once.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="glossary-of-terms">Glossary of terms</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li><strong>Phase 1 / 2 / 3 / 4 / 5 / 6</strong> — pipeline stages defined in
+<code>src/lib/pipeline.ts</code>. Don't renumber.</li>
+<li><strong>Grounding</strong> — Phase 1; correcting transcript text against the KB
+and the glossary.</li>
+<li><strong>Audit</strong> — Phase 2; surfacing DM clarification questions.</li>
+<li><strong>Chronicle</strong> — the Phase 3 output: narrative prose of the session.</li>
+<li><strong>Polish</strong> — Phase 5; local-only smoothing of the chronicle. Cloud
+providers skip this phase (pass-through).</li>
+<li><strong>Extras</strong> — the Phase 4 output: jests, gore, quotes.</li>
+<li><strong>Condense</strong> — Phase 6 (optional, user-triggered): tightened
+retelling + 10–15 catch-up bullets.</li>
+<li><strong>Glossary</strong> — the structured corrections data
+(<code>safeReplacements</code> + <code>contextualHints</code>) in
+<code>{configDir}/glossary.json</code>.</li>
+<li><strong>Speakers</strong> — the persistent mapping of
+<code>discordUserId → playerName → characterName</code> in
+<code>{configDir}/speakers.json</code>. The <code>discordUserId</code> is a Craig-derived
+identifier — usually the Discord user ID Craig embedded in the
+filename, or a stable hash of the filename for non-Craig sources.</li>
+<li><strong>Provider</strong> — a cloud LLM (<code>gemini</code> | <code>claude</code> | <code>openai</code>) or a
+local LLM backend (<code>local</code>).</li>
+<li><strong>Profile</strong> — per-provider configuration: which model to use for
+which phase.</li>
+<li><strong>Routing</strong> — for a given pipeline run, which provider/profile
+handles which phase. With Hybrid Mode, may mix local + cloud.</li>
+<li><strong>Mini-probe</strong> — the 2-test local-LLM capability check (structured
+JSON + grounding fidelity).</li>
+<li><strong>Session</strong> — one recorded D&#x26;D session, identified by <code>sessionId</code>
+(UUID). Source is a Craig zip or loose audio uploaded via the
+Sessions / Bot tab.</li>
+<li><strong>Utterance</strong> — a single audio file (one speaker, one continuous
+stretch). For Craig uploads, the whole per-speaker track becomes one
+long "utterance" before the live queue splits it on word-gaps.</li>
+<li><strong>Chunk (upload)</strong> — one Craig zip's worth of tracks. Sequential
+chunks stitch end-to-end into one session.</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="future-work-speculative-not-authorised-for-autonomous-pickup">Future work (speculative — not authorised for autonomous pickup)</h2></summary>
+<div class="docs-section-body">
+<p>Deferred until there's user feedback to ground them. Mostly carried
+over from the previous roadmap with a couple of additions; items
+already promoted into the Quality-of-life backlog above are removed.</p>
+<ul>
+<li><strong>Batch API support.</strong> Anthropic and OpenAI both offer ~50%
+discounts for batched processing with delayed delivery. Phases 2 and
+4 are excellent candidates. Adds latency, fine for non-interactive
+runs.</li>
+<li><strong>Glossary update proposals.</strong> After each chronicle, a Tier-1 pass
+surfaces newly-introduced names for user review.</li>
+<li><strong>Continuous quality sampling for local LLMs.</strong> Re-route 5–10% of
+local outputs through the cloud as a verifier; flag drift early.</li>
+<li><strong>Multi-language support.</strong> Whisper handles it; the pipeline
+doesn't. Would touch every prompt.</li>
+<li><strong>Concurrent sessions.</strong> One session at a time is enough for now.
+Concurrency means GPU scheduling, queue management, etc.</li>
+<li><strong>App packaging (Electron / Tauri).</strong> Promoted to active roadmap as the Tusk's Tomes Launcher — see "What's coming next".</li>
+<li><strong>Embedded Python distribution.</strong> Bundling a <code>python-embed</code> build so
+the user doesn't need a system Python install. ~150 MB per platform.</li>
+<li><strong>Per-phase quality eval to validate the default model assignments.</strong>
+Today's defaults (Sonnet for prose, Haiku for JSON) are intuition,
+not measured.</li>
+<li><strong>Phase 3 prompt for local providers at higher capability tiers.</strong>
+The mini-probe currently hard-codes <code>phase3: false</code> for local
+models. A richer probe could validate prose quality and unlock local
+Phase 3.</li>
+<li><strong>PWA / installable webapp.</strong> Service worker for offline asset
+caching once the local-LLM path is reliable enough that the user
+could genuinely run offline end-to-end.</li>
+<li><strong>Player-share mode.</strong> Read-only export of the chronicle as a static
+HTML page (no API keys, no toolbar) for sharing in a campaign
+Discord. Renders the same prose + extras the user sees.</li>
+</ul>
+<hr>
+</div>
+</details>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/ROADMAP.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+</body>
+</html>

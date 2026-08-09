@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM providers — picking one, getting a key, going offline — Tusk's Tomes</title>
+<meta name="description" content="Tusk's Tomes needs at least one LLM to run the pipeline. There are three routes to that, and you can mix them per phase:">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/providers/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="LLM providers — picking one, getting a key, going offline — Tusk's Tomes">
+<meta property="og:description" content="Tusk's Tomes needs at least one LLM to run the pipeline. There are three routes to that, and you can mix them per phase:">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/providers/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LLM providers — picking one, getting a key, going offline — Tusk's Tomes">
+<meta name="twitter:description" content="Tusk's Tomes needs at least one LLM to run the pipeline. There are three routes to that, and you can mix them per phase:">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "LLM providers — picking one, getting a key, going offline",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/providers/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "LLM providers — picking one, getting a key, going offline",
+  "description": "Tusk's Tomes needs at least one LLM to run the pipeline. There are three routes to that, and you can mix them per phase:",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/providers/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/setup/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Add-ons</h2>
+<ul><li><a href="/Tusks-Tomes/docs/add-ons/node-isolation/">Add-on isolation — Node and Python sandboxing rules</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/">Add-ons — optional capabilities you can install in one click</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/audio-transcription/">Audio Transcription add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/personas/">Chronicle Personas Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code (your subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/codex/">Codex (your ChatGPT subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/obsidian-vault/">Obsidian Vault Lore (read-only)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/whisper-cpp/">whisper.cpp bridge — bring your own build</a></li></ul>
+<h2>Tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/diagnose/">Diagnosis bundles for Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify — local code-graph for Claude Code</a></li></ul>
+<h2>Guides</h2>
+<ul><li><a href="/Tusks-Tomes/docs/beginner-guide/">Beginner's guide — setting this up with no terminal experience</a></li>
+<li><a href="/Tusks-Tomes/docs/reforge/">Chronicle Reforge — redo the later phases on a different model</a></li>
+<li><a href="/Tusks-Tomes/docs/configuration/">Configuration &amp; file structure</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/workflows/">Getting a session in — three ways</a></li>
+<li><a href="/Tusks-Tomes/docs/is-this-safe/">How safe is this? What it installs, and what could go wrong</a></li>
+<li><a href="/Tusks-Tomes/docs/comparison/">How this compares to the alternatives</a></li>
+<li><a href="/Tusks-Tomes/docs/known-bugs/">Known bugs and limitations</a></li>
+<li><a href="/Tusks-Tomes/docs/providers/" aria-current="page">LLM providers — picking one, getting a key, going offline</a></li>
+<li><a href="/Tusks-Tomes/docs/privacy/">Privacy &amp; security</a></li>
+<li><a href="/Tusks-Tomes/docs/architecture/">Project Architecture: Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/faq/">Questions I get asked, and a few I asked myself</a></li>
+<li><a href="/Tusks-Tomes/docs/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/security-quickref/">Security quick reference</a></li>
+<li><a href="/Tusks-Tomes/docs/audio-to-chronicle/">Session audio to a lore-grounded chronicle</a></li>
+<li><a href="/Tusks-Tomes/docs/setup/">Setup — getting Tusk's Tomes running</a></li>
+<li><a href="/Tusks-Tomes/docs/roadmap/">Tusk's Tomes — Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/vault/">Tusk's Vault — the sibling project (coming soon)</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li>
+<li><a href="/Tusks-Tomes/docs/walkthrough/">Walkthrough — your first session, end to end</a></li>
+<li><a href="/Tusks-Tomes/docs/pricing/">What it costs to run</a></li>
+<li><a href="/Tusks-Tomes/docs/dependencies/">What you need installed</a></li>
+<li><a href="/Tusks-Tomes/docs/use-cases/">Who this is actually for</a></li>
+<li><a href="/Tusks-Tomes/docs/youtube-transcript-to-chronicle/">YouTube transcript to a lore-grounded chronicle</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>LLM providers — picking one, getting a key, going offline</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#which-provider-should-i-pick">Which provider should I pick?</a></li><li><a href="#google-gemini-paid-key-required">Google Gemini — paid key required 💎</a></li><li><a href="#anthropic-claude-pay-as-you-go">Anthropic Claude — pay-as-you-go 💎</a></li><li><a href="#openai-pay-as-you-go">OpenAI — pay-as-you-go 💎</a></li><li><a href="#claude-code-your-own-subscription-no-api-key">Claude Code — your own subscription, no API key 🤖</a></li><li><a href="#running-fully-offline-with-ollama-lm-studio-unsloth">Running fully offline with Ollama / LM Studio / Unsloth</a></li><li><a href="#why-the-local-llm-proxy-exists">Why the local-LLM proxy exists</a></li></ul></aside>
+    <article class="prose">
+<h1>🔑 LLM providers — picking one, getting a key, going offline</h1>
+<p>Tusk's Tomes needs at least one LLM to run the pipeline. There are three routes to that, and you can mix them per phase:</p>
+<ol>
+<li><strong>A cloud API key</strong> — Gemini, Claude or OpenAI. Works out of the box; you pay per token.</li>
+<li><strong>A subscription you already have</strong> — if the <a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code</a> or <a href="/Tusks-Tomes/docs/add-ons/codex/">Codex</a> CLI is installed and signed in, Tomes can draw on that plan's allowance instead of metered API credit.</li>
+<li><strong>Fully local</strong> — Ollama / LM Studio / Unsloth, gated behind the <a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs add-on</a>. No key, no bill, no network.</li>
+</ol>
+<details class="docs-section">
+<summary><h2 id="which-provider-should-i-pick">Which provider should I pick?</h2></summary>
+<div class="docs-section-body">
+<blockquote>
+<p><strong>A note on cost.</strong> Tusk's Tomes itself is free and open source — there's no payment to the project at any point. The only money involved is your chosen LLM provider's API fees. When Tomes first launched, Google's free Gemini tier gave access to Pro-class models, which made a fully free workflow viable. Google has since moved Pro models behind billing, so a paid API key is now required for the main pipeline; the project has been engineered to keep those API costs as low as possible (prefix caching, audit-skip optimisation, per-tier chunk sizing, and Smart Budget routing all exist to shrink your bill).</p>
+</blockquote>
+<p>Short answer:</p>
+<ul>
+<li><strong>Lore-accurate content</strong> → <strong>Google Gemini</strong>. Stays more faithful to source materials that include swearing, explicit content, and violence (toggleable in settings) where Claude and ChatGPT tend to sanitise content by default.</li>
+<li><strong>Best narrative prose?</strong> → <strong>Google Gemini Pro</strong> or <strong>Claude Sonnet</strong>. Both produce strong long-form narration; Gemini Pro is cheaper per session.</li>
+<li><strong>Already have an OpenAI account?</strong> → <strong>OpenAI</strong>. Solid all-rounder.</li>
+<li><strong>Already pay for Claude or ChatGPT?</strong> → <strong><a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code</a></strong> or <strong><a href="/Tusks-Tomes/docs/add-ons/codex/">Codex</a></strong>. Routes phases through the signed-in CLI and spends that plan's allowance rather than API credit. Running out mid-session pauses the run instead of failing it.</li>
+<li><strong>No cloud, no cost, full privacy?</strong> → <strong>Local via Ollama / LM Studio / Unsloth</strong> (requires the <a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs add-on</a>).</li>
+</ul>
+<p>For most groups, <strong>Gemini Flash for cleanup + Claude Sonnet for narrative</strong> is the sweet spot. Per-phase routing makes that one Settings panel away.</p>
+<h3 id="cost-what-youll-actually-pay">Cost — what you'll actually pay</h3>
+<p>Honest per-session estimates for a <strong>3-hour Craig recording with full lore documents and DM clarifications</strong> (a realistic upper bound — shorter sessions and lighter lore cost less). Numbers come from many real runs across the providers; rough but landed.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Provider + model</th><th>Approx. per 3hr session</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Gemini Pro, paid (default)</strong></td><td>~£3</td><td>The reference number. No quota interruptions.</td></tr><tr><td><strong>Gemini Smart Budget (paid + optional free)</strong></td><td>~£1.50</td><td>One-click preset in Hybrid Routing. Paid Flash for grounding + audit, Paid Pro for chronicle, Paid Flash-Lite for condense; optionally routes Phase 4 extras to a free-tier key if you've configured one (the only phase that ever uses your free key).</td></tr><tr><td><strong>Gemini Flash, paid (Budget mode)</strong></td><td>~£0.70</td><td>One-click swap in Hybrid Routing. ~76% saving vs Pro paid. Chronicle prose is noticeably weaker.</td></tr><tr><td><strong>Claude Sonnet, paid</strong></td><td>~£2.50–£3.50</td><td>Best narrative prose in side-by-side comparisons.</td></tr><tr><td><strong>Claude Haiku, paid (Budget mode)</strong></td><td>~£0.80</td><td>Cheaper but the chronicle prose loses some richness.</td></tr><tr><td><strong>GPT-5, paid</strong></td><td>~£2</td><td>Solid all-rounder.</td></tr><tr><td><strong>GPT-5-mini, paid (Budget mode)</strong></td><td>~£0.50</td><td>The cheapest paid path.</td></tr><tr><td><strong>Claude Code / Codex subscription</strong></td><td>£0 extra</td><td>No API spend — the work comes out of the allowance on a Claude or ChatGPT plan you already pay for. Requires the <a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code</a> or <a href="/Tusks-Tomes/docs/add-ons/codex/">Codex</a> add-on and a signed-in CLI.</td></tr><tr><td><strong>Local LLMs (Ollama / LM Studio)</strong></td><td>£0</td><td>No API cost. Electricity + the GPU you already own. Requires the <a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs add-on</a>.</td></tr></tbody></table>
+<p>Tomes paces between chunks automatically — it reads each provider's response headers (<code>anthropic-ratelimit-*</code>, <code>x-ratelimit-*</code>) on every call and waits exactly long enough to stay under the rate limit. Gemini uses a static tier map keyed on which key you populated (paid Pro vs paid Flash — Flash gets the higher-throughput row). Paid users typically see 4–5× faster runs than the prior fixed-65-second-between-chunks pacing.</p>
+<h3 id="making-it-cheaper-ongoing-cost-reduction-work">💡 Making it cheaper — ongoing cost-reduction work</h3>
+<p>Cost-per-session is something KochiTusker (the maintainer) actively works to bring down. Two architectural improvements shipped in the current release:</p>
+<ul>
+<li><strong>Prompt caching, extended.</strong> Phase 3 (Chronicle) and Phase 6 (Condense) now use the cacheable-prefix split that Phase 1 already had. The system instructions, KB lore, and DM Q&#x26;A live in the prefix; the per-chunk transcript + tail lives in the user prompt. Claude rebates ~90% on cached input, OpenAI's automatic prefix cache rebates similarly, Gemini's implicit cache rebates ~75%. <strong>Net effect: the lore stops being re-billed on every chunk.</strong> This was the biggest single token-cost driver on long sessions.</li>
+<li><strong>(provider, model-tier)-keyed chunk sizes.</strong> Fast-tier models (Flash, Haiku, GPT-5-mini/nano) now run on chunks roughly half the flagship size. They're cheaper per call AND degrade less on long inputs, so the quality holds at lower token counts. <strong>Budget mode</strong> is the one-click way to use this — Settings → Hybrid Routing → <strong>Budget mode</strong> swaps every phase to the fast-tier model.</li>
+</ul>
+<p>Combined, a 3hr session that cost <del>£3 on Pro lands around **</del>£0.70 on Flash with caching**. Quality caveat: Flash's chronicle prose is noticeably weaker than Pro's — A/B-test a 30-minute slice before committing if quality matters more than cost.</p>
+<p>The next two cost levers on the roadmap:</p>
+<ul>
+<li><strong>Explicit Gemini <code>cachedContent</code> wiring</strong> — guaranteed 75% rebate on the prefix (currently we lean on Gemini's implicit cache, which works but doesn't guarantee a hit).</li>
+<li><strong>Batch API support</strong> — Anthropic and OpenAI both offer ~50% discounts for batched processing. Phase 2 (Audit) and Phase 4 (Extras) are excellent candidates because they're non-interactive.</li>
+</ul>
+<p>Track progress in <a href="/Tusks-Tomes/docs/roadmap/">ROADMAP.md</a> and vote on priorities via the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a>. A community Discord with a <code>#feature-ideas</code> channel is on the roadmap.</p>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="google-gemini-paid-key-required">Google Gemini — paid key required 💎</h2></summary>
+<div class="docs-section-body">
+<p>Best price/quality for this workload — typically the cheapest of the cloud options. <strong>A billing-enabled (paid) Google Cloud API key is required</strong> to use Tomes' main pipeline.</p>
+<blockquote>
+<p><strong>Why paid?</strong> When Tomes first shipped, Google's free Gemini tier gave access to Pro-class models, which made a fully free workflow viable. Google has since moved Pro models behind billing (the <code>gemini-2.5-pro</code> and <code>gemini-3.x</code> families), and free Flash on its own is too slow (≈2 RPM on Pro, ≈10 RPM on Flash) to carry a 3-hour session's main pipeline within a sensible runtime. Tomes is engineered to minimise API spend (prefix caching, audit-skip, per-tier chunk sizing), but a paid key is now the entry point.</p>
+</blockquote>
+<ol>
+<li>Open <a href="https://aistudio.google.com/apikey" rel="noopener">https://aistudio.google.com/apikey</a> and sign in with a Google account.</li>
+<li>Click <strong>Create API key</strong>. If asked, pick or create a Google Cloud project; ensure billing is enabled on it (Google Cloud Console → Billing).</li>
+<li>Copy the key (starts with <code>AIza...</code>).</li>
+<li>In Tomes: Settings → API Keys → paste under <strong>Gemini (paid, primary)</strong>. The keystore encrypts it immediately.</li>
+</ol>
+<blockquote>
+<p>Gemini 3.x requires billing enabled on the project (same key, same encryption). Default Tomes models are <code>gemini-2.5-pro</code> / <code>gemini-2.5-flash</code>; override with <code>VITE_MODEL_PRO=gemini-2.5-pro</code> in <code>.env</code> if you want to stay on 2.5.</p>
+</blockquote>
+<p><strong>Optional second key — for Smart Budget extras only.</strong> If you also have a free-tier Gemini key (without billing), you can paste it under <strong>Gemini (free, optional secondary)</strong>. Tomes will use it for <strong>Phase 4 extras only</strong>, and only when Smart Budget routing is selected. Every other phase always uses your paid key. The free-tier escalation safety net (Free → Paid retry on PROHIBITED_CONTENT or transient 5xx) covers Phase 4 if the free quota stalls.</p>
+<blockquote>
+<p><strong>💡 Got a free-tier Gemini key? Consider saving it for <a href="https://github.com/KochiTusker/Tusks-Vault" rel="noopener">Tusk's Vault</a></strong> (the upcoming AI-chatbot companion that lets you query your campaign lore in natural language — coming soon). Vault's per-query token use is far lower than Tomes' six-phase pipeline (a single retrieval-augmented answer over a few KB of indexed lore, vs Tomes processing a 3-hour transcript end-to-end), so a free-tier quota carries Vault's workload comfortably. Pasting your free key into Tomes is fine — it'll only ever drive Phase 4 extras — but the higher-leverage use is over there.</p>
+</blockquote>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="anthropic-claude-pay-as-you-go">Anthropic Claude — pay-as-you-go 💎</h2></summary>
+<div class="docs-section-body">
+<p>Best prose quality in our testing for the narrative phase.</p>
+<ol>
+<li>Open the <a href="https://console.anthropic.com/" rel="noopener">Anthropic Console</a> and sign up.</li>
+<li>Add a payment method under <strong>Plans</strong>.</li>
+<li>Go to <strong>API Keys</strong> in the sidebar, click <strong>Create Key</strong>, give it a name.</li>
+<li>Copy the key (starts with <code>sk-ant-...</code>) — it's shown only once.</li>
+<li>In Tomes: Settings → API Keys → paste under <strong>Claude</strong>.</li>
+</ol>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="openai-pay-as-you-go">OpenAI — pay-as-you-go 💎</h2></summary>
+<div class="docs-section-body">
+<p>Solid all-rounder. Similar pricing to Anthropic.</p>
+<ol>
+<li>Open <a href="https://platform.openai.com/api-keys" rel="noopener">https://platform.openai.com/api-keys</a>.</li>
+<li>Add a payment method under <a href="https://platform.openai.com/account/billing" rel="noopener">Billing</a>.</li>
+<li>Click <strong>Create new secret key</strong>, name it, copy the key (starts with <code>sk-...</code>).</li>
+<li>In Tomes: Settings → API Keys → paste under <strong>OpenAI</strong>.</li>
+</ol>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="claude-code-your-own-subscription-no-api-key">Claude Code — your own subscription, no API key 🤖</h2></summary>
+<div class="docs-section-body">
+<p>Power the pipeline with your locally-installed <a href="https://docs.claude.com/en/docs/claude-code" rel="noopener">Claude Code</a> (Pro/Max) plan instead of a per-token API key, via the <a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code add-on</a>. Tomes shells out to the <code>claude</code> CLI you've already logged into; it never handles your credentials.</p>
+<ol>
+<li><strong>Install Claude Code</strong> and run <code>claude login</code>, choosing your Pro/Max plan. Make sure <code>claude</code> is on your <code>PATH</code> and <code>ANTHROPIC_API_KEY</code> is unset.</li>
+<li><strong>Settings → Add-ons → Claude Code → Install</strong>, then restart <code>npm run dev</code>.</li>
+<li>Pick <strong>Claude Code (your subscription)</strong> as the active provider, or assign it per-phase in Hybrid Routing.</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>Usage limits.</strong> Subscriptions meter headless use in rolling ~5-hour windows, not per token. The pipeline is token-heavy — <strong>in testing, one full session used up to ~60% of the allowance in a 5-hour window</strong> — so budget for roughly one or two sessions per window. If a run hits the limit, wait for the reset or route the rest to another provider. A cost-effective pattern: Claude Code for grounding + chronicle, then <a href="/Tusks-Tomes/docs/reforge/">Reforge</a> the extras + condensed recap on Gemini. Cost shows as <strong>$0</strong> (covered by your plan).</p>
+</blockquote>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="running-fully-offline-with-ollama-lm-studio-unsloth">Running fully offline with Ollama / LM Studio / Unsloth</h2></summary>
+<div class="docs-section-body">
+<p>Local LLM routing lives in the <a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs add-on</a>. Default installs are cloud-only.</p>
+<ol>
+<li><strong>Settings → Add-ons → Local LLMs → Install.</strong> No download — the add-on is a feature flag plus a same-origin proxy. Restart <code>npm run dev</code> after install.</li>
+<li>Install <strong><a href="https://ollama.com" rel="noopener">Ollama</a></strong> (recommended for ease) and pull a model: <code>ollama pull gemma3:27b</code>. Or run <strong><a href="https://lmstudio.ai" rel="noopener">LM Studio</a></strong> / <strong><a href="https://github.com/unslothai/unsloth" rel="noopener">Unsloth</a></strong> on their default ports.</li>
+<li>In Tomes: Settings → Local LLM → <strong>Detect</strong>. Tomes probes localhost on the default ports for each backend.</li>
+<li>Assign the detected model per phase under Settings → Hybrid Routing.</li>
+</ol>
+<p>⚠️ <strong>Quality caveat</strong>: local models under ~15B parameters produce noticeably weaker prose than Claude / GPT-4 / Gemini Pro. A 4070 + <code>gemma3:27b</code> produces a perfectly serviceable chronicle; smaller models will struggle on the narrative phase. <strong>Mix-and-match per phase is the sweet spot</strong> — Gemini Flash for cleanup + grounding, Claude Sonnet for narrative, local for the cheap stuff.</p>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="why-the-local-llm-proxy-exists">Why the local-LLM proxy exists</h2></summary>
+<div class="docs-section-body">
+<p>The browser can't reach Ollama (<code>localhost:11434</code>) or LM Studio (<code>localhost:1234</code>) due to CORS (different port = different origin). The Local LLMs add-on mounts an Express proxy at <code>/api/local/list-models</code>, <code>/api/local/generate</code>, and <code>/api/local/launch</code> that's same-origin with the SPA. The proxy:</p>
+<ul>
+<li>Validates that target URLs are <code>localhost</code>/private LAN only.</li>
+<li>Never acts as an open proxy.</li>
+<li>Supports bearer-token, OAuth2 password flow (cached 30-min JWTs), and HTTP Basic auth for backends that need it.</li>
+<li>Is <strong>only mounted when the add-on is loaded</strong> — default installs return 404 on these endpoints.</li>
+</ul>
+<p>See <a href="/Tusks-Tomes/docs/add-ons/local-llm/">the add-on docs</a> for setup details and <a href="/Tusks-Tomes/docs/architecture/"><code>architecture.md</code></a> for the registry/loader implementation.</p>
+</div>
+</details>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/providers.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+</body>
+</html>

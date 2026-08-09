@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How safe is this? What it installs, and what could go wrong — Tusk's Tomes</title>
+<meta name="description" content="Short version: I'm a GM who got fed up and wrote this for my own table. This page is me telling you exactly what it does to your computer, including the…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/is-this-safe/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="How safe is this? What it installs, and what could go wrong — Tusk's Tomes">
+<meta property="og:description" content="Short version: I'm a GM who got fed up and wrote this for my own table. This page is me telling you exactly what it does to your computer, including the…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/is-this-safe/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How safe is this? What it installs, and what could go wrong — Tusk's Tomes">
+<meta name="twitter:description" content="Short version: I'm a GM who got fed up and wrote this for my own table. This page is me telling you exactly what it does to your computer, including the…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How safe is this? What it installs, and what could go wrong",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/is-this-safe/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "How safe is this? What it installs, and what could go wrong",
+  "description": "Short version: I'm a GM who got fed up and wrote this for my own table. This page is me telling you exactly what it does to your computer, including the…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/is-this-safe/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/setup/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Add-ons</h2>
+<ul><li><a href="/Tusks-Tomes/docs/add-ons/node-isolation/">Add-on isolation — Node and Python sandboxing rules</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/">Add-ons — optional capabilities you can install in one click</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/audio-transcription/">Audio Transcription add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/personas/">Chronicle Personas Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code (your subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/codex/">Codex (your ChatGPT subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/obsidian-vault/">Obsidian Vault Lore (read-only)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/whisper-cpp/">whisper.cpp bridge — bring your own build</a></li></ul>
+<h2>Tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/diagnose/">Diagnosis bundles for Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify — local code-graph for Claude Code</a></li></ul>
+<h2>Guides</h2>
+<ul><li><a href="/Tusks-Tomes/docs/beginner-guide/">Beginner's guide — setting this up with no terminal experience</a></li>
+<li><a href="/Tusks-Tomes/docs/reforge/">Chronicle Reforge — redo the later phases on a different model</a></li>
+<li><a href="/Tusks-Tomes/docs/configuration/">Configuration &amp; file structure</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/workflows/">Getting a session in — three ways</a></li>
+<li><a href="/Tusks-Tomes/docs/is-this-safe/" aria-current="page">How safe is this? What it installs, and what could go wrong</a></li>
+<li><a href="/Tusks-Tomes/docs/comparison/">How this compares to the alternatives</a></li>
+<li><a href="/Tusks-Tomes/docs/known-bugs/">Known bugs and limitations</a></li>
+<li><a href="/Tusks-Tomes/docs/providers/">LLM providers — picking one, getting a key, going offline</a></li>
+<li><a href="/Tusks-Tomes/docs/privacy/">Privacy &amp; security</a></li>
+<li><a href="/Tusks-Tomes/docs/architecture/">Project Architecture: Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/faq/">Questions I get asked, and a few I asked myself</a></li>
+<li><a href="/Tusks-Tomes/docs/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/security-quickref/">Security quick reference</a></li>
+<li><a href="/Tusks-Tomes/docs/audio-to-chronicle/">Session audio to a lore-grounded chronicle</a></li>
+<li><a href="/Tusks-Tomes/docs/setup/">Setup — getting Tusk's Tomes running</a></li>
+<li><a href="/Tusks-Tomes/docs/roadmap/">Tusk's Tomes — Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/vault/">Tusk's Vault — the sibling project (coming soon)</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li>
+<li><a href="/Tusks-Tomes/docs/walkthrough/">Walkthrough — your first session, end to end</a></li>
+<li><a href="/Tusks-Tomes/docs/pricing/">What it costs to run</a></li>
+<li><a href="/Tusks-Tomes/docs/dependencies/">What you need installed</a></li>
+<li><a href="/Tusks-Tomes/docs/use-cases/">Who this is actually for</a></li>
+<li><a href="/Tusks-Tomes/docs/youtube-transcript-to-chronicle/">YouTube transcript to a lore-grounded chronicle</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>How safe is this? What it installs, and what could go wrong</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#where-this-came-from">Where this came from</a></li><li><a href="#its-a-work-in-progress-and-its-tested-on-one-pc">It's a work in progress, and it's tested on one PC</a></li><li><a href="#what-you-need-before-you-start-i-cant-install-these-for-you">What you need before you start (I can't install these for you)</a></li><li><a href="#what-it-installs-and-where">What it installs, and where</a></li><li><a href="#everything-it-writes-outside-its-own-folder">Everything it writes outside its own folder</a></li><li><a href="#what-it-never-does">What it never does</a></li><li><a href="#what-could-go-wrong-the-things-i-already-know-about">What could go wrong — the things I already know about</a></li><li><a href="#keeping-the-blast-radius-small">Keeping the blast radius small</a></li><li><a href="#dont-take-my-word-for-it">Don't take my word for it</a></li><li><a href="#getting-rid-of-it">Getting rid of it</a></li></ul></aside>
+    <article class="prose">
+<h1>🛡️ How safe is this? What it installs, and what could go wrong</h1>
+<p>Short version: I'm a GM who got fed up and wrote this for my own table. This
+page is me telling you exactly what it does to your computer, including the
+parts I'm not thrilled about, because you're about to run a stranger's code and
+you deserve to make that call with the facts.</p>
+<p>I'd rather be transparent than reassuring. Where something could bite you, it's
+below.</p>
+<h2 id="where-this-came-from">Where this came from</h2>
+<p>I wanted a record of my sessions. Not minutes — the actual story. The bit where
+the rogue did something monumentally stupid and it somehow worked. The joke
+that had everyone crying. The line the DM delivered that made the table go
+quiet.</p>
+<p>The existing options didn't fit. Meeting transcribers are built for standups:
+you get a transcript and a bulleted summary, for £15 a month, forever, in
+somebody else's cloud. And none of them have the faintest idea who Wiktoria is —
+they'd hear the name, invent a spelling, and confidently use the wrong one for
+three hours straight.</p>
+<p>So this got built. It's a niche tool for a niche group of people: GMs who want
+their campaign written up properly, grounded in their own names and lore, on
+their own machine, without a subscription. If that's you, welcome. If you need
+something polished and enterprise-grade, I'd genuinely point you elsewhere —
+this is one person's project, and the rest of this page is about what that
+means for you.</p>
+<h2 id="its-a-work-in-progress-and-its-tested-on-one-pc">It's a work in progress, and it's tested on one PC</h2>
+<p>This is version 1.3.0. It's not a commercial product with a QA department. It's
+tested on my machine, which runs Windows and has an NVIDIA card, and that shows
+up in what I can honestly claim:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Area</th><th>How well tested</th></tr></thead><tbody><tr><td>Windows</td><td>My daily driver. Well exercised.</td></tr><tr><td>Linux / macOS</td><td><strong>Not tested.</strong> It should work — I haven't proven it.</td></tr><tr><td>Cloud providers (Gemini / Claude / OpenAI)</td><td>Well exercised — this is the path I use every session.</td></tr><tr><td>Audio transcription (Whisper)</td><td>Exercised on an NVIDIA GPU. CPU-only works, but slowly.</td></tr><tr><td>Claude Code add-on</td><td>Exercised.</td></tr><tr><td>Codex add-on</td><td>Partially tested.</td></tr><tr><td>Local LLMs add-on</td><td><strong>Partially tested</strong> — I don't have the VRAM to run anything above 4B.</td></tr><tr><td>Obsidian vault add-on</td><td>Exercised, including the writes described below.</td></tr></tbody></table>
+<p>I don't expect anything serious to go wrong, but "I don't expect" isn't a
+guarantee and I'm not going to dress it up as one. What I have tried hard to
+do is make sure that if something <em>does</em> go wrong, it wrecks files this app
+created — not the files you already had. Most of this page is about how well
+that holds up, and where it doesn't.</p>
+<hr>
+<h2 id="what-you-need-before-you-start-i-cant-install-these-for-you">What you need before you start (I can't install these for you)</h2>
+<p>Being straight about this, because it's the bit that catches people out: there
+is no one-click installer yet. You need a couple of things already on your
+machine, and <strong>Tusk's Tomes deliberately does not install them for you</strong> — a
+setup script that silently installs system-wide software is exactly the kind of
+thing I wouldn't want running on my own PC. It checks, tells you the exact
+command, and stops.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>You need</th><th>When</th><th>If it's missing</th></tr></thead><tbody><tr><td><strong>Node.js 20+</strong></td><td>Always. Nothing runs without it.</td><td>Setup stops and prints <code>winget install OpenJS.NodeJS.LTS</code>.</td></tr><tr><td><strong>Git</strong></td><td>To download the project in the first place.</td><td>Setup prints the install command.</td></tr><tr><td><strong>Python 3.10, 3.11 or 3.12</strong></td><td><strong>Only</strong> for the audio-transcription add-on.</td><td>The core app is completely fine without it.</td></tr></tbody></table>
+<p>Two things worth knowing:</p>
+<ul>
+<li><strong>Python 3.13 does not work</strong> for transcription — the speech-to-text
+libraries have no builds for it yet. If you have 3.13, install 3.12
+alongside it. Setup checks your version and says so rather than letting you
+discover it 2 GB into a failed install.</li>
+<li><strong>You do not need Visual Studio Build Tools</strong>, whatever older guides say.
+Nothing in the dependency tree compiles native code any more.</li>
+</ul>
+<p>So yes — realistically this is still a "you're comfortable installing Node and
+running a <code>.bat</code> file" project. I'd like that not to be true, and a proper
+standalone installer that handles the whole thing is on the
+<a href="/Tusks-Tomes/docs/roadmap/">roadmap</a>. Right now it isn't done, and pretending otherwise
+would just waste your evening.</p>
+<h2 id="what-it-installs-and-where">What it installs, and where</h2>
+<p>There's no installer. You clone a folder and run <code>setup.bat</code> (or <code>setup.sh</code>).
+No MSI, no elevation prompt, nothing added to Windows itself.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Location</th><th>What</th><th>Size</th></tr></thead><tbody><tr><td><code>&#x3C;the folder you cloned into></code></td><td>The program itself.</td><td>~8 MB</td></tr><tr><td><code>…\node_modules</code></td><td>JavaScript libraries, fetched by <code>npm install</code>.</td><td>~360 MB (measured on Windows)</td></tr><tr><td><code>…\dist</code>, <code>…\dist-server</code></td><td>Built output, only if you run a build.</td><td>~5 MB</td></tr><tr><td><code>…\vendor\python-venv</code></td><td>Python + the speech-to-text model. <strong>Only if you install the audio add-on.</strong></td><td>1.5–2.5 GB</td></tr><tr><td><code>…\Sessions\&#x3C;campaign>\</code></td><td>Your finished chronicles, as Markdown.</td><td>small</td></tr><tr><td><code>%APPDATA%\tusks-tomes</code></td><td>Settings, glossary, speaker names, encrypted API key.</td><td>&#x3C; 1 MB</td></tr><tr><td><code>%LOCALAPPDATA%\tusks-tomes</code></td><td>Session recordings, transcripts, run checkpoints.</td><td>large, if you upload audio</td></tr></tbody></table>
+<p>The first six live inside the folder you cloned. Delete that folder and they're
+gone.</p>
+<h3 id="three-things-i-think-you-should-understand">Three things I think you should understand</h3>
+<p><strong><code>node_modules</code> is other people's code.</strong> It's the standard JavaScript
+dependency set from npm, and it's by far the largest body of code on your
+machine that I didn't write. I can't personally vouch for all of it — nobody in
+this ecosystem can. What I can tell you is that it's all listed in
+<code>package.json</code>, <code>npm audit</code> will report known problems in it any time you ask,
+and CI fails the build if a shipping dependency has a high-severity advisory.</p>
+<p><strong>The Whisper add-on is the heavy one.</strong> It installs Python packages including
+PyTorch, plus a CUDA build if you have an NVIDIA card. It's big, it's fiddly,
+and it's the step most likely to fall over on your machine. It's also entirely
+optional and lives in exactly one folder.</p>
+<p><strong>Your API key is encrypted, but it's still on your disk.</strong> It's tied to this
+machine — hostname, username, platform — so copying the file to another
+computer won't decrypt it. That defends against someone stealing the file. It
+doesn't defend against someone already sitting at your computer.</p>
+<hr>
+<h2 id="everything-it-writes-outside-its-own-folder">Everything it writes outside its own folder</h2>
+<p>I'd rather list these than tell you "it all stays in one place", because that
+isn't true. Every one of them happens because you asked for it.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>What it writes</th><th>Where</th><th>When</th></tr></thead><tbody><tr><td>Settings, keys, glossary</td><td><code>%APPDATA%\tusks-tomes</code></td><td>When you change a setting.</td></tr><tr><td>Recordings, transcripts, checkpoints</td><td><code>%LOCALAPPDATA%\tusks-tomes</code></td><td>When you upload audio or pause a run.</td></tr><tr><td>Cached probe results</td><td>the platform cache folder</td><td>Throwaway; safe to delete any time.</td></tr><tr><td>A <code>Tusks-Lore</code> folder <strong>beside</strong> the program folder</td><td>your chosen location</td><td>Only if you click "Create lore folder".</td></tr><tr><td>Files into a paired <strong>Tusk's Vault</strong> install</td><td>wherever you put Vault</td><td>Only if you pair them and send a chronicle across.</td></tr><tr><td><strong>Into your Obsidian vault</strong></td><td>the folder you picked</td><td>Only via three specific, opt-in buttons — see below.</td></tr></tbody></table>
+<h3 id="the-obsidian-vault-is-the-one-that-would-worry-me">The Obsidian vault is the one that would worry me</h3>
+<p>That folder is <em>your notes</em>. It's the only place this app writes to something
+you made, and I don't take that lightly. Reading is the normal mode. There are
+exactly three writes, all behind a button you have to press:</p>
+<ol>
+<li><strong>Markdown conversion</strong> — makes a <code>.md</code> copy of a Word or PDF file, beside
+the original. It never modifies or deletes your original, and it refuses to
+overwrite an existing <code>.md</code>.</li>
+<li><strong><code>CLAUDE.md</code> generator</strong> — writes a navigation guide into the vault root.
+If one already exists it stops and asks before replacing it.</li>
+<li><strong>Graphify index</strong> — writes a <code>graphify-out/</code> folder into the vault.</li>
+</ol>
+<p>The code that reads your vault during a normal chronicle run cannot write at
+all. That's not me promising to be careful — there's a test that fails the
+build if a write call ever appears in those files.</p>
+<p><strong>If your vault matters to you and isn't already backed up or in git, back it
+up before you first use those features.</strong> I'd tell you that about any tool that
+touches your notes, including mine.</p>
+<hr>
+<h2 id="what-it-never-does">What it never does</h2>
+<ul>
+<li>No registry entries, no services, no scheduled tasks, no startup items, no
+PATH changes.</li>
+<li>No Administrator elevation, ever. If something asks you for admin rights
+while you're installing this, it didn't come from me.</li>
+<li>No telemetry, no analytics, no crash reporting, no update pings. There's
+nothing to opt out of because there's nothing there. I don't know how many
+people use this and I'm fine with that.</li>
+<li>No account, no login, no server of mine anywhere.</li>
+<li>It listens on <code>127.0.0.1</code> — your machine only, not your network.</li>
+</ul>
+<p>The one thing that leaves your computer is transcript text going to whichever
+AI provider you set up, so it can write the chronicle. That's the entire
+network story. Point it at a local model and even that stops.</p>
+<hr>
+<h2 id="what-could-go-wrong-the-things-i-already-know-about">What could go wrong — the things I already know about</h2>
+<h3 id="the-folder-isnt-writable">The folder isn't writable</h3>
+<p>The most common failure by a mile. It happens when the folder is in
+<code>C:\Program Files</code>, at the root of <code>C:\</code>, on a disconnected network drive, or
+being held by OneDrive or antivirus. Setup checks for this before touching
+anything, so you get told rather than left with a half-finished install.</p>
+<p><strong>Fix:</strong> move the folder to Documents or Desktop and run setup again.</p>
+<p><strong>Please don't "fix" it by running as Administrator.</strong> It's the first thing
+everyone tries and it makes things worse — you end up with files your normal
+account can't modify, and the app fails later in far more confusing ways. This
+never needs elevation.</p>
+<h3 id="the-python-whisper-install-falls-over-part-way">The Python / Whisper install falls over part-way</h3>
+<p>Python packaging is fragile and this step downloads a lot. I've seen it fail
+from: no Python, Python not on PATH, no disk space, a dropped connection
+mid-download, and antivirus interrupting file creation.</p>
+<p><strong>How bad is it:</strong> contained to <code>vendor\python-venv</code>. Delete that folder and
+re-run the add-on install. Your system Python is never touched — the whole
+reason it builds a separate environment is so a bad day here can't reach it.</p>
+<h3 id="antivirus-gets-involved">Antivirus gets involved</h3>
+<p>To a heuristic scanner, installing software looks a lot like malware: a process
+creating hundreds of files fast and pulling down executables. If setup dies
+with no explanation, check your antivirus history before assuming the app is
+broken. All the source is public if you want to look first.</p>
+<h3 id="the-uninstaller-genuinely-deletes-things">The uninstaller genuinely deletes things</h3>
+<p>It's the one part with real destructive power, so here's how it's fenced in. It
+refuses to run unless it's sitting in a real Tusk's Tomes folder. It resolves
+every path through the filesystem before deleting, so a symlink can't redirect
+it somewhere else. It refuses any path that isn't either inside the program
+folder or inside a folder with <code>tusks-tomes</code> in its name. It makes you type
+<code>I UNDERSTAND</code> before it starts. It keeps everything you authored unless you
+explicitly tell it not to, and it never touches a lore folder or a custom
+session folder.</p>
+<p>It's still code, and code has bugs. <strong><code>npm run uninstall -- --dry-run</code> shows
+you exactly what it would delete and deletes nothing.</strong> Worth doing first.</p>
+<p>One sharp edge I know about: it decides which folder to clean from <strong>its own
+location on disk</strong>, not from where you run it. If you copy <code>uninstall.mjs</code>
+somewhere else and run it there, it will still go after the folder it was
+copied from. Run it in place with <code>npm run uninstall</code>. I know this because I
+caught it out exactly that way during development.</p>
+<h3 id="platforms-i-cant-test">Platforms I can't test</h3>
+<p>On Linux or macOS you may well be the first person down that path. I don't
+expect breakage, but I haven't earned the right to say more than that. If you
+hit something, please tell me — that's genuinely the fastest way it gets fixed.</p>
+<h3 id="putting-it-on-your-network">Putting it on your network</h3>
+<p>By default only your own machine can reach it. Setting <code>TUSKS_HOST=0.0.0.0</code>
+makes it reachable across your local network. Even then, write operations stay
+off unless you separately enable them — but anyone on that network could still
+read your transcripts. Only do it on a network you control.</p>
+<h3 id="it-runs-other-programs">It runs other programs</h3>
+<p>Tusk's Tomes launches other software on your machine: Python for transcription,
+<code>ffmpeg</code> for audio, <code>nvidia-smi</code> to ask about your graphics card, and — if you
+turn those add-ons on — the <code>claude</code>, <code>codex</code> or <code>ollama</code> commands. All with
+your normal user permissions, never elevated, and all programs you installed
+yourself.</p>
+<hr>
+<h2 id="keeping-the-blast-radius-small">Keeping the blast radius small</h2>
+<p>Things that genuinely limit what a bug of mine could reach:</p>
+<ul>
+<li><strong>Clone into a normal folder.</strong> Documents or Desktop. Not Program Files, not
+a synced OneDrive folder.</li>
+<li><strong>Back up your Obsidian vault</strong> before first using the conversion or
+generator buttons, if it isn't in version control already.</li>
+<li><strong>Run the uninstaller with <code>--dry-run</code> first.</strong></li>
+<li><strong>Skip add-ons you don't need.</strong> Everything past "paste a transcript" is
+opt-in. Not installing Whisper skips 2 GB and the most fragile step there is.</li>
+<li><strong>Keep your lore folder outside the program folder</strong> — that's the default, and
+it means deleting the app can never reach your notes.</li>
+</ul>
+<hr>
+<h2 id="dont-take-my-word-for-it">Don't take my word for it</h2>
+<p>It's all public at
+<a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">github.com/KochiTusker/Tusks-Tomes</a>.
+If you only read four files, read these — they're the ones that actually answer
+this question:</p>
+<ul>
+<li><code>setup.bat</code> / <code>scripts/setup/check-deps.mjs</code> — everything the install does.</li>
+<li><code>scripts/uninstall.mjs</code> — everything the uninstall does, guards included.</li>
+<li><code>scripts/whisper/setup.ps1</code> — the Python environment build.</li>
+<li><code>server/lore/obsidian/</code> — the vault code, and the read-only test that enforces
+what I claimed above.</li>
+</ul>
+<p>If any of it doesn't match what you see happening, that's a bug and I want to
+know: <a href="https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose" rel="noopener">open an issue</a>.</p>
+<h2 id="getting-rid-of-it">Getting rid of it</h2>
+<pre><code>npm run uninstall
+</code></pre>
+<p>It keeps everything you authored unless you pass <code>--purge-user-data</code>, and
+leaves a <code>TUSKS-TOMES-uninstall-notes.md</code> in the folder listing what was
+removed, what was kept and where, and which leftovers are <strong>shared with other
+software</strong> and shouldn't be deleted just to tidy up. Move that file somewhere
+safe before you delete the folder.</p>
+<p><code>npm run uninstall -- --list-locations</code> prints the same paths and deletes
+nothing at all.</p>
+<p>Then delete the folder. Nothing of mine is left outside the locations at the
+top of this page.</p>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/is-this-safe.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+</body>
+</html>

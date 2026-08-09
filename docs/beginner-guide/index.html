@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beginner's guide — setting this up with no terminal experience — Tusk's Tomes</title>
+<meta name="description" content="If you've never opened a terminal, never used GitHub, and never installed a Node.js project, this is the page for you. It assumes none of that and explains…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/beginner-guide/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Beginner's guide — setting this up with no terminal experience — Tusk's Tomes">
+<meta property="og:description" content="If you've never opened a terminal, never used GitHub, and never installed a Node.js project, this is the page for you. It assumes none of that and explains…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/beginner-guide/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Beginner's guide — setting this up with no terminal experience — Tusk's Tomes">
+<meta name="twitter:description" content="If you've never opened a terminal, never used GitHub, and never installed a Node.js project, this is the page for you. It assumes none of that and explains…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Beginner's guide — setting this up with no terminal experience",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/beginner-guide/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Beginner's guide — setting this up with no terminal experience",
+  "description": "If you've never opened a terminal, never used GitHub, and never installed a Node.js project, this is the page for you. It assumes none of that and explains…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/beginner-guide/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/setup/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Add-ons</h2>
+<ul><li><a href="/Tusks-Tomes/docs/add-ons/node-isolation/">Add-on isolation — Node and Python sandboxing rules</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/">Add-ons — optional capabilities you can install in one click</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/audio-transcription/">Audio Transcription add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/personas/">Chronicle Personas Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code (your subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/codex/">Codex (your ChatGPT subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/obsidian-vault/">Obsidian Vault Lore (read-only)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/whisper-cpp/">whisper.cpp bridge — bring your own build</a></li></ul>
+<h2>Tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/diagnose/">Diagnosis bundles for Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify — local code-graph for Claude Code</a></li></ul>
+<h2>Guides</h2>
+<ul><li><a href="/Tusks-Tomes/docs/beginner-guide/" aria-current="page">Beginner's guide — setting this up with no terminal experience</a></li>
+<li><a href="/Tusks-Tomes/docs/reforge/">Chronicle Reforge — redo the later phases on a different model</a></li>
+<li><a href="/Tusks-Tomes/docs/configuration/">Configuration &amp; file structure</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/workflows/">Getting a session in — three ways</a></li>
+<li><a href="/Tusks-Tomes/docs/is-this-safe/">How safe is this? What it installs, and what could go wrong</a></li>
+<li><a href="/Tusks-Tomes/docs/comparison/">How this compares to the alternatives</a></li>
+<li><a href="/Tusks-Tomes/docs/known-bugs/">Known bugs and limitations</a></li>
+<li><a href="/Tusks-Tomes/docs/providers/">LLM providers — picking one, getting a key, going offline</a></li>
+<li><a href="/Tusks-Tomes/docs/privacy/">Privacy &amp; security</a></li>
+<li><a href="/Tusks-Tomes/docs/architecture/">Project Architecture: Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/faq/">Questions I get asked, and a few I asked myself</a></li>
+<li><a href="/Tusks-Tomes/docs/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/security-quickref/">Security quick reference</a></li>
+<li><a href="/Tusks-Tomes/docs/audio-to-chronicle/">Session audio to a lore-grounded chronicle</a></li>
+<li><a href="/Tusks-Tomes/docs/setup/">Setup — getting Tusk's Tomes running</a></li>
+<li><a href="/Tusks-Tomes/docs/roadmap/">Tusk's Tomes — Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/vault/">Tusk's Vault — the sibling project (coming soon)</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li>
+<li><a href="/Tusks-Tomes/docs/walkthrough/">Walkthrough — your first session, end to end</a></li>
+<li><a href="/Tusks-Tomes/docs/pricing/">What it costs to run</a></li>
+<li><a href="/Tusks-Tomes/docs/dependencies/">What you need installed</a></li>
+<li><a href="/Tusks-Tomes/docs/use-cases/">Who this is actually for</a></li>
+<li><a href="/Tusks-Tomes/docs/youtube-transcript-to-chronicle/">YouTube transcript to a lore-grounded chronicle</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Beginner's guide — setting this up with no terminal experience</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#step-1-install-nodejs">Step 1 — Install Node.js</a></li><li><a href="#step-2-optional-install-python">Step 2 — *(Optional)* Install Python</a></li><li><a href="#step-3-download-tusks-tomes">Step 3 — Download Tusk's Tomes</a></li><li><a href="#step-4-run-the-first-time-setup-script">Step 4 — Run the first-time setup script</a></li><li><a href="#step-5-launch-the-app">Step 5 — Launch the app</a></li><li><a href="#step-6-configure-from-the-dashboard">Step 6 — Configure from the dashboard</a></li><li><a href="#macos-linux-equivalents">macOS / Linux equivalents</a></li><li><a href="#stopping-starting-later">Stopping / starting later</a></li><li><a href="#where-to-ask-for-help">Where to ask for help</a></li></ul></aside>
+    <article class="prose">
+<h1>🧙 Beginner's guide — setting this up with no terminal experience</h1>
+<p>If you've <strong>never opened a terminal, never used GitHub, and never installed a
+Node.js project</strong>, this is the page for you. It assumes none of that and
+explains each step as it comes.</p>
+<p>I'll be honest about the time, because I'd rather you knew going in: <strong>budget
+about 20 minutes</strong> the first time. Roughly ten of that is installing Node.js
+and downloading the project — one-off, and you'll never do it again. The
+remainder is the app itself, which is quick.</p>
+<p>If you also want audio transcription for Craig recordings, add Python
+(~5 minutes) and the add-on install (which downloads about 2 GB, so it depends
+entirely on your connection). That part is optional and you can leave it until
+later, or skip it entirely — there's a route that uses YouTube to do the
+transcribing for you.</p>
+<p>It's fiddlier than double-clicking an installer, and I know that. A proper
+standalone installer is on the <a href="/Tusks-Tomes/docs/roadmap/">roadmap</a>; it isn't built yet,
+and I'd rather tell you that now than halfway down the page.</p>
+<blockquote>
+<p><strong>What you get straight away:</strong> the Chronicle tab (paste a transcript, get a
+proper write-up), Caption Repair (drop in a YouTube <code>.sbv</code>), Tome of Lore
+(your campaign notes and glossary), and Settings. The audio Upload and
+Sessions tabs arrive with the add-on if you decide you want it.</p>
+</blockquote>
+<blockquote>
+<p><strong>If you get stuck, that's a bug in this guide, not a failing on your part.</strong>
+Tell me via the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a>
+and I'll fix the wording.</p>
+</blockquote>
+<hr>
+<details class="docs-section">
+<summary><h2 id="step-1-install-nodejs">Step 1 — Install Node.js</h2></summary>
+<div class="docs-section-body">
+<p>Node.js is the runtime that powers Tusk's Tomes. One install, then you never see it again.</p>
+<ol>
+<li>Go to <a href="https://nodejs.org" rel="noopener">https://nodejs.org</a>.</li>
+<li>Click the big green <strong>LTS</strong> button (LTS = "long-term support" = the stable version).</li>
+<li>Run the installer. Defaults are fine — click Next, Next, Install.</li>
+<li>Restart your computer if it asks you to.</li>
+</ol>
+<p>That's it. You don't need to "do anything" with Node — just installing it makes the launcher scripts work.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="step-2-optional-install-python">Step 2 — *(Optional)* Install Python</h2></summary>
+<div class="docs-section-body">
+<blockquote>
+<p><strong>Skip this step if you don't need audio transcription.</strong> You can always come back later when you decide you want it. The Audio Transcription add-on (which needs Python) unlocks Craig multitrack uploads and direct audio-to-text. If you're starting from YouTube <code>.sbv</code> captions or pasting transcripts directly, you'll never touch Python.</p>
+</blockquote>
+<ol>
+<li>Go to <a href="https://python.org/downloads" rel="noopener">https://python.org/downloads</a>.</li>
+<li>Click the big yellow <strong>Download Python 3.12</strong> button (or 3.10 or 3.11 — any of those three).</li>
+<li>Run the installer. <strong>Important:</strong> tick the box that says <strong>"Add python.exe to PATH"</strong> at the bottom of the first screen. Then click Install Now.</li>
+<li>Restart your computer.</li>
+</ol>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="step-3-download-tusks-tomes">Step 3 — Download Tusk's Tomes</h2></summary>
+<div class="docs-section-body">
+<p>You have two options here. Option B is recommended because it gets you one-click updates from inside the app.</p>
+<h3 id="option-a-download-the-zip-no-git-needed">Option A — Download the ZIP (no Git needed)</h3>
+<ol>
+<li>Go to <a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">https://github.com/KochiTusker/Tusks-Tomes</a>.</li>
+<li>Click the green <strong><code>&#x3C;> Code</code></strong> button at the top, then <strong>Download ZIP</strong> at the bottom of the dropdown.</li>
+<li>Find the file in your Downloads folder. <strong>Right-click → Extract All…</strong> Pick a folder you'll remember, like <code>Documents\Tusks-Tomes</code>.</li>
+</ol>
+<blockquote>
+<p><strong>Trade-off:</strong> the in-app updater needs Git, so if you go the ZIP route you'll have to re-download a fresh ZIP whenever a new version drops. Most updates take 30 seconds; this isn't a big deal.</p>
+</blockquote>
+<h3 id="option-b-clone-with-git-one-click-updates-later">Option B — Clone with Git (one-click updates later)</h3>
+<ol>
+<li>
+<p>Install Git for Windows from <a href="https://git-scm.com/download/win" rel="noopener">https://git-scm.com/download/win</a> — defaults are fine.</p>
+</li>
+<li>
+<p>Right-click in any folder where you want Tusk's Tomes to live, and click <strong>Open in Terminal</strong> (or open Command Prompt and <code>cd</code> to that folder).</p>
+</li>
+<li>
+<p>Type this and press Enter:</p>
+<pre><code class="language-sh">git clone https://github.com/KochiTusker/Tusks-Tomes.git
+</code></pre>
+<p>This creates a <code>Tusks-Tomes/</code> folder with the code in it.</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>About the folder name:</strong> if you're also using <a href="https://github.com/KochiTusker/Tusks-Vault" rel="noopener">Tusk's Vault</a>, keep both repos as <strong>siblings</strong> — for example, <code>Documents\Tusks-Tomes\</code> and <code>Documents\Tusks-Vault\</code>. The two find each other automatically when they're sitting next to each other. Don't rename <code>Tusks-Tomes</code> to something else, or sibling auto-detection won't work.</p>
+</blockquote>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="step-4-run-the-first-time-setup-script">Step 4 — Run the first-time setup script</h2></summary>
+<div class="docs-section-body">
+<ol>
+<li>Open the folder where you put Tusk's Tomes.</li>
+<li><strong>Double-click <code>setup.bat</code></strong>. A black window opens. It will:
+<ul>
+<li>Confirm Node and Git are present (prints exact <code>winget</code> install commands for anything missing).</li>
+<li>Detect your GPU (reports only — no install).</li>
+<li>Copy <code>.env.example</code> to <code>.env</code>.</li>
+<li>Install the Node packages (~1 minute).</li>
+</ul>
+</li>
+<li>When it says "Setup complete", close the window.</li>
+</ol>
+<p><code>setup.bat</code> is plain readable text — open it in Notepad first if you want to see exactly what it does. About 60 lines, no admin elevation, no system-wide installs.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="step-5-launch-the-app">Step 5 — Launch the app</h2></summary>
+<div class="docs-section-body">
+<ol>
+<li><strong>Double-click <code>Start_Tusks_Tomes.bat</code></strong>.</li>
+<li>A black window opens and says "Starting on <a href="http://localhost:5173" rel="noopener">http://localhost:5173</a>". Wait ~5 seconds.</li>
+<li>Your browser auto-opens to the dashboard.</li>
+<li><strong>Leave the black window open</strong> — closing it stops the server.</li>
+</ol>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="step-6-configure-from-the-dashboard">Step 6 — Configure from the dashboard</h2></summary>
+<div class="docs-section-body">
+<p>Everything below happens in your browser. No code, no config files.</p>
+<ol>
+<li><strong>Add an LLM API key.</strong> Settings → API Keys → paste a Gemini / Claude / OpenAI key → <strong>Save</strong>.
+<ul>
+<li><strong>Don't have one yet?</strong> See <a href="/Tusks-Tomes/docs/providers/">providers.md</a> for paid-key sign-up walkthroughs. (Gemini Pro moved behind billing in 2026 — a paid key is required for the main pipeline; the project has been engineered to keep that bill small.)</li>
+<li><strong>Want to run fully offline?</strong> Install the <strong>Local LLMs</strong> add-on first (Settings → Add-ons → Local LLMs → Install, restart), then install <a href="https://ollama.com" rel="noopener">Ollama</a> and use Settings → Local LLM → <strong>Detect</strong>.</li>
+</ul>
+</li>
+<li><em>(Optional)</em> <strong>Enable Audio Transcription.</strong> If you want to upload Craig recordings or transcribe audio files directly: <strong>Settings → Add-ons → Audio Transcription → Install</strong>. This downloads the Whisper sidecar (~2 GB) — requires Python from Step 2. Restart <code>Start_Tusks_Tomes.bat</code> when prompted.</li>
+<li><em>(Optional)</em> <strong>Enable Local LLMs.</strong> If you want to route phases through Ollama, LM Studio, or Unsloth: <strong>Settings → Add-ons → Local LLMs → Install</strong> (no download — the add-on is a feature flag). Then install your runner of choice separately and restart Tomes.</li>
+<li><strong>Drop in your campaign lore.</strong> Tome of Lore tab → upload PDFs / Word docs / notes. Add Glossary entries for proper nouns the model would otherwise mangle.</li>
+<li><strong>List your players.</strong> Same tab → Speakers card → add a row per player with their player name + character name.</li>
+<li><strong>Chronicle a session.</strong> Either paste a transcript into the Chronicle tab, or follow one of the <a href="/Tusks-Tomes/docs/workflows/">two workflows</a>.</li>
+</ol>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="macos-linux-equivalents">macOS / Linux equivalents</h2></summary>
+<div class="docs-section-body">
+<p>Same idea, terminal-flavoured:</p>
+<pre><code class="language-sh"># 1. Install Node 20+, Python 3.10-3.12 (optional), Git, ffmpeg
+# macOS:  brew install node python git ffmpeg
+# Debian: sudo apt install nodejs npm python3 python3-venv git ffmpeg
+# Fedora: sudo dnf install nodejs npm python3 git ffmpeg
+# Arch:   sudo pacman -S nodejs npm python git ffmpeg
+
+# 2. Clone
+git clone https://github.com/KochiTusker/Tusks-Tomes.git
+cd Tusks-Tomes
+
+# 3. One-time setup
+bash setup.sh
+
+# 4. Run any time
+bash start.sh                       # or: npm run dev
+</code></pre>
+<p><code>setup.sh</code> is optional — <code>start.sh</code> will install dependencies on first launch too. To stop: <code>Ctrl+C</code> in the terminal, or close the window.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="stopping-starting-later">Stopping / starting later</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li><strong>Stop:</strong> close the black window (Windows) or <code>Ctrl+C</code> in the terminal (macOS / Linux).</li>
+<li><strong>Start:</strong> double-click <code>Start_Tusks_Tomes.bat</code> (Windows) or run <code>bash start.sh</code> (POSIX).</li>
+</ul>
+<p>Your keys, lore, glossary, model profiles, and chronicles are all saved — Tomes picks up exactly where you left off.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="where-to-ask-for-help">Where to ask for help</h2></summary>
+<div class="docs-section-body">
+<p>The fastest way to get unstuck right now is the <strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a></strong> — the maintainer reads every submission. A community Discord with a <code>#support</code> channel of fellow DMs is on the <a href="/Tusks-Tomes/docs/roadmap/">roadmap</a>; the form is what we have until enough interest signals it's worth spinning one up.</p>
+<p>If you'd rather file a written issue, <a href="https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose" rel="noopener">open one on GitHub</a> — the templates ask for exactly the info needed.</p>
+</div>
+</details>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/beginner-guide.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+</body>
+</html>

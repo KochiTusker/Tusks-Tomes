@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnosis bundles for Claude Code — Tusk's Tomes</title>
+<meta name="description" content="A single structured markdown file at .diagnose/latest.md that Claude Code reads with one Read call to get full diagnostic context for a Tusk's Tomes bug…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/tooling/diagnose/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Diagnosis bundles for Claude Code — Tusk's Tomes">
+<meta property="og:description" content="A single structured markdown file at .diagnose/latest.md that Claude Code reads with one Read call to get full diagnostic context for a Tusk's Tomes bug…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/tooling/diagnose/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Diagnosis bundles for Claude Code — Tusk's Tomes">
+<meta name="twitter:description" content="A single structured markdown file at .diagnose/latest.md that Claude Code reads with one Read call to get full diagnostic context for a Tusk's Tomes bug…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Diagnosis bundles for Claude Code",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/tooling/diagnose/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Diagnosis bundles for Claude Code",
+  "description": "A single structured markdown file at .diagnose/latest.md that Claude Code reads with one Read call to get full diagnostic context for a Tusk's Tomes bug…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/tooling/diagnose/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/setup/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Add-ons</h2>
+<ul><li><a href="/Tusks-Tomes/docs/add-ons/node-isolation/">Add-on isolation — Node and Python sandboxing rules</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/">Add-ons — optional capabilities you can install in one click</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/audio-transcription/">Audio Transcription add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/personas/">Chronicle Personas Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code (your subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/codex/">Codex (your ChatGPT subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/obsidian-vault/">Obsidian Vault Lore (read-only)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/whisper-cpp/">whisper.cpp bridge — bring your own build</a></li></ul>
+<h2>Tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/diagnose/" aria-current="page">Diagnosis bundles for Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify — local code-graph for Claude Code</a></li></ul>
+<h2>Guides</h2>
+<ul><li><a href="/Tusks-Tomes/docs/beginner-guide/">Beginner's guide — setting this up with no terminal experience</a></li>
+<li><a href="/Tusks-Tomes/docs/reforge/">Chronicle Reforge — redo the later phases on a different model</a></li>
+<li><a href="/Tusks-Tomes/docs/configuration/">Configuration &amp; file structure</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/workflows/">Getting a session in — three ways</a></li>
+<li><a href="/Tusks-Tomes/docs/is-this-safe/">How safe is this? What it installs, and what could go wrong</a></li>
+<li><a href="/Tusks-Tomes/docs/comparison/">How this compares to the alternatives</a></li>
+<li><a href="/Tusks-Tomes/docs/known-bugs/">Known bugs and limitations</a></li>
+<li><a href="/Tusks-Tomes/docs/providers/">LLM providers — picking one, getting a key, going offline</a></li>
+<li><a href="/Tusks-Tomes/docs/privacy/">Privacy &amp; security</a></li>
+<li><a href="/Tusks-Tomes/docs/architecture/">Project Architecture: Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/faq/">Questions I get asked, and a few I asked myself</a></li>
+<li><a href="/Tusks-Tomes/docs/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/security-quickref/">Security quick reference</a></li>
+<li><a href="/Tusks-Tomes/docs/audio-to-chronicle/">Session audio to a lore-grounded chronicle</a></li>
+<li><a href="/Tusks-Tomes/docs/setup/">Setup — getting Tusk's Tomes running</a></li>
+<li><a href="/Tusks-Tomes/docs/roadmap/">Tusk's Tomes — Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/vault/">Tusk's Vault — the sibling project (coming soon)</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li>
+<li><a href="/Tusks-Tomes/docs/walkthrough/">Walkthrough — your first session, end to end</a></li>
+<li><a href="/Tusks-Tomes/docs/pricing/">What it costs to run</a></li>
+<li><a href="/Tusks-Tomes/docs/dependencies/">What you need installed</a></li>
+<li><a href="/Tusks-Tomes/docs/use-cases/">Who this is actually for</a></li>
+<li><a href="/Tusks-Tomes/docs/youtube-transcript-to-chronicle/">YouTube transcript to a lore-grounded chronicle</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Diagnosis bundles for Claude Code</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#the-user-flow">The user flow</a></li><li><a href="#whats-in-a-bundle">What's in a bundle</a></li><li><a href="#soft-error-signatures-current-library">Soft-error signatures (current library)</a></li><li><a href="#adding-a-new-signature">Adding a new signature</a></li><li><a href="#auto-trigger-behaviour">Auto-trigger behaviour</a></li><li><a href="#devtools-shortcuts">DevTools shortcuts</a></li><li><a href="#privacy-file-location">Privacy / file location</a></li><li><a href="#out-of-scope-today">Out of scope today</a></li></ul></aside>
+    <article class="prose">
+<h1>Diagnosis bundles for Claude Code</h1>
+<p>A single structured markdown file at <code>.diagnose/latest.md</code> that Claude Code
+reads with one Read call to get full diagnostic context for a Tusk's Tomes
+bug. Auto-built on every pipeline error; manual button in
+Settings → Diagnostics for proactive snapshots.</p>
+<h2 id="the-user-flow">The user flow</h2>
+<ol>
+<li>You hit a bug. Pipeline error fires (or you click "Build bundle now").</li>
+<li>A toast appears: <em>"Diagnosis ready — paste @.diagnose/latest.md into
+Claude Code (N soft-errors matched)."</em></li>
+<li>In Claude Code, type:
+<pre><code>@.diagnose/latest.md what's wrong?
+</code></pre>
+</li>
+<li>Claude reads ONE file with everything it needs. No follow-up
+"send me your routing.json" round-trips.</li>
+</ol>
+<h2 id="whats-in-a-bundle">What's in a bundle</h2>
+<p>Predictable section headings so any Claude session can parse them fast:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>§</th><th>Section</th><th>Contents</th></tr></thead><tbody><tr><td>1</td><td>Current state</td><td>Status / phase / chunk / active provider / output selection / last error (table)</td></tr><tr><td>2</td><td>Soft-error signatures matched</td><td>Severity-sorted matches with hint + suggested next step + collapsible evidence JSON</td></tr><tr><td>3</td><td>Last 80 events</td><td>JSON Lines from the merged browser+server ring</td></tr><tr><td>4</td><td>Graphify slice</td><td>Callers + callees + same-community siblings for the throw-site symbol</td></tr><tr><td>5</td><td>Probe cache snapshot</td><td>Per-slot fingerprint + accessibility count + notable inaccessible models</td></tr><tr><td>6</td><td>Routing snapshot</td><td>Full <code>routing.json</code> (formatted JSON block)</td></tr><tr><td>7</td><td>Git state</td><td>Branch + <code>git status --short</code> + last 5 commits</td></tr><tr><td>8</td><td>Recommended next steps</td><td>Prioritised actions generated from the matched signatures + stack trace</td></tr></tbody></table>
+<h2 id="soft-error-signatures-current-library">Soft-error signatures (current library)</h2>
+<p>Each signature is a pure function that scans the ring + state and decides
+"is something fishy here?" — the curated subset worth investigating. New
+signatures land in <code>server/lib/softErrorSignatures.ts</code> next to the
+existing ones.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>ID</th><th>Severity</th><th>What it catches</th></tr></thead><tbody><tr><td><code>chunk_latency_outlier</code></td><td>warning</td><td>A chunk took >3× the phase median — likely a silent retry.</td></tr><tr><td><code>auto_fallback_mid_run</code></td><td>warning</td><td>Gemini auto-tier soft-swapped to the Free key mid-run.</td></tr><tr><td><code>probed_model_inaccessible_but_selected</code></td><td>critical</td><td>Routing names a model the probe says is inaccessible.</td></tr><tr><td><code>empty_phase_output</code></td><td>warning</td><td>Phase 3 completed but <code>state.chronicle.length &#x3C; 100</code>.</td></tr><tr><td><code>stale_perPhase_override</code></td><td>warning</td><td>A perPhase entry diverges from the global geminiTier.</td></tr><tr><td><code>provider_keys_mismatch_with_fingerprint</code></td><td>critical</td><td>Quota event reports a fingerprint that no current probe slot knows.</td></tr><tr><td><code>hidden_500_retries</code></td><td>info</td><td>≥3 transient retries on one phase within 60s.</td></tr><tr><td><code>tier_escalated_silently</code></td><td>critical</td><td><code>tier_escalated</code> fired but next <code>chunk_started</code> used the old tier.</td></tr></tbody></table>
+<h2 id="adding-a-new-signature">Adding a new signature</h2>
+<ol>
+<li>Open <code>server/lib/softErrorSignatures.ts</code>.</li>
+<li>Define a <code>Signature</code> object: <code>{ id, description, severity, match(input) }</code>.</li>
+<li>Append to <code>SIGNATURES</code> at the bottom of the file.</li>
+<li>Add positive + negative fixture in <code>server/lib/softErrorSignatures.test.ts</code>.</li>
+<li>Bump the expected count in the <code>SIGNATURES.length</code> test.</li>
+</ol>
+<p>That's it — the bundle assembler iterates the library directly, the API
+echoes new matches, and the toast surfaces them automatically.</p>
+<h2 id="auto-trigger-behaviour">Auto-trigger behaviour</h2>
+<ul>
+<li>Fires from <code>RefinementTool.handlePipelineError</code> on any non-<code>AbortError</code>.</li>
+<li>30-second debounce in the client wrapper (<code>src/lib/diagnose.ts</code>) so a
+rapid-fire failure produces one bundle, not twelve.</li>
+<li>Backup rotation: the most recent 10 timestamped bundles
+(<code>diagnose-&#x3C;ISO>.md</code>) survive; older ones are pruned. <code>latest.md</code> is
+always the latest copy.</li>
+<li>Explicit "Build bundle now" button in Settings → Diagnostics bypasses
+the debounce (<code>force: true</code>).</li>
+</ul>
+<h2 id="devtools-shortcuts">DevTools shortcuts</h2>
+<pre><code class="language-js">// Build a bundle from the browser console (handy when investigating
+// something that didn't trigger an automatic build):
+fetch('/api/diagnose/bundle', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    trigger: 'manual',
+    browserRing: window.__tusk.dumpRecentEvents({ count: 80 }),
+  }),
+}).then((r) => r.json()).then(console.log)
+
+// List recent bundles:
+fetch('/api/diagnose/recent').then((r) => r.json()).then(console.log)
+</code></pre>
+<h2 id="privacy-file-location">Privacy / file location</h2>
+<ul>
+<li>Bundle path: <code>.diagnose/latest.md</code> (in repo root, gitignored).</li>
+<li>Sanitization: client-side <code>sanitizeForForwarding()</code> in <code>verboseLog.ts</code>
+redacts <code>apiKey</code>, <code>userPrompt</code>, <code>cacheablePrefix</code>, <code>rawTranscript</code>,
+<code>groundedTranscript</code>, and <code>systemPrompt</code> at the forwarder boundary.
+The bundle inherits those redactions.</li>
+<li>Key references: 6-char SHA-256 fingerprints only — same convention
+used by the RateLimitDialog + DiagnosticsCard.</li>
+<li>Endpoint: behind <code>loopbackOnly()</code> — LAN sources get 403.</li>
+</ul>
+<h2 id="out-of-scope-today">Out of scope today</h2>
+<ul>
+<li>No WebSocket push to a live "diagnose viewer" tab — the file-based
+bundle covers the primary case.</li>
+<li>No <code>/diagnose</code> slash command in Claude Code — extending the
+graphify-skill pattern is a follow-up.</li>
+<li>No auto-issue creation in GitHub — the bundle has everything <code>gh issue create</code> would need, but the wrapper is a separate ask.</li>
+</ul>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/tooling/diagnose.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+</body>
+</html>

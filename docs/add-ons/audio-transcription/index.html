@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audio Transcription add-on — Tusk's Tomes</title>
+<meta name="description" content="This is the add-on that turns recordings into text, using faster-whisper running on your own machine. It adds the Upload and Sessions tabs and the full Craig…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/audio-transcription/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Audio Transcription add-on — Tusk's Tomes">
+<meta property="og:description" content="This is the add-on that turns recordings into text, using faster-whisper running on your own machine. It adds the Upload and Sessions tabs and the full Craig…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/audio-transcription/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Audio Transcription add-on — Tusk's Tomes">
+<meta name="twitter:description" content="This is the add-on that turns recordings into text, using faster-whisper running on your own machine. It adds the Upload and Sessions tabs and the full Craig…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Audio Transcription add-on",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/audio-transcription/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Audio Transcription add-on",
+  "description": "This is the add-on that turns recordings into text, using faster-whisper running on your own machine. It adds the Upload and Sessions tabs and the full Craig…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/audio-transcription/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/setup/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Add-ons</h2>
+<ul><li><a href="/Tusks-Tomes/docs/add-ons/node-isolation/">Add-on isolation — Node and Python sandboxing rules</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/">Add-ons — optional capabilities you can install in one click</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/audio-transcription/" aria-current="page">Audio Transcription add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/personas/">Chronicle Personas Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code (your subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/codex/">Codex (your ChatGPT subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/obsidian-vault/">Obsidian Vault Lore (read-only)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/whisper-cpp/">whisper.cpp bridge — bring your own build</a></li></ul>
+<h2>Tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/diagnose/">Diagnosis bundles for Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify — local code-graph for Claude Code</a></li></ul>
+<h2>Guides</h2>
+<ul><li><a href="/Tusks-Tomes/docs/beginner-guide/">Beginner's guide — setting this up with no terminal experience</a></li>
+<li><a href="/Tusks-Tomes/docs/reforge/">Chronicle Reforge — redo the later phases on a different model</a></li>
+<li><a href="/Tusks-Tomes/docs/configuration/">Configuration &amp; file structure</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/workflows/">Getting a session in — three ways</a></li>
+<li><a href="/Tusks-Tomes/docs/is-this-safe/">How safe is this? What it installs, and what could go wrong</a></li>
+<li><a href="/Tusks-Tomes/docs/comparison/">How this compares to the alternatives</a></li>
+<li><a href="/Tusks-Tomes/docs/known-bugs/">Known bugs and limitations</a></li>
+<li><a href="/Tusks-Tomes/docs/providers/">LLM providers — picking one, getting a key, going offline</a></li>
+<li><a href="/Tusks-Tomes/docs/privacy/">Privacy &amp; security</a></li>
+<li><a href="/Tusks-Tomes/docs/architecture/">Project Architecture: Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/faq/">Questions I get asked, and a few I asked myself</a></li>
+<li><a href="/Tusks-Tomes/docs/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/security-quickref/">Security quick reference</a></li>
+<li><a href="/Tusks-Tomes/docs/audio-to-chronicle/">Session audio to a lore-grounded chronicle</a></li>
+<li><a href="/Tusks-Tomes/docs/setup/">Setup — getting Tusk's Tomes running</a></li>
+<li><a href="/Tusks-Tomes/docs/roadmap/">Tusk's Tomes — Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/vault/">Tusk's Vault — the sibling project (coming soon)</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li>
+<li><a href="/Tusks-Tomes/docs/walkthrough/">Walkthrough — your first session, end to end</a></li>
+<li><a href="/Tusks-Tomes/docs/pricing/">What it costs to run</a></li>
+<li><a href="/Tusks-Tomes/docs/dependencies/">What you need installed</a></li>
+<li><a href="/Tusks-Tomes/docs/use-cases/">Who this is actually for</a></li>
+<li><a href="/Tusks-Tomes/docs/youtube-transcript-to-chronicle/">YouTube transcript to a lore-grounded chronicle</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Audio Transcription add-on</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#what-it-enables">What it enables</a></li><li><a href="#installation">Installation</a></li><li><a href="#what-it-costs-you">What it costs you</a></li><li><a href="#workflow-a-youtube-audio-captures">Workflow A — YouTube audio captures</a></li><li><a href="#workflow-b-craig-multitrack-the-premium-pipeline">Workflow B — Craig multitrack (the premium pipeline)</a></li><li><a href="#a-shout-out-to-craig">A shout-out to Craig</a></li><li><a href="#gpu-acceleration-optional-but-worth-it">GPU acceleration (optional, but worth it)</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#files-this-add-on-touches">Files this add-on touches</a></li></ul></aside>
+    <article class="prose">
+<h1>🎙️ Audio Transcription add-on</h1>
+<p>This is the add-on that turns recordings into text, using
+<a href="https://github.com/SYSTRAN/faster-whisper" rel="noopener"><code>faster-whisper</code></a> running on your
+own machine. It adds the <strong>Upload</strong> and <strong>Sessions</strong> tabs and the full Craig
+workflow. Your audio never leaves the computer, which was the whole point —
+I wasn't willing to upload my friends' voices to somebody's cloud, and I
+assumed I wasn't alone in that.</p>
+<p>It's also the biggest and most fragile thing here: a 1.5–2.5 GB download, a
+Python dependency, and — read this bit — an <strong>NVIDIA</strong> GPU or nothing. If that sounds
+like more than you want to take on, <a href="/Tusks-Tomes/docs/workflows/">Workflow B</a> gets you a
+transcript with none of it.</p>
+<blockquote>
+<p>🔎 <strong>View in app:</strong> this doc renders inside Tusk's Tomes too — open the <strong>Help</strong> tab and pick "Audio Transcription Add-on", or click <strong>Read docs</strong> from the add-on row in Settings.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>Name</strong></td><td><code>audio-addon</code></td></tr><tr><td><strong>Adds tabs</strong></td><td>Upload, Sessions</td></tr><tr><td><strong>Disk footprint</strong></td><td>~2 GB (Whisper venv + torch wheels)</td></tr><tr><td><strong>Runtime cost</strong></td><td>Idle when not transcribing</td></tr><tr><td><strong>Hard prereq</strong></td><td>Python 3.10–3.12 on PATH</td></tr><tr><td><strong>Optional prereq</strong></td><td>An <strong>NVIDIA</strong> GPU + recent drivers (~7× faster than CPU). AMD / Intel / Apple GPUs are not used at all — see the note below.</td></tr></tbody></table>
+<hr>
+<details class="docs-section">
+<summary><h2 id="what-it-enables">What it enables</h2></summary>
+<div class="docs-section-body">
+<p>Without this add-on, your only path into the pipeline is <strong>paste text</strong> or <strong>drop a pre-made <code>.sbv</code></strong>. With the add-on enabled, the <strong>Upload</strong> tab accepts:</p>
+<ul>
+<li><strong><a href="https://craig.chat" rel="noopener">Craig</a> multitrack <code>.zip</code> files</strong> — one or many, with staged batch upload for sessions split across hour-long Craig chunks. Per-speaker tracks survive into the chronicle, so every line is attributed to the right player and character.</li>
+<li><strong>Loose per-speaker WAV / FLAC files</strong> — drop one file per speaker, label them in the speaker-mapping table.</li>
+<li><strong>Single-track audio (any common format)</strong> — transcribed without speaker attribution, but you still get the cleaned narrative chronicle.</li>
+</ul>
+<p>The <strong>Sessions</strong> tab is the history view of everything you've uploaded — re-open old transcripts, re-run pipelines with different model profiles, export to Tusk's Vault, or send to the Chronicle tab for refinement.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="installation">Installation</h2></summary>
+<div class="docs-section-body">
+<h3 id="from-the-in-app-manager-recommended">From the in-app manager (recommended)</h3>
+<ol>
+<li>Open <strong>Settings → Add-ons</strong>.</li>
+<li>Find the <strong>Audio Transcription</strong> card → click <strong>Install</strong>.</li>
+<li>Watch the live install log — it streams every line from the setup script. Takes 1–5 minutes depending on your connection (faster-whisper + torch wheels are ~2 GB).</li>
+<li>When the toast says <strong>"Restart npm run dev"</strong>, stop the server with <code>Ctrl+C</code> and relaunch it.</li>
+<li>The Upload and Sessions tabs appear on next load.</li>
+</ol>
+<p>If install fails partway through, the most common cause is Python not being on PATH. Open a fresh terminal, run <code>python --version</code> — if it prints anything other than <code>Python 3.10.x</code> / <code>3.11.x</code> / <code>3.12.x</code>, that's your fix. Re-install Python (Windows installer → tick <strong>"Add python.exe to PATH"</strong>) and retry.</p>
+<h3 id="from-the-cli-advanced-users">From the CLI (advanced users)</h3>
+<p>Same outcome, more control:</p>
+<pre><code class="language-sh"># Windows (CPU or GPU — script auto-detects CUDA via nvidia-smi)
+npm run whisper:setup
+
+# macOS / Linux (CPU only)
+npm run whisper:setup:posix
+
+# macOS / Linux (CUDA 12.4)
+bash scripts/whisper/setup.sh --cuda 12.4
+</code></pre>
+<p>Scripts live in <code>scripts/whisper/</code> — plain readable shell, no admin elevation. Audit them first if you'd like.</p>
+<h3 id="disabling-without-uninstalling">Disabling without uninstalling</h3>
+<p>The toggle on the add-on row flips the feature on or off without removing the 2 GB Python venv. Useful when you want to free RAM/CPU temporarily but expect to come back. A disabled add-on hides the Upload / Sessions tabs and unmounts the routes on next restart; the venv and your session data stay untouched on disk.</p>
+<h3 id="uninstalling">Uninstalling</h3>
+<p><strong>Settings → Add-ons → Uninstall</strong> wipes <code>vendor/python-venv/</code> and disables the routes. Or, manually: <code>rm -rf vendor/python-venv/</code>. No residual state in the core app.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="what-it-costs-you">What it costs you</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li><strong>Disk:</strong> ~2 GB on first install (torch is the bulk of it). The venv lives at <code>vendor/python-venv/</code> inside the repo.</li>
+<li><strong>First-transcription wait:</strong> Whisper downloads the model the first time it runs (~3 GB for <code>large-v3</code>). After that, transcription is local-only.</li>
+<li><strong>Time per session:</strong> ~12 min for a 4-hour session on an NVIDIA 4070, ~90 min on CPU. The dashboard shows live progress.</li>
+<li><strong>Network:</strong> Zero outbound calls after the initial install + model download. Audio stays on your machine forever.</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="workflow-a-youtube-audio-captures">Workflow A — YouTube audio captures</h2></summary>
+<div class="docs-section-body">
+<p>Have a session uploaded to YouTube (public / private / unlisted)? Two options:</p>
+<ol>
+<li><strong>Caption Repair</strong> (no add-on needed) — download the auto-caption <code>.sbv</code> from YouTube Studio, drop it in.</li>
+<li><strong>Audio Transcription add-on</strong> — extract the audio yourself with <code>yt-dlp</code> or your tool of choice, drop the audio into the Upload tab. Whisper produces better, more consistent quality than YouTube's auto-captions.</li>
+</ol>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="workflow-b-craig-multitrack-the-premium-pipeline">Workflow B — Craig multitrack (the premium pipeline)</h2></summary>
+<div class="docs-section-body">
+<p>This is the workflow Tusk's Tomes was originally designed around. <strong><a href="https://craig.chat" rel="noopener">Craig</a></strong> is a free, donation-supported Discord recording bot that records each speaker to their own audio track. The per-speaker tracks survive through Whisper into the chronicle, so every line in the final write-up is correctly attributed.</p>
+<p><strong>One-time Craig setup</strong> (~2 minutes):</p>
+<ol>
+<li>Open <a href="https://craig.chat" rel="noopener">https://craig.chat</a> → <strong>Invite Craig</strong>.</li>
+<li>Pick your D&#x26;D Discord server. Approve.</li>
+<li>Done — Craig runs on their infrastructure, no hosting needed.</li>
+</ol>
+<p><strong>During the session:</strong></p>
+<ol>
+<li>Everyone joins voice. Type <code>:craig:, join</code> in any text channel. Craig records each speaker to their own track.</li>
+<li>At the end: <code>:craig:, stop</code>. Craig DMs you a download link valid for 7 days.</li>
+</ol>
+<p><strong>After the session:</strong></p>
+<ol>
+<li>Click the link → <strong>Multi-track FLAC</strong> (the default). You'll get a <code>.zip</code> per Craig chunk (Craig rolls hourly). Download all of them.</li>
+<li>Tusk's Tomes → <strong>Upload tab</strong> → drag all the zips in. Either upload everything at once OR use the <strong>staged batch upload</strong> flow:
+<ul>
+<li>Drop your first set → <strong>Save Part 1</strong> → green confirmation appears.</li>
+<li>Click <strong>Add another batch</strong> → drop the next set → <strong>Save Part 2</strong>. Repeat as needed.</li>
+<li>Click <strong>All audio uploaded — start transcription</strong>.</li>
+</ul>
+</li>
+<li>Whisper grinds through each track from each batch. The speaker-mapping table appears in the same view — edit player + character names while Whisper runs.</li>
+<li>Click the green <strong>Use this transcript for refinement</strong> button → Chronicle tab → <strong>Run</strong>.</li>
+</ol>
+<p>The resulting <code>.sbv</code> interleaves every speaker from every batch chronologically into one merged transcript with <code>[Character (Player)]</code> labels.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="a-shout-out-to-craig">A shout-out to Craig</h2></summary>
+<div class="docs-section-body">
+<p>The Craig workflow <strong>only works because <a href="https://craig.chat" rel="noopener">Craig</a> exists.</strong> Run by <a href="https://github.com/Yahweasel" rel="noopener">Yahweasel</a> — free for everyone, no rate limits, no premium tier, no dark patterns. The per-speaker multitrack output is the gold standard for TTRPG Discord recording.</p>
+<p><strong>If it works for you, go and support Craig directly — <a href="https://craig.chat" rel="noopener">craig.chat</a>.</strong> This project sends no money to Craig and is not affiliated with them. We just rely on their excellent work.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="gpu-acceleration-optional-but-worth-it">GPU acceleration (optional, but worth it)</h2></summary>
+<div class="docs-section-body">
+<p>A CUDA-capable NVIDIA GPU cuts a 4-hour session's transcription from ~90 minutes to ~12 minutes. The install script auto-detects your GPU via <code>nvidia-smi</code> and installs the matching torch wheel.</p>
+<p>If <code>nvidia-smi</code> exists but reports an older CUDA version, pass <code>--cuda 11.8</code> (or whatever your driver supports) to the install script — or delete <code>vendor/python-venv/</code> and re-run <code>npm run whisper:setup</code>, which re-probes.</p>
+<p>No GPU? The CPU path works fine — you'll just want to start transcription before dinner instead of during it.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="troubleshooting">Troubleshooting</h2></summary>
+<div class="docs-section-body">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody><tr><td>"Python not found" during install</td><td>Python not on PATH</td><td>Re-install Python with <strong>"Add to PATH"</strong> ticked; open a fresh terminal</td></tr><tr><td>Torch import failure on first transcription</td><td>CUDA mismatch</td><td>Delete <code>vendor/python-venv/</code>, re-run install with <code>--cuda &#x3C;your-version></code></td></tr><tr><td>Install hangs at ~80%</td><td>Slow connection / large torch download</td><td>Wait it out (~2 GB); the SSE log keeps you informed</td></tr><tr><td>Transcription runs on CPU even with GPU present</td><td><code>nvidia-smi</code> not on PATH</td><td>Reinstall NVIDIA drivers; verify with <code>nvidia-smi</code> in a terminal</td></tr><tr><td>Upload tab still missing after install</td><td>Forgot to restart the dev server</td><td><code>Ctrl+C</code> then <code>npm run dev</code> again</td></tr></tbody></table>
+<p>For anything else, drop a note in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a> — a community Discord with a <code>#support</code> channel is on the <a href="/Tusks-Tomes/docs/roadmap/">roadmap</a>, and the form is the interim path.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section">
+<summary><h2 id="files-this-add-on-touches">Files this add-on touches</h2></summary>
+<div class="docs-section-body">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Path</th><th>Purpose</th></tr></thead><tbody><tr><td><code>vendor/python-venv/</code></td><td>Python virtual environment (faster-whisper + torch)</td></tr><tr><td><code>scripts/whisper/setup.ps1</code> / <code>setup.sh</code></td><td>Install scripts</td></tr><tr><td><code>server/whisper/</code></td><td>Whisper sidecar invocation + per-session transcription queue</td></tr><tr><td><code>server/upload/</code></td><td>Multitrack zip / loose-audio extractor</td></tr><tr><td><code>server/api/whisper.ts</code>, <code>transcribe.ts</code>, <code>upload.ts</code></td><td>HTTP routes (mounted only when add-on is enabled)</td></tr></tbody></table>
+<p>When the add-on is disabled, none of these routes are mounted — Express returns 404, no Python import is attempted. See <a href="/Tusks-Tomes/docs/architecture/"><code>architecture.md</code></a> for the registry/loader implementation.</p>
+</div>
+</details>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/add-ons/audio-transcription.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+</body>
+</html>

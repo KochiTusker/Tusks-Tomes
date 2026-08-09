@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>whisper.cpp bridge — bring your own build — Tusk's Tomes</title>
+<meta name="description" content="This is the route for AMD, Intel and Apple GPUs. It's more involved than the other add-ons, and I want to be straight about why rather than dress it up.">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/whisper-cpp/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="whisper.cpp bridge — bring your own build — Tusk's Tomes">
+<meta property="og:description" content="This is the route for AMD, Intel and Apple GPUs. It's more involved than the other add-ons, and I want to be straight about why rather than dress it up.">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/whisper-cpp/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="whisper.cpp bridge — bring your own build — Tusk's Tomes">
+<meta name="twitter:description" content="This is the route for AMD, Intel and Apple GPUs. It's more involved than the other add-ons, and I want to be straight about why rather than dress it up.">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "whisper.cpp bridge — bring your own build",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/whisper-cpp/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "whisper.cpp bridge — bring your own build",
+  "description": "This is the route for AMD, Intel and Apple GPUs. It's more involved than the other add-ons, and I want to be straight about why rather than dress it up.",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/add-ons/whisper-cpp/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/setup/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Add-ons</h2>
+<ul><li><a href="/Tusks-Tomes/docs/add-ons/node-isolation/">Add-on isolation — Node and Python sandboxing rules</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/">Add-ons — optional capabilities you can install in one click</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/audio-transcription/">Audio Transcription add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/personas/">Chronicle Personas Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code (your subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/codex/">Codex (your ChatGPT subscription)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/local-llm/">Local LLMs Add-on</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/obsidian-vault/">Obsidian Vault Lore (read-only)</a></li>
+<li><a href="/Tusks-Tomes/docs/add-ons/whisper-cpp/" aria-current="page">whisper.cpp bridge — bring your own build</a></li></ul>
+<h2>Tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/diagnose/">Diagnosis bundles for Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify — local code-graph for Claude Code</a></li></ul>
+<h2>Guides</h2>
+<ul><li><a href="/Tusks-Tomes/docs/beginner-guide/">Beginner's guide — setting this up with no terminal experience</a></li>
+<li><a href="/Tusks-Tomes/docs/reforge/">Chronicle Reforge — redo the later phases on a different model</a></li>
+<li><a href="/Tusks-Tomes/docs/configuration/">Configuration &amp; file structure</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/workflows/">Getting a session in — three ways</a></li>
+<li><a href="/Tusks-Tomes/docs/is-this-safe/">How safe is this? What it installs, and what could go wrong</a></li>
+<li><a href="/Tusks-Tomes/docs/comparison/">How this compares to the alternatives</a></li>
+<li><a href="/Tusks-Tomes/docs/known-bugs/">Known bugs and limitations</a></li>
+<li><a href="/Tusks-Tomes/docs/providers/">LLM providers — picking one, getting a key, going offline</a></li>
+<li><a href="/Tusks-Tomes/docs/privacy/">Privacy &amp; security</a></li>
+<li><a href="/Tusks-Tomes/docs/architecture/">Project Architecture: Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/faq/">Questions I get asked, and a few I asked myself</a></li>
+<li><a href="/Tusks-Tomes/docs/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/security-quickref/">Security quick reference</a></li>
+<li><a href="/Tusks-Tomes/docs/audio-to-chronicle/">Session audio to a lore-grounded chronicle</a></li>
+<li><a href="/Tusks-Tomes/docs/setup/">Setup — getting Tusk's Tomes running</a></li>
+<li><a href="/Tusks-Tomes/docs/roadmap/">Tusk's Tomes — Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/vault/">Tusk's Vault — the sibling project (coming soon)</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li>
+<li><a href="/Tusks-Tomes/docs/walkthrough/">Walkthrough — your first session, end to end</a></li>
+<li><a href="/Tusks-Tomes/docs/pricing/">What it costs to run</a></li>
+<li><a href="/Tusks-Tomes/docs/dependencies/">What you need installed</a></li>
+<li><a href="/Tusks-Tomes/docs/use-cases/">Who this is actually for</a></li>
+<li><a href="/Tusks-Tomes/docs/youtube-transcript-to-chronicle/">YouTube transcript to a lore-grounded chronicle</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>whisper.cpp bridge — bring your own build</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#what-youll-need">What you'll need</a></li><li><a href="#building-whispercpp-with-vulkan">Building whisper.cpp with Vulkan</a></li><li><a href="#getting-a-model">Getting a model</a></li><li><a href="#setting-it-up-in-tusks-tomes">Setting it up in Tusk's Tomes</a></li><li><a href="#what-could-go-wrong">What could go wrong</a></li><li><a href="#honestly-is-it-worth-it">Honestly, is it worth it?</a></li></ul></aside>
+    <article class="prose">
+<h1>🔧 whisper.cpp bridge — bring your own build</h1>
+<p>This is the route for <strong>AMD, Intel and Apple GPUs</strong>. It's more involved than
+the other add-ons, and I want to be straight about why rather than dress it up.</p>
+<p>The built-in transcriber only accelerates on NVIDIA. I went looking for a
+ready-made alternative that would use other cards and didn't find a good one:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Project</th><th>Prebuilt GPU backends</th><th>Verdict</th></tr></thead><tbody><tr><td><a href="https://github.com/ggml-org/whisper.cpp" rel="noopener">whisper.cpp</a></td><td>CPU, BLAS <em>(still CPU)</em>, CUDA</td><td>Has a <strong>Vulkan</strong> backend in source — but it is in <strong>no release build</strong>.</td></tr><tr><td><a href="https://github.com/k2-fsa/sherpa-onnx" rel="noopener">sherpa-onnx</a></td><td>CPU, CUDA</td><td>300+ release assets, no DirectML.</td></tr><tr><td><a href="https://github.com/Const-me/Whisper" rel="noopener">Const-me/Whisper</a></td><td>DirectCompute — any DirectX 11 GPU</td><td>Genuinely works on AMD/Intel. No release since July 2023.</td></tr></tbody></table>
+<p>So there is no maintained binary I could bundle that would use your card. I
+could compile and ship one, but that would make this project a binary
+publisher — signing, checksums, platform gatekeepers — for software I can't
+test on the hardware it's for. I'd rather not make a promise I can't keep.</p>
+<p><strong>So this add-on is a bridge, not an installer.</strong> You build or obtain
+whisper.cpp yourself; Tusk's Tomes detects it, checks it, and uses it. Same
+arrangement as the <a href="/Tusks-Tomes/docs/add-ons/claude-code/">Claude Code</a> and <a href="/Tusks-Tomes/docs/add-ons/codex/">Codex</a> add-ons:
+you own the tool, I own the integration.</p>
+<blockquote>
+<p><strong>It downloads and installs nothing.</strong> Enabling the add-on writes a single
+marker file. Uninstalling removes that file and the paths you configured —
+your whisper.cpp build and model files are yours and are never touched.</p>
+</blockquote>
+<hr>
+<h2 id="what-youll-need">What you'll need</h2>
+<ol>
+<li>A <strong>whisper.cpp build compiled with a GPU backend</strong> for your card.</li>
+<li>A <strong>model file</strong> in GGML format.</li>
+</ol>
+<p>Both live wherever you like. Tusk's Tomes only stores the paths.</p>
+<blockquote>
+<p>⚠️ <strong>Downloading an official release will not give you GPU acceleration.</strong>
+The release binaries are CPU-only (or CUDA, if you have NVIDIA — in which
+case use the normal Audio Transcription add-on instead, it's easier). For
+AMD or Intel you have to compile with Vulkan. The add-on reads your binary's
+own capability line and will tell you plainly if it's a CPU-only build, so
+you won't be left wondering why it's slow.</p>
+</blockquote>
+<hr>
+<h2 id="building-whispercpp-with-vulkan">Building whisper.cpp with Vulkan</h2>
+<p>Vulkan is the backend worth having: one build covers AMD, Intel and NVIDIA.</p>
+<p>The authoritative instructions are in the project's own README —
+<strong><a href="https://github.com/ggml-org/whisper.cpp#vulkan-gpu-support" rel="noopener">github.com/ggml-org/whisper.cpp</a></strong> —
+and you should prefer those if they differ from what's below. This is what the
+process looks like in practice.</p>
+<h3 id="windows">Windows</h3>
+<p>You'll need <a href="https://visualstudio.microsoft.com/downloads/" rel="noopener">Visual Studio</a>
+with the "Desktop development with C++" workload, <a href="https://cmake.org/download/" rel="noopener">CMake</a>,
+and the <a href="https://vulkan.lunarg.com/sdk/home" rel="noopener">Vulkan SDK</a> from LunarG.</p>
+<pre><code class="language-powershell">git clone https://github.com/ggml-org/whisper.cpp
+cd whisper.cpp
+cmake -B build -DGGML_VULKAN=1
+cmake --build build --config Release
+</code></pre>
+<p>The binary lands at <code>build\bin\Release\whisper-cli.exe</code>.</p>
+<h3 id="linux">Linux</h3>
+<pre><code class="language-sh"># Vulkan headers + loader, via your package manager. On Debian/Ubuntu:
+sudo apt install vulkan-tools libvulkan-dev glslc cmake build-essential
+
+git clone https://github.com/ggml-org/whisper.cpp
+cd whisper.cpp
+cmake -B build -DGGML_VULKAN=1
+cmake --build build --config Release
+</code></pre>
+<p>The binary lands at <code>build/bin/whisper-cli</code>.</p>
+<h3 id="macos">macOS</h3>
+<p>Don't use Vulkan here — Apple Silicon has a better option. Metal is enabled by
+default, so a plain build already uses your GPU:</p>
+<pre><code class="language-sh">git clone https://github.com/ggml-org/whisper.cpp
+cd whisper.cpp
+cmake -B build
+cmake --build build --config Release
+</code></pre>
+<h3 id="checking-it-worked">Checking it worked</h3>
+<p>Run the binary with no arguments and look for the <code>system_info:</code> line. You want
+<code>VULKAN = 1</code> (or <code>METAL = 1</code> on a Mac). If everything reads <code>0</code>, the build
+didn't pick up the SDK — the add-on will also tell you this once configured.</p>
+<hr>
+<h2 id="getting-a-model">Getting a model</h2>
+<p>The models live in the whisper.cpp repo's Hugging Face mirror. <code>large-v3</code> is
+what the built-in engine uses and gives the best results; <code>medium</code> is a
+reasonable compromise on a smaller card.</p>
+<pre><code class="language-sh"># from inside the whisper.cpp checkout
+./models/download-ggml-model.sh large-v3    # or: medium, small, base
+</code></pre>
+<p>On Windows use <code>models\download-ggml-model.cmd large-v3</code>. The file lands in
+<code>models/</code> and is roughly 3 GB for <code>large-v3</code>.</p>
+<p>If you'd rather download directly, the files are at
+<a href="https://huggingface.co/ggerganov/whisper.cpp/tree/main" rel="noopener">huggingface.co/ggerganov/whisper.cpp</a>.
+Take the <code>.bin</code> — the add-on rejects anything under 20 MB, since that's
+invariably a Git-LFS pointer rather than real weights.</p>
+<hr>
+<h2 id="setting-it-up-in-tusks-tomes">Setting it up in Tusk's Tomes</h2>
+<ol>
+<li>
+<p><strong>Settings → Add-ons → whisper.cpp bridge → Install.</strong> Nothing downloads;
+it just enables the integration.</p>
+</li>
+<li>
+<p><strong>Restart Tusk's Tomes</strong> so the bridge loads.</p>
+</li>
+<li>
+<p><strong>Settings → whisper.cpp bridge</strong> — set two paths:</p>
+<ul>
+<li>the binary, e.g. <code>C:\dev\whisper.cpp\build\bin\Release\whisper-cli.exe</code></li>
+<li>the model, e.g. <code>C:\dev\whisper.cpp\models\ggml-large-v3.bin</code></li>
+</ul>
+<p>Both must be absolute paths.</p>
+</li>
+<li>
+<p>The panel then reports what it found. You're looking for
+<strong>"Ready, with GPU acceleration via Vulkan"</strong>. If it says <em>"this is a
+CPU-only build"</em>, the compile didn't pick up Vulkan — revisit the SDK step.</p>
+</li>
+</ol>
+<hr>
+<h2 id="what-could-go-wrong">What could go wrong</h2>
+<p><strong>"That binary didn't run."</strong> Usually the path is wrong, or on Linux/macOS the
+file isn't executable — <code>chmod +x whisper-cli</code>. On Windows, if you moved the
+<code>.exe</code> out of its build folder, put it back: it needs the DLLs alongside it.</p>
+<p><strong>"CPU-only build."</strong> The compile didn't find the Vulkan SDK. On Windows, open
+a fresh terminal after installing the SDK so <code>VULKAN_SDK</code> is set, then delete
+<code>build/</code> and configure again.</p>
+<p><strong>"Model file is missing or too small."</strong> Almost always a Git-LFS pointer file
+rather than the real weights. Re-download using the script above.</p>
+<p><strong>It runs but is no faster than before.</strong> Check the <code>system_info:</code> line
+directly. Some drivers expose a Vulkan device that falls back to software
+rendering, which reports as available but performs like CPU.</p>
+<hr>
+<h2 id="honestly-is-it-worth-it">Honestly, is it worth it?</h2>
+<p>If you've a decent AMD or Intel card and you're comfortable with a build
+toolchain: yes. You get proper GPU transcription instead of waiting hours.</p>
+<p>If any of the above made you wince: <strong>use the
+<a href="/Tusks-Tomes/docs/workflows/">YouTube route</a> instead</strong>. Upload the recording as an unlisted
+video, let Google transcribe it, import the captions. It needs no GPU, no
+compiler and no Python, and it's what I'd recommend to most people in this
+position. The trade-off is speaker attribution, covered in that page.</p>
+<p>Making this as easy as the main Whisper add-on is on the
+<a href="/Tusks-Tomes/docs/roadmap/">roadmap</a> — it needs an upstream project to ship a
+vendor-neutral GPU build, or for me to take on publishing signed binaries.
+Neither is true today, and I'd rather say so than pretend otherwise.</p>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/add-ons/whisper-cpp.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+</body>
+</html>
