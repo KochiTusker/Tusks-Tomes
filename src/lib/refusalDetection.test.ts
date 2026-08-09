@@ -22,13 +22,13 @@ describe('detectRefusal', () => {
   it('does NOT flag a long chronicle that merely quotes "I can\'t" in dialogue', () => {
     const prose =
       'The hall fell silent. ' .repeat(60) +
-      '"I can\'t believe you did that," Zainab muttered, wiping blood from the blade. ' +
+      '"I can\'t believe you did that," Wiktoria muttered, wiping blood from the blade. ' +
       'The chronicle continued for many more paragraphs. '.repeat(60)
     expect(looksLikeRefusal(prose)).toBe(false)
   })
 
   it('does NOT flag normal grounded output', () => {
-    expect(looksLikeRefusal('Zainab: We march at dawn, you bastards.')).toBe(false)
+    expect(looksLikeRefusal('Wiktoria: We march at dawn, you bastards.')).toBe(false)
   })
 
   it('flags near-empty output for a large input', () => {

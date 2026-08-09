@@ -6,18 +6,18 @@
 //
 // Findings inform the pricing table + routing options.
 
-const FIXTURE = `[Ursula (Perpetua)] Right, I'm going to charge the ogre. I roll a... twelve.
+const FIXTURE = `[Solveig (Orsolya)] Right, I'm going to charge the ogre. I roll a... twelve.
 [DM (DM)] You leap forward and your hammer connects with a sickening crunch — the ogre's jaw shatters in a spray of yellow teeth.
-[Zainab (Adaeze)] My god. Ursula, that was beautiful.
-[Ursula (Perpetua)] That's for stealing my sandwich.
-[Hiroko (Xiomara)] I cast firebolt on the second ogre. Natural twenty!
+[Wiktoria (Alessia)] My god. Solveig, that was beautiful.
+[Solveig (Orsolya)] That's for stealing my sandwich.
+[Giulia (Valentina)] I cast firebolt on the second ogre. Natural twenty!
 [DM (DM)] The firebolt explodes against the ogre's chest and you watch as it staggers backwards, its leather armour catching fire.
-[Bhavna (Priya)] Wait, can the leather armour give the ogre disadvantage?
-[Ursula (Perpetua)] He's literally on fire, Bhavna. He's having a worse day than getting disadvantage.
+[Camille (Oksana)] Wait, can the leather armour give the ogre disadvantage?
+[Solveig (Orsolya)] He's literally on fire, Camille. He's having a worse day than getting disadvantage.
 [DM (DM)] The ogre's screams echo through the cavern as it falls to its knees.
-[Zainab (Adaeze)] I want to loot the body.
-[Hiroko (Xiomara)] It's still on fire.
-[Zainab (Adaeze)] I have gloves.`
+[Wiktoria (Alessia)] I want to loot the body.
+[Giulia (Valentina)] It's still on fire.
+[Wiktoria (Alessia)] I have gloves.`
 
 const EXTRAS_PROMPT = `Extract three lists from the following D&D transcript chunk. Output ONLY valid JSON in this exact shape:
 {

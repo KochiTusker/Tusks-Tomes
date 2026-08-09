@@ -87,8 +87,8 @@ function refusalEvents(events: PipelineEvent[]) {
 }
 
 const RAW =
-  '[Zainab (Adaeze)] We march on the Crimson Cathedral at dawn, blades drawn.\n' +
-  '[Ursula (Perpetua)] Aye, and the Sun Blade hums for blood this morning.\n'.repeat(40)
+  '[Wiktoria (Alessia)] We march on the Crimson Cathedral at dawn, blades drawn.\n' +
+  '[Solveig (Orsolya)] Aye, and the Sun Blade hums for blood this morning.\n'.repeat(40)
 
 describe('Claude Code refusal tracking (failsafe OFF)', () => {
   beforeEach(() => {

@@ -6,7 +6,7 @@ describe('dedupeBullets', () => {
     const input = [
       'The party reached Thornholt at dusk.',
       'A guard in silver-and-grey livery challenged them at the gate.',
-      'Lakshmi rolled Insight and learned the guard had been on duty since dawn.',
+      'Leilani rolled Insight and learned the guard had been on duty since dawn.',
     ]
     expect(dedupeBullets(input)).toEqual(input)
   })
@@ -91,15 +91,15 @@ describe('dedupeBullets', () => {
     // out of scope; we accept that the rare deep paraphrase slips through.
     const input = [
       // Chunk 1 bullets
-      'The party met Liesel at the Silver Lantern.',
-      'Cassian recognised the cadence of the captive as a Pact of Mor ritual.',
+      'The party met Farida at the Silver Lantern.',
+      'Chidi recognised the cadence of the captive as a Pact of Mor ritual.',
       // Chunk 2 boundary repeat — small phrasing drift, same event
-      'Cassian recognised the cadence of the captive as a Pact of Mor rite.',
+      'Chidi recognised the cadence of the captive as a Pact of Mor rite.',
       'Mira agreed to help interrogate the surviving thug.',
     ]
     const out = dedupeBullets(input)
     expect(out).toHaveLength(3)
-    expect(out[0]).toMatch(/Liesel/)
+    expect(out[0]).toMatch(/Farida/)
     expect(out[1]).toMatch(/recognised the cadence/)
     expect(out[2]).toMatch(/Mira/)
   })

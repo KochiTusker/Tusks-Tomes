@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Focused probe — does Ursula's specific line that tripped Phase 2 chunk 3
+// Focused probe — does Solveig's specific line that tripped Phase 2 chunk 3
 // during the dev-test-mode run pass on Paid Flash / Paid Pro when it fails
 // on Free Flash? Confirms the Free→Paid escalation path will actually
 // recover the chunk before we soft-skip it.
@@ -74,22 +74,22 @@ const BRODY_CHUNK = `0:11:35.000,0:11:35.720
 [Dungeon Master (DM)] Himself
 
 0:11:38.470,0:11:39.630
-[Ursula (Perpetua)] wanna as he like
+[Solveig (Orsolya)] wanna as he like
 
 0:11:39.630,0:11:41.470
-[Ursula (Perpetua)] gets knocked prone I wanna do like this
+[Solveig (Orsolya)] gets knocked prone I wanna do like this
 
 0:11:41.470,0:11:43.730
-[Ursula (Perpetua)] and then just like stick my tongue out at him
+[Solveig (Orsolya)] and then just like stick my tongue out at him
 
 0:11:43.730,0:11:45.590
-[Ursula (Perpetua)] like in the most gay way possible
+[Solveig (Orsolya)] like in the most gay way possible
 
 0:11:46.620,0:11:47.480
 [Dungeon Master (DM)] Yeah sure
 
 0:11:48.060,0:11:48.580
-[Ursula (Perpetua)] um
+[Solveig (Orsolya)] um
 
 0:11:48.080,0:11:50.700
 [Dungeon Master (DM)] You can get two hype points for that`
@@ -164,7 +164,7 @@ async function main() {
     total: 3,
   })
 
-  console.log('=== Ursula-dialogue probe ===')
+  console.log('=== Solveig-dialogue probe ===')
   console.log(`Chunk length: ${BRODY_CHUNK.length} chars`)
   console.log(`Prompt length: ${userPrompt.length} chars`)
   console.log(`Free key configured: ${freeKey ? 'YES' : 'NO'} (source: ${keysFrom})`)

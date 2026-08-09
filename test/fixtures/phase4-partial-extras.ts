@@ -15,17 +15,17 @@ import type { ExtrasOutput } from '@/types'
  *  must round-trip this exactly into priorExtras. */
 export const PARTIAL_AFTER_3_CHUNKS: ExtrasOutput = {
   jests: [
-    "Ursula's third pun this session",
-    'Mireille mishearing "doom" as "Zoom"',
-    'Hiroko insisting the goblin was actually a Funko Pop',
+    "Solveig's third pun this session",
+    'Gustav mishearing "doom" as "Zoom"',
+    'Giulia insisting the goblin was actually a Funko Pop',
   ],
   gore: [
-    'Zainab cleaves the ogre lengthwise',
-    'Cassian critically fumbles, drops his own sword on his foot',
+    'Wiktoria cleaves the ogre lengthwise',
+    'Chidi critically fumbles, drops his own sword on his foot',
   ],
   quotes: [
-    { speaker: 'Ursula', line: 'It\'s half seven, let\'s start.' },
-    { speaker: 'Zainab', line: 'Yeah.', kind: 'funny' },
+    { speaker: 'Solveig', line: 'It\'s half seven, let\'s start.' },
+    { speaker: 'Wiktoria', line: 'Yeah.', kind: 'funny' },
   ],
 }
 

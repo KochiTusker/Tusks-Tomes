@@ -890,21 +890,38 @@ ${routing}
     <p class="provenance-note"><strong>Names have been changed.</strong> ${escapeHtml(p.anonymisation ?? '')} ${escapeHtml(p.selectionNote ?? '')}</p>
   </div>`
 
-  /** One sample, as a card. `body` is trusted generated markup, never input. */
+  /** One sample, as a collapsed card. `body` is trusted generated markup,
+   *  never input.
+   *
+   *  <details> rather than a plain card, for the same reason the output tiles
+   *  above are: the samples are ~15% of the landing page, and a visitor who has
+   *  not yet decided they care should not have to scroll past a session's worth
+   *  of generated prose to reach the rest. Collapsed content stays in the DOM,
+   *  so it is still indexed, still reachable by in-page find, and still there
+   *  for the reader who does want it.
+   *
+   *  All five start closed. The tiles above leave their first one open because
+   *  that one is the headline claim; here the heading and note already say what
+   *  each sample is, and opening one by default just reinstates the wall of
+   *  text in miniature.
+   *
+   *  The header is <summary>, so its children must be phrasing content — hence
+   *  <span> for the note and meta where the card used <p>. An <h3> is allowed
+   *  inside <summary> and keeps the document outline intact. */
   const sample = (s, body) =>
     !s
       ? ''
-      : `  <article class="sample">
-    <header class="sample-head">
+      : `  <details class="sample">
+    <summary class="sample-head">
       <h3>${escapeHtml(s.label)}</h3>
-      <p class="sample-note">${escapeHtml(s.note)}</p>
-      ${s.meta ? `<p class="sample-meta">${escapeHtml(s.meta)}</p>` : ''}
-    </header>
+      <span class="sample-note">${escapeHtml(s.note)}</span>
+      ${s.meta ? `<span class="sample-meta">${escapeHtml(s.meta)}</span>` : ''}
+    </summary>
     <div class="sample-body">
 ${body}
     </div>
     ${s.callout ? `<p class="sample-callout">${escapeHtml(s.callout)}</p>` : ''}
-  </article>`
+  </details>`
 
   const list = (items) =>
     `      <ul class="sample-list">\n${items

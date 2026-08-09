@@ -38,8 +38,8 @@ through "<Character> said", "<Character> drew their blade", etc.
 A player line often mixes two things that must be handled differently:
 - **Action declaration (out-of-character) — NARRATE, never quote.** The player states
   what their character DOES, usually first person ("I swing my axe", "I try to pick the
-  lock", "I roll to persuade"). Convert to third-person narrative ("Zainab swung his
-  axe"). NEVER write it as dialogue (do NOT write: Zainab said, "I swing my axe.").
+  lock", "I roll to persuade"). Convert to third-person narrative ("Wiktoria swung his
+  axe"). NEVER write it as dialogue (do NOT write: Wiktoria said, "I swing my axe.").
 - **In-character dialogue — QUOTE verbatim.** The character speaks aloud in the fiction
   ("'Die, foul thing!'"). Quote it, attributed to the character.
 A line like "I kick the door down and shout 'Anyone home?!'" → narrate the kick, quote

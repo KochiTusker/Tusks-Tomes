@@ -22,7 +22,7 @@ afterEach(() => {
   while (dirs.length) rmSync(dirs.pop(), { recursive: true, force: true })
 })
 
-const POOL = ['Zephyrine', 'Bram', 'Coledge', 'Ilta', 'Lorcan', 'Sorrel', 'Wynn', 'Tamsin']
+const POOL = ['Zephyrine', 'Bram', 'Coledge', 'Ilta', 'Magnus', 'Sorrel', 'Wynn', 'Tamsin']
 
 describe('pool loading refuses to mix placeholders with real people', () => {
   it('THROWS when a pool name is also on the private denylist', () => {
@@ -159,16 +159,16 @@ describe('substitution changes names and nothing else', () => {
   ].join('\n')
 
   it('substitutes every occurrence, in both cases', () => {
-    const next = { pc1: 'Lorcan', pc2: 'Wynn', pc3: 'Tamsin' }
+    const next = { pc1: 'Magnus', pc2: 'Wynn', pc3: 'Tamsin' }
     const out = rotate(SOURCE, CURRENT, next)
-    expect(out).toContain("speakers: ['Lorcan', 'Wynn', 'Tamsin']")
-    expect(out).toContain('[Lorcan (Wynn)]')
-    expect(out).toContain("aliases['lorcan']")
-    expect(out).toContain("'Lorcan Vale'")
+    expect(out).toContain("speakers: ['Magnus', 'Wynn', 'Tamsin']")
+    expect(out).toContain('[Magnus (Wynn)]')
+    expect(out).toContain("aliases['magnus']")
+    expect(out).toContain("'Magnus Vale'")
   })
 
   it('leaves longer words containing a name alone', () => {
-    const out = rotate(SOURCE, CURRENT, { pc1: 'Lorcan', pc2: 'Wynn', pc3: 'Tamsin' })
+    const out = rotate(SOURCE, CURRENT, { pc1: 'Magnus', pc2: 'Wynn', pc3: 'Tamsin' })
     expect(out).toContain('Bramble is a plant')
     expect(out).toContain('bramConfig')
     expect(out).toContain('coledgeMode')
@@ -195,7 +195,7 @@ describe('substitution changes names and nothing else', () => {
   })
 
   it('never leaves a sentinel behind', () => {
-    const out = rotate(SOURCE, CURRENT, { pc1: 'Lorcan', pc2: 'Wynn', pc3: 'Tamsin' })
+    const out = rotate(SOURCE, CURRENT, { pc1: 'Magnus', pc2: 'Wynn', pc3: 'Tamsin' })
     expect(out).not.toMatch(/__ROT_/)
     expect(out).not.toMatch(/lc__/)
   })

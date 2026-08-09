@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The previous Free/Paid probe showed: Ursula's chunk blocks on ALL three
+// The previous Free/Paid probe showed: Solveig's chunk blocks on ALL three
 // Gemini tiers (Free Flash, Paid Flash, Paid Pro). So the trigger is the
 // content itself, not the endpoint's T&S threshold.
 //
@@ -39,16 +39,16 @@ const SAFETY_SETTINGS = [
 // If you re-run this against a fresh block, DO NOT paste the real chunk in.
 // Write an equivalent, or point the probe at a file outside the repo.
 const LINE_SUSPECT = `0:11:43.730,0:11:45.590
-[Ursula (Perpetua)] and I do it in the most gay way possible obviously`
+[Solveig (Orsolya)] and I do it in the most gay way possible obviously`
 
 const LINE_SUPLEX = `0:11:35.720,0:11:37.880
 [Dungeon Master (DM)] He hoists you up and drops you with a suplex`
 
 const LINE_KNOCKED_PRONE = `0:11:39.630,0:11:41.470
-[Ursula (Perpetua)] so once he's knocked prone I want to do this bit`
+[Solveig (Orsolya)] so once he's knocked prone I want to do this bit`
 
 const LINE_TONGUE = `0:11:41.470,0:11:43.730
-[Ursula (Perpetua)] I stand over him and stick my tongue out at the crowd`
+[Solveig (Orsolya)] I stand over him and stick my tongue out at the crowd`
 
 // The full chunk, assembled from the cues above plus filler turns.
 const FULL = `0:11:35.000,0:11:35.720
@@ -61,22 +61,22 @@ const FULL = `0:11:35.000,0:11:35.720
 [Dungeon Master (DM)] Hard
 
 0:11:38.470,0:11:39.630
-[Ursula (Perpetua)] right ok so what I want is
+[Solveig (Orsolya)] right ok so what I want is
 
 0:11:39.630,0:11:41.470
-[Ursula (Perpetua)] so once he's knocked prone I want to do this bit
+[Solveig (Orsolya)] so once he's knocked prone I want to do this bit
 
 0:11:41.470,0:11:43.730
-[Ursula (Perpetua)] I stand over him and stick my tongue out at the crowd
+[Solveig (Orsolya)] I stand over him and stick my tongue out at the crowd
 
 0:11:43.730,0:11:45.590
-[Ursula (Perpetua)] and I do it in the most gay way possible obviously
+[Solveig (Orsolya)] and I do it in the most gay way possible obviously
 
 0:11:46.620,0:11:47.480
 [Dungeon Master (DM)] Yeah go on then
 
 0:11:48.060,0:11:48.580
-[Ursula (Perpetua)] um
+[Solveig (Orsolya)] um
 
 0:11:48.080,0:11:50.700
 [Dungeon Master (DM)] That's two hype points for the crowd work`
@@ -91,82 +91,82 @@ const NEUTRAL_BEFORE = `0:08:00.000,0:08:03.000
 [Dungeon Master (DM)] The wrestling ring is set up. The crowd is buzzing.
 
 0:08:03.000,0:08:05.000
-[Ursula (Perpetua)] I want to enter to my theme music. Star Spangled Pentagon power.
+[Solveig (Orsolya)] I want to enter to my theme music. Star Spangled Pentagon power.
 
 0:08:05.000,0:08:07.000
 [Dungeon Master (DM)] Confetti rains down. The pyrotechnics fire.
 
 0:08:07.000,0:08:09.000
-[Mireille (Cormac)] This is the big match. Tonight Stardust faces the Underminer.
+[Gustav (Dagny)] This is the big match. Tonight Stardust faces the Underminer.
 
 0:08:09.000,0:08:12.000
-[Hiroko (Xiomara)] Last week's championship was a real spectacle. The crowd loved it.
+[Giulia (Valentina)] Last week's championship was a real spectacle. The crowd loved it.
 
 0:08:12.000,0:08:14.000
-[Ursula (Perpetua)] I'm gonna start with a low-risk jab. Just feeling him out.
+[Solveig (Orsolya)] I'm gonna start with a low-risk jab. Just feeling him out.
 
 0:08:14.000,0:08:16.000
 [Dungeon Master (DM)] Roll a d20 for the jab attack.
 
 0:08:16.000,0:08:18.000
-[Ursula (Perpetua)] Twelve plus three. Fifteen total.
+[Solveig (Orsolya)] Twelve plus three. Fifteen total.
 
 0:08:18.000,0:08:20.000
 [Dungeon Master (DM)] The Underminer blocks. You lose a hype point.
 
 0:08:20.000,0:08:22.000
-[Ursula (Perpetua)] Damn it. I'll try to grapple him next round.
+[Solveig (Orsolya)] Damn it. I'll try to grapple him next round.
 
 0:08:22.000,0:08:25.000
-[Mireille (Cormac)] You need five hype points to attempt a pin. Build it up.
+[Gustav (Dagny)] You need five hype points to attempt a pin. Build it up.
 
 0:08:25.000,0:08:28.000
-[Hiroko (Xiomara)] The crowd's getting louder. They love a comeback story.
+[Giulia (Valentina)] The crowd's getting louder. They love a comeback story.
 
 0:08:28.000,0:08:30.000
 [Dungeon Master (DM)] The Underminer hits the ropes for momentum.
 
 0:08:30.000,0:08:33.000
-[Ursula (Perpetua)] I'll counter with a shoulder tackle. Roll the d20.
+[Solveig (Orsolya)] I'll counter with a shoulder tackle. Roll the d20.
 
 0:08:33.000,0:08:35.000
 [Dungeon Master (DM)] Eighteen. You knock him down. Two hype points.
 
 0:08:35.000,0:08:38.000
-[Hiroko (Xiomara)] The arena's getting electric. Star Spangled signs everywhere.
+[Giulia (Valentina)] The arena's getting electric. Star Spangled signs everywhere.
 
 0:08:38.000,0:08:41.000
-[Ursula (Perpetua)] I want to climb the turnbuckle for an elbow drop.
+[Solveig (Orsolya)] I want to climb the turnbuckle for an elbow drop.
 
 0:08:41.000,0:08:43.000
 [Dungeon Master (DM)] You climb, but he rolls away. Roll for landing.
 
 0:08:43.000,0:08:46.000
-[Ursula (Perpetua)] Six. Ouch. I crash into the mat.
+[Solveig (Orsolya)] Six. Ouch. I crash into the mat.
 
 0:08:46.000,0:08:48.000
-[Mireille (Cormac)] Big mistake. The Underminer's back on his feet.
+[Gustav (Dagny)] Big mistake. The Underminer's back on his feet.
 
 0:08:48.000,0:08:51.000
 [Dungeon Master (DM)] He launches into a clothesline. Roll to defend.
 
 0:08:51.000,0:08:53.000
-[Ursula (Perpetua)] Nineteen. I duck under it.
+[Solveig (Orsolya)] Nineteen. I duck under it.
 
 0:08:53.000,0:08:56.000
-[Hiroko (Xiomara)] The crowd's chanting Stardust's name now. The mood has shifted.
+[Giulia (Valentina)] The crowd's chanting Stardust's name now. The mood has shifted.
 
 0:08:56.000,0:08:58.000
 [Dungeon Master (DM)] Good. The Underminer is winded from missing.
 
 0:08:58.000,0:09:01.000
-[Ursula (Perpetua)] I want to seize the moment. Going for a body slam.
+[Solveig (Orsolya)] I want to seize the moment. Going for a body slam.
 
 0:09:01.000,0:09:04.000
 [Dungeon Master (DM)] Roll. The crowd is on its feet.
 
 0:09:04.000,0:09:06.000
-[Ursula (Perpetua)] Sixteen plus three. Nineteen.
+[Solveig (Orsolya)] Sixteen plus three. Nineteen.
 
 0:09:06.000,0:09:09.000
 [Dungeon Master (DM)] You lift him over your head. The audience gasps.`
@@ -175,46 +175,46 @@ const NEUTRAL_AFTER = `0:11:50.700,0:11:53.000
 [Dungeon Master (DM)] The crowd is roaring. The Underminer staggers up.
 
 0:11:53.000,0:11:55.000
-[Ursula (Perpetua)] I want to follow up with another suplex while he's dazed.
+[Solveig (Orsolya)] I want to follow up with another suplex while he's dazed.
 
 0:11:55.000,0:11:57.000
 [Dungeon Master (DM)] Roll for the second attempt.
 
 0:11:57.000,0:11:59.000
-[Ursula (Perpetua)] Eight. That's not great.
+[Solveig (Orsolya)] Eight. That's not great.
 
 0:11:59.000,0:12:01.000
 [Dungeon Master (DM)] He reverses. You're on your back now.
 
 0:12:01.000,0:12:03.000
-[Mireille (Cormac)] He's playing to the audience. Soaking in the boos.
+[Gustav (Dagny)] He's playing to the audience. Soaking in the boos.
 
 0:12:03.000,0:12:06.000
-[Hiroko (Xiomara)] The crowd's split. Half cheering Stardust, half jeering.
+[Giulia (Valentina)] The crowd's split. Half cheering Stardust, half jeering.
 
 0:12:06.000,0:12:08.000
-[Ursula (Perpetua)] I'll kip up to my feet and dust myself off.
+[Solveig (Orsolya)] I'll kip up to my feet and dust myself off.
 
 0:12:08.000,0:12:10.000
 [Dungeon Master (DM)] Smooth move. The judges note your style.
 
 0:12:10.000,0:12:13.000
-[Hiroko (Xiomara)] This is the biggest match Pentagon has seen this season.
+[Giulia (Valentina)] This is the biggest match Pentagon has seen this season.
 
 0:12:13.000,0:12:15.000
-[Mireille (Cormac)] You've still got three hype points. Build it up to five.
+[Gustav (Dagny)] You've still got three hype points. Build it up to five.
 
 0:12:15.000,0:12:18.000
 [Dungeon Master (DM)] The Underminer paces the ring, taunting the crowd.
 
 0:12:18.000,0:12:20.000
-[Ursula (Perpetua)] I'll go for a running clothesline.
+[Solveig (Orsolya)] I'll go for a running clothesline.
 
 0:12:20.000,0:12:22.000
 [Dungeon Master (DM)] Roll. The crowd is chanting.
 
 0:12:22.000,0:12:24.000
-[Ursula (Perpetua)] Seventeen. I connect.
+[Solveig (Orsolya)] Seventeen. I connect.
 
 0:12:24.000,0:12:26.000
 [Dungeon Master (DM)] He's down. Four hype points now.`

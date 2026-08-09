@@ -18,7 +18,7 @@ never written back into the vault.
 Tusk's Tomes reads two things from your vault:
 
 1. **An entity index** — canonical names + aliases, used by Phase 1 grounding to
-   fix mis-transcribed names (e.g. "Merr" → "Zainab Corvel"). It prefers a
+   fix mis-transcribed names (e.g. "Merr" → "Wiktoria Corvel"). It prefers a
    curated `_system/entity-index.json` if your vault has one; otherwise it walks
    your notes and reads each note's frontmatter.
 2. **The note bodies** — used as the Knowledge Base for the chronicle phases.

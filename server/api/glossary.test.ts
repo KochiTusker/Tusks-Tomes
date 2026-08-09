@@ -56,7 +56,7 @@ describe('glossaryRouter PUT — strict validation (Phase J)', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           version: 1,
-          safeReplacements: [{ from: 'broady', to: 'Ursula' }],
+          safeReplacements: [{ from: 'broady', to: 'Solveig' }],
           contextualHints: [],
         }),
       })
@@ -148,7 +148,7 @@ describe('glossaryRouter — destructive-write protection', () => {
 
   it('refuses a PUT that would empty a populated glossary', async () => {
     await withGlossaryServer(async (baseUrl) => {
-      const seeded = { version: 1, safeReplacements: [{ from: 'buggo', to: 'Cassian' }], contextualHints: [] }
+      const seeded = { version: 1, safeReplacements: [{ from: 'buggo', to: 'Chidi' }], contextualHints: [] }
       expect((await fetch(baseUrl, {
         method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(seeded),
       })).status).toBe(200)
@@ -187,8 +187,8 @@ describe('glossaryRouter — destructive-write protection', () => {
         fetch(`${baseUrl}${qs}`, {
           method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
         })
-      await put({ version: 1, safeReplacements: [{ from: 'buggo', to: 'Cassian' }], contextualHints: [] })
-      await put({ version: 1, safeReplacements: [{ from: 'broady', to: 'Ursula' }], contextualHints: [] })
+      await put({ version: 1, safeReplacements: [{ from: 'buggo', to: 'Chidi' }], contextualHints: [] })
+      await put({ version: 1, safeReplacements: [{ from: 'broady', to: 'Solveig' }], contextualHints: [] })
       // Even a sanctioned clear leaves the prior state recoverable.
       await put({ version: 1, safeReplacements: [], contextualHints: [] }, '?allowEmpty=1')
 

@@ -7,7 +7,7 @@ Five-scenario Gemini-only validation that runs the full pipeline UI end-to-end a
 For each of the five Gemini scenarios in [`scenarios.mjs`](scenarios.mjs):
 
 - The pipeline reaches `status === 'done'` without unrecoverable errors
-- Phase 3 chronicle is non-empty and contains ≥4 of 7 seeded entities (Cassian / Lakshmi / Zainab / Liesel / Thornholt / The Three / Pact of Mor)
+- Phase 3 chronicle is non-empty and contains ≥4 of 7 seeded entities (Chidi / Leilani / Wiktoria / Farida / Thornholt / The Three / Pact of Mor)
 - Phase 4 extras parses with ≥1 quote
 - Phase 6 condensed narrative meets the 1500-word floor enforced by `src/lib/prompts.ts:631-634`
 - Each phase routed to the model the scenario specifies

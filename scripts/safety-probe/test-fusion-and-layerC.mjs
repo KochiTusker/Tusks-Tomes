@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // Empirically validate Layer B (chunk fusion) and Layer C (Paid Flash
-// 15KB chunks) for the Ursula trigger.
+// 15KB chunks) for the Solveig trigger.
 //
 // Builds a realistic 3-chunk Phase 2 audit scenario from the dev-test-mode
-// transcript (24KB truncated), where chunk 3 is the Ursula-trigger chunk.
+// transcript (24KB truncated), where chunk 3 is the Solveig-trigger chunk.
 // Probes:
 //   a) Original Free Flash 8KB chunk 3 (baseline — should block)
 //   b) Layer C: same content but Paid Flash 15KB chunk size (chunk 3

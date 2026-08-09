@@ -1663,6 +1663,50 @@ tbody tr:nth-child(even) td {
   border-bottom: 1px solid var(--border);
 }
 
+/* The sample cards are <details>, collapsed by default — see the sample()
+   helper in scripts/site/build-site.mjs for why. Interaction styling mirrors
+   the output tiles above so the two disclosure patterns on this page behave
+   identically. */
+.sample > summary {
+  cursor: pointer;
+  /* Default triangle can't be styled cross-browser and sits badly in a flex
+     row; ::after below replaces it, exactly as the tiles do. */
+  list-style: none;
+}
+.sample > summary::-webkit-details-marker {
+  display: none;
+}
+.sample > summary:focus-visible {
+  outline: 2px solid var(--arcane-bright);
+  outline-offset: -2px;
+}
+
+/* Closed, the header IS the whole card, so the rule beneath it would be a
+   line to nowhere. It only earns its keep once there is body text under it. */
+.sample:not([open]) > .sample-head {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+/* .sample-meta keeps its auto left margin, so it still sits at the far end of
+   the header and this chevron lands just outside it. */
+.sample > summary::after {
+  content: "";
+  margin-left: 0.85rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid var(--arcane-bright);
+  border-bottom: 2px solid var(--arcane-bright);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.28s;
+  flex: none;
+  align-self: center;
+}
+.sample[open] > summary::after {
+  transform: rotate(-135deg);
+}
+
 .sample-head h3 {
   margin: 0;
   font-family: var(--font-serif);

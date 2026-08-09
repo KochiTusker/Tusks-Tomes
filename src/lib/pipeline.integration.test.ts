@@ -97,7 +97,7 @@ import type { PhaseId, DMQuestion, ExtrasOutput } from '@/types'
 // (phase, chunkIndex) so we can assert per-call dispatch.
 
 const GROUNDED_PROSE_PER_CHUNK = (i: number) =>
-  `[Zainab (Adaeze)] In Waterdeep, Zainab rolls a perception check while Ursula watches. ` +
+  `[Wiktoria (Alessia)] In Waterdeep, Wiktoria rolls a perception check while Solveig watches. ` +
   `The party glances at the Sun Blade. The Crimson Cathedral looms over the square. ` +
   // Pad past 100 chars so the no-silent-empty assertion clears with margin.
   `Chunk #${i} grounded — additional canonical narrative padding to keep response length stable.`
@@ -106,23 +106,23 @@ const PHASE2_QUESTIONS_PER_CHUNK = (i: number) =>
   JSON.stringify([
     {
       id: `q-${i}-1`,
-      question: `What did Zainab actually do at the Crimson Cathedral in chunk ${i}?`,
+      question: `What did Wiktoria actually do at the Crimson Cathedral in chunk ${i}?`,
       context: `The grounded transcript suggests a perception check, but the raw says lunge.`,
     },
   ])
 
 const CHRONICLE_PROSE_PER_CHUNK = (i: number) =>
-  `The chronicle of chunk ${i} unfolds: Zainab stepped through the gates of the Crimson ` +
-  `Cathedral, the Sun Blade humming faintly at his hip. Ursula followed, axe gleaming. ` +
+  `The chronicle of chunk ${i} unfolds: Wiktoria stepped through the gates of the Crimson ` +
+  `Cathedral, the Sun Blade humming faintly at his hip. Solveig followed, axe gleaming. ` +
   `The party paused at the inscription, weighing what to do next under Waterdeep's red sun.`
 
 const PHASE4_EXTRAS_PER_CHUNK = (i: number) =>
   JSON.stringify({
-    jests: [`Chunk ${i}: Zainab forgot to bring rope, again.`],
+    jests: [`Chunk ${i}: Wiktoria forgot to bring rope, again.`],
     gore: [`Chunk ${i}: a guard fell from the rampart, splattering on cobblestone.`],
     quotes: [
       {
-        speaker: 'Zainab',
+        speaker: 'Wiktoria',
         line: `That's the third time this week, chunk ${i}.`,
         kind: 'funny',
       },
@@ -133,13 +133,13 @@ const PHASE6_CONDENSE_PER_CHUNK = (i: number) =>
   JSON.stringify({
     narrative:
       `Chunk ${i}: the party entered the Crimson Cathedral under Waterdeep's red sun, ` +
-      `Zainab leading with the Sun Blade. Ursula followed, axe drawn. They paused at the ` +
+      `Wiktoria leading with the Sun Blade. Solveig followed, axe drawn. They paused at the ` +
       `inscription. Bones cracked under boots. A guard fell from the rampart. The party ` +
       `pressed on, weighing the riddle of the Withering Staff against the lure of gold. ` +
       `By the third bell they had decided — into the crypt, weapons ready, hope thin.`,
     bulletPoints: [
       `Chunk ${i} — bullet A: party entered Cathedral`,
-      `Chunk ${i} — bullet B: Zainab found the inscription`,
+      `Chunk ${i} — bullet B: Wiktoria found the inscription`,
     ],
   })
 
@@ -215,7 +215,7 @@ describe('pipeline integration — all 6 phases on the 24KB fixture', () => {
     expect(TRANSCRIPT_24KB.length).toBeGreaterThan(20_000)
     expect(TRANSCRIPT_24KB.length).toBeLessThan(30_000)
     // Speaker brackets are present so the detach-pass has work to do.
-    expect(TRANSCRIPT_24KB).toMatch(/^\[Zainab \(Player\)\]/)
+    expect(TRANSCRIPT_24KB).toMatch(/^\[Wiktoria \(Player\)\]/)
   })
 
   describe('Phase 1 — ground', () => {
@@ -401,7 +401,7 @@ describe('pipeline integration — all 6 phases on the 24KB fixture', () => {
       // Use the chronicle-shaped string from Phase 3's expected output as
       // the input here — it's all that matters; Phase 6 chunks on this.
       const chronicle = (
-        'Zainab walked into the Crimson Cathedral. Ursula followed, axe in hand. ' +
+        'Wiktoria walked into the Crimson Cathedral. Solveig followed, axe in hand. ' +
         'The party paused at the inscription. They debated, then descended into the crypt. '
       ).repeat(30) // ~6000 chars so we definitely have ≥1 chunk
 

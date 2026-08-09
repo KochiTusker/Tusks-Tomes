@@ -28,9 +28,9 @@ describe('mapObsidianType', () => {
 
 describe('parseObsidianNote', () => {
   it('reads top-level type + inline aliases, names from the stem', () => {
-    const raw = `---\ntype: npc\naliases: [Merr, Zainab]\nstatus: alive\n---\n\n# Body`
-    const r = parseObsidianNote(raw, 'Zainab Corvel')
-    expect(r).toEqual({ name: 'Zainab Corvel', type: 'character', aliases: ['Merr', 'Zainab'] })
+    const raw = `---\ntype: npc\naliases: [Merr, Wiktoria]\nstatus: alive\n---\n\n# Body`
+    const r = parseObsidianNote(raw, 'Wiktoria Corvel')
+    expect(r).toEqual({ name: 'Wiktoria Corvel', type: 'character', aliases: ['Merr', 'Wiktoria'] })
   })
 
   it('reads block-list aliases', () => {
@@ -55,7 +55,7 @@ describe('vault adapter against a synthetic fixture vault', () => {
       path.join(vault, '_system', 'entity-index.json'),
       JSON.stringify({
         entities: [
-          { name: 'Zainab Corvel', aliases: ['Merr', 'Zainab'], type: 'pc', path: 'PCs/Zainab Corvel.md' },
+          { name: 'Wiktoria Corvel', aliases: ['Merr', 'Wiktoria'], type: 'pc', path: 'PCs/Wiktoria Corvel.md' },
           { name: 'Morvan Vayne', aliases: ['Gravedust'], type: 'npc', path: '02 - NPCs/Morvan Vayne.md' },
           { name: 'Dirge Chain', aliases: [], type: 'concept', path: '05 - Lore/Dirge Chain.md' },
         ],
@@ -71,11 +71,11 @@ describe('vault adapter against a synthetic fixture vault', () => {
     expect(source).toBe('entity-index')
     expect(Object.keys(index.byEntity)).toHaveLength(3)
     // canonical + aliases all map to canonical, lowercased.
-    expect(index.aliases['zainab']).toBe('Zainab Corvel')
+    expect(index.aliases['wiktoria']).toBe('Wiktoria Corvel')
     expect(index.aliases['gravedust']).toBe('Morvan Vayne')
-    expect(index.aliases['zainab corvel']).toBe('Zainab Corvel')
+    expect(index.aliases['wiktoria corvel']).toBe('Wiktoria Corvel')
     // type coercion
-    expect(index.byEntity['Zainab Corvel'].type).toBe('character')
+    expect(index.byEntity['Wiktoria Corvel'].type).toBe('character')
     expect(index.byEntity['Dirge Chain'].type).toBe('other')
     // file carried through from the entity-index path
     expect(index.byEntity['Morvan Vayne'].file).toBe('02 - NPCs/Morvan Vayne.md')

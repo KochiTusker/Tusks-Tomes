@@ -6,7 +6,7 @@ import { resolveWikilinks, buildModeBHeader, buildObsidianKbConcat, listObsidian
 
 describe('resolveWikilinks', () => {
   it('renders aliased and bare wikilinks to plaintext', () => {
-    expect(resolveWikilinks('met [[Zainab Corvel|Merr]] today')).toBe('met Merr today')
+    expect(resolveWikilinks('met [[Wiktoria Corvel|Merr]] today')).toBe('met Merr today')
     expect(resolveWikilinks('the [[Dustvale Accord]] moved')).toBe('the Dustvale Accord moved')
     // path-style target keeps the leaf
     expect(resolveWikilinks('see [[04 - Locations/Caminus Primordialis]]')).toBe(

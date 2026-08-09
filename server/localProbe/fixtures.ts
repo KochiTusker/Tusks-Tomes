@@ -73,10 +73,10 @@ export type GroundingFixture = {
 
 export const GROUNDING_FIXTURE: GroundingFixture = {
   glossary: [
-    'Lakshmi',
+    'Leilani',
     'Az',
-    'Ursula',
-    'Cassian',
+    'Solveig',
+    'Chidi',
     'Merr',
     'Bahamut',
     'Waterdeep',
@@ -86,10 +86,10 @@ export const GROUNDING_FIXTURE: GroundingFixture = {
     'Cormyr',
   ],
   mishearings: [
-    { wrong: 'Liara', right: 'Lakshmi' },
+    { wrong: 'Liara', right: 'Leilani' },
     { wrong: 'as he', right: 'Az he' },
-    { wrong: 'Broady', right: 'Ursula' },
-    { wrong: 'Buggo', right: 'Cassian' },
+    { wrong: 'Broady', right: 'Solveig' },
+    { wrong: 'Buggo', right: 'Chidi' },
     { wrong: 'Bahamoot', right: 'Bahamut' },
   ],
   // ~200 words. Each mishearing appears once. Some real "as" usages appear
