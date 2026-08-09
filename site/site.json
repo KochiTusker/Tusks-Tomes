@@ -1,0 +1,364 @@
+{
+  "_comment": [
+    "Content data for the public GitHub Pages site. Edited by hand; consumed by",
+    "scripts/site/build-site.mjs.",
+    "",
+    "=== ADDING THE DEMO VIDEO — the whole recipe ===",
+    "",
+    "1. Record ONE video covering the whole journey. Upload it to YouTube",
+    "   (unlisted is fine) and add chapter markers in the description.",
+    "2. Put the video ID in video.id below (just the bit after ?v=).",
+    "3. Copy each chapter's timestamp straight from your YouTube chapter list",
+    "   into start/end. '5:45' and '1:02:03' both work — no converting to",
+    "   seconds. Leave end empty to run to the end of the video.",
+    "4. npm run site:build   — then npm run site:preview to check it.",
+    "5. npm run site:publish",
+    "",
+    "That's it. One video, embedded in six places, each bounded to its own",
+    "section. Nothing else needs editing.",
+    "",
+    "WHERE EACH CHAPTER APPEARS (slug -> page section):",
+    "  install   -> 'Get started' (bottom of the page)",
+    "  keys      -> index only; no inline embed. Add {{CLIP:keys}} to",
+    "               site/index.template.html if you want one.",
+    "  import    -> 'How it works', step 1",
+    "  speakers  -> 'How it works', step 2",
+    "  run       -> 'How it works', step 4",
+    "  output    -> 'What you get back'",
+    "The full video plus a clickable chapter index sits in 'Watch it run'.",
+    "",
+    "A slug referenced by a CLIP placeholder but missing here FAILS THE BUILD,",
+    "so a typo can't silently drop a video from the page.",
+    "",
+    "video.id — the YouTube video ID only (the part after ?v=), NOT a full URL.",
+    "Leave it as an empty string until a demo video exists: the builder then",
+    "renders placeholders and omits the VideoObject structured data, so nothing",
+    "false is ever published. Setting it switches on a click-to-load facade (no",
+    "YouTube request until the visitor clicks) plus rich-result markup.",
+    "",
+    "video.chapters — ONE uploaded video, embedded several times across the",
+    "page, each copy bounded to its own section. Each chapter also becomes a",
+    "schema.org Clip, which is what Google's 'Key Moments' rich result reads,",
+    "so the sections can surface and be linked individually in search.",
+    "",
+    "  slug   — matches a CLIP placeholder in site/index.template.html.",
+    "           An unknown slug fails the build rather than rendering nothing.",
+    "  start  — seconds (90) or a timestamp copied from your YouTube chapter",
+    "  end      list ('1:30', '1:02:03'). end may be omitted to play to the end.",
+    "  poster — local screenshot shown before the visitor clicks. Never a",
+    "           YouTube thumbnail: fetching one would leak the visitor to",
+    "           Google on page load and defeat the facade.",
+    "",
+    "faq — each entry becomes BOTH a visible question on the page and one",
+    "Question node in FAQPage structured data. Google requires the answer text",
+    "to be visible, which is why there is only one list. Answers may contain",
+    "simple HTML; the BASE placeholder expands to the site base path."
+  ],
+  "video": {
+    "id": "",
+    "title": "Tusk's Tomes — turning a D&D session recording into a chronicle",
+    "description": "A walkthrough of the six-phase AI pipeline: importing a session recording, grounding names and lore against a campaign glossary, and exporting a narrative chronicle plus a Discord-ready recap.",
+    "uploadDate": "",
+    "duration": "",
+    "poster": "docs/assets/pipeline-six-phase-ai-dnd-chronicle.png",
+    "chapters": [
+      {
+        "slug": "install",
+        "label": "Install and first launch",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Node, one command, first run in the browser",
+        "poster": "docs/assets/gemini-api-key-setup.png"
+      },
+      {
+        "slug": "keys",
+        "label": "Add a provider key",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Encrypted at rest and machine-bound",
+        "poster": "docs/assets/gemini-api-key-setup.png"
+      },
+      {
+        "slug": "import",
+        "label": "Import a Craig recording",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Multi-track Discord audio, transcribed locally",
+        "poster": "docs/assets/craig-discord-whisper-audio-upload.png"
+      },
+      {
+        "slug": "speakers",
+        "label": "Map speakers to characters",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Set once per campaign; persists across sessions",
+        "poster": "docs/assets/speaker-character-mapping.png"
+      },
+      {
+        "slug": "run",
+        "label": "Run the pipeline",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Six phases, with pause and resume",
+        "poster": "docs/assets/pipeline-six-phase-ai-dnd-chronicle.png"
+      },
+      {
+        "slug": "output",
+        "label": "The finished chronicle",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Chronicle, recap and quote lists",
+        "poster": "docs/assets/pipeline-six-phase-ai-dnd-chronicle.png"
+      }
+    ]
+  },
+  "seo": {
+    "_comment": [
+      "The search-facing half of the site: strings a visitor never reads, but",
+      "that decide whether they ever arrive. See seoFor() in",
+      "scripts/site/build-site.mjs for the rule this file follows —",
+      "invisible METADATA is fair game, invisible CONTENT is not. There is no",
+      "hidden keyword block anywhere in this site and there must not be one:",
+      "keyword-stuffed off-screen text is an explicit Google spam-policy",
+      "violation, and the penalty lands on the whole domain.",
+      "",
+      "landing.title — the <title>, which is the headline in a search result.",
+      "  Aim for under ~60 characters; past that Google truncates mid-word.",
+      "  Front-load the words someone actually types. They search",
+      "  'dnd transcriber free' — not 'session chronicler', which is the",
+      "  project's own vocabulary and nobody else's.",
+      "",
+      "landing.description — not a ranking factor, purely a click factor. It is",
+      "  the two lines under the headline, so it should answer 'is this the",
+      "  thing I wanted?' in the first six words. ~155 characters renders.",
+      "",
+      "keywords / about / audience — schema.org properties. NOT the dead",
+      "  <meta name=\"keywords\"> tag, which Google has ignored since 2009 and",
+      "  which this site does not emit. These end up in the JSON-LD graph,",
+      "  where they are read by search engines and by the AI crawlers robots.txt",
+      "  explicitly invites.",
+      "",
+      "pages — per-slug overrides. `title` replaces the <title> only; the H1 on",
+      "  the page is unchanged, which is the point. A page can be headed 'Session",
+      "  audio to a lore-grounded chronicle' for someone reading it and titled",
+      "  'Transcribe a D&D Session into a Written Chronicle' for someone who has",
+      "  not arrived yet. `howTo` emits HowTo structured data and belongs ONLY on",
+      "  pages that really are a start-to-finish procedure — mislabelling a",
+      "  reference page to chase the rich result gets structured data distrusted",
+      "  site-wide. `priority` is a within-site hint for sitemap.xml."
+    ],
+
+    "landing": {
+      "title": "Free D&D Session Transcriber & Recap Generator | Tusk's Tomes",
+      "description": "Turn a D&D, Pathfinder or TTRPG session recording — or a YouTube transcript — into a narrative chronicle and a Discord-ready recap. Free, open source, runs locally."
+    },
+
+    "audience": "Game masters, tabletop RPG players, actual-play podcasters and streamers, VTT archivists",
+
+    "about": [
+      "Tabletop role-playing games",
+      "Dungeons & Dragons",
+      "Speech transcription",
+      "Automatic summarization",
+      "Open-source software"
+    ],
+
+    "keywords": [
+      "D&D transcriber",
+      "DnD transcriber",
+      "free D&D transcriber",
+      "TTRPG transcriber",
+      "tabletop RPG transcription",
+      "D&D session transcription",
+      "transcribe D&D session",
+      "D&D session recap generator",
+      "D&D session summary AI",
+      "D&D session notes generator",
+      "campaign journal generator",
+      "TTRPG session recap",
+      "Pathfinder session summary",
+      "Call of Cthulhu session write-up",
+      "actual play transcription",
+      "Craig Discord recording transcript",
+      "Discord D&D recording to text",
+      "YouTube captions to session recap",
+      "Whisper D&D transcription",
+      "local AI session chronicler",
+      "self-hosted transcription",
+      "open source D&D tools",
+      "AI dungeon master notes"
+    ],
+
+    "pages": {
+      "docs/audio-to-chronicle": {
+        "title": "Transcribe a D&D Session Recording into a Written Chronicle",
+        "description": "Record, transcribe locally with Whisper, and turn a D&D or TTRPG session recording into a narrative chronicle grounded in your own campaign lore. Free and open source.",
+        "priority": "0.9",
+        "keywords": [
+          "transcribe D&D session",
+          "D&D session recording to text",
+          "Craig Discord recording transcript",
+          "Whisper D&D transcription",
+          "multitrack Discord recording",
+          "D&D session chronicle generator",
+          "tabletop RPG transcription"
+        ],
+        "howTo": {
+          "name": "Turn a tabletop RPG session recording into a written chronicle",
+          "totalTime": "PT1H",
+          "supply": ["An audio recording of one session", "A glossary or vault of campaign lore"],
+          "tool": [
+            "Tusk's Tomes",
+            "Node.js 20 or newer",
+            "The Audio Transcription add-on",
+            "An NVIDIA GPU (recommended)"
+          ],
+          "steps": [
+            {
+              "name": "Record the session",
+              "text": "Record the game. Recording each player to a separate track — the Craig Discord bot does this on its free tier — makes every line in the finished chronicle attributable to the right character.",
+              "anchor": "stage-1-record-the-session"
+            },
+            {
+              "name": "Transcribe it on your own machine",
+              "text": "Drop the recording into the Upload tab. A local Whisper sidecar transcribes each track separately and interleaves them into one timestamped transcript with speakers attached. Nothing is uploaded.",
+              "anchor": "stage-2-transcribe-it-on-your-own-machine"
+            },
+            {
+              "name": "Ground the names against your lore",
+              "text": "Phase 1 corrects the transcript against your glossary or Obsidian vault before any prose is written, so misheard fantasy names are fixed rather than confidently repeated. Phase 2 returns whatever it could not resolve as questions.",
+              "anchor": "stage-3-ground-the-names-against-your-lore"
+            },
+            {
+              "name": "Write it up",
+              "text": "Phase 3 writes the narrative chronicle, Phase 4 extracts quotes, jests and combat highlights, and Phase 6 optionally condenses the chronicle to a length you set. Export as .docx or Markdown.",
+              "anchor": "stage-4-write-it-up"
+            }
+          ]
+        }
+      },
+
+      "docs/youtube-transcript-to-chronicle": {
+        "title": "Turn a YouTube Transcript into a D&D Session Write-Up",
+        "description": "No GPU needed: upload your session to YouTube as unlisted, let automatic captions transcribe it, and turn the transcript into a narrative chronicle grounded in your campaign lore.",
+        "priority": "0.9",
+        "keywords": [
+          "YouTube transcript to session recap",
+          "D&D transcriber no GPU",
+          "free D&D transcriber",
+          "SBV caption file",
+          "YouTube automatic captions transcript",
+          "TTRPG session summary from video",
+          "transcribe D&D without a GPU"
+        ],
+        "howTo": {
+          "name": "Turn a YouTube transcript into a tabletop RPG session write-up",
+          "supply": ["A recording of one session", "A glossary or vault of campaign lore"],
+          "tool": ["Tusk's Tomes", "Node.js 20 or newer", "A YouTube account"],
+          "steps": [
+            {
+              "name": "Record the session",
+              "text": "Capture the game with OBS Studio, Zoom, or anything else that produces a file YouTube will accept. Video is not needed — audio with a still image uploads fine.",
+              "anchor": "step-1-record-the-session"
+            },
+            {
+              "name": "Upload it as unlisted or private",
+              "text": "Upload to YouTube and set visibility to Unlisted or Private, so the recording is neither indexed nor listed on your channel.",
+              "anchor": "step-2-upload-it-as-unlisted-or-private"
+            },
+            {
+              "name": "Wait for automatic captions",
+              "text": "YouTube generates captions on its own schedule. They appear under Subtitles in YouTube Studio once ready.",
+              "anchor": "step-3-wait-for-automatic-captions"
+            },
+            {
+              "name": "Get the transcript out",
+              "text": "Either copy the caption text straight into the Raw transcript box, or download the .sbv file and run it through the Caption Repair tab, which keeps the timestamps.",
+              "anchor": "step-4-get-the-transcript-out"
+            },
+            {
+              "name": "Ground it against your lore",
+              "text": "Phase 1 corrects misheard names against your glossary or Obsidian vault before any prose is written. Expect more clarifying questions than on the audio route, because caption files carry no speaker labels at all.",
+              "anchor": "step-5-ground-it-against-your-lore"
+            }
+          ]
+        }
+      }
+    }
+  },
+
+  "faq": [
+    {
+      "q": "Is there a free D&D session transcriber?",
+      "a": "This is one. Tusk's Tomes is MIT-licensed, has no paid tier and no account, and runs on your own machine. Transcription itself is free either way — locally via Whisper, or on Google's hardware via YouTube's automatic captions. The only spend is the AI model that writes the chronicle, and even that reaches £0 if you route to a local model or to a Claude Code / Codex subscription you already pay for."
+    },
+    {
+      "q": "What is the best way to transcribe a D&D session?",
+      "a": "Record each player to a separate track. The <a href=\"{{BASE}}/docs/audio-to-chronicle/\">audio route</a> uses the Craig Discord bot for that, then transcribes each track locally with Whisper — because one track means one speaker, every line stays attributable to the right character. If you have no NVIDIA GPU or want the least setup, the <a href=\"{{BASE}}/docs/youtube-transcript-to-chronicle/\">YouTube transcript route</a> needs no GPU and no add-on at all."
+    },
+    {
+      "q": "Can it turn a YouTube video of my session into a write-up?",
+      "a": "Yes, and it needs no GPU. Upload the recording to YouTube as unlisted, wait for automatic captions, then either paste the transcript text in or download the <code>.sbv</code> caption file and run it through the Caption Repair tab. The <a href=\"{{BASE}}/docs/youtube-transcript-to-chronicle/\">full walkthrough</a> covers both, including the one real trade-off: caption files carry no speaker labels, so attribution becomes inference rather than fact."
+    },
+    {
+      "q": "What does the output actually look like?",
+      "a": "Five things from one run: a narrative chronicle of roughly 16,000–18,000 words for a three-hour session, a condensed version at whatever length you set, catch-up bullets for the group chat, a curated list of jests and combat highlights, and attributed quotes grouped by flavour. Every one of them is optional and editable before you export, as <code>.docx</code> or Markdown. <a href=\"{{BASE}}/docs/features/\">What it does</a> covers each in detail."
+    },
+    {
+      "q": "Is Tusk's Tomes free?",
+      "a": "Yes. It is open source under the MIT licence and there is no paid tier, subscription, or account to create. You supply your own LLM API key, or run it entirely offline against a local model and pay nothing at all."
+    },
+    {
+      "q": "Does my session audio or transcript get uploaded anywhere?",
+      "a": "The app runs on your own machine and there is no telemetry or analytics of any kind. Audio is transcribed locally by Whisper and never leaves your computer. If you use a cloud LLM, the transcript text is sent to that provider (Google, Anthropic or OpenAI) and nowhere else — and you can avoid that entirely by routing to a local model. See the <a href=\"{{BASE}}/docs/privacy/\">privacy notes</a>."
+    },
+    {
+      "q": "How much does it cost to chronicle one session?",
+      "a": "Roughly £1–£2 of API credit for a three-hour session on a paid Gemini key, depending on the routing preset you pick. Running fully local against Ollama or LM Studio costs nothing beyond electricity. The <a href=\"{{BASE}}/docs/pricing/\">pricing page</a> breaks down the per-phase token cost."
+    },
+    {
+      "q": "Can I use my Claude Code or ChatGPT/Codex subscription instead of paying for API credit?",
+      "a": "Yes. If the <strong>Claude Code</strong> CLI or the <strong>OpenAI Codex</strong> CLI is installed and signed in on the same machine, Tusk's Tomes can route pipeline phases through it and draw on that plan's existing allowance rather than spending metered API credit. It runs the CLI against your logged-in session and strips API keys out of the call, so the work cannot silently land on a pay-per-token bill. If you exhaust the allowance part-way through, the run pauses rather than erroring and can be resumed once it resets. You can mix this with other providers per phase — see the <a href=\"{{BASE}}/docs/add-ons/claude-code/\">Claude Code</a> and <a href=\"{{BASE}}/docs/add-ons/codex/\">Codex</a> add-on docs."
+    },
+    {
+      "q": "How long does it take to process a three-hour session?",
+      "a": "About an hour end to end, and almost none of it needs you. On a real 8-player, 3-hour session with an NVIDIA RTX 3070 Ti, local Whisper transcription took 20–30 minutes and the six-phase chronicle pipeline about another 30. You start it and walk away; progress, pause and resume are all built in. If you already have a transcript and skip transcription, the pipeline alone is the ~30-minute half."
+    },
+    {
+      "q": "What if I don't have an NVIDIA GPU?",
+      "a": "Whisper transcription is heavily GPU-dependent, and specifically <strong>NVIDIA</strong>-dependent: the engine (<code>faster-whisper</code>) implements only CUDA and CPU, so AMD, Intel and Apple GPUs are not used at all and you get processor speed. On CPU, a three-hour session can take several hours instead of half an hour. If you don't have a dedicated GPU, use the YouTube route: upload the recording as an unlisted or private video, let YouTube auto-caption it, download the <code>.sbv</code> from YouTube Studio (Subtitles → ⋮ → Download), and drop that into the Caption Repair tab. It needs no GPU, no Python and no add-on. The trade-off is speaker attribution — see the next question."
+    },
+    {
+      "q": "Is the YouTube caption route as good as recording with Craig and Whisper?",
+      "a": "It is easier to start with, but the output is weaker in one specific way: <strong>speaker attribution</strong>. A YouTube caption file has no speaker labels at all — it is one undifferentiated stream of text — so Tomes has to reconstruct who said what from context, and it will ask you a fair number of clarifying questions before it can attribute lines. Even then some attribution is a best guess. The Craig multi-track route gives Whisper one audio file per person, so it simply knows. If reliable per-character attribution matters to you, record multi-track; if you mainly want a readable account of the session, YouTube is a perfectly good place to start."
+    },
+    {
+      "q": "Does it work with Craig Discord recordings?",
+      "a": "Yes, and this is what it is built for. Craig produces a multi-track zip with one audio file per speaker; the Audio Transcription add-on feeds each track to a local Whisper sidecar separately, so every line in the finished chronicle is attributed to the right player and character. You can also drop in a single .mp3, .wav or .flac from Zoom or a phone recording."
+    },
+    {
+      "q": "Do I need to record audio at all?",
+      "a": "No. Audio is one of several inputs. You can paste raw transcript text, load a YouTube .sbv caption file, import .docx or .pdf notes, or paste a Roll20 or Foundry VTT chat log. Text-only sessions run through exactly the same pipeline with no add-on required."
+    },
+    {
+      "q": "Does it only work for Dungeons & Dragons?",
+      "a": "No — the prompts are system-agnostic. It is used for D&D 5e, Pathfinder 1e and 2e, Call of Cthulhu, Blades in the Dark, Vampire: The Masquerade, Daggerheart, Fabula Ultima, OSR retroclones and homebrew systems. Nothing in the pipeline assumes a particular rules set."
+    },
+    {
+      "q": "How is this different from Otter.ai, Read.ai or Descript?",
+      "a": "Those are meeting-transcription products: they give you a transcript and a bulleted summary, they run in someone else's cloud on a monthly subscription, and they have no idea who your characters are. Tusk's Tomes writes narrative prose rather than minutes, grounds every name and place against your own campaign glossary so the AI stops inventing spellings, keeps per-character attribution end to end, and runs on your machine for free. The <a href=\"{{BASE}}/docs/comparison/\">comparison page</a> goes into detail."
+    },
+    {
+      "q": "Can it run completely offline with a local LLM?",
+      "a": "Yes — the Local LLMs add-on routes any or all phases to Ollama, LM Studio or Unsloth. Two honest caveats. First, testing coverage: <strong>no local model above 4B parameters has been run on the maintainer's hardware</strong>, so anything larger is unverified. Second, quality: local models are weaker at long-form prose than cloud ones, and <strong>below roughly 15–20B parameters the chronicle tends to read like a log rather than a story</strong>, with less reliable grounding against your glossary. The pragmatic setup is to run the mechanical phases locally and send Phase 3 — the chronicle — to a cloud model or a subscription CLI. See the <a href=\"{{BASE}}/docs/add-ons/local-llm/\">local LLM add-on docs</a>."
+    },
+    {
+      "q": "What do I need installed to get started?",
+      "a": "Node.js 20 or newer, and one LLM API key. That is the whole core install. Python and Whisper are only needed if you want the audio-transcription add-on, and the setup script bootstraps those for you. The <a href=\"{{BASE}}/docs/setup/\">setup guide</a> walks through it on Windows, macOS and Linux."
+    },
+    {
+      "q": "Why does the AI keep misspelling my characters' names, and does this fix it?",
+      "a": "Speech-to-text renders unfamiliar fantasy names phonetically, and a general-purpose LLM will happily invent a plausible spelling and stick with it. Phase 1 of the pipeline exists specifically to fix this: it corrects the raw transcript against a glossary of your own names, places and terms before any narrative is written, so the chronicle uses your campaign's spellings rather than the model's guesses."
+    }
+  ]
+}

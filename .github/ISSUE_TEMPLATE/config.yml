@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Feedback form — setup help, feature ideas, general questions
+    url: https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header
+    about: For setup help, "is this a bug?" sanity checks, model recommendations, or chronicle showcases — drop a note here. A community Discord is on the roadmap; this form is the interim channel.
+  - name: 📖 Documentation — README, SETUP, architecture
+    url: https://github.com/KochiTusker/Tusks-Tomes#-table-of-contents
+    about: Walkthroughs for first-time setup, the two workflows (YouTube .sbv vs Craig multitrack), provider configuration, and the full architecture deep-dive.
+  - name: 🗂️ Companion project — Tusk's Vault
+    url: https://github.com/KochiTusker/tusks-vault
+    about: Vault answers questions about your campaign lore. Tomes captures sessions, Vault retrieves from them. Issues about Vault belong in its own repo.

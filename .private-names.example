@@ -1,0 +1,52 @@
+# Private-name denylist — template. Copy to `.private-names` and fill it in.
+#
+#   cp .private-names.example .private-names
+#
+# `.private-names` is gitignored and MUST NEVER be committed. That is the whole
+# point: a list of the names you are keeping off the internet cannot itself go
+# on the internet. This template is tracked; the real file is not.
+#
+# WHAT GOES IN IT
+# ---------------
+# The real first names (and surnames, and handles) of actual people connected
+# to your campaign: your players, yourself, anyone who has ever sat at the
+# table. Not character names — those are invented and may ship.
+#
+# Every layer in this scanner suite except this one protects the maintainer:
+# emails, machine paths, commit identity. This one protects everybody else.
+#
+# WHAT IT DOES
+# ------------
+# Every tracked file is scanned for these names, case-insensitively, on word
+# boundaries. `Bram` will not match `Bramble`; `Cole` will not match
+# `Coledge`. A hit blocks:
+#
+#   - `node scripts/audit-current-tree.mjs`  (warns if this file is absent)
+#   - `npm run site:build`                   (warns if this file is absent)
+#   - `git push public …`                    (FAILS if this file is absent)
+#
+# The push gate refuses to run without a list, because "the file went missing"
+# is never the intended state for the person doing the pushing.
+#
+# WHY IT EXISTS
+# -------------
+# Version 1.3.0 shipped with 110 occurrences of seven real first names, in
+# probe fixtures written from real sessions. The dialogue in those fixtures had
+# been rewritten to be synthetic; the speaker labels had not. Seven scanner
+# layers passed it, because a first name in a parenthetical is not a
+# credential, not a path, and not an author field.
+#
+# FORMAT
+# ------
+# One entry per line. `#` starts a comment. Blank lines are ignored.
+# Add nicknames and short forms separately — the match is exact, not fuzzy.
+
+# Your players' real first names, one per line:
+# Firstname
+# Firstname
+
+# Your own real name (the handle is fine; the name is not):
+# Firstname
+
+# Anyone else who has been at the table — former players count:
+# Firstname

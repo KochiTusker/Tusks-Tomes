@@ -1,0 +1,1907 @@
+/* Tusk's Tomes — public site stylesheet.
+ *
+ * The visual language (void-violet base, amethyst primary, ember accent,
+ * gold-leaf detailing, Cinzel/Cormorant/Inter) is ported from the app's own
+ * theme in src/index.css, so the site and the product look like the same
+ * thing. Committed dark, matching the app — not a light/dark pair.
+ *
+ * Self-hosted fonts and no external stylesheet: the page makes ZERO
+ * third-party requests at load. That keeps the no-telemetry promise honest
+ * (a Google Fonts link would hand every visitor's IP to a third party) and
+ * protects the Core Web Vitals that feed search ranking.
+ *
+ * Fonts are OFL-1.1 — see assets/fonts/LICENSES.txt for attribution.
+ */
+
+/* ---------- self-hosted fonts (paths relative to this file) ---------- */
+@font-face { font-family: "Cinzel"; font-weight: 600; font-style: normal; font-display: swap; src: url("assets/fonts/cinzel-600.woff2") format("woff2"); }
+@font-face { font-family: "Cinzel"; font-weight: 700; font-style: normal; font-display: swap; src: url("assets/fonts/cinzel-700.woff2") format("woff2"); }
+@font-face { font-family: "Cinzel Decorative"; font-weight: 700; font-style: normal; font-display: swap; src: url("assets/fonts/cinzel-decorative-700.woff2") format("woff2"); }
+@font-face { font-family: "Cinzel Decorative"; font-weight: 900; font-style: normal; font-display: swap; src: url("assets/fonts/cinzel-decorative-900.woff2") format("woff2"); }
+@font-face { font-family: "Fondamento"; font-weight: 400; font-style: normal; font-display: swap; src: url("assets/fonts/fondamento-400.woff2") format("woff2"); }
+@font-face { font-family: "Fondamento"; font-weight: 400; font-style: italic; font-display: swap; src: url("assets/fonts/fondamento-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-weight: 400; font-style: normal; font-display: swap; src: url("assets/fonts/cormorant-400.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-weight: 600; font-style: normal; font-display: swap; src: url("assets/fonts/cormorant-600.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-weight: 400; font-style: italic; font-display: swap; src: url("assets/fonts/cormorant-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; font-style: normal; font-display: swap; src: url("assets/fonts/inter-400.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; font-style: normal; font-display: swap; src: url("assets/fonts/inter-500.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; font-style: normal; font-display: swap; src: url("assets/fonts/inter-600.woff2") format("woff2"); }
+
+:root {
+  --bg: oklch(0.11 0.04 285);
+  --bg-deep: oklch(0.09 0.03 285);
+  --card: oklch(0.16 0.05 285);
+  --card2: oklch(0.19 0.06 290);
+  --fg: oklch(0.94 0.025 90);
+  --muted: oklch(0.72 0.04 285);
+  --arcane: oklch(0.65 0.22 295);
+  --arcane-bright: oklch(0.8 0.2 295);
+  --ember: oklch(0.72 0.19 50);
+  --gold: #c2a14d;
+  --border: oklch(0.32 0.07 290);
+
+  --font-display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-deco: "Cinzel Decorative", "Cinzel", Georgia, serif;
+  --font-script: "Fondamento", "Cormorant Garamond", Georgia, serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --radius: 12px;
+  --maxw: 68rem;
+
+  /* Structural tokens, borrowed wholesale from the reference the site was
+   * re-cut against. Three ideas do most of the work there:
+   *
+   *   1. Cards are much rounder than a typical app UI — 26px, not 12px — which
+   *      reads as printed matter rather than as chrome.
+   *   2. Buttons are full pills. At this radius a rectangle looks unfinished
+   *      next to the cards.
+   *   3. Prose sits in a genuinely narrow column (~38rem, near enough 62
+   *      characters) no matter how wide the card around it is. That is the
+   *      single biggest readability difference and the easiest to lose.
+   */
+  --radius-card: 26px;
+  --radius-pill: 999px;
+  --measure: 38rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+  background-image:
+    radial-gradient(ellipse 120% 80% at 50% -20%, oklch(0.35 0.14 295 / 0.3), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 120%, oklch(0.2 0.1 285 / 0.45), transparent 65%),
+    radial-gradient(ellipse 60% 50% at 12% 28%, oklch(0.4 0.12 295 / 0.1), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 88% 72%, oklch(0.55 0.16 50 / 0.07), transparent 75%);
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+a {
+  color: var(--arcane-bright);
+  text-underline-offset: 0.15em;
+}
+a:hover {
+  color: var(--arcane);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+  color: var(--arcane-bright);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+::selection {
+  background-color: var(--arcane);
+  color: oklch(0.99 0.005 290);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.13 0.04 285);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.3 0.08 290);
+  border-radius: 6px;
+  border: 2px solid oklch(0.13 0.04 285);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.45 0.12 295);
+}
+
+/* Inline SVG symbol sheet. A class rather than style="display:none" so the
+ * page carries no inline styles at all and the CSP can forbid them. */
+.svg-defs {
+  display: none;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  background: var(--card);
+  border: 2px solid var(--arcane);
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--arcane-bright);
+  outline-offset: 2px;
+}
+
+/* ---------- keyframes ---------- */
+
+@keyframes brand-pulse {
+  0%, 100% { filter: drop-shadow(0 0 18px oklch(0.65 0.22 295 / 0.35)); }
+  50% { filter: drop-shadow(0 0 30px oklch(0.72 0.24 295 / 0.6)); }
+}
+@keyframes spell-charge {
+  0%, 100% { box-shadow: 0 0 0 1px oklch(0.65 0.22 295 / 0.4), 0 8px 24px -8px oklch(0.65 0.22 295 / 0.45); }
+  50% { box-shadow: 0 0 0 1px oklch(0.72 0.24 295 / 0.6), 0 10px 28px -6px oklch(0.7 0.24 295 / 0.55), 0 0 0 4px oklch(0.7 0.24 295 / 0.08); }
+}
+@keyframes slow-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes ember-drift {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.6); }
+  10% { opacity: 0.6; }
+  80% { opacity: 0.4; }
+  100% { opacity: 0; transform: translate3d(var(--dx, 12px), -100vh, 0) scale(1); }
+}
+
+/* Drifting embers — fixed background layer behind everything. */
+.ember-field {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.ember-field span {
+  position: absolute;
+  bottom: -20px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.85 0.18 50 / 0.95), oklch(0.6 0.18 50 / 0.4) 60%, transparent 75%);
+  box-shadow: 0 0 8px oklch(0.78 0.18 50 / 0.6);
+  animation: ember-drift 15s linear infinite;
+}
+.ember-field span:nth-child(1) { left: 12%; --dx: 18px; animation-duration: 13s; animation-delay: -1s; }
+.ember-field span:nth-child(2) { left: 30%; --dx: 8px; animation-duration: 16s; animation-delay: -3s; }
+.ember-field span:nth-child(3) { left: 47%; --dx: -14px; animation-duration: 19s; animation-delay: -8s; }
+.ember-field span:nth-child(4) { left: 64%; --dx: 20px; animation-duration: 15s; animation-delay: -11s; }
+.ember-field span:nth-child(5) { left: 80%; --dx: -22px; animation-duration: 17s; animation-delay: -5s; }
+.ember-field span:nth-child(6) { left: 91%; --dx: -10px; animation-duration: 18s; animation-delay: -6s; }
+
+/* ---------- header / footer ---------- */
+
+.site-head {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem clamp(1rem, 4vw, 2.5rem);
+  background: linear-gradient(180deg, oklch(0.11 0.04 285 / 0.92), oklch(0.11 0.04 285 / 0.62));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-deco);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.86rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+.brand svg {
+  width: 24px;
+  height: 24px;
+  color: var(--gold);
+}
+
+.site-head nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.15rem;
+  font-size: 0.86rem;
+}
+.site-head nav a {
+  text-decoration: none;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+.site-head nav a:hover {
+  color: var(--arcane-bright);
+}
+.site-head nav a.gh {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: oklch(0.99 0.005 290);
+  border: 1px solid oklch(0.65 0.22 295 / 0.5);
+  background: linear-gradient(180deg, oklch(0.5 0.2 295), oklch(0.38 0.18 295));
+  transition: 0.2s;
+}
+.site-head nav a.gh:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px oklch(0.8 0.22 295 / 0.6), 0 6px 20px -6px oklch(0.7 0.24 295 / 0.5);
+}
+.site-head nav a.gh svg {
+  width: 15px;
+  height: 15px;
+}
+
+.site-foot {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+  padding: 2.5rem clamp(1rem, 4vw, 2.5rem);
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+.site-foot p {
+  margin: 0.4rem 0;
+}
+
+/* ---------- landing ---------- */
+
+main {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.hero {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vw, 4.5rem) clamp(1rem, 4vw, 2.5rem) 2rem;
+  text-align: center;
+}
+
+.sigil {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 0.5rem;
+  display: grid;
+  place-items: center;
+}
+.sigil-ring {
+  position: absolute;
+  inset: -14%;
+  color: var(--arcane);
+  opacity: 0.55;
+  animation: slow-spin 60s linear infinite;
+}
+.sigil-ring.inner {
+  inset: 8%;
+  color: var(--ember);
+  opacity: 0.4;
+  animation: slow-spin 90s linear infinite reverse;
+}
+.sigil-mark {
+  width: 74px;
+  height: 74px;
+  color: var(--gold);
+  filter: drop-shadow(0 0 16px oklch(0.7 0.22 295 / 0.5));
+}
+
+.hero h1 {
+  font-family: var(--font-deco);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+  line-height: 1.15;
+  margin: 0.15em 0 0.35em;
+  background: linear-gradient(180deg, oklch(0.98 0.02 295), oklch(0.86 0.14 295) 55%, oklch(0.7 0.2 295));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brand-pulse 4s ease-in-out infinite;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.lede {
+  max-width: 44rem;
+  margin: 0 auto 2rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  line-height: 1.6;
+  color: oklch(0.88 0.03 285);
+}
+
+/* Second line under the lede — the "who wrote this and why" note. Smaller and
+ * quieter than the lede itself so it reads as an aside, not a second pitch. */
+.lede-sub {
+  max-width: 40rem;
+  margin: -0.75rem auto 2rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+  margin: 0 0 1.25rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: 0.25s;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  background: oklch(0.18 0.05 285 / 0.6);
+}
+.btn:hover {
+  border-color: var(--arcane);
+  color: var(--arcane-bright);
+}
+.btn.primary {
+  color: oklch(0.99 0.005 290);
+  border-color: oklch(0.65 0.22 295 / 0.6);
+  background: linear-gradient(180deg, oklch(0.5 0.2 295), oklch(0.38 0.18 295));
+  animation: spell-charge 3.6s ease-in-out infinite;
+}
+.btn.primary:hover {
+  animation-play-state: paused;
+  transform: translateY(-1px);
+  color: oklch(0.99 0.005 290);
+  box-shadow: 0 0 0 1px oklch(0.85 0.22 295 / 0.7), 0 12px 32px -4px oklch(0.7 0.24 295 / 0.6);
+}
+
+.runestones {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.runestones li {
+  font-size: 0.71rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: oklch(0.16 0.05 285 / 0.6);
+}
+.runestones b {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* Rune divider between sections. */
+.rune {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2.5rem);
+  color: var(--arcane);
+  opacity: 0.8;
+}
+.rune::before,
+.rune::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, oklch(0.65 0.22 295 / 0.55), transparent);
+}
+.rune svg {
+  width: 20px;
+  height: 20px;
+  filter: drop-shadow(0 0 6px oklch(0.7 0.22 295 / 0.55));
+}
+
+.section {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(2.25rem, 5vw, 3.25rem) clamp(1rem, 4vw, 2.5rem);
+}
+
+/* Section headings are a light-weight serif at a large size with leading near
+ * 1.0, rather than a heavy display face letterspaced into a title. The effect
+ * is that a long sentence-case heading reads as a *sentence* — which is what
+ * lets the copy say "Two ways in, one chronicle out" instead of "Workflows".
+ * Cinzel is kept for the wordmark and the eyebrows, where the carved look is
+ * the point; at paragraph-heading size it fights the text underneath it. */
+.section > h2 {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  font-size: clamp(1.85rem, 4vw, 2.7rem);
+  line-height: 1.06;
+  max-width: 30ch;
+  margin-inline: auto;
+  margin-bottom: 0.6rem;
+  text-wrap: balance;
+}
+
+.section-lede {
+  max-width: var(--measure);
+  margin: 0 auto 2.5rem;
+  text-align: center;
+  line-height: 1.55;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.15rem;
+  margin-top: 1.5rem;
+}
+
+.card {
+  padding: 1.75rem 1.6rem;
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  border: 1px solid oklch(0.34 0.08 290);
+  box-shadow: 0 1px 0 oklch(0.55 0.16 295 / 0.18) inset, 0 24px 48px -24px oklch(0.04 0.02 285 / 0.8);
+  transition: 0.28s;
+}
+.card:hover {
+  border-color: oklch(0.45 0.12 295);
+  transform: translateY(-3px);
+}
+.card h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: var(--fg);
+}
+.card p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.phases {
+  counter-reset: phase;
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 1rem;
+}
+.phases > li {
+  counter-increment: phase;
+  position: relative;
+  padding: 1.2rem 1.35rem 1.2rem 4rem;
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  border: 1px solid var(--border);
+}
+.phases > li::before {
+  content: counter(phase);
+  position: absolute;
+  left: 1.15rem;
+  top: 1.15rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: oklch(0.99 0.005 290);
+  background: radial-gradient(circle at 35% 30%, oklch(0.72 0.22 295), oklch(0.42 0.18 295));
+  box-shadow: 0 0 18px oklch(0.65 0.22 295 / 0.5), 0 0 0 1px oklch(0.7 0.22 295 / 0.5);
+}
+.phases > li:nth-child(even)::before {
+  background: radial-gradient(circle at 35% 30%, oklch(0.8 0.18 55), oklch(0.55 0.18 50));
+  box-shadow: 0 0 18px oklch(0.7 0.19 50 / 0.5), 0 0 0 1px oklch(0.75 0.19 50 / 0.5);
+}
+.phases h3 {
+  margin: 0 0 0.35em;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+}
+.phases p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.tag {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  background: oklch(0.3 0.1 295 / 0.35);
+  border: 1px solid oklch(0.5 0.14 295 / 0.6);
+  color: var(--arcane-bright);
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.more {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+/* Three-tier requirements. Colour-coded left rail so the severity reads at a
+ * glance before any of the text does — critical/advised/nice-to-have is the
+ * one thing a visitor needs to take away from this section. */
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1.15rem;
+  margin-top: 1.5rem;
+}
+
+.tier {
+  padding: 1.4rem 1.35rem;
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--tier-colour, var(--border));
+}
+.tier h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.2rem;
+  font-size: 1.05rem;
+  color: var(--tier-colour, var(--fg));
+}
+.tier .dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--tier-colour, var(--muted));
+  box-shadow: 0 0 10px var(--tier-colour, transparent);
+  flex: none;
+}
+.tier-note {
+  margin: 0 0 0.9rem;
+  font-size: 0.86rem;
+  color: var(--muted);
+  font-style: italic;
+}
+.tier ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.93rem;
+  color: var(--muted);
+}
+.tier li {
+  margin-bottom: 0.55rem;
+}
+.tier strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+.tier-foot {
+  margin: 0.9rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.tier.critical {
+  --tier-colour: oklch(0.68 0.19 25);
+}
+.tier.advised {
+  --tier-colour: var(--ember);
+}
+.tier.nice {
+  --tier-colour: oklch(0.72 0.15 155);
+}
+
+/* Expectation-setting callouts. `.warn` is the ember variant, used where a
+ * reader could otherwise waste an evening finding out the hard way. */
+.notice {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--arcane);
+  background: oklch(0.16 0.05 285 / 0.7);
+}
+.notice.warn {
+  border-left-color: var(--ember);
+  background: oklch(0.18 0.06 50 / 0.16);
+}
+.notice h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.02rem;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+}
+.notice.warn h3 {
+  color: var(--ember);
+}
+.notice p {
+  margin: 0 0 0.7rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.notice p:last-child {
+  margin-bottom: 0;
+}
+.notice strong {
+  color: var(--fg);
+}
+
+.caveats {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.caveats li {
+  margin-bottom: 0.5rem;
+}
+.caveats strong {
+  color: var(--fg);
+}
+
+/* Numbered "recommended stack" — same orb treatment as the phase list, but
+ * ember-toned so the two ordered lists read as different things. */
+.stack {
+  counter-reset: stackstep;
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 1rem;
+}
+.stack > li {
+  counter-increment: stackstep;
+  position: relative;
+  padding: 1.2rem 1.35rem 1.2rem 4rem;
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  border: 1px solid var(--border);
+}
+.stack > li::before {
+  content: counter(stackstep);
+  position: absolute;
+  left: 1.15rem;
+  top: 1.15rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: oklch(0.99 0.005 290);
+  background: radial-gradient(circle at 35% 30%, oklch(0.8 0.18 55), oklch(0.55 0.18 50));
+  box-shadow: 0 0 18px oklch(0.7 0.19 50 / 0.45), 0 0 0 1px oklch(0.75 0.19 50 / 0.5);
+}
+.stack h3 {
+  margin: 0 0 0.35em;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+}
+.stack p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.steps {
+  margin: 0.9rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.steps li {
+  margin-bottom: 0.4rem;
+}
+.steps strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.who {
+  max-width: 48rem;
+  margin: 1.5rem auto 0;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+.who li {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  color: var(--muted);
+}
+.who li::before {
+  content: "✦";
+  color: var(--gold);
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+.who strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 34rem;
+  font-size: 0.93rem;
+}
+caption {
+  caption-side: top;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+th,
+td {
+  text-align: left;
+  padding: 0.7rem 1rem;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+}
+thead th {
+  background: var(--card2);
+  color: var(--fg);
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+tbody th {
+  color: var(--fg);
+  font-weight: 600;
+}
+tbody td {
+  color: var(--muted);
+}
+tbody tr:nth-child(even) td {
+  background: oklch(0.16 0.05 285 / 0.5);
+}
+
+.faq {
+  max-width: 48rem;
+  margin: 1.5rem auto 0;
+}
+.faq dt {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-top: 1.75rem;
+  color: var(--fg);
+}
+.faq dd {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+}
+
+.doc-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.doc-group h3 {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 0.6rem;
+}
+.doc-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.93rem;
+}
+.doc-group li {
+  margin-bottom: 0.35rem;
+}
+
+.closing {
+  text-align: center;
+  max-width: 48rem;
+  margin: 1rem auto 3rem;
+  padding: 2.5rem 1.5rem;
+  border-radius: 18px;
+  background: radial-gradient(ellipse at 50% 0%, oklch(0.28 0.12 295 / 0.5), transparent 70%), var(--card);
+  border: 1px solid oklch(0.4 0.12 295 / 0.5);
+  box-shadow: 0 0 40px -8px oklch(0.6 0.2 295 / 0.35);
+}
+.closing p {
+  color: var(--muted);
+}
+
+/* ---------- video facade ---------- */
+
+.video {
+  position: relative;
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 16 / 9;
+}
+.video iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.video-play {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+.video-play img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  display: block;
+}
+.video-btn {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 5rem;
+  height: 3.5rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, oklch(0.6 0.22 295), oklch(0.42 0.18 295));
+  box-shadow: 0 0 24px oklch(0.65 0.22 295 / 0.55), 0 0 0 1px oklch(0.75 0.22 295 / 0.6);
+}
+.video-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.65rem 0 0.65rem 1.1rem;
+  border-color: transparent transparent transparent oklch(0.99 0.005 290);
+}
+.video-play:hover .video-btn {
+  background: linear-gradient(180deg, oklch(0.72 0.22 295), oklch(0.5 0.2 295));
+}
+.video-note {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.6rem;
+  color: oklch(0.9 0.02 285);
+  font-size: 0.78rem;
+  text-shadow: 0 1px 4px #000;
+}
+.video-compact .video-btn {
+  width: 3.5rem;
+  height: 2.5rem;
+}
+.video-compact .video-btn::after {
+  border-width: 0.5rem 0 0.5rem 0.8rem;
+}
+
+/* Chapter index under the demo player. Timestamps are monospaced and
+ * fixed-width so the labels line up into a readable column. */
+.chapters {
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: oklch(0.16 0.05 285 / 0.6);
+}
+.chapters h3 {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+.chapter-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.15rem 1.5rem;
+}
+.chapter {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.4rem 0.55rem;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.93rem;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.chapter:hover {
+  background: oklch(0.22 0.06 290 / 0.6);
+  color: var(--fg);
+}
+.chapter[aria-current='true'] {
+  background: oklch(0.22 0.06 290 / 0.8);
+  color: var(--arcane-bright);
+}
+.chapter-time {
+  flex: none;
+  min-width: 3.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--arcane-bright);
+  font-variant-numeric: tabular-nums;
+}
+.chapter[aria-current='true'] .chapter-time {
+  color: var(--ember);
+}
+
+.clip {
+  margin: 1.25rem 0 0;
+}
+.clip-time {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.08rem 0.45rem;
+  border-radius: 5px;
+  background: oklch(0.3 0.1 295 / 0.35);
+  border: 1px solid oklch(0.5 0.14 295 / 0.5);
+  color: var(--arcane-bright);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+.clip figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+.clip-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding: 0.7rem 1rem;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  background: oklch(0.14 0.045 285 / 0.6);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.clip-placeholder span {
+  color: var(--arcane);
+}
+.clip-placeholder em {
+  color: oklch(0.6 0.03 285);
+  font-size: 0.78rem;
+}
+
+.video-placeholder {
+  margin-top: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--muted);
+}
+.video-placeholder p {
+  margin: 0.35rem 0;
+}
+
+/* ---------- docs pages ---------- */
+
+.docs-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 4vw, 2.5rem);
+  align-items: start;
+}
+
+@media (max-width: 60rem) {
+  .docs-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .docs-nav {
+    position: static !important;
+    max-height: none !important;
+    border-right: 0 !important;
+  }
+}
+
+.docs-nav {
+  position: sticky;
+  top: 4.5rem;
+  max-height: calc(100vh - 6.5rem);
+  overflow-y: auto;
+  font-size: 0.9rem;
+  border-right: 1px solid var(--border);
+  padding-right: 1rem;
+}
+.docs-nav h2 {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin: 1.5rem 0 0.5rem;
+}
+.docs-nav h2:first-child {
+  margin-top: 0;
+}
+.docs-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.docs-nav a {
+  display: block;
+  padding: 0.28rem 0.55rem;
+  border-radius: 6px;
+  color: var(--muted);
+  text-decoration: none;
+}
+.docs-nav a:hover {
+  background: oklch(0.22 0.06 290 / 0.55);
+  color: var(--arcane-bright);
+}
+.docs-nav a[aria-current="page"] {
+  background: oklch(0.22 0.06 290 / 0.7);
+  color: var(--arcane-bright);
+  font-weight: 600;
+}
+
+.crumbs {
+  font-size: 0.83rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+.crumbs a {
+  text-decoration: none;
+}
+
+.toc {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+}
+.toc h2 {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin: 0 0 0.5rem;
+}
+.toc ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  columns: 2;
+  column-gap: 2rem;
+}
+@media (max-width: 45rem) {
+  .toc ul {
+    columns: 1;
+  }
+}
+.toc li {
+  margin: 0.2rem 0;
+  break-inside: avoid;
+}
+
+.prose {
+  max-width: 46rem;
+}
+.prose h1 {
+  font-family: var(--font-deco);
+  font-size: clamp(1.8rem, 3.8vw, 2.4rem);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.6em;
+  color: var(--fg);
+}
+.prose h2 {
+  font-size: 1.5rem;
+  margin-top: 2.2em;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid oklch(0.32 0.07 290 / 0.6);
+}
+.prose h3 {
+  font-size: 1.18rem;
+  margin-top: 1.8em;
+}
+.prose h4 {
+  font-size: 1.02rem;
+  margin-top: 1.5em;
+}
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.6rem 1.2rem;
+  border-left: 3px solid var(--arcane);
+  background: oklch(0.14 0.045 285 / 0.6);
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 1.08em;
+}
+.prose pre {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+}
+.prose pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.86rem;
+  color: oklch(0.88 0.03 285);
+}
+.prose img {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: block;
+  margin: 1.5rem 0;
+}
+.prose table {
+  min-width: 0;
+  display: block;
+  overflow-x: auto;
+}
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+.prose details {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 0.6rem 1.1rem;
+  margin: 1.25rem 0;
+}
+.prose details summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-display);
+}
+.prose details summary h2,
+.prose details summary h3 {
+  display: inline;
+  border: 0;
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.edit-link {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+
+/* Bespoke motion is decoration — drop all of it when asked. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero h1,
+  .btn.primary,
+  .sigil-ring,
+  .ember-field span,
+  .card:hover,
+  .site-head nav a.gh:hover {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Expandable output tiles ("What you get back")
+   ---------------------------------------------------------------------------
+   Native <details>, deliberately. The section has to explain five distinct
+   outputs without becoming a wall of text on a page whose job is to make
+   someone decide in thirty seconds — but the detail still has to be THERE, for
+   the reader who wants it and for search engines, which index collapsed
+   <details> content because it is present in the DOM. A JS accordion would
+   trade both of those away for nothing: no keyboard handling for free, no
+   in-page find, and it breaks entirely if the script is blocked.
+
+   Single column rather than a grid. These are read top-to-bottom in a
+   deliberate order (the main output first, the incidental ones after), and
+   expanding a tile inside a grid row shoves its neighbours around. */
+.tiles {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1.6rem;
+}
+
+.tile {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  box-shadow: 0 1px 0 oklch(0.55 0.16 295 / 0.14) inset;
+  overflow: hidden;
+  transition: border-color 0.28s;
+}
+.tile:hover,
+.tile[open] {
+  border-color: oklch(0.45 0.12 295);
+}
+
+.tile > summary {
+  cursor: pointer;
+  padding: 1.05rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  /* The default triangle sits awkwardly against a flex row and cannot be
+     styled cross-browser; ::after below replaces it. */
+  list-style: none;
+}
+.tile > summary::-webkit-details-marker {
+  display: none;
+}
+.tile > summary:focus-visible {
+  outline: 2px solid var(--arcane-bright);
+  outline-offset: -2px;
+}
+
+.tile-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--fg);
+}
+
+.tile-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Pushed right, and rotates on open. A chevron drawn in CSS rather than an
+   SVG keeps this file self-contained and inherits currentColor for free. */
+.tile > summary::after {
+  content: "";
+  margin-left: auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid var(--arcane-bright);
+  border-bottom: 2px solid var(--arcane-bright);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.28s;
+  flex: none;
+  align-self: center;
+}
+.tile[open] > summary::after {
+  transform: rotate(-135deg);
+}
+
+.tile-body {
+  padding: 0 1.25rem 1.25rem;
+  border-top: 1px solid oklch(0.32 0.07 290 / 0.5);
+  padding-top: 1rem;
+  margin-top: -0.15rem;
+}
+.tile-body p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+.tile-body p:last-child {
+  margin-bottom: 0;
+}
+.tile-body strong {
+  color: var(--fg);
+}
+.tile-links {
+  font-size: 0.9rem;
+}
+
+.section-outro {
+  margin-top: 1.6rem;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tile > summary::after {
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Documentation filter + index entries
+   --------------------------------------------------------------------------- */
+.doc-filter {
+  margin: 0 0 1.75rem;
+}
+.doc-filter-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.doc-filter input {
+  width: 100%;
+  max-width: 32rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.95rem;
+}
+.doc-filter input::placeholder {
+  color: var(--muted);
+  opacity: 0.75;
+}
+.doc-filter input:focus-visible {
+  outline: 2px solid var(--arcane-bright);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+.doc-filter-count {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  /* Reserve the line so results appearing don't shove the list downward. */
+  min-height: 1.2em;
+}
+
+.doc-item-note {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.1rem;
+  /* Summaries are one line of context, not a paragraph — keep them from
+     wrapping into a wall that buries the links they describe. */
+  line-height: 1.45;
+}
+.doc-index .doc-item + .doc-item,
+.doc-group .doc-item + .doc-item {
+  margin-top: 0.6rem;
+}
+
+/* ===========================================================================
+   Two ways in — the pathway cards
+   ===========================================================================
+   Two routes to the same output, presented as equals rather than as a
+   recommended option and a fallback. The flow strip at the top of each card
+   does the explaining before the prose does: someone scanning the page should
+   be able to tell the routes apart without reading a word of the paragraph
+   underneath. */
+
+.routes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.route {
+  display: flex;
+  flex-direction: column;
+  padding: 1.9rem 1.7rem 1.6rem;
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  border: 1px solid oklch(0.34 0.08 290);
+  box-shadow:
+    0 1px 0 oklch(0.55 0.16 295 / 0.18) inset,
+    0 28px 56px -28px oklch(0.04 0.02 285 / 0.85);
+}
+
+.route h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.55rem;
+  line-height: 1.12;
+  margin: 0 0 0.65rem;
+  color: var(--fg);
+}
+
+.route p {
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* audio → whisper → grounded → chronicle, as chevron-separated steps. The
+   chevron is a rotated ::after box rather than a character in the markup, so
+   a screen reader hears four labels and not "audio chevron whisper". */
+.route-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin: 0 0 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.route-flow span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+}
+
+.route-flow span:last-child {
+  color: var(--ember);
+}
+
+.route-flow span:not(:last-child)::after {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-top: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  transform: rotate(45deg);
+}
+
+.route-need {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  font-size: 0.9rem;
+}
+
+.route-need strong {
+  color: var(--fg);
+}
+
+/* One button per card, so the pair reads as a choice rather than a menu. */
+.route .cta {
+  justify-content: flex-start;
+  margin: 1.2rem 0 0;
+}
+
+.section-outro {
+  max-width: var(--measure);
+  margin: 2rem auto 0;
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ===========================================================================
+   Why I built this — the memo
+   ===========================================================================
+   Deliberately the least decorated block on the page: no card, no border, no
+   gradient. Everything else here is a product surface and this one is a person
+   talking, so it gets the treatment a letter would — one narrow column of
+   serif text with nothing competing against it. */
+
+.memo-body {
+  max-width: var(--measure);
+  margin: 0 auto;
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  line-height: 1.68;
+  color: oklch(0.88 0.03 285);
+}
+
+.memo-body p {
+  margin: 0 0 1.15rem;
+  text-wrap: pretty;
+}
+
+.memo-body em {
+  color: var(--fg);
+  font-style: italic;
+}
+
+.memo-sign {
+  margin-top: 1.75rem;
+  font-family: var(--font-script);
+  font-size: 1.2rem;
+  color: var(--ember);
+}
+
+/* ===========================================================================
+   Sample output
+   ===========================================================================
+   The one place on the site where the reader looks at the product's actual
+   output rather than a description of it, so the styling gets out of the way:
+   generated prose is set in the reading serif at the prose measure, and every
+   piece of surrounding chrome — labels, counts, commentary — is set in the UI
+   sans. A reader should never have to wonder which words the tool wrote. */
+
+.samples {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.sample {
+  padding: 1.9rem 1.7rem 1.6rem;
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  border: 1px solid oklch(0.34 0.08 290);
+  box-shadow:
+    0 1px 0 oklch(0.55 0.16 295 / 0.18) inset,
+    0 28px 56px -28px oklch(0.04 0.02 285 / 0.85);
+}
+
+.sample-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.85rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sample-head h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--fg);
+}
+
+.sample-note {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--arcane-bright);
+}
+
+/* "4 of the 17 this session produced" — the honesty line. Pushed to the far
+   end of the header so it reads as a footnote to the title rather than as a
+   claim being made. */
+.sample-meta {
+  margin: 0 0 0 auto;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.sample-body {
+  max-width: var(--measure);
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1.66;
+  color: oklch(0.9 0.025 285);
+}
+
+.sample-body p {
+  margin: 0 0 1.1rem;
+  text-wrap: pretty;
+}
+
+.sample-subhead {
+  margin-top: 1.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--arcane-bright);
+}
+
+.sample-list,
+.sample-bullets {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.sample-list li,
+.sample-bullets li {
+  margin-bottom: 0.9rem;
+}
+
+.sample-list li::marker,
+.sample-bullets li::marker {
+  color: var(--arcane);
+}
+
+/* Commentary on the sample, not part of it. Sans-serif and rail-marked so it
+   is unmistakably the site talking rather than more generated text — the one
+   ambiguity that would undermine the whole section. */
+.sample-callout {
+  max-width: var(--measure);
+  margin: 1.6rem 0 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--ember);
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.provenance {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.6rem 1.7rem 1.2rem;
+  border-radius: var(--radius-card);
+  border: 1px dashed var(--border);
+  background: oklch(0.14 0.04 285 / 0.6);
+}
+
+.provenance h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.provenance p {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.provenance-note {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border);
+}
+
+.provenance-note strong {
+  color: var(--fg);
+}
+
+.quotes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+}
+
+.quote {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 1.2rem 1.3rem 1rem;
+  border-radius: 18px;
+  background: oklch(0.13 0.035 285 / 0.75);
+  border: 1px solid var(--border);
+}
+
+.quote blockquote {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+.quote blockquote p {
+  margin: 0;
+}
+
+/* funny · stupid · dark. A pill rather than a coloured border, because the
+   three categories are equals and a colour scale would imply a ranking. */
+.quote-kind {
+  align-self: flex-start;
+  margin-bottom: 0.7rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--arcane-bright);
+  background: oklch(0.65 0.22 295 / 0.14);
+  border: 1px solid oklch(0.65 0.22 295 / 0.3);
+}
+
+.quote-context {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* An exchange keeps one line per turn, with the speaker in a fixed gutter, so
+   the back-and-forth stays legible as a back-and-forth. Collapsing it into a
+   run-on paragraph would destroy the only thing that makes it land. */
+.quote-turns {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.quote-turns p {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, auto) 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.quote-turns b {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.quote-by {
+  margin-top: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--ember);
+}
+
+/* Local-review banner. Loud on purpose — it exists to be impossible to miss in
+   a preview build, and publish-site.mjs refuses to push any page carrying it.
+   See UNAPPROVED_PREVIEW_MARKER in scripts/site/build-site.mjs. */
+.notice.unapproved {
+  max-width: 46rem;
+  margin: 0 auto 1.5rem;
+  border-style: dashed;
+}
+
+@media (max-width: 45rem) {
+  .sample-meta {
+    margin-left: 0;
+  }
+  .quote-turns p {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}
+
+/* The site's own voice, inside a sample card — 'a quiet scene first: …'.
+   Sans-serif and quieter than the extract it introduces, so the boundary
+   between our words and generated prose is never ambiguous. */
+.sample-intro {
+  max-width: var(--measure);
+  margin: 0 0 1.4rem !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.92rem !important;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.sample-body p + .sample-intro {
+  margin-top: 2rem !important;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--border);
+}
+
+.sample-body em {
+  font-style: italic;
+  color: var(--fg);
+}
+
+.sample-bullets strong,
+.sample-body strong {
+  color: var(--fg);
+  font-weight: 600;
+}

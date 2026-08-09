@@ -1,0 +1,196 @@
+{
+  "_comment": [
+    "Sample pipeline output for the public site's 'What it actually writes' section.",
+    "",
+    "=== THE APPROVAL GATE ===",
+    "",
+    "`approved` is false until a human has read every string in this file and",
+    "signed it off. While it is false the builder renders NOTHING — no section,",
+    "no structured data, no anchor — so an unreviewed snippet cannot reach the",
+    "public site by being merged and forgotten. Flip it to true only after the",
+    "read-through. scripts/site/build-site.test.mjs asserts the gate holds.",
+    "",
+    "=== WHERE THIS CAME FROM ===",
+    "",
+    "Every string below is real pipeline output, copied out of the maintainer's",
+    "own campaign notes. Nothing here was written by hand, paraphrased, or",
+    "polished after the fact — the prose is exactly as the pipeline produced it.",
+    "Two changes were made, both mechanical:",
+    "",
+    "  1. NAMES. Every character, NPC, place, faction and deity was substituted",
+    "     for a fantasy equivalent. The substitution is one-to-one and consistent",
+    "     across all five sections, which is the point: that consistency IS the",
+    "     feature being demonstrated. Real D&D terms were deliberately NOT",
+    "     changed — Leomund's Tiny Hut, Gentle Repose, Sacred Flame, Wall of",
+    "     Fire, Aura of Desecration, Deflect Attack and the rest stay, because",
+    "     the mechanical fidelity is the most convincing thing in the samples.",
+    "",
+    "     No player's real name appears anywhere. The source notes attribute",
+    "     quotes as 'Character Name (Player Name)'; every player name was",
+    "     stripped rather than substituted.",
+    "",
+    "  2. SELECTION. One session produces upwards of 20 jests, a dozen combat",
+    "     highlights and 40-plus quotes. What is published is a curated subset,",
+    "     drawn from several sessions. A real table's unfiltered talk is not",
+    "     marketing copy, and the page says so rather than implying otherwise —",
+    "     see `provenance.selectionNote`.",
+    "",
+    "Where an extract was cut, it was cut and not rewritten: the remaining words",
+    "are contiguous and untouched.",
+    "",
+    "=== EDITING ===",
+    "",
+    "Adding a snippet re-opens the review. Set `approved` back to false, add the",
+    "text, then read the whole file again — not just the diff. The gate exists",
+    "because 'I only changed one line' is exactly how an unreviewed line ships."
+  ],
+
+  "approved": true,
+
+  "heading": "What it actually writes",
+  "lede": "Real output from real sessions, with the names changed and nothing else. Read it before you install anything — the prose is the whole product, and no description of it is worth as much as four paragraphs of the actual thing.",
+
+  "provenance": {
+    "sessionLabel": "Extracts from four sessions of one home campaign, ~3 hours of Discord audio each",
+    "routing": [
+      { "phase": "Phase 1 — grounding", "engine": "Claude Code (Sonnet)" },
+      { "phase": "Phase 2 — audit", "engine": "Claude Code (Haiku)" },
+      { "phase": "Phase 3 — chronicle", "engine": "Gemini API (paid key)" },
+      { "phase": "Phase 4 — extras", "engine": "Gemini API (paid key)" },
+      { "phase": "Phase 6 — condense", "engine": "Gemini API (paid key)" }
+    ],
+    "routingNote": "A hybrid run: the two mechanical phases went through a signed-in Claude Code CLI, drawing on a subscription allowance rather than API credit, and the three writing phases went to a paid Google Gemini key. That split is the combination this project recommends, and it is what produced every word below.",
+    "anonymisation": "Characters, NPCs, places and gods have been renamed — one-to-one, and consistently across every sample. Spell and rules names are untouched. Nothing else was edited: where an extract is cut, the remaining words are contiguous and exactly as generated.",
+    "selectionNote": "Curated across four sessions. A single session produces around twenty jests, a dozen combat highlights and over forty quotes; a handful of each is shown here. Real table talk is not always printable, and this page does not pretend otherwise."
+  },
+
+  "chronicle": {
+    "label": "The chronicle",
+    "note": "Phase 3 · narrative prose",
+    "meta": "Two extracts — a full session runs to roughly 16,000 words",
+    "intro": "A quiet scene first: two players with nothing to do on a night watch. No combat, no plot beats, and the write-up still finds the turn at the end.",
+    "paragraphs": [
+      "Roused to their duties, the two clerics ascended to the top deck, their shared darkvision piercing the pitch-black harbour. To pass the hours, Grendal conjured a <em>Leomund's Tiny Hut</em>, projecting bright, magical cartoons across the interior of the dome. Ostyn added minor illusion hand puppets, turning the cold watch into a bizarre, domestic pillow-fort cinema.",
+      "To complete the grotesque tableau, Ostyn propped up the rotting flesh golem — the stitched-together abomination left behind by the Osk Triplets — among their plush pillows. Reeking of decaying pumpkin, the headless monstrosity sagged against Grendal before being shoved aside. Realising the gourd at its core was rotting away before Wren the bird could pilot it again, Ostyn resolved to cast <em>Gentle Repose</em> in the morning, happily noting the spell's requirement of laying copper pennies on the eyes of the dead.",
+      "The quiet prompted Grendal to examine the burdens he carried: his mother's medallion and his towering father's paladin gauntlets, recovered from the demonic triplets. Ostyn slipped his hands into the massive steel gauntlets. His fingers barely reached halfway, leaving him flexing uselessly like a child playing dress-up in a parent's armour. Yet, for a split second, Ostyn felt a profound, divine warmth radiating from the metal, the unmistakable sense of divine eyes turning upon him.",
+      "Grendal then lifted his mother's medallion and placed it around his neck. The connection was instantaneous and violent. He was drawn into a sudden, overwhelming oneness with chaos itself. The butterfly effect rippled outward; looking at a moored ship, his mind whirled backward through every permutation of history that had brought it to the docks. The revelation quickly curdled into a suffocating clamour. Panting, Grendal tore the medallion off, hearing the unmistakable, knowing chuckle of his mother echoing in the back of his skull. He dropped it to the floor, refusing to touch the cursed heirloom until the watch ended."
+    ],
+    "secondIntro": "And a combat round, from a different session. Crits, an aura, a card draw, a rage, a Wall of Fire angled for cover — the mechanics are all there, and it still reads as prose.",
+    "secondParagraphs": [
+      "The quiet of the Ashenreach necropolis shattered. Granted a surprise round, the party's ambush on Isolde Mors's grave-robbing crew was a symphony of calculated chaos. Malachar Corvel, lounging on a crate, opened the engagement with casual devastation. Two crackling shots of force energy from his finger-guns slammed into a raider captain, the critical blasts leaving the man stunned and reeling. From the other side, Grendal Osk charged forward, a thirty-foot Aura of Desecration pulsing outwards from him like a wave of pure entropy. The necrotic energy washed over six of Isolde's crew, searing their flesh. Not content, Grendal drew a card from his Deck of Aveline; the Chains of Zephyr erupted, magically restraining all but one of the afflicted, who then withered further under the aura's baleful light. Merrec Corvel seized the opening, reaching over a ledge to grab a crossbow-wielding woman by the leg, hauling her over the side and slamming her into the ground behind him before settling into his barbarian rage. The assault was capped by Ostyn Rale, who conjured a towering Wall of Fire, angling it to incinerate the restrained gravediggers while providing cover for Grendal. A follow-up blast of Sacred Flame left the woman Merrec had downed smoldering."
+    ],
+    "callout": "Neither extract was tidied up for this page. The spell names are right, the sequencing is right, and the emotional beat at the end of the first one is in the recording — nobody prompted for it."
+  },
+
+  "condensed": {
+    "label": "The condensed version",
+    "note": "Phase 6 · you set the length",
+    "meta": "A whole session in one paragraph",
+    "narrative": "The party departed Emberlight aboard the <em>Too Many Bruisers</em>, bound for Ashenreach by way of Kelvaris's Vein. After a chaotic captaincy vote, Halvard was crowned Captain and promptly reorganised the crew into corporate “departments.” On the pier, a town crier broke the news that two Solance Elders had been missing for a month, and Grendal's medallion delivered the first vision of Veera and Bridge's lost expedition. Fennel rejoined the crew at the docks. At sea, Ostyn received a matching vision through his father's gauntlets, and Halvard set about indoctrinating the terrified Pell into the family.",
+    "bulletsLabel": "…and the same session again as catch-up bullets",
+    "bullets": [
+      "Outside Aldric's office, the party settled their route: around the Western Badlands and up Kelvaris's Vein to Ashenreach.",
+      "<strong>The captaincy was finally decided.</strong> Malachar and Merrec recused themselves; Grendal's <em>Augury</em>-and-bottle ruled it Aveline's will that Halvard command. A three-vote democratic vote (Sivo, Ostyn, Grendal) crowned <strong>Halvard Captain of the <em>Too Many Bruisers</em></strong>.",
+      "<strong>The crew was reorganised as a company:</strong> Malachar took command of a new <strong>research division</strong> (developing the ship's explosives into a weapon), with Sump Rat reporting directly to him. Kurogane was made head of <strong>“Resources” (R)</strong>, and Wemble was formally appointed <strong>Quartermaster</strong>.",
+      "<strong>Grendal received the first medallion vision:</strong> Veera fighting in a cave, locking eyes with a young Bridge Rale, and a vast beam of energy.",
+      "<strong>Halvard “indoctrinated” Pell</strong>, super-kicking Merrec and delivering a “what is your story?” monologue that visibly began to break something inside Pell; Merrec pulled him away."
+    ],
+    "callout": "Written from the finished chronicle rather than from the transcript, so shortening it drops the padding instead of the good bits. The bullets are the version you paste into the group chat on Monday."
+  },
+
+  "jests": {
+    "label": "The Gallery of Jests",
+    "note": "Phase 4 · the bit people reread",
+    "meta": "5 of the ~20 a session produces",
+    "items": [
+      "Kurogane's real-life Alexa suddenly goes off at full volume in his headset mid-session, which the party immediately jokes is the goddess Sethra trying and failing to connect to the internet to speak to him.",
+      "Kurogane completely forgets he has the Deflect Attack feature until Ostyn points out he has just taken over 50 damage from Vorrak's triple greatsword attack.",
+      "Grendal activates his Aura of Desecration, which Kurogane immediately rebrands as the “Aura of Constipation.”",
+      "Grendal and Ostyn spend their watch in a Tiny Hut transformed into a pillow-fort cinema, watching cartoons on the dome's interior, a tender moment they immediately make grotesque by propping up a decaying flesh golem to watch with them.",
+      "Kurogane creatively blocks a dazed Merrec's heavy hammer swing by clicking an immovable rod into place right in front of the arc, causing the weapon to bounce off with a comical, joint-shattering vibration."
+    ],
+    "callout": "The first one is the tell. A player's smart speaker went off in his headset, the table folded it into the fiction, and the write-up caught it — because it was working from a recording of the evening rather than from notes about the game."
+  },
+
+  "gore": {
+    "label": "The Gallery of Gore",
+    "note": "Phase 4 · the grisly ones",
+    "meta": "4 of the dozen a session produces",
+    "items": [
+      "Kurogane catches a heavy crossbow bolt out of the air and launches it back, pinning an enemy through the eye while maintaining cold eye contact with Vorrak.",
+      "Ostyn unleashes a Sacred Flame that completely obliterates the enemy captain, vaporizing him out of existence so thoroughly that not a single trace is left.",
+      "The graveyard is left in disarray with shattered coffins and exhumed skeletal remains loaded onto an abandoned cart, with the personal valuables of the deceased scattered carelessly across the dirt.",
+      "In a post-session cutscene, the mysterious serpent-masked figure executes an underling for insolence. A mere flick of their wrist sends an invisible blade of force across the room, opening a deep, jagged red line across the captain's throat as he collapses, choking and drowning in his own blood."
+    ],
+    "callout": "This is the part most tools quietly sand off. Gemini's API lets the content filters be turned off, so a session that was violent gets written up as violent — which is why the recommended routing sends the writing phases there."
+  },
+
+  "quotes": {
+    "label": "Memorable quotes",
+    "note": "Phase 4 · exchanges, not one-liners",
+    "meta": "6 of the 40-plus a session produces",
+    "items": [
+      {
+        "speaker": "Ostyn, the DM",
+        "kind": "funny",
+        "context": "Mid-combat, checking whether a restrained enemy gets a saving throw.",
+        "exchange": [
+          { "speaker": "Ostyn", "line": "Restrained people can't make saves for Dex. They auto-fail. I'm pretty sure, let me double check that one." },
+          { "speaker": "Ostyn", "line": "Restrained. Speed zero. Oh no, it's just disadvantage. It's not auto fail." },
+          { "speaker": "the DM", "line": "fuck it they failed" }
+        ]
+      },
+      {
+        "speaker": "Ostyn, Kurogane",
+        "kind": "stupid",
+        "exchange": [
+          { "speaker": "Ostyn", "line": "Are you gonna deflect any of those?" },
+          { "speaker": "Kurogane", "line": "shit I totally forgot I can do that" },
+          { "speaker": "Ostyn", "line": "you just took like 60 damage!" },
+          { "speaker": "Kurogane", "line": "took more than that" }
+        ]
+      },
+      {
+        "speaker": "Malachar, Grendal",
+        "kind": "dark",
+        "exchange": [
+          { "speaker": "Malachar", "line": "So you're telling me you're not killing goblins and draining their blood?" },
+          { "speaker": "Grendal", "line": "I'm not that devout." }
+        ]
+      },
+      {
+        "speaker": "Halvard, Malachar, Ostyn",
+        "kind": "funny",
+        "context": "Halvard is a wrestler, and takes his presentation extremely seriously.",
+        "exchange": [
+          { "speaker": "Halvard", "line": "I have to make sure that my whites are pearly whites when I smile for the crowd." },
+          { "speaker": "Malachar", "line": "Has anyone ever told you that nearly half of your teeth have cracks in them?" },
+          { "speaker": "Halvard", "line": "They don't. I know because I go to a very good dentist. Me." },
+          { "speaker": "Ostyn", "line": "You can't see your own teeth." },
+          { "speaker": "Halvard", "line": "Have you heard of a mirror, Ostyn? You fucking idiot." }
+        ]
+      },
+      {
+        "speaker": "the DM, Malachar, Kurogane",
+        "kind": "dark",
+        "context": "Kurogane had just been knocked unconscious.",
+        "exchange": [
+          { "speaker": "the DM", "line": "He's just going to go over to Kurogane's unconscious body and then spit on you and then walk away." },
+          { "speaker": "Malachar", "line": "emotional damage" },
+          { "speaker": "Kurogane", "line": "he's asking for beef" }
+        ]
+      },
+      {
+        "speaker": "Halvard, Malachar, Merrec",
+        "kind": "stupid",
+        "context": "The new recruit cannot swim, and has said so.",
+        "exchange": [
+          { "speaker": "Halvard", "line": "DID I SAY WE WERE GOING TO THROW HIM OVERBOARD?" },
+          { "speaker": "Malachar", "line": "We could dunk him." },
+          { "speaker": "Merrec", "line": "There will be no dunking." }
+        ]
+      }
+    ],
+    "callout": "Every one of these is an exchange, because table humour almost never fits in one line. “I'm not that devout” is nothing on its own. It is very funny three seconds after somebody asks whether you have been draining goblins. Pull out only the punchline and you are left with something that means nothing to anyone who wasn't in the room."
+  }
+}

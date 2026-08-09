@@ -1,0 +1,730 @@
+<!doctype html>
+<!--
+  Landing page source. Double-brace placeholders are filled in by
+  scripts/site/build-site.mjs — edit this file, then `npm run site:build`.
+
+  Do NOT write a placeholder name inside a comment: substitution is a plain
+  string replace over the whole file, so a name mentioned here would be
+  expanded here too. (The builder strips comments before substituting, which
+  makes that safe, but keep the habit.)
+
+  The copy here is deliberately NOT a paste of README.md. Two near-identical
+  pages would compete with each other in search results instead of covering
+  different queries; the README serves people already on GitHub, this page
+  serves people who have not heard of the project yet.
+-->
+<html lang="en-GB">
+<head>
+{{HEAD}}
+</head>
+<body class="landing">
+<a class="skip" href="#main">Skip to content</a>
+{{SVG_DEFS}}
+{{EMBER_FIELD}}
+{{HEADER}}
+
+<main id="main">
+
+  <section class="hero">
+    <div class="sigil" aria-hidden="true">
+      <svg class="sigil-ring" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="96" stroke="currentColor" stroke-width="1" stroke-dasharray="3 7"/>
+        <circle cx="100" cy="100" r="82" stroke="currentColor" stroke-width="0.6" stroke-dasharray="14 10"/>
+      </svg>
+      <svg class="sigil-ring inner" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="1" stroke-dasharray="2 12"/>
+      </svg>
+      <svg class="sigil-mark"><use href="#tt-tusk"/></svg>
+    </div>
+    <p class="eyebrow">Free · Open source · Runs on your machine</p>
+    <h1>Your campaign, transcribed and written up properly</h1>
+    <p class="lede">
+      Point it at a recording of your D&amp;D, Pathfinder or Call of Cthulhu game — or at a transcript you
+      already have — and get back a proper narrative account of what happened. Spelled the way your table
+      spells things, because it checks your campaign's own lore before it writes a word.
+    </p>
+    <p class="lede-sub">
+      A personal project. I built it for my own table, and the write-ups turned out to be the thing people
+      reread.
+    </p>
+    <p class="cta">
+      <a class="btn primary" href="{{BASE}}/docs/setup/">Install it</a>
+      <a class="btn" href="#routes">Which route suits me?</a>
+      <a class="btn" href="{{BASE}}/docs/dependencies/">What you'll need first</a>
+    </p>
+    <ul class="runestones">
+      <li><b>MIT</b> licensed</li>
+      <li><b>No</b> account</li>
+      <li><b>No</b> subscription</li>
+      <li><b>Zero</b> telemetry</li>
+      <li>v<b>{{VERSION}}</b></li>
+    </ul>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="routes" aria-labelledby="routes-h">
+    <h2 id="routes-h">Two ways in, one chronicle out</h2>
+    <p class="section-lede">
+      The hard part was never the writing. It's getting four hours of six people talking over each other
+      into text at all. There are two roads to that, and they both end in the same place — pick the one
+      that matches the hardware you already own.
+    </p>
+    <div class="routes">
+
+      <article class="route">
+        <p class="route-flow"><span>Session audio</span><span>Whisper, locally</span><span>Grounded transcript</span><span>Chronicle</span></p>
+        <h3>Record it and transcribe it yourself</h3>
+        <p>
+          Drop in a Discord multitrack, a Zoom export, or a phone recording from the middle of the table.
+          Whisper transcribes it on your own machine — the audio never goes anywhere. Record each player
+          to their own track and every line in the finished chronicle stays attached to the right
+          character, because one track means one person and nothing has to guess.
+        </p>
+        <p class="route-need"><strong>Wants:</strong> an NVIDIA GPU and the Audio Transcription add-on.</p>
+        <p class="cta"><a class="btn primary" href="{{BASE}}/docs/audio-to-chronicle/">How the audio route works</a></p>
+      </article>
+
+      <article class="route">
+        <p class="route-flow"><span>Session video</span><span>YouTube captions</span><span>Grounded transcript</span><span>Chronicle</span></p>
+        <h3>Let YouTube do the transcribing</h3>
+        <p>
+          Upload the recording to YouTube as unlisted, wait for the automatic captions, then bring the
+          transcript back — paste the text, or download the <code>.sbv</code> and run it through Caption
+          Repair to keep the timestamps. The transcription happens on Google's hardware instead of yours.
+        </p>
+        <p class="route-need"><strong>Wants:</strong> nothing you don't already have. No GPU, no Python, no add-on.</p>
+        <p class="cta"><a class="btn primary" href="{{BASE}}/docs/youtube-transcript-to-chronicle/">How the YouTube route works</a></p>
+      </article>
+
+    </div>
+    <p class="section-outro">
+      Both roads meet at the same place: the grounding pass, where your campaign's names get corrected
+      against your own lore before any prose is written. That step is the reason this exists.
+      <a href="{{BASE}}/docs/workflows/">Compare every way to get a session in →</a>
+    </p>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="demo" aria-labelledby="demo-h">
+    <h2 id="demo-h">Watch it run</h2>
+    <p class="section-lede">The whole journey, from a fresh install to a saved chronicle.</p>
+    {{VIDEO}}
+    {{CHAPTERS}}
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="outputs" aria-labelledby="outputs-h">
+    <h2 id="outputs-h">What you get back</h2>
+    <p class="section-lede">
+      One run over one recording produces all five of these. Open any of them to see what it actually
+      looks like — and none of it is a wall of transcript.
+    </p>
+    <div class="tiles">
+
+      <details class="tile" open>
+        <summary>
+          <span class="tile-title">The chronicle</span>
+          <span class="tile-note">the main event · prose, not minutes</span>
+        </summary>
+        <div class="tile-body">
+          <p>
+            Your session written up as a continuous narrative — what the party did, what it cost them,
+            and what they said while doing it. A consistent voice from start to finish, exported as
+            <code>.docx</code> or Markdown and ready to drop into a campaign journal.
+          </p>
+          <p>
+            <strong>The part that matters: it's grounded against your own lore first.</strong>
+            Before a word of narrative is written, a separate pass corrects the transcript against a
+            glossary of <em>your</em> names, places and factions — or, if you keep your campaign in
+            Obsidian, against the vault itself. Speech-to-text renders unfamiliar fantasy names
+            phonetically and a general-purpose model will happily invent a plausible spelling and then
+            commit to it for forty pages. This is the step that stops that happening, and everything
+            downstream inherits it.
+          </p>
+          <p class="tile-links">
+            <a href="{{BASE}}/docs/add-ons/obsidian-vault/">Grounding from an Obsidian vault</a>
+          </p>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <span class="tile-title">A condensed version</span>
+          <span class="tile-note">you choose how short</span>
+        </summary>
+        <div class="tile-body">
+          <p>
+            The same session at whatever length suits you, written <em>from</em> the finished chronicle
+            rather than from the raw transcript — so shortening it drops the padding rather than the
+            good bits.
+          </p>
+          <p>
+            A slider sets the target and shows the projected word count as you drag it. A three-hour
+            session lands at roughly 16,000–18,000 words in full; at the default setting the condensed
+            version comes back nearer 3,000. Useful when you want something readable in a coffee break,
+            or a "previously on…" to read aloud at the top of next week's game.
+          </p>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <span class="tile-title">A bullet-point catch-up recap</span>
+          <span class="tile-note">for the Monday Discord post</span>
+        </summary>
+        <div class="tile-body">
+          <p>
+            The events of the session as a short list of plain statements — no prose, no flourish. This
+            is the one you paste into your group chat so the player who missed last week can catch up in
+            thirty seconds, and the one you skim yourself five minutes before the next session starts.
+          </p>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <span class="tile-title">The Gallery of Jests and Gore</span>
+          <span class="tile-note">the bit people actually reread</span>
+        </summary>
+        <div class="tile-body">
+          <p>
+            Two curated lists kept side by side. <strong>Jests</strong> collects the moments the table
+            actually laughed at. <strong>Gore</strong> collects the grisly ones — the critical hit that
+            went far too well, the description nobody expected you to commit to.
+          </p>
+          <p>
+            These get lost faster than anything else. A month later nobody can remember how the joke
+            went, only that there was one. Having them written down is, honestly, what makes people ask
+            for the write-up in the first place.
+          </p>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <span class="tile-title">Memorable quotes</span>
+          <span class="tile-note">sorted funny · stupid · dark</span>
+        </summary>
+        <div class="tile-body">
+          <p>
+            Attributed lines, grouped by flavour, ready to paste. The useful design decision here is
+            that it captures the whole <em>exchange</em>, not single lines — table humour is almost
+            never one sentence. It's the setup, the terrible response, and the pause afterwards. Pulling
+            out just the punchline leaves something that isn't funny to anyone who wasn't there.
+          </p>
+        </div>
+      </details>
+
+    </div>
+    <p class="section-outro">
+      Every one of these is optional and every one is editable before you export. If you only ever use
+      the chronicle and the quotes, that's a perfectly sensible way to run it.
+      <a href="{{BASE}}/docs/features/">See everything it does →</a>
+    </p>
+    {{CLIP:output}}
+  </section>
+
+{{EXAMPLES}}
+
+  {{RUNE}}
+
+  <section class="section" id="requirements" aria-labelledby="requirements-h">
+    <h2 id="requirements-h">What you'll need</h2>
+    <p class="section-lede">
+      Worth reading before you clone anything. Three tiers, so you can see what's genuinely
+      required versus what just makes things better. The summary is below —
+      <a href="{{BASE}}/docs/dependencies/"><strong>the full dependencies page</strong></a>
+      covers each one properly, including how to check what you already have.
+    </p>
+
+    <div class="tiers">
+      <article class="tier critical">
+        <h3><span class="dot" aria-hidden="true"></span>Critical</h3>
+        <p class="tier-note">Nothing runs without these.</p>
+        <ul>
+          <li><strong>Node.js 20+</strong> — the app is a Node program. The one hard prerequisite.</li>
+          <li><strong>Git</strong> — how you download it, and how the in-app updater works.</li>
+          <li>
+            <strong>One way to reach an AI model</strong> — an API key, a Claude Code / Codex
+            subscription you already pay for, or a local model. Pick one; they're interchangeable.
+          </li>
+        </ul>
+        <p class="tier-foot">You do <strong>not</strong> need Visual Studio Build Tools. Nothing here compiles.</p>
+      </article>
+
+      <article class="tier advised">
+        <h3><span class="dot" aria-hidden="true"></span>Advised</h3>
+        <p class="tier-note">Not required — but the result is noticeably better.</p>
+        <ul>
+          <li><strong>Python 3.10–3.12</strong> — runs Whisper to transcribe your recordings locally. 3.13 is untested rather than broken.</li>
+          <li><strong>An NVIDIA GPU specifically</strong> — turns "several hours" of transcription into 20–30 minutes. AMD, Intel and Apple GPUs aren't used at all; the engine has no backend for them.</li>
+          <li><strong>Discord + Craig</strong> — records one track per person, which is what makes speaker attribution reliable. Craig's free tier is enough.</li>
+        </ul>
+      </article>
+
+      <article class="tier nice">
+        <h3><span class="dot" aria-hidden="true"></span>Nice to have</h3>
+        <p class="tier-note">Quality of life. Skip freely.</p>
+        <ul>
+          <li><strong>Obsidian</strong> — a pleasant home for campaign lore, though any folder of markdown works.</li>
+          <li><strong>Claude Code / Codex CLI</strong> — spends a subscription you already have instead of API credit.</li>
+          <li><strong>Ollama or LM Studio</strong> — run some or all phases offline.</li>
+          <li><strong>Windows Terminal</strong> — a tidier launcher window. Purely cosmetic.</li>
+        </ul>
+      </article>
+    </div>
+
+    <p class="cta">
+      <a class="btn primary" href="{{BASE}}/docs/dependencies/">Full requirements list</a>
+      <a class="btn" href="{{BASE}}/docs/setup/">Setup guide</a>
+    </p>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="expect" aria-labelledby="expect-h">
+    <h2 id="expect-h">Before you install — what to expect</h2>
+    <p class="section-lede">
+      The honest version: how long a session actually takes, what hardware it wants, and where the
+      output is weaker. Better to know now than after cloning.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>Measured on a real session — 8 players, 3 hours of audio, NVIDIA RTX 3070 Ti</caption>
+        <thead>
+          <tr>
+            <th scope="col">Stage</th>
+            <th scope="col">How long</th>
+            <th scope="col">Needs you there?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Local Whisper transcription</th>
+            <td>20–30 minutes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <th scope="row">Six-phase chronicle pipeline</th>
+            <td>~30 minutes</td>
+            <td>No — pause and resume are built in</td>
+          </tr>
+          <tr>
+            <th scope="row">Total, end to end</th>
+            <td><strong>About an hour</strong></td>
+            <td>Start it and walk away</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="notice warn">
+      <h3>Whisper transcription is heavily GPU-dependent</h3>
+      <p>
+        Those numbers assume an <strong>NVIDIA</strong> GPU, and that word is doing real work. Whisper
+        here runs on <code>faster-whisper</code>, whose backend implements exactly two devices: CUDA and
+        CPU. There is no AMD, Intel Arc or Apple GPU backend — those cards <strong>aren't used at
+        all</strong>, so you get the same speed as a machine with no graphics card. That's the engine's
+        limitation, not a preference.
+      </p>
+      <p>
+        On the processor, a three-hour session can take several hours rather than half an hour. It still
+        works if you set it going and walk away. <strong>Otherwise use the YouTube route below</strong> —
+        it does the transcribing on Google's hardware instead of yours.
+      </p>
+    </div>
+
+    <div class="cards">
+      <article class="card">
+        <h3>Craig + Whisper <span class="tag">best output</span></h3>
+        <p>
+          Record in Discord with Craig, drop the multi-track zip in, and Whisper transcribes each speaker's
+          track separately on your machine. Because every track is one person, attribution is reliable
+          from the transcript all the way through to the finished chronicle.
+        </p>
+        <p><strong>Needs:</strong> an <strong>NVIDIA</strong> GPU (realistically) plus the Audio Transcription add-on. AMD and Intel cards aren't used at all — the engine has no backend for them.</p>
+      </article>
+      <article class="card">
+        <h3>Record and let YouTube transcribe <span class="tag">easiest start</span></h3>
+        <p>
+          Record the session with <strong>OBS Studio</strong> or any similar recorder, upload it to YouTube
+          as <strong>unlisted or private</strong>, and let YouTube's automatic captions do the transcription
+          on Google's hardware. No GPU, no Python, no add-on to install.
+        </p>
+        <ol class="steps">
+          <li>Record the session (OBS Studio, or whatever you already use).</li>
+          <li>Upload to YouTube; set visibility to <strong>Unlisted</strong> or <strong>Private</strong>.</li>
+          <li>Wait for automatic captions to finish generating.</li>
+          <li>
+            In <strong>YouTube Studio</strong> → your video → <strong>Subtitles</strong>, take your pick:
+            <ul>
+              <li>open the language's caption track and <strong>copy the transcript text</strong>, then paste it straight into the <strong>Raw transcript</strong> box in Tomes; or</li>
+              <li><strong>⋮</strong> → <strong>Download <code>.sbv</code></strong>, then drop the file into the <strong>Caption Repair</strong> tab → <strong>Repair captions</strong> → <strong>Send to refinement</strong>.</li>
+            </ul>
+          </li>
+        </ol>
+        <p>
+          The <code>.sbv</code> route keeps the timestamps, which helps the pipeline segment the session;
+          pasting the plain text is quicker. Either way you land in the same chronicle pipeline.
+        </p>
+      </article>
+    </div>
+
+    <div class="notice">
+      <h3>The trade-off, stated plainly</h3>
+      <p>
+        The YouTube route is much more beginner-friendly, but <strong>the output is not as good, and the
+        gap is entirely about who said what</strong>. A YouTube caption file contains <strong>no speaker
+        labels at all</strong> — it is one undifferentiated stream of text. Tomes reconstructs speakers
+        from context, and to do that it will ask you a fair number of clarifying questions before it can
+        attribute lines confidently. Even then, attribution is a best guess in places, where the
+        multi-track Craig route simply knows.
+      </p>
+      <p>
+        If you want the chronicle to reliably say which character did what, record multi-track. If you
+        mainly want a readable account of the session and can live with some fuzziness on attribution,
+        YouTube is a perfectly good place to start — and you can always switch later.
+      </p>
+    </div>
+
+    <div class="notice">
+      <h3>How long the output actually is</h3>
+      <p>
+        A three-hour session typically produces a chronicle of <strong>16,000–18,000 words</strong>. If
+        that's more than you want to read out to the table, the optional condense phase cuts it down as
+        far as you like — you set the target.
+      </p>
+    </div>
+
+    <div class="notice warn">
+      <h3>What hasn't been tested much yet</h3>
+      <p>
+        Being straight about maturity, since this is open source and you're the one installing it:
+      </p>
+      <ul class="caveats">
+        <li><strong>Windows is the tested platform.</strong> The current build has not been tested on Linux or macOS — it's expected to work, but assume you may hit rough edges, and please report them.</li>
+        <li><strong>The Codex add-on is only partially tested.</strong> The provider, routing and usage-limit handling are covered, but it has had far less real-session mileage than the cloud path.</li>
+        <li><strong>Local LLMs have not been tested above 4B parameters</strong>, for want of VRAM on the test machine. Everything larger is unverified here.</li>
+      </ul>
+    </div>
+
+    <p><a class="more" href="{{BASE}}/docs/workflows/">Compare all the input workflows →</a></p>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="recommended" aria-labelledby="recommended-h">
+    <h2 id="recommended-h">The setup that works best</h2>
+    <p class="section-lede">
+      Everything is optional and swappable, but if you want the short answer to "what should I actually
+      pick" — this is the combination that has produced the best results in practice.
+    </p>
+    <ol class="stack">
+      <li>
+        <h3>Record with Craig <span class="tag">free tier is enough</span></h3>
+        <p>
+          The <a href="https://craig.chat" rel="noopener">Craig</a> Discord bot records each participant to
+          their own track. Nothing here needs a paid Craig plan — the free tier covers this workflow.
+        </p>
+      </li>
+      <li>
+        <h3>Transcribe with Whisper, locally</h3>
+        <p>
+          Strongly recommended alongside Craig, because per-speaker tracks give Whisper audio that is
+          trivially attributable — every line ends up tied to the right person. This is the single biggest
+          quality difference versus any single-stream transcript.
+        </p>
+      </li>
+      <li>
+        <h3>Keep lore in an Obsidian vault</h3>
+        <p>
+          The <a href="{{BASE}}/docs/add-ons/obsidian-vault/">Obsidian Vault add-on</a> is recommended over
+          the plain Tusks-Lore folder layout — it grounds names and lore more reliably. In head-to-head
+          testing the outputs were comparable, so the folder route is far from useless; Obsidian is just the
+          better of the two.
+        </p>
+      </li>
+      <li>
+        <h3>Route Gemini + Claude Code</h3>
+        <p>
+          The best balance found so far between cost and output quality. Part of the reason is
+          unglamorous but important: <strong>Gemini's API lets you turn the content filters off</strong>,
+          so the mature material a real session contains — violence, swearing, explicit dialogue — is
+          processed and written up as it happened. Claude and ChatGPT models tend to sanitise that content
+          by default, and no amount of prompt wording fully prevents it.
+        </p>
+      </li>
+    </ol>
+    <p><a class="more" href="{{BASE}}/docs/recommended-settings/">Full recommended settings →</a></p>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="how" aria-labelledby="how-h">
+    <h2 id="how-h">How it works</h2>
+    <p class="section-lede">
+      A six-phase pipeline. Each phase does one job and hands off to the next, so a failure is recoverable
+      and you can pause a run and pick it up later.
+    </p>
+    <ol class="phases">
+      <li>
+        <h3>Get the words out of the recording</h3>
+        <p>
+          Drop in a <a href="https://craig.chat" rel="noopener">Craig</a> multi-track Discord zip, a single
+          audio file from Zoom or a phone, a YouTube <code>.sbv</code> caption file, or just paste text.
+          Audio is transcribed locally by Whisper — one track per speaker, so attribution survives.
+        </p>
+        {{CLIP:import}}
+      </li>
+      <li>
+        <h3>Ground the names <span class="tag">the important bit</span></h3>
+        <p>
+          Speech-to-text renders unfamiliar fantasy names phonetically, and a general LLM will invent a
+          spelling and commit to it. Phase&nbsp;1 corrects the raw transcript against your own glossary of
+          characters, places and terms first, so everything downstream is working from your canon.
+        </p>
+        {{CLIP:speakers}}
+      </li>
+      <li>
+        <h3>Flag what's ambiguous</h3>
+        <p>
+          The audit phase compares the raw and corrected transcripts and hands the DM a list of things it
+          could not resolve, rather than guessing and burying the guess in prose.
+        </p>
+      </li>
+      <li>
+        <h3>Write the chronicle</h3>
+        <p>
+          The narrative pass turns the grounded transcript into continuous prose, keeping player dialogue
+          where it matters and rendering the DM's narration as narration.
+        </p>
+        {{CLIP:run}}
+      </li>
+      <li>
+        <h3>Pull the extras</h3>
+        <p>Quotes, jests and combat highlights are extracted as structured lists in a separate pass.</p>
+      </li>
+      <li>
+        <h3>Condense</h3>
+        <p>Optionally boil the chronicle down to the short recap version for posting.</p>
+      </li>
+    </ol>
+    <p><a class="more" href="{{BASE}}/docs/walkthrough/">Read the full walkthrough →</a></p>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="compare" aria-labelledby="compare-h">
+    <h2 id="compare-h">Built for a different job</h2>
+    <p class="section-lede">
+      Otter.ai, Read.ai and Descript are genuinely good tools, and if you want a searchable record of a
+      standup they will beat this comfortably. They are built around the shape of a meeting — decisions,
+      owners, action items. A session has none of those and is mostly made of invented proper nouns, so
+      the two want quite different things.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <caption>Tusk's Tomes compared with general-purpose meeting transcription tools</caption>
+        <thead>
+          <tr>
+            <th scope="col">&nbsp;</th>
+            <th scope="col">Tusk's Tomes</th>
+            <th scope="col">Meeting transcribers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Output</th>
+            <td>Narrative prose written as a story</td>
+            <td>Transcript plus bulleted action items</td>
+          </tr>
+          <tr>
+            <th scope="row">Invented character names</th>
+            <td>Corrected against your glossary before writing</td>
+            <td>As the speech model heard them</td>
+          </tr>
+          <tr>
+            <th scope="row">Where it runs</th>
+            <td>Your own machine</td>
+            <td>Their servers</td>
+          </tr>
+          <tr>
+            <th scope="row">Cost</th>
+            <td>Free; ~£1–£2 of your own API credit per session, or £0 fully local</td>
+            <td>Typically £12–£25 per month</td>
+          </tr>
+          <tr>
+            <th scope="row">Per-character attribution</th>
+            <td>End to end, from multi-track audio</td>
+            <td>Speaker labels at best</td>
+          </tr>
+          <tr>
+            <th scope="row">Works offline</th>
+            <td>Yes, with a local model</td>
+            <td>No</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p><a class="more" href="{{BASE}}/docs/comparison/">See the detailed comparison →</a></p>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="who" aria-labelledby="who-h">
+    <h2 id="who-h">Who it's for</h2>
+    <ul class="who">
+      <li><span><strong>Game masters</strong> running long campaigns who want every session written up without doing it themselves at 2am.</span></li>
+      <li><span><strong>Groups on Discord</strong> recording with Craig and wanting per-player attribution that survives to the finished text.</span></li>
+      <li><span><strong>Actual-play podcasters and streamers</strong> who need episode recaps, show notes and pull-quotes without paying an editor to listen back.</span></li>
+      <li><span><strong>VTT archivists</strong> on Roll20, Foundry or Fantasy Grounds — paste the chat log, no audio required.</span></li>
+      <li><span><strong>Anyone who won't upload campaign audio to a SaaS</strong> and would rather keep the whole thing on their own disk.</span></li>
+    </ul>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="cost" aria-labelledby="cost-h">
+    <h2 id="cost-h">What it costs</h2>
+    <p class="section-lede">
+      Nothing to install and nothing to subscribe to. The only money involved is whatever your chosen model
+      provider charges for the tokens — and there are three separate ways to reduce that to nothing.
+    </p>
+    <div class="cards">
+      <article class="card">
+        <h3>Cloud models</h3>
+        <p>Around <strong>£1–£2</strong> per three-hour session on a paid Gemini key. Built-in routing presets trade cost against quality, with the savings shown before you run.</p>
+      </article>
+      <article class="card">
+        <h3>A subscription you already pay for <span class="tag">no API spend</span></h3>
+        <p>
+          If <strong>Claude Code</strong> or the <strong>OpenAI Codex CLI</strong> is installed and signed in,
+          Tomes can route phases through it and draw on that plan's existing allowance instead of spending API
+          credit. It uses your logged-in session — API keys are stripped from the call, so nothing lands on a
+          metered bill. If the allowance runs out mid-run the pipeline pauses rather than failing, and resumes
+          when it resets.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Fully local</h3>
+        <p><strong>£0.</strong> Route every phase to Ollama, LM Studio or Unsloth and nothing leaves the machine — no key, no bill, no network. Read the prose-quality note below before choosing this for the chronicle phase.</p>
+      </article>
+      <article class="card">
+        <h3>Mixed</h3>
+        <p>Run the mechanical phases on a local model or a subscription CLI, and send only the narrative pass to a cloud one. Most of the quality, a fraction of the spend.</p>
+      </article>
+    </div>
+    <div class="notice warn">
+      <h3>What you give up going fully local</h3>
+      <p>
+        Local models are not as good at long-form narrative prose as the cloud ones, and it shows most in
+        the phase you care about most. <strong>Below roughly 15–20B parameters the chronicle tends to read
+        like a log rather than a story</strong> — events in sequence, little narrative voice — and grounding
+        against your glossary is less reliable too. Mileage varies a lot between models of similar size.
+      </p>
+      <p>
+        The pragmatic middle ground is the <strong>Mixed</strong> option above: run the mechanical phases
+        locally and send <strong>Phase 3, the chronicle itself</strong>, to a cloud model or a subscription
+        CLI. You keep most of the saving and all of the prose quality.
+      </p>
+    </div>
+
+    <div class="notice">
+      <h3>Does a big lore library make it expensive?</h3>
+      <p>
+        Not really. More lore means more context for the model to read, so cost does rise — but gently. In
+        practice, <strong>up to around 100,000 words of lore spread across several documents was not a
+        noticeable difference</strong> on the bill. Add the lore; the grounding it buys is worth far more
+        than the tokens it costs.
+      </p>
+    </div>
+
+    <p><a class="more" href="{{BASE}}/docs/pricing/">Full cost breakdown →</a></p>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="faq" aria-labelledby="faq-h">
+    <h2 id="faq-h">Frequently asked questions</h2>
+    {{FAQ}}
+  </section>
+
+  {{RUNE}}
+
+  <section class="section memo" id="why" aria-labelledby="why-h">
+    <h2 id="why-h">Why I built this</h2>
+    <div class="memo-body">
+      <p>
+        I wanted a record of my campaign. Not minutes — a record. Something a player who missed a night
+        could read and arrive already caught up, and something you could go back to two years later and
+        actually feel the session again.
+      </p>
+      <p>
+        The first few I wrote by hand. They were the best ones, they took about four hours each, and I
+        stopped. So I did the obvious thing and handed a transcript to an AI, which worked beautifully
+        right up until it decided the party's patron was called Duskwarden in the first chapter and
+        Dawnwarden by the third, and then stayed confidently wrong for the rest of the write-up. Fixing
+        that by hand took longer than writing it myself would have.
+      </p>
+      <p>
+        That one stubborn failure is where the whole project comes from. Everything else here — the six
+        phases, the pause-and-resume, the quote lists, the slider that sets how long the recap should be —
+        grew around a single idea: correct the names against the campaign's own lore <em>first</em>,
+        before a sentence of prose exists, and let everything downstream inherit it.
+      </p>
+      <p>
+        It's a personal project and it reads like one. It does one thing, it does it on hardware you
+        already own, and it will never grow an account, a subscription or a pricing page. If it turns out
+        to be useful at your table as well as mine, that's the best outcome I could ask for — and if it
+        does something annoying, the issue tracker is right there and I do read it.
+      </p>
+      <p class="memo-sign">— KochiTusker, who mostly just wanted the write-ups</p>
+    </div>
+  </section>
+
+  {{RUNE}}
+
+  <section class="section" id="docs" aria-labelledby="docs-h">
+    <h2 id="docs-h">Documentation</h2>
+    <p class="section-lede">Every guide that ships with the app, also readable here.</p>
+    <div class="doc-index">
+{{DOCS_LINKS}}
+    </div>
+  </section>
+
+  <section class="section closing" aria-labelledby="start-h">
+    <h2 id="start-h">Get started</h2>
+    <p>
+      You need Node.js 20 and one API key. Everything else — Whisper, local model routing, the Obsidian
+      vault integration — is an add-on you install only if you want it. If you're not sure what you
+      already have on your machine, start with
+      <a href="{{BASE}}/docs/dependencies/">what you'll need</a> — it tells you how to check.
+    </p>
+    {{CLIP:install}}
+    <p class="cta">
+      <a class="btn primary" href="{{BASE}}/docs/setup/">Setup guide</a>
+      <a class="btn" href="{{BASE}}/docs/dependencies/">What you'll need</a>
+      <a class="btn" href="{{BASE}}/docs/beginner-guide/">Beginner's guide</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine. No telemetry.</p>
+  <p>
+    <a href="{{REPO}}" rel="noopener">GitHub</a> ·
+    <a href="{{BASE}}/docs/">Documentation</a> ·
+    <a href="{{BASE}}/docs/dependencies/">What you'll need</a> ·
+    <a href="{{REPO}}/blob/main/LICENSE" rel="noopener">Licence</a> ·
+    <a href="https://buymeacoffee.com/kochitusker" rel="noopener">Buy me a coffee</a>
+  </p>
+</footer>
+
+<script src="{{BASE}}/site.js" defer></script>
+</body>
+</html>

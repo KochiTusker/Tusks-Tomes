@@ -1,0 +1,25 @@
+# Project-local graphify ignore. Belt-and-braces over .gitignore for the
+# cases where graphify's cache is stickier than its file-walk and stale
+# entries don't get re-evaluated on --update.
+
+# Playwright MCP scratch — dev-only page snapshots / request payloads.
+# Already in .gitignore, but currently leaking into the graph cache.
+.playwright-mcp/
+
+# Diagnose bundles — auto-written ring-buffer dumps; never useful in the
+# code graph. Already excluded today, but pinning it here protects against
+# future cache regressions.
+.diagnose/
+
+# Graphify output cycling back into itself.
+graphify-out/
+
+# Whisper Python venv (huge; correctly excluded today, pinning).
+vendor/
+
+# Claude Code worktrees (correctly excluded today, pinning).
+.claude/
+
+# Build artefacts.
+dist/
+dist-server/

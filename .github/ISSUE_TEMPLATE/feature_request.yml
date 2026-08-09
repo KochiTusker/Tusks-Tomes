@@ -1,0 +1,55 @@
+name: ✨ Feature request
+description: Suggest a new feature, integration, or improvement.
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Got an idea? Lay it out below. For half-formed ideas or "would this
+        even fit?" sanity checks, the [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header)
+        is the faster venue. A community Discord with a `#feature-ideas` channel is on the roadmap.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: The use case in your own words — what would a DM or player be trying to do?
+      placeholder: As a DM running long sessions, I want to…
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How would Tusk's Tomes ideally handle this? Sketch the UI / workflow if you can.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other tools / approaches you've tried, or ways this could be implemented differently.
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Roughly how big is this?
+      options:
+        - Small — a config option or minor UI tweak
+        - Medium — a new tab, panel, or pipeline phase
+        - Large — a new ingest format, provider integration, or external dependency
+        - Not sure
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: alignment
+    attributes:
+      label: Project fit
+      description: Tusk's Tomes is local-first and explicitly avoids cloud accounts, telemetry, and subscription-style features.
+      options:
+        - label: This idea is compatible with local-first / no-account / no-telemetry principles.
+          required: true

@@ -1,0 +1,115 @@
+node_modules
+dist
+dist-server
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+.vite
+# Claude Code tooling state (worktrees, hooks, local agent settings).
+# Never commit — the worktree pointer files leak internal-tool IDs and
+# break on other machines.
+.claude/
+# Runtime per-session audio + transcripts. Scoped to the repo root so
+# `server/sessions/` (source code for the session manifest helpers) is
+# not accidentally ignored.
+/sessions/
+/Sessions/
+# Python venv for the Whisper sidecar — rebuilt by `npm run whisper:setup`.
+vendor/
+# Ad-hoc diagnostic dumps from manually invoking the Whisper sidecar.
+# Generic patterns — keep any *-err.txt / *-out.json file in the repo
+# root out of version control regardless of the speaker prefix.
+*-err.txt
+*-out.json
+# Credential-bearing file shapes — defense in depth on top of the
+# pre-push hook's filename heuristic. If any of these ever land in
+# the tracked tree, the hook will still block the push, but blocking
+# them at stage-time prevents the mistake at the earliest possible point.
+*.pem
+*.key
+*.pfx
+*.p12
+*.crt
+*.cer
+*.csr
+.npmrc
+.netrc
+id_rsa*
+id_ed25519*
+id_ecdsa*
+credentials.json
+secrets.json
+service-account*.json
+gcp-key*.json
+aws-credentials
+# Editor / IDE workspace state — sometimes embeds absolute paths
+# or local-user identifiers.
+.vscode/
+.idea/
+# Gitleaks scratch reports from manual scans (the audit scripts write
+# these as temp output; keep them out of commits in case of leftovers).
+.gl-*.json
+# Graphify code-graph output — large machine-generated knowledge graph
+# files (`graph.json`, `graph.html`, `GRAPH_REPORT.md`) rebuilt locally
+# via `graphify update .`. Treated as derived artefacts; each developer
+# regenerates them with `/graphify update .` in their AI assistant.
+graphify-out/
+# Diagnosis bundles — structured markdown auto-written by the diagnose
+# system whenever a pipeline error fires or a soft-error signature
+# matches. Contains key fingerprints + routing snapshots + recent ring
+# events; never raw keys or prompts (sanitized at the forwarder
+# boundary). Per-developer, per-incident — never useful to commit.
+# User reads them via @.diagnose/latest.md in Claude Code.
+.diagnose/
+
+# Playwright MCP scratch — console logs and request payloads captured
+# by ad-hoc dev sessions (see scripts/playwright-matrix/ for the formal
+# harness, whose artefacts live under .diagnose/playwright-runs/ and
+# are also gitignored above).
+.playwright-mcp/
+
+# Manual screenshot captures from pre-formal-harness Playwright sessions.
+# These are dev-only debugging artefacts; the formal matrix writes
+# under .diagnose/playwright-runs/.
+cost-estimator-live.png
+stage1-final-state.png
+stage2-fail-phase3-prohibited.png
+
+# Real-session transcript fragments used by the Playwright matrix when
+# validating against actual lore content. SBV files often contain
+# private session dialogue + speaker mappings — never commit.
+scripts/playwright-matrix/real-session-*.sbv
+
+# Underscore-prefixed scratch helpers under scripts/playwright-matrix/.
+# These hardcode per-developer paths (e.g. Downloads/ dirs) and are
+# regenerated per matrix run; the canonical harness lives in
+# scenarios.mjs + assertions.mjs + README.md.
+scripts/playwright-matrix/_*.mjs
+
+# Generated output of scripts/site/build-site.mjs. Rebuilt from site/ +
+# docs/**/*.md on every publish, so there is nothing to track; keeping it
+# out of the tree also stops the built copy of the docs from being scanned
+# and reviewed twice.
+site-dist/
+
+# Written by scripts/uninstall.mjs into the repo root on uninstall: a record
+# of what was removed, what was kept, and which leftovers are shared with
+# other software. Generated per-machine, never committed.
+TUSKS-TOMES-uninstall-notes.md
+
+# Real people's names, for the private-name scanner layer
+# (scripts/lib/private-names.mjs). NEVER COMMIT THIS FILE — a denylist of the
+# names you are keeping off the internet cannot itself go on the internet.
+# The tracked template is .private-names.example; only the filled-in copy is
+# ignored. `git push public` refuses to run when it is missing.
+.private-names
+
+# Rotation pool + the record of which names are currently placed in the tree
+# (scripts/lib/name-pool.mjs). Both gitignored: the pool is the set of
+# placeholders the fixtures cycle through each release, and publishing it would
+# let a reader subtract it from the history to find the names that ISN'T in it.
+# Tracked template: .name-pool.example
+.name-pool
+.name-rotation.json

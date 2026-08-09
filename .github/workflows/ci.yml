@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Rapid pushes during active iteration used to trigger one CI run per
+# commit, flooding the inbox with "All Jobs have failed" emails for the
+# same defect. cancel-in-progress collapses bursts to one run per branch
+# tip — the latest push wins; older queued/running jobs are cancelled.
+# Cancelled runs don't generate failure emails.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    strategy:
+      # Don't short-circuit on the first failure — we want to see whether
+      # a failure is OS-specific (Windows-only regression vs. a real bug).
+      fail-fast: false
+      matrix:
+        # Tusk's Tomes ships to Windows users in practice (setup.bat,
+        # IS_WIN branches in updater + localProxy). Without windows-latest
+        # in the matrix, Windows-only regressions (e.g. spawn-shell-false
+        # against .cmd shims) reach users undetected. ubuntu-latest still
+        # runs the gitleaks / OSINT scanners which only exist on Linux
+        # build hosts in this repo's tooling.
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # audit-current-tree.mjs reads `git show HEAD:<file>` and
+          # `git ls-files`; the default shallow checkout (depth: 1) is
+          # sufficient for those calls. No need to fetch full history.
+          fetch-depth: 1
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      # The uninstall safety harness is a standalone runner (excluded
+      # from vitest because of the shebang). Has to run on both OSes
+      # because its path-handling differs platform-to-platform.
+      - run: npm run uninstall:test
+
+      # Linux-only steps below: the audit scripts + npm audit run once
+      # per build — no benefit to repeating on Windows.
+      #
+      # Gitleaks is intentionally NOT installed here. Our own scanners
+      # in scripts/audit-current-tree.mjs and scripts/lib/*.mjs cover
+      # the same threat shapes (token regexes, file-name heuristics,
+      # personal identifiers, lockfile denylists) and are unit-tested.
+      # audit-current-tree.mjs *can* invoke gitleaks as an extra
+      # ~150-rule layer if the binary is on PATH; when it's not, the
+      # script logs a warning and continues with the other layers.
+      # For the dev CI loop this is the right tradeoff: no third-party
+      # tarball to SHA-pin, no fail-closed placeholder blocking
+      # downstream audits, full test coverage via the in-tree scanners.
+      #
+      # When a release.yml workflow is added for the public-release
+      # path, gitleaks SHOULD be SHA-pinned via the official action:
+      #     - uses: gitleaks/gitleaks-action@<full-sha>
+      # That's the conventional supply-chain-safe pattern. Dev CI's
+      # threat model doesn't need it.
+      - name: Audit current tree (dev-mode)
+        if: matrix.os == 'ubuntu-latest'
+        run: node scripts/audit-current-tree.mjs --dev-mode
+      # Codified institutional memory — the regressions that have already
+      # happened once. See scripts/audit-security-contracts.mjs.
+      - name: Audit security contracts
+        if: matrix.os == 'ubuntu-latest'
+        run: node scripts/audit-security-contracts.mjs
+      # Scoped to dependencies that actually SHIP (--omit=dev).
+      #
+      # This gate used to be `--audit-level=moderate` across all deps, which
+      # made CI fail on advisories published against build-only packages —
+      # vite, esbuild, ws, postcss, @babel — none of which reach a user's
+      # install. Worse, it failed on commits that changed nothing: a new
+      # advisory against an unchanged dependency turns a green build red
+      # overnight, which trains everyone to ignore a red CI.
+      #
+      # What remains gated is the part that matters: runtime dependencies,
+      # at high severity. adm-zip and multer sit directly on the untrusted-
+      # input path (a user drops in a Craig .zip), so a real advisory there
+      # should stop the build.
+      #
+      # Dev-dependency advisories are not ignored — Dependabot still reports
+      # them on the repo; they just don't gate the build.
+      - name: npm audit (shipping deps, high+)
+        if: matrix.os == 'ubuntu-latest'
+        run: npm audit --omit=dev --audit-level=high

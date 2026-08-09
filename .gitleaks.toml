@@ -1,0 +1,35 @@
+# gitleaks configuration. Extends the default rule set with sensible
+# Tomes-specific path exclusions so the working-tree `dir` scan ignores
+# dependency dirs and per-worktree state — those generate noise without
+# adding signal (none of it reaches public via the orphan-commit
+# workflow).
+#
+# Allowlisted fingerprints for known false positives live in
+# .gitleaksignore at the repo root. Keep one source of truth for each:
+#   - This file:        scope / paths / global allowlists
+#   - .gitleaksignore:  individual <commit>:<file>:<rule>:<line> hits
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Tomes-specific path + content exclusions"
+paths = [
+  '''node_modules/''',
+  '''dist/''',
+  '''dist-server/''',
+  '''vendor/''',
+  '''\.claude/''',
+  '''\.git/''',
+  '''Lore/''',
+  '''sessions/''',
+  '''Sessions/''',
+  # Screenshots and other visual assets for the README walkthrough.
+  # gitleaks-on-text doesn't read PNG/JPG bytes, but explicit allowlisting
+  # keeps the binary-inventory warning quieter and signals intent.
+  '''docs/assets/''',
+]
+# Documentation placeholders that look like credentials but aren't.
+regexes = [
+  '''"discordUserId":\s*"123456789012345678"''',
+]

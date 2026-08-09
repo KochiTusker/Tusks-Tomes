@@ -1,0 +1,16 @@
+# Whisper sidecar dependencies. Torch + faster-whisper compatibility is
+# brittle across CUDA versions — update with care.
+#
+# CUDA 12.x users (RTX 30/40/50 series): install torch from the CUDA wheel
+# index before running pip install -r requirements.txt:
+#
+#   pip install "torch>=2.2" --index-url https://download.pytorch.org/whl/cu124
+#
+# CPU-only users:
+#
+#   pip install "torch>=2.2" --index-url https://download.pytorch.org/whl/cpu
+#
+# Note on Python 3.13: torch < 2.6 has no Python 3.13 wheels. The pin
+# below permits torch 2.6+ which is the first version with cp313 wheels.
+faster-whisper>=1.0.3
+torch>=2.2,<3

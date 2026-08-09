@@ -1,0 +1,13 @@
+# gitleaks fingerprints to ignore.
+#
+# Format: <commit-sha>:<file>:<rule-id>:<line>
+# Add only after manually verifying the match is a placeholder, schema
+# example, or other false positive. Real credentials must be rotated +
+# scrubbed, not allowlisted.
+
+# ROADMAP.md schema example — canonical Discord placeholder ID
+# "123456789012345678" used to illustrate the speaker-mapping JSON
+# schema. The current tree no longer contains this content; the
+# fingerprints below refer to historical commits only.
+334fc377e77875efc25f1fe0eada9a5bb24f5179:ROADMAP.md:discord-client-id:267
+9e8a38204877767287fd8f25e1e6bcf5b66da128:ROADMAP.md:discord-client-id:267

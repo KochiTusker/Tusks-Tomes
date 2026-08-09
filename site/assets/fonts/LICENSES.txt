@@ -1,0 +1,17 @@
+Self-hosted web fonts — all under the SIL Open Font License 1.1 (OFL-1.1).
+Bundled locally so the docs site makes no third-party requests at page load
+(consistent with the project's local-first, no-telemetry posture).
+
+Subset: latin. Format: woff2.
+
+- Cinzel — Natanael Gama. https://fonts.google.com/specimen/Cinzel
+- Cinzel Decorative — Natanael Gama. https://fonts.google.com/specimen/Cinzel+Decorative
+- Fondamento — Eduardo Tunni. https://fonts.google.com/specimen/Fondamento
+- Cormorant Garamond — Christian Thalmann / Catharsis Fonts. https://fonts.google.com/specimen/Cormorant+Garamond
+- Inter — Rasmus Andersson. https://fonts.google.com/specimen/Inter
+
+Each font is distributed under the SIL Open Font License, Version 1.1.
+Full licence text: https://openfontlicense.org/
+
+The woff2 files carry only standard font name-table metadata (family name,
+designer, licence URL) — no personal or build-environment data.

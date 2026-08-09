@@ -1,0 +1,1168 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  /* Legacy aliases kept so older components that read --color-gold /
+     --color-tide don't break — they now resolve to the arcane palette. */
+  --color-gold: var(--arcane);
+  --color-tide: var(--ember);
+  --color-arcane: var(--arcane);
+  --color-ember: var(--ember);
+  --color-moonsilver: var(--moonsilver);
+
+  /* Cross-project semantic aliases — the shared <Tabs> component in
+     src/components/ui/tabs.tsx (mirrored from Tusk's Vault) reads these
+     names. Surface and foreground-strong are alternative spellings for
+     card and foreground respectively; the shadow-glow stack tints an
+     amethyst halo at three intensities. */
+  --color-surface: var(--card);
+  --color-surface-elevated: var(--muted);
+  --color-foreground-strong: oklch(0.99 0.005 290);
+  --shadow-glow-sm: 0 0 12px oklch(0.70 0.24 295 / 0.30);
+  --shadow-glow-md: 0 0 18px oklch(0.70 0.24 295 / 0.40);
+  --shadow-glow-lg: 0 0 28px oklch(0.70 0.24 295 / 0.50);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-display: "Cinzel", "Trajan Pro", "Cormorant Garamond", Georgia, serif;
+  --font-script: "Fondamento", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ===========================================================================
+   Tusk's Tomes — Arcane Theme
+   ===========================================================================
+
+   The visual identity: a spellbook open on a violet-lit altar at 2am. Deep
+   void violet base, amethyst primary, ember spell-flame accent. Cinzel for
+   the display headings, Fondamento for italic flourishes, Inter for body.
+
+   Palette:
+     background    deep void violet     oklch(0.11 0.04 285)
+     card          lifted void          oklch(0.16 0.05 285)
+     primary       arcane amethyst      oklch(0.65 0.22 295)
+     accent        ember spell-flame    oklch(0.7  0.18  50)
+     border        violet edge          oklch(0.32 0.07 290)
+     muted-fg      moonsilver lavender  oklch(0.7  0.04 285)
+
+   Animations are deliberately more dramatic than the previous abyssal-sea
+   theme — brand wordmark pulses with a visible aura, primary CTAs carry a
+   continuous spell-charge glow, dividers shimmer like rune-traces, and
+   embers drift up the background. Everything still bows out under
+   prefers-reduced-motion. */
+
+/* ---- Light theme (kept available; not used by default) ---- */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.98 0.01 290);
+  --foreground: oklch(0.18 0.04 285);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.04 285);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.04 285);
+  --primary: oklch(0.55 0.2 295);
+  --primary-foreground: oklch(0.98 0.01 290);
+  --secondary: oklch(0.93 0.03 290);
+  --secondary-foreground: oklch(0.22 0.05 285);
+  --muted: oklch(0.94 0.02 290);
+  --muted-foreground: oklch(0.45 0.04 285);
+  --accent: oklch(0.65 0.18 50);
+  --accent-foreground: oklch(0.18 0.04 285);
+  --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.88 0.02 290);
+  --input: oklch(0.88 0.02 290);
+  --ring: oklch(0.55 0.2 295);
+  --arcane: oklch(0.55 0.2 295);
+  --ember: oklch(0.65 0.18 50);
+  --moonsilver: oklch(0.92 0.01 285);
+}
+
+/* ---- Default: deep void violet arcane, "Tusk's Tomes" ---- */
+.dark {
+  /* Void violet base — deeper than navy, slight magenta lean */
+  --background: oklch(0.11 0.04 285);
+  /* Parchment moonsilver foreground — warm enough to read against violet */
+  --foreground: oklch(0.94 0.025 90);
+  /* Cards: lifted, a hair more chromatic so they catch the rim glow */
+  --card: oklch(0.16 0.05 285);
+  --card-foreground: oklch(0.94 0.025 90);
+  --popover: oklch(0.15 0.05 285);
+  --popover-foreground: oklch(0.94 0.025 90);
+  /* Primary: arcane amethyst — the spellbook's binding glow */
+  --primary: oklch(0.65 0.22 295);
+  --primary-foreground: oklch(0.99 0.005 290);
+  /* Secondary: deeper violet — used by Radix tab triggers etc. */
+  --secondary: oklch(0.27 0.07 290);
+  --secondary-foreground: oklch(0.94 0.025 90);
+  /* Muted: barely above bg, subdued */
+  --muted: oklch(0.2 0.05 285);
+  --muted-foreground: oklch(0.7 0.04 285);
+  /* Accent: ember orange — warm spell-flame, used for highlights/CTAs */
+  --accent: oklch(0.7 0.18 50);
+  --accent-foreground: oklch(0.13 0.04 285);
+  /* Destructive: deep crimson — keep alarming */
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  /* Borders: violet edge, readable but soft */
+  --border: oklch(0.32 0.07 290);
+  --input: oklch(0.27 0.05 285);
+  /* Focus ring: amethyst, glows visibly */
+  --ring: oklch(0.7 0.2 295);
+  /* Named palette tokens for spell-themed components */
+  --arcane: oklch(0.65 0.22 295);
+  --ember: oklch(0.72 0.19 50);
+  --moonsilver: oklch(0.85 0.025 285);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body {
+    height: 100%;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Atmospheric vignette — arcane amethyst aurora at the top, deep void
+     violet bloom at the bottom. The fixed attachment keeps the cosmic feel
+     stable while content scrolls. */
+  .dark body {
+    background-image:
+      radial-gradient(
+        ellipse 120% 80% at 50% -20%,
+        oklch(0.35 0.14 295 / 0.35),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 80% 60% at 50% 110%,
+        oklch(0.2 0.1 285 / 0.5),
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 15% 30%,
+        oklch(0.4 0.12 295 / 0.12),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 85% 70%,
+        oklch(0.55 0.16 50 / 0.08),
+        transparent 75%
+      );
+    background-attachment: fixed;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+  /* Violet-tinted scrollbar */
+  .dark ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .dark ::-webkit-scrollbar-track {
+    background: oklch(0.13 0.04 285);
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: oklch(0.3 0.08 290);
+    border-radius: 6px;
+    border: 2px solid oklch(0.13 0.04 285);
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.45 0.12 295);
+  }
+}
+
+/* ===========================================================================
+   Keyframes — arcane animation library
+   =========================================================================== */
+
+/* Soft card entrance. Translates up + fades in over 280ms. */
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tab-panel cross-fade. Same shape, shorter. */
+@keyframes tab-fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Diagonal moving highlight across a progress bar. Same as before but
+   gradient is now violet+silver so it reads as arcane. */
+@keyframes progress-sheen {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Brand wordmark — dramatic violet aura with secondary ember halo.
+   4s loop (was 7s) so the pulse is visible at a glance. */
+@keyframes brand-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 18px oklch(0.65 0.22 295 / 0.4),
+      0 0 36px oklch(0.65 0.22 295 / 0.2),
+      0 0 60px oklch(0.7 0.18 50 / 0.08);
+  }
+  50% {
+    text-shadow:
+      0 0 24px oklch(0.7 0.24 295 / 0.65),
+      0 0 48px oklch(0.7 0.24 295 / 0.35),
+      0 0 80px oklch(0.7 0.18 50 / 0.18);
+  }
+}
+
+/* Rune-trace shimmer for header underlines and section dividers. The
+   gradient is a stronger violet sweep with a brief ember peak — like a
+   spell-line being drawn left to right and back. 12s loop for that
+   contemplative magical pace. */
+@keyframes rune-trace {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 220% 50%; }
+}
+
+/* Slow CCW rotation for the arcane circle behind the brand logo. Full
+   revolution every 60s — barely noticeable unless you watch for it,
+   contributes to the "alive" feeling. */
+@keyframes arcane-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Continuous CW rotation for inner rings to counter-spin against the
+   outer ring. Same period, opposite direction. */
+@keyframes arcane-rotate-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Pulsing sigil — slow breath for dropzone empty states. Opacity
+   oscillates so the magic circle invites the user to drop something
+   without being demanding. */
+@keyframes sigil-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.04); }
+}
+
+/* Candle flicker — small, quick, irregular opacity dip. Used by
+   candle-glow elements on the Sessions tab and on any "warm" highlight. */
+@keyframes candle-flicker {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  18% { opacity: 0.88; filter: brightness(0.92); }
+  22% { opacity: 1; filter: brightness(1.05); }
+  60% { opacity: 0.93; filter: brightness(0.96); }
+  64% { opacity: 1; filter: brightness(1.02); }
+}
+
+/* Spell-charge — continuous violet glow ring on primary CTAs. Mimics
+   the slow build of arcane energy. Lifts on hover via separate
+   selectors below. */
+@keyframes spell-charge {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px oklch(0.65 0.22 295 / 0.4),
+      0 8px 24px -8px oklch(0.65 0.22 295 / 0.45),
+      0 0 0 0 oklch(0.7 0.24 295 / 0);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px oklch(0.72 0.24 295 / 0.6),
+      0 10px 28px -6px oklch(0.7 0.24 295 / 0.55),
+      0 0 0 4px oklch(0.7 0.24 295 / 0.08);
+  }
+}
+
+/* Ember drift — single particle floats up and fades. The wrapper
+   spawns multiple particles with staggered delays so the field is
+   continuous. */
+@keyframes ember-drift {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.6);
+  }
+  10% { opacity: 0.6; }
+  80% { opacity: 0.4; }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--ember-drift-x, 12px), -100vh, 0) scale(1);
+  }
+}
+
+/* Starfield twinkle — slow opacity oscillation for the Upload tab
+   background. Each star gets a random animation-delay via inline style. */
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.8; }
+}
+
+/* Ported from Tusk's Vault — flickering candle-flame loader used by
+   <FlameLoader />. Distinct from `candle-flicker` (which is the slow
+   opacity dip on warm corner glows); this is the fast scale+translate
+   dance an actual flame does, paired with a brighter drop-shadow pulse. */
+@keyframes flame-flicker {
+  0%, 100% { transform: scale(1)    translateY(0);    opacity: 1; }
+  20%      { transform: scale(1.04) translateY(-0.5px); opacity: 0.94; }
+  40%      { transform: scale(0.97) translateY(0.5px);  opacity: 1; }
+  60%      { transform: scale(1.05) translateY(-0.3px); opacity: 0.92; }
+  80%      { transform: scale(0.99) translateY(0.2px);  opacity: 0.97; }
+}
+@keyframes flame-glow {
+  0%, 100% { filter: drop-shadow(0 0 6px oklch(0.72 0.19 50 / 0.55)); }
+  50%      { filter: drop-shadow(0 0 14px oklch(0.85 0.18 50 / 0.75)); }
+}
+.candle-flame {
+  animation:
+    flame-flicker 0.85s ease-in-out infinite,
+    flame-glow    1.7s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+/* Ported from Tusk's Vault — section divider gradient used by
+   <RuneDivider />. Amethyst sweep that brightens toward the centre. */
+.rune-divider {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(0.65 0.22 295 / 0.25) 40%,
+    oklch(0.72 0.24 295 / 0.55) 50%,
+    oklch(0.65 0.22 295 / 0.25) 60%,
+    transparent 100%
+  );
+}
+
+/* In-app docs: native <details> elements wrapped around each H2 section
+   are styled to look like our expandable cards. CSS-only (uses the
+   browser's built-in open/close), with a chevron rotation and a soft
+   amethyst rim glow when open. Class names come from the auto-wrap
+   helper in src/lib/collapsibleMarkdown.ts. */
+details.docs-section {
+  background: linear-gradient(180deg, var(--card), oklch(0.14 0.045 285));
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  margin: 0.75rem 0;
+  overflow: hidden;
+  transition: box-shadow 250ms ease, border-color 250ms ease;
+}
+details.docs-section:hover {
+  border-color: oklch(0.45 0.12 295);
+}
+details.docs-section[open] {
+  border-color: oklch(0.55 0.16 295 / 0.55);
+  box-shadow:
+    0 0 0 1px oklch(0.55 0.16 295 / 0.18) inset,
+    0 0 24px -2px oklch(0.70 0.24 295 / 0.30);
+}
+details.docs-section > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.85rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+details.docs-section > summary::-webkit-details-marker {
+  display: none;
+}
+details.docs-section > summary h2 {
+  margin: 0;
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--foreground);
+}
+/* Custom chevron — amethyst arrow that flips on open. */
+details.docs-section > summary::after {
+  content: '';
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1.5px solid var(--arcane);
+  border-bottom: 1.5px solid var(--arcane);
+  transform: rotate(45deg);
+  transition: transform 220ms ease;
+  margin-right: 0.25rem;
+}
+details.docs-section[open] > summary::after {
+  transform: rotate(-135deg);
+}
+details.docs-section > .docs-section-body {
+  padding: 0 1.1rem 1.1rem;
+}
+
+/* Arcane wisps — slow meandering "will o' wisp" orbs. Each path takes a
+   curving route across the viewport instead of a straight rise. Six
+   distinct keyframes give independent silhouettes; pairing any of them
+   with the wisp-pulse + wisp-sway breathing animations sells the feeling
+   of bodiless spirits drifting through the room. Translations use vw/vh
+   so the effect scales with the window. */
+@keyframes wisp-path-1 {
+  0%   { transform: translate3d(2vw,  95vh, 0) scale(0.6);  opacity: 0; }
+  6%   { opacity: 0.55; }
+  22%  { transform: translate3d(12vw, 72vh, 0) scale(1);    }
+  40%  { transform: translate3d(-3vw, 50vh, 0) scale(0.85); }
+  60%  { transform: translate3d(15vw, 28vh, 0) scale(1.05); }
+  80%  { transform: translate3d(4vw,  8vh,  0) scale(0.95); }
+  94%  { opacity: 0.3; }
+  100% { transform: translate3d(10vw, -12vh, 0) scale(0.5); opacity: 0; }
+}
+@keyframes wisp-path-2 {
+  0%   { transform: translate3d(85vw, 98vh, 0) scale(0.55); opacity: 0; }
+  8%   { opacity: 0.6; }
+  25%  { transform: translate3d(78vw, 76vh, 0) scale(1.1);  }
+  45%  { transform: translate3d(92vw, 54vh, 0) scale(0.9);  }
+  65%  { transform: translate3d(72vw, 32vh, 0) scale(1.15); }
+  85%  { transform: translate3d(84vw, 6vh,  0) scale(0.85); }
+  95%  { opacity: 0.25; }
+  100% { transform: translate3d(80vw, -14vh, 0) scale(0.5); opacity: 0; }
+}
+@keyframes wisp-path-3 {
+  0%   { transform: translate3d(45vw, 92vh, 0) scale(0.65); opacity: 0; }
+  10%  { opacity: 0.5; }
+  28%  { transform: translate3d(38vw, 68vh, 0) scale(1);    }
+  50%  { transform: translate3d(54vw, 44vh, 0) scale(1.1);  }
+  72%  { transform: translate3d(40vw, 20vh, 0) scale(0.95); }
+  92%  { opacity: 0.3; }
+  100% { transform: translate3d(48vw, -8vh, 0) scale(0.55); opacity: 0; }
+}
+/* Sideways drifter — enters left, arcs across midline, exits right.
+   The lateral motion contrasts the rising paths so the field doesn't
+   feel like everything is just rising. */
+@keyframes wisp-path-4 {
+  0%   { transform: translate3d(-12vw, 62vh, 0) scale(0.55); opacity: 0; }
+  10%  { opacity: 0.5; }
+  28%  { transform: translate3d(18vw,  58vh, 0) scale(1);    }
+  50%  { transform: translate3d(48vw,  48vh, 0) scale(1.1);  }
+  72%  { transform: translate3d(78vw,  52vh, 0) scale(0.95); }
+  92%  { opacity: 0.25; }
+  100% { transform: translate3d(108vw, 46vh, 0) scale(0.5);  opacity: 0; }
+}
+@keyframes wisp-path-5 {
+  0%   { transform: translate3d(108vw, 30vh, 0) scale(0.6);  opacity: 0; }
+  10%  { opacity: 0.45; }
+  30%  { transform: translate3d(78vw,  36vh, 0) scale(1);    }
+  52%  { transform: translate3d(50vw,  26vh, 0) scale(1.05); }
+  74%  { transform: translate3d(22vw,  34vh, 0) scale(0.9);  }
+  92%  { opacity: 0.25; }
+  100% { transform: translate3d(-10vw, 28vh, 0) scale(0.5);  opacity: 0; }
+}
+/* Descender — comes from above, slow settling. Rare but striking. */
+@keyframes wisp-path-6 {
+  0%   { transform: translate3d(28vw, -10vh, 0) scale(0.5);  opacity: 0; }
+  12%  { opacity: 0.45; }
+  35%  { transform: translate3d(34vw, 24vh,  0) scale(1);    }
+  60%  { transform: translate3d(24vw, 52vh,  0) scale(1.1);  }
+  82%  { transform: translate3d(32vw, 78vh,  0) scale(0.95); }
+  94%  { opacity: 0.3; }
+  100% { transform: translate3d(26vw, 108vh, 0) scale(0.5);  opacity: 0; }
+}
+/* Pulsing brightness — the wisp "breathes" magical light as it drifts.
+   Combines with the path keyframes for layered motion. */
+@keyframes wisp-pulse {
+  0%, 100% { filter: blur(2px) brightness(0.9); }
+  50%      { filter: blur(4px) brightness(1.4); }
+}
+/* Tiny secondary sway — adds micro-jitter so the wisp isn't visibly
+   rigid along its curved path. Compounds with translate3d on parent. */
+@keyframes wisp-sway {
+  0%, 100% { margin-left: 0px;  margin-top: 0px;  }
+  25%      { margin-left: 6px;  margin-top: -4px; }
+  50%      { margin-left: -3px; margin-top: 5px;  }
+  75%      { margin-left: 5px;  margin-top: 2px;  }
+}
+
+/* Spell-sigil reveal — a single arcane glyph fades in at a corner of
+   the viewport, lingers, fades out, rotates. Used by ArcaneSigil overlay.
+   Long off-period so it feels like an event, not decoration. */
+@keyframes sigil-reveal {
+  0%, 88%, 100% { opacity: 0; transform: rotate(0deg)   scale(0.85); }
+  6%            { opacity: 0; transform: rotate(15deg)  scale(0.9);  }
+  14%           { opacity: 0.45; transform: rotate(30deg) scale(1);  }
+  60%           { opacity: 0.45; transform: rotate(70deg) scale(1);  }
+  78%           { opacity: 0; transform: rotate(95deg) scale(1.08); }
+}
+
+/* Reduced-motion compliance — collapse every bespoke animation. Tailwind
+   utility classes (animate-spin etc.) are unaffected. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ===========================================================================
+   Component classes — arcane decoration
+   =========================================================================== */
+
+@layer components {
+  /* Brand wordmark — same gradient text approach but the gradient is now
+     amethyst → moonsilver → ember instead of brass. */
+  .brand-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: linear-gradient(
+      180deg,
+      oklch(0.98 0.02 295),
+      oklch(0.78 0.2 295) 55%,
+      oklch(0.62 0.22 295)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: brand-pulse 4s ease-in-out infinite;
+  }
+
+  .brand-subtitle {
+    font-family: var(--font-script);
+    font-style: italic;
+    color: oklch(0.78 0.06 285);
+    letter-spacing: 0.02em;
+  }
+
+  /* Ornamental divider — thin amethyst line with a centered diamond
+     glow. The existing .ornament class is repainted to violet. */
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--arcane);
+    opacity: 0.65;
+  }
+  .ornament::before,
+  .ornament::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--arcane),
+      transparent
+    );
+  }
+
+  /* Arcane-card — primary card treatment. Subtle violet gradient,
+     violet rim border, soft drop shadow. On hover the rim brightens
+     and the shadow extends as if the card is glowing harder. */
+  .arcane-card {
+    position: relative;
+    background:
+      linear-gradient(
+        180deg,
+        oklch(0.19 0.06 290),
+        oklch(0.15 0.05 285)
+      );
+    border: 1px solid oklch(0.34 0.08 290);
+    box-shadow:
+      0 1px 0 oklch(0.55 0.16 295 / 0.18) inset,
+      0 24px 48px -24px oklch(0.04 0.02 285 / 0.8);
+    animation: card-rise 320ms ease-out backwards;
+    transition: box-shadow 280ms ease, border-color 280ms ease;
+  }
+  .arcane-card:hover {
+    border-color: oklch(0.42 0.12 295);
+    box-shadow:
+      0 1px 0 oklch(0.65 0.18 295 / 0.25) inset,
+      0 0 0 1px oklch(0.55 0.18 295 / 0.18),
+      0 28px 56px -20px oklch(0.04 0.02 285 / 0.85);
+  }
+
+  /* Tab-panel transition — same fade as before. */
+  [role="tabpanel"][data-state="active"] {
+    animation: tab-fade-in 260ms ease-out;
+  }
+
+  /* Progress-sheen — moving violet highlight over the filled bar. */
+  .progress-sheen {
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(0.85 0.1 295 / 0) 25%,
+      oklch(0.92 0.15 295 / 0.4) 50%,
+      oklch(0.85 0.1 295 / 0) 75%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    animation: progress-sheen 1.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Rune-trace shimmer for header underlines + section dividers. */
+  .ornament-shimmer,
+  .rune-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(0.65 0.22 295 / 0) 15%,
+      oklch(0.72 0.24 295 / 0.65) 45%,
+      oklch(0.72 0.19 50 / 0.45) 55%,
+      oklch(0.65 0.22 295 / 0) 85%,
+      transparent 100%
+    );
+    background-size: 220% 100%;
+    animation: rune-trace 12s linear infinite;
+  }
+
+  /* Primary CTA — continuous spell-charge glow. The data-slot="primary-cta"
+     attribute is set by the Button component when variant="default". */
+  .dark button[data-slot="primary-cta"]:not(:disabled) {
+    animation: spell-charge 3.6s ease-in-out infinite;
+  }
+  .dark button[data-slot="primary-cta"]:not(:disabled):hover {
+    animation-play-state: paused;
+    box-shadow:
+      0 0 0 1px oklch(0.85 0.22 295 / 0.7),
+      0 10px 32px -4px oklch(0.7 0.24 295 / 0.65),
+      0 0 0 6px oklch(0.7 0.24 295 / 0.14);
+  }
+
+  /* Ember-orange CTAs (when something is "kindled" or warning-toned —
+     the green Send-to-refinement and Send-to-Vault buttons already use
+     their own colour; this hooks anything with data-slot="ember-cta"). */
+  .dark button[data-slot="ember-cta"]:not(:disabled) {
+    box-shadow:
+      0 0 0 1px oklch(0.72 0.19 50 / 0.5),
+      0 8px 24px -8px oklch(0.72 0.19 50 / 0.4);
+  }
+  .dark button[data-slot="ember-cta"]:not(:disabled):hover {
+    box-shadow:
+      0 0 0 1px oklch(0.8 0.21 50 / 0.7),
+      0 12px 32px -6px oklch(0.78 0.21 50 / 0.55);
+  }
+
+  /* Prose tweaks for the chronicle — warm parchment cream on the
+     violet background reads like ink on aged paper. */
+  .chronicle-prose {
+    font-family: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: oklch(0.93 0.025 85);
+  }
+  .chronicle-prose p + p {
+    margin-top: 1.1em;
+    text-indent: 1.5em;
+  }
+
+  /* ---- Ember-field — drifting spark particles for the page background.
+     Render <div className="ember-field" aria-hidden /> once near the
+     top of the layout. 7 particles, staggered, each with a CSS-variable
+     horizontal drift so the trails fan slightly. Fixed-position so it
+     covers the whole viewport without affecting layout. */
+  .ember-field {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .ember-field::before,
+  .ember-field::after,
+  .ember-field span {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      oklch(0.85 0.18 50 / 0.95),
+      oklch(0.6 0.18 50 / 0.4) 60%,
+      transparent 75%
+    );
+    box-shadow: 0 0 8px oklch(0.78 0.18 50 / 0.6);
+    animation: ember-drift 14s linear infinite;
+  }
+  .ember-field::before {
+    left: 12%;
+    --ember-drift-x: 18px;
+    animation-duration: 13s;
+    animation-delay: 0s;
+  }
+  .ember-field::after {
+    left: 78%;
+    --ember-drift-x: -22px;
+    animation-duration: 17s;
+    animation-delay: -4s;
+  }
+  .ember-field span:nth-child(1) {
+    left: 28%;
+    --ember-drift-x: 8px;
+    animation-duration: 16s;
+    animation-delay: -2s;
+  }
+  .ember-field span:nth-child(2) {
+    left: 45%;
+    --ember-drift-x: -14px;
+    animation-duration: 19s;
+    animation-delay: -7s;
+  }
+  .ember-field span:nth-child(3) {
+    left: 62%;
+    --ember-drift-x: 20px;
+    animation-duration: 15s;
+    animation-delay: -10s;
+  }
+  .ember-field span:nth-child(4) {
+    left: 88%;
+    --ember-drift-x: -10px;
+    animation-duration: 18s;
+    animation-delay: -5s;
+  }
+  .ember-field span:nth-child(5) {
+    left: 5%;
+    --ember-drift-x: 26px;
+    animation-duration: 21s;
+    animation-delay: -12s;
+  }
+
+  /* ---- Arcane circle wrapper — used by Header to spin a sigil behind
+     the Tusk logo. Sized by its parent; the inner SVGs handle the
+     drawing. */
+  .arcane-circle {
+    position: absolute;
+    inset: -40%;
+    pointer-events: none;
+    color: var(--arcane);
+    animation: arcane-rotate 60s linear infinite;
+    opacity: 0.6;
+  }
+  .arcane-circle--inner {
+    position: absolute;
+    inset: -25%;
+    pointer-events: none;
+    color: var(--ember);
+    animation: arcane-rotate-cw 90s linear infinite;
+    opacity: 0.35;
+  }
+
+  /* Section divider — short SVG rune flanked by violet trace lines.
+     Used by the ArcaneRune component. */
+  .arcane-rune-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--arcane);
+    opacity: 0.7;
+  }
+  .arcane-rune-divider::before,
+  .arcane-rune-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.6 0.18 295 / 0.6),
+      transparent
+    );
+  }
+  .arcane-rune-divider svg {
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 6px oklch(0.7 0.22 295 / 0.5));
+  }
+
+  /* ---- Per-tab themed backgrounds. Each one is a thin atmospheric
+     overlay applied to the <main> wrapper based on data-tab attribute.
+     All overlays are pseudo-elements anchored to the wrapper so they
+     don't interact with layout. */
+
+  .tab-bg {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Chronicle — parchment cream wash + faint horizontal ink-line
+     watermark, like a manuscript page beneath the dark theme. */
+  .tab-bg[data-tab="refinement"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 60% 30% at 50% 20%,
+        oklch(0.92 0.06 75 / 0.05),
+        transparent 70%
+      ),
+      repeating-linear-gradient(
+        180deg,
+        transparent 0,
+        transparent 28px,
+        oklch(0.7 0.04 85 / 0.025) 28px,
+        oklch(0.7 0.04 85 / 0.025) 29px
+      );
+  }
+
+  /* Caption Repair — violet ink-drip motif at the top edge. */
+  .tab-bg[data-tab="captions"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 50% 20% at 30% 0%,
+        oklch(0.55 0.2 295 / 0.18),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 40% 16% at 75% 5%,
+        oklch(0.55 0.2 295 / 0.1),
+        transparent 70%
+      );
+  }
+
+  /* Tome of Lore — bookshelf candlelight glow at the bottom. */
+  .tab-bg[data-tab="kb"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 70% 25% at 50% 100%,
+        oklch(0.6 0.18 50 / 0.18),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 30% 15% at 20% 95%,
+        oklch(0.6 0.18 50 / 0.1),
+        transparent 75%
+      );
+    animation: candle-flicker 4s ease-in-out infinite;
+  }
+
+  /* Upload — drifting star-field at the upper half. CSS-only:
+     concentric radial gradients of differing sizes give the illusion
+     of stars at different depths. */
+  .tab-bg[data-tab="upload"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, oklch(0.95 0.05 295 / 0.6), transparent),
+      radial-gradient(1px 1px at 25% 8%, oklch(0.95 0.05 295 / 0.5), transparent),
+      radial-gradient(1.5px 1.5px at 48% 22%, oklch(0.95 0.05 295 / 0.7), transparent),
+      radial-gradient(1px 1px at 67% 6%, oklch(0.95 0.05 295 / 0.4), transparent),
+      radial-gradient(1.5px 1.5px at 82% 14%, oklch(0.95 0.05 295 / 0.6), transparent),
+      radial-gradient(1px 1px at 92% 26%, oklch(0.95 0.05 295 / 0.5), transparent),
+      radial-gradient(1px 1px at 8% 34%, oklch(0.95 0.05 295 / 0.4), transparent),
+      radial-gradient(1px 1px at 38% 32%, oklch(0.95 0.05 295 / 0.55), transparent),
+      radial-gradient(1px 1px at 72% 38%, oklch(0.95 0.05 295 / 0.45), transparent);
+    animation: star-twinkle 8s ease-in-out infinite;
+    opacity: 0.7;
+  }
+
+  /* Sessions — warm candle glow corner. */
+  .tab-bg[data-tab="sessions"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 40% 30% at 92% 8%,
+        oklch(0.65 0.2 50 / 0.18),
+        transparent 65%
+      );
+    animation: candle-flicker 3.2s ease-in-out infinite;
+  }
+
+  /* Settings — faint hexagonal arcane-forge motif. Two overlapping
+     repeating gradients evoke a sigil grid without an SVG. */
+  .tab-bg[data-tab="settings"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 60% 25% at 50% 0%,
+        oklch(0.5 0.16 295 / 0.12),
+        transparent 70%
+      ),
+      repeating-linear-gradient(
+        60deg,
+        transparent 0,
+        transparent 40px,
+        oklch(0.5 0.16 295 / 0.03) 40px,
+        oklch(0.5 0.16 295 / 0.03) 41px
+      ),
+      repeating-linear-gradient(
+        -60deg,
+        transparent 0,
+        transparent 40px,
+        oklch(0.5 0.16 295 / 0.03) 40px,
+        oklch(0.5 0.16 295 / 0.03) 41px
+      );
+  }
+
+  /* ---- Wisp-veil — drifting arcane orbs that meander across the viewport.
+     Distinct from ember-field (straight-up sparks): wisps follow lazy
+     curving paths, pulse with magical light, and use mix-blend-mode:
+     screen so they brighten the violet background additively rather than
+     painting over it. Three colour variants (amethyst / ember / silver)
+     and six path keyframes give an irregular, alive feel. Render one
+     <div className="wisp-veil" aria-hidden> with seven <span> children
+     near the top of the layout. */
+  .wisp-veil {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+    mix-blend-mode: screen;
+  }
+  .wisp-veil > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    /* Amethyst body — overridden by colour-variant classes below. */
+    background: radial-gradient(
+      circle,
+      oklch(0.94 0.14 295 / 0.95) 8%,
+      oklch(0.72 0.22 295 / 0.55) 38%,
+      oklch(0.55 0.2  295 / 0.18) 65%,
+      transparent 80%
+    );
+    box-shadow:
+      0 0 14px oklch(0.7  0.24 295 / 0.65),
+      0 0 32px oklch(0.65 0.22 295 / 0.35),
+      0 0 56px oklch(0.6  0.2  295 / 0.18);
+    will-change: transform, opacity, filter;
+  }
+  .wisp-veil > .wisp-ember {
+    background: radial-gradient(
+      circle,
+      oklch(0.95 0.14 60 / 0.95) 8%,
+      oklch(0.78 0.2  55 / 0.55) 38%,
+      oklch(0.58 0.18 50 / 0.18) 65%,
+      transparent 80%
+    );
+    box-shadow:
+      0 0 14px oklch(0.78 0.2  55 / 0.65),
+      0 0 32px oklch(0.66 0.18 55 / 0.35),
+      0 0 56px oklch(0.56 0.16 50 / 0.18);
+  }
+  .wisp-veil > .wisp-silver {
+    background: radial-gradient(
+      circle,
+      oklch(0.96 0.03 285 / 0.9) 8%,
+      oklch(0.82 0.06 290 / 0.5) 38%,
+      oklch(0.65 0.06 290 / 0.15) 65%,
+      transparent 80%
+    );
+    box-shadow:
+      0 0 16px oklch(0.86 0.08 290 / 0.55),
+      0 0 36px oklch(0.72 0.08 290 / 0.3),
+      0 0 56px oklch(0.6  0.08 290 / 0.15);
+  }
+
+  /* Per-particle path / pulse / sway pairing. Each wisp uses one of the
+     six path keyframes plus the universal pulse + sway. Negative delays
+     are crucial — without them, all wisps would spawn together at t=0
+     and the field would look staged. The delays distribute them across
+     their loop so the screen always shows some at every phase. */
+  .wisp-veil > span:nth-child(1) {
+    animation:
+      wisp-path-1 38s linear infinite,
+      wisp-pulse  6s ease-in-out infinite,
+      wisp-sway   4.7s ease-in-out infinite;
+    animation-delay: 0s, -1s, 0s;
+  }
+  .wisp-veil > span:nth-child(2) {
+    animation:
+      wisp-path-2 46s linear infinite,
+      wisp-pulse  7.5s ease-in-out infinite,
+      wisp-sway   5.3s ease-in-out infinite;
+    animation-delay: -14s, -3s, -1s;
+  }
+  .wisp-veil > span:nth-child(3) {
+    animation:
+      wisp-path-3 52s linear infinite,
+      wisp-pulse  9s ease-in-out infinite,
+      wisp-sway   6.1s ease-in-out infinite;
+    animation-delay: -28s, -5s, -2s;
+  }
+  .wisp-veil > span:nth-child(4) {
+    animation:
+      wisp-path-4 58s linear infinite,
+      wisp-pulse  8s ease-in-out infinite,
+      wisp-sway   5.7s ease-in-out infinite;
+    animation-delay: -22s, -2s, -3s;
+  }
+  .wisp-veil > span:nth-child(5) {
+    animation:
+      wisp-path-5 50s linear infinite,
+      wisp-pulse  7s ease-in-out infinite,
+      wisp-sway   4.3s ease-in-out infinite;
+    animation-delay: -8s, -4s, -1.5s;
+  }
+  .wisp-veil > span:nth-child(6) {
+    animation:
+      wisp-path-1 44s linear infinite,
+      wisp-pulse  8.5s ease-in-out infinite,
+      wisp-sway   5.9s ease-in-out infinite;
+    animation-delay: -32s, 0s, -2.5s;
+  }
+  .wisp-veil > span:nth-child(7) {
+    animation:
+      wisp-path-6 64s linear infinite,
+      wisp-pulse  9.5s ease-in-out infinite,
+      wisp-sway   6.7s ease-in-out infinite;
+    animation-delay: -40s, -6s, -3.5s;
+  }
+
+  /* ---- Arcane-sigil — single rune glyph that fades in at a corner of
+     the viewport every ~30s, lingers briefly, rotates a quarter turn
+     and fades back out. Long off-period (cycle is ~28s with ~6s of
+     visibility) so it reads as a magical *event* rather than wallpaper. */
+  .arcane-sigil {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    width: 220px;
+    height: 220px;
+    opacity: 0;
+    color: oklch(0.7 0.22 295);
+    filter: drop-shadow(0 0 18px oklch(0.7 0.24 295 / 0.55));
+    mix-blend-mode: screen;
+    animation: sigil-reveal 28s ease-in-out infinite;
+  }
+  .arcane-sigil--tl { top: 8%;  left: 4%;  }
+  .arcane-sigil--br { bottom: 10%; right: 5%; animation-delay: -14s; color: oklch(0.72 0.18 55); filter: drop-shadow(0 0 18px oklch(0.72 0.2 55 / 0.5)); }
+
+  /* Spell-glow utility — drop on any element you want to feel charged.
+     Pulses an amethyst halo at a slow, deliberate rate. */
+  .spell-glow {
+    box-shadow:
+      0 0 0 1px oklch(0.65 0.22 295 / 0.4),
+      0 0 24px -2px oklch(0.7 0.24 295 / 0.4);
+    animation: spell-charge 4s ease-in-out infinite;
+  }
+}
+
+/* ── Run-reactive ambience ─────────────────────────────────────────────
+   The ember field, wisps and sigils animate identically whether the app
+   is idle or mid-run. Keying them off `data-pipeline` on <html> makes the
+   chrome respond to real work: sparks rise faster, wisps brighten, and
+   the active tab panel picks up a slow arcane pulse while phases run.
+
+   Decoration only — no layout shifts, nothing that moves under the
+   pointer, and the whole block is disabled under reduced-motion. */
+
+:root[data-pipeline='running'] .ember-field span {
+  animation-duration: 5.5s;
+  opacity: 1;
+}
+
+:root[data-pipeline='running'] .wisp-veil {
+  opacity: 0.9;
+  transition: opacity 1.2s ease;
+}
+
+:root[data-pipeline='running'] .wisp-veil span {
+  animation-duration: 26s;
+}
+
+/* Slow breathing glow along the top edge of the working area, so the
+   "something is happening" signal is visible even when the progress card
+   is scrolled out of view. */
+@keyframes pipeline-breath {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.7; }
+}
+
+:root[data-pipeline='running'] .tab-bg::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(0.72 0.24 295 / 0.9),
+    oklch(0.78 0.16 85 / 0.7),
+    transparent
+  );
+  animation: pipeline-breath 3.2s ease-in-out infinite;
+}
+
+/* Settings sections: lift on hover so the collapsible rows read as
+   interactive, and reveal their contents with the same easing the cards
+   already use. */
+details[id^='page-section-'] > summary:hover {
+  box-shadow: inset 0 0 0 1px oklch(0.72 0.24 295 / 0.25);
+}
+
+details[id^='page-section-'][open] > div {
+  animation: card-rise 260ms ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-pipeline='running'] .ember-field span,
+  :root[data-pipeline='running'] .wisp-veil span,
+  :root[data-pipeline='running'] .tab-bg::before,
+  details[id^='page-section-'][open] > div {
+    animation: none;
+  }
+}

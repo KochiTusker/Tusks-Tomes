@@ -1,0 +1,82 @@
+#!/bin/sh
+# pre-push hook — two stages:
+#
+#   Stage 1 (ALL remotes): run `npm run verify`, which is defined as exactly
+#     the set of gates CI runs — typecheck, vitest, the uninstaller safety
+#     tests, the dev-mode tree audit, and the security-contract audit.
+#     Aborts on any failure so a broken push never reaches CI / a teammate.
+#     This is the dev-time gate that replaces the missing pre-commit
+#     (pre-commit would kill the inner loop; pre-push is the
+#     smallest-still-effective gate).
+#
+#     It calls the `verify` SCRIPT rather than listing the commands here,
+#     because this hook and CI drifting apart is not hypothetical: the hook
+#     used to run only typecheck + vitest while CI additionally ran the
+#     uninstaller tests and the tree audit, so three consecutive pushes went
+#     green locally and red in CI on failures nothing local could have
+#     caught. One definition, two callers. A test pins the two together.
+#
+#   Stage 2 (public remote only): scan the commits being pushed for
+#     OpenAI/Anthropic/Google/Discord token shapes. Block on any match.
+#     Forwards stdin (git's standard pre-push format) to
+#     scripts/audit-push-range.mjs which does the actual scanning.
+#
+# Installation: `node scripts/install-hooks.mjs` copies this file into
+# .git/hooks/pre-push. Hooks live outside the tree, so the canonical
+# source lives here and the installer mirrors it on demand.
+#
+# Bypass: `git push --no-verify` skips this hook entirely. Use only when
+# you've verified the failure is a false positive — typical case is when
+# you're pushing a known-broken WIP branch for a teammate to look at and
+# tests-must-pass isn't the right invariant.
+
+remote_name="$1"
+# remote_url="$2"  (unused, but git passes it in)
+
+# Resolve the worktree-aware repo root so we find scripts/ regardless of
+# whether the user is in the main checkout or a linked worktree.
+repo_root=$(git rev-parse --show-toplevel) || exit 0
+
+# Stage 1: run typecheck + npm test (every remote).
+#
+# Reads stdin in stage 2 — preserve it for the audit script by piping
+# git's stdin into a tempfile we replay later.
+stdin_file=$(mktemp)
+trap 'rm -f "$stdin_file"' EXIT
+cat > "$stdin_file" || exit 0
+
+# Skip stage 1 entirely when SKIP_TESTS=1 is set (CI uses this; ordinary
+# dev pushes should always go through the gate).
+if [ "${SKIP_TESTS:-0}" != "1" ]; then
+  echo "pre-push: running npm run verify before pushing…"
+  if ! (cd "$repo_root" && npm run --silent verify); then
+    echo "" >&2
+    echo "pre-push: npm run verify FAILED. Push aborted." >&2
+    echo "  Run \`npm run verify\` to see the failures, fix them, then push again." >&2
+    echo "  If you're pushing a known-broken WIP branch on purpose:" >&2
+    echo "    git push --no-verify" >&2
+    exit 1
+  fi
+fi
+
+# Stage 2: secret scan (public remote only).
+#
+# Case-folded compare so a remote named `Public` or `PUBLIC` (created by
+# a typo or a contributor's preference) triggers the gate just like
+# `public`. The string comparison without tr would silently no-op.
+remote_lc=$(printf '%s' "$remote_name" | tr '[:upper:]' '[:lower:]')
+if [ "$remote_lc" != "public" ]; then
+  exit 0
+fi
+
+audit_script="$repo_root/scripts/audit-push-range.mjs"
+
+if [ ! -f "$audit_script" ]; then
+  # Hook is installed but the audit script is missing — fail open so a
+  # half-installed setup doesn't block legitimate pushes. Print a warning.
+  echo "WARNING: $audit_script not found. Skipping secret scan." >&2
+  exit 0
+fi
+
+# Replay the captured stdin to the auditor.
+node "$audit_script" < "$stdin_file"

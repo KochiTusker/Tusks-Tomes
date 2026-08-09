@@ -1,0 +1,393 @@
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
+import type { Express } from 'express'
+import { configDir, personasFile, personasMarkerFile, writeJson } from '../appData.js'
+import { whisperStatus, runSetup, venvDir } from '../whisper/bootstrap.js'
+import { registerLiveImpl } from '../sessions/liveSessionBridge.js'
+import { getLiveSessionState, refreshLiveSbv } from '../whisper/liveQueue.js'
+import { whisperRouter } from '../api/whisper.js'
+import { uploadRouter } from '../api/upload.js'
+import { transcribeRouter } from '../api/transcribe.js'
+import { localProxyRouter } from '../api/localProxy.js'
+import { localLLMRouter } from '../api/localLLM.js'
+import { probeRouter } from '../api/probe.js'
+import { claudeCodeRouter, claudeCodeStatus } from '../api/claudeCode.js'
+import { codexRouter, codexStatus } from '../api/codex.js'
+import {
+  whisperCppConfigPath,
+  whisperCppMarkerFile,
+  whisperCppRouter,
+  whisperCppStatus,
+} from '../api/whisperCpp.js'
+import { personasRouter } from '../api/personas.js'
+import { buildSeedDocument } from '../personas/seed.js'
+import { obsidianRouter } from '../api/obsidian.js'
+import { loopbackOnly } from '../lib/loopbackGate.js'
+import { obsidianMarkerPath, obsidianConfigPath } from '../lore/source/resolver.js'
+
+export type LogEntry = { stream: 'stdout' | 'stderr'; line: string }
+export type LogEmitter = (entry: LogEntry) => void
+
+export type AddonDefinition = {
+  /** Machine-stable identifier used in API paths and UI keys. */
+  name: string
+  /** Human-readable name shown in the AddonsManager UI. */
+  displayName: string
+  /** One-line description shown in the AddonsManager UI. */
+  description: string
+  /** When true, AddonsManager shows a "Work in progress" disclaimer. */
+  wip: boolean
+  /** Optional /api/docs slug for this add-on's user-facing doc. If set,
+   *  AddonsManager renders a "Read docs" link that deep-links into the
+   *  Help tab. */
+  docSlug?: string
+  /** Returns true if the add-on's prerequisites are satisfied. Called on
+   *  every server start — this is the sole source of truth for "enabled". */
+  isReady: () => Promise<boolean>
+  /** Satisfies prerequisites (e.g. installs a Python venv). Receives an
+   *  emitter so the caller can stream log lines as SSE. Resolves with the
+   *  exit code of the underlying setup process (0 = success). */
+  install: (emit: LogEmitter) => Promise<number>
+  /** Removes prerequisites so the add-on won't load on next restart. */
+  uninstall: () => Promise<void>
+  /** Mounts Express routes. Only called when isReady() returned true. */
+  registerRoutes: (app: Express) => void
+}
+
+/** Marker file for the local-llm-addon. We use a tiny on-disk flag rather
+ *  than a heavyweight prerequisite (the local runner itself is installed
+ *  separately by the user) so the install/uninstall flow has the same
+ *  shape as the audio-addon: clicking Install opts in, clicking Uninstall
+ *  opts out. The toggle (configEnabled) lets users flip without removing
+ *  the marker. */
+function localLlmMarkerFile(): string {
+  return path.join(configDir(), 'local-llm.enabled')
+}
+
+/** Marker file for the claude-code-addon. Same opt-in/opt-out shape as the
+ *  local-llm-addon: the CLI itself is installed + logged in by the user
+ *  separately; this flag just records that they've enabled the integration. */
+function claudeCodeMarkerFile(): string {
+  return path.join(configDir(), 'claude-code.enabled')
+}
+
+/** Marker file for the codex-addon. Identical opt-in shape to the
+ *  claude-code-addon; the two are fully independent — enabling, disabling,
+ *  or uninstalling one never touches the other. */
+function codexMarkerFile(): string {
+  return path.join(configDir(), 'codex.enabled')
+}
+
+export const ADDON_REGISTRY: AddonDefinition[] = [
+  {
+    name: 'audio-addon',
+    displayName: 'Audio Transcription',
+    description:
+      'Multitrack Craig recording upload and local Whisper transcription pipeline. ' +
+      'Requires Python 3.10–3.12 on your PATH.',
+    wip: true,
+    docSlug: 'add-ons-audio-transcription',
+    async isReady() {
+      const s = await whisperStatus()
+      return s.ready
+    },
+    async install(emit) {
+      return await runSetup(emit)
+    },
+    async uninstall() {
+      await fs.rm(venvDir(), { recursive: true, force: true })
+    },
+    registerRoutes(app) {
+      registerLiveImpl(getLiveSessionState, refreshLiveSbv)
+      app.use('/api/sessions', transcribeRouter())
+      app.use('/api/sessions', uploadRouter())
+      app.use('/api/whisper', whisperRouter())
+    },
+  },
+  {
+    name: 'personas-addon',
+    displayName: 'Chronicle Personas',
+    description:
+      'Swap the Chronicle narrator out of the default bardic voice. Ships six presets ' +
+      '(Arnold Schwarzenegger, Homer Simpson, Peter Griffin, Gandalf, Mike Tyson, Donkey) ' +
+      'and lets you author your own — from a template, from scratch, or generated by your ' +
+      'active LLM. The locked bard prompt remains the default; personas only override ' +
+      'phases 3, 5, and 6.',
+    wip: false,
+    docSlug: 'add-ons-personas',
+    async isReady() {
+      try {
+        await fs.access(personasMarkerFile())
+        return true
+      } catch {
+        return false
+      }
+    },
+    async install(emit) {
+      const marker = personasMarkerFile()
+      await fs.mkdir(path.dirname(marker), { recursive: true })
+      await fs.writeFile(marker, new Date().toISOString())
+      // Seed personas.json with the six presets on first install. If the
+      // user re-installs after an uninstall (which wipes personas.json),
+      // they get the presets back — matches their explicit choice that
+      // uninstall is a clean slate.
+      try {
+        await fs.access(personasFile())
+        emit({ stream: 'stdout', line: 'Existing personas.json detected — leaving custom personas intact.' })
+      } catch {
+        await writeJson(personasFile(), buildSeedDocument())
+        emit({ stream: 'stdout', line: 'Seeded 6 preset personas. Bard remains the default.' })
+      }
+      emit({
+        stream: 'stdout',
+        line: 'Chronicle Personas add-on enabled. Restart npm run dev, then switch personas from the Chronicle tab header or manage them in Settings.',
+      })
+      return 0
+    },
+    async uninstall() {
+      // Per spec: uninstall wipes personas.json so re-install gives a
+      // fresh slate. The marker file goes with it.
+      await fs.rm(personasMarkerFile(), { force: true })
+      await fs.rm(personasFile(), { force: true })
+    },
+    registerRoutes(app) {
+      app.use('/api/personas', personasRouter())
+    },
+  },
+  {
+    name: 'local-llm-addon',
+    displayName: 'Local LLMs',
+    description:
+      'Route pipeline phases through Ollama, LM Studio, or Unsloth Studio instead of (or alongside) a cloud provider. ' +
+      'Install one of those runners separately, then enable this add-on to surface the Local LLM panel and Hybrid Routing editor.',
+    wip: false,
+    docSlug: 'add-ons-local-llm',
+    async isReady() {
+      try {
+        await fs.access(localLlmMarkerFile())
+        return true
+      } catch {
+        return false
+      }
+    },
+    async install(emit) {
+      const marker = localLlmMarkerFile()
+      await fs.mkdir(path.dirname(marker), { recursive: true })
+      await fs.writeFile(marker, new Date().toISOString())
+      emit({
+        stream: 'stdout',
+        line: 'Local LLM add-on enabled. Restart npm run dev, then point Tusk\'s Tomes at your runner from Settings.',
+      })
+      return 0
+    },
+    async uninstall() {
+      await fs.rm(localLlmMarkerFile(), { force: true })
+    },
+    registerRoutes(app) {
+      app.use('/api/local', localProxyRouter())
+      app.use('/api/local-llm', localLLMRouter())
+      app.use('/api/local-llm', probeRouter())
+    },
+  },
+  {
+    name: 'claude-code-addon',
+    displayName: 'Claude Code (your subscription)',
+    description:
+      'Use your own locally-installed Claude Code subscription (Pro/Max) as the LLM — no API key required. ' +
+      'Install Claude Code separately and run `claude login`, then enable this add-on to pick it as a provider. ' +
+      'Bring your own subscription: the app never handles login and never touches your API keys.',
+    wip: true,
+    docSlug: 'add-ons-claude-code',
+    async isReady() {
+      try {
+        await fs.access(claudeCodeMarkerFile())
+        return true
+      } catch {
+        return false
+      }
+    },
+    async install(emit) {
+      const marker = claudeCodeMarkerFile()
+      await fs.mkdir(path.dirname(marker), { recursive: true })
+      await fs.writeFile(marker, new Date().toISOString())
+      const status = await claudeCodeStatus(true)
+      if (status.installed) {
+        emit({ stream: 'stdout', line: `Detected Claude Code CLI (${status.version}).` })
+        if (!status.authenticated) {
+          emit({
+            stream: 'stderr',
+            line: "Couldn't confirm a logged-in session. Run `claude login` and pick your Pro/Max plan.",
+          })
+        }
+      } else {
+        emit({
+          stream: 'stderr',
+          line: 'Claude Code CLI not found on PATH. Install it (https://docs.claude.com/en/docs/claude-code) and run `claude login`.',
+        })
+      }
+      emit({
+        stream: 'stdout',
+        line: 'Claude Code add-on enabled. Ensure ANTHROPIC_API_KEY is NOT set (it would override your subscription), restart npm run dev, then select Claude Code in Settings.',
+      })
+      return 0
+    },
+    async uninstall() {
+      await fs.rm(claudeCodeMarkerFile(), { force: true })
+    },
+    registerRoutes(app) {
+      app.use('/api/claude-code', claudeCodeRouter())
+    },
+  },
+  {
+    name: 'codex-addon',
+    displayName: 'Codex (your ChatGPT subscription)',
+    description:
+      'Use your own locally-installed OpenAI Codex CLI (ChatGPT Plus/Pro) as the LLM — no API key required. ' +
+      'Install Codex separately (npm i -g @openai/codex) and run `codex login`, then enable this add-on to pick it as a provider. ' +
+      'Bring your own subscription: the app never handles login and never touches your API keys.',
+    wip: true,
+    docSlug: 'add-ons-codex',
+    async isReady() {
+      try {
+        await fs.access(codexMarkerFile())
+        return true
+      } catch {
+        return false
+      }
+    },
+    async install(emit) {
+      const marker = codexMarkerFile()
+      await fs.mkdir(path.dirname(marker), { recursive: true })
+      await fs.writeFile(marker, new Date().toISOString())
+      const status = await codexStatus(true)
+      if (status.installed) {
+        emit({ stream: 'stdout', line: `Detected Codex CLI (${status.version}).` })
+      } else {
+        emit({
+          stream: 'stderr',
+          line: 'Codex CLI not found on PATH. Install it (npm i -g @openai/codex) and run `codex login`.',
+        })
+      }
+      emit({
+        stream: 'stdout',
+        line: 'Codex add-on enabled. Ensure OPENAI_API_KEY is NOT set (it would override your subscription), restart npm run dev, then select Codex in Settings.',
+      })
+      return 0
+    },
+    async uninstall() {
+      await fs.rm(codexMarkerFile(), { force: true })
+    },
+    registerRoutes(app) {
+      app.use('/api/codex', codexRouter())
+    },
+  },
+  {
+    name: 'whisper-cpp-addon',
+    displayName: 'whisper.cpp bridge (bring your own build)',
+    description:
+      'Transcribe using a whisper.cpp build you install yourself. This is the route for AMD, Intel and ' +
+      'Apple GPUs: the built-in Whisper only accelerates on NVIDIA, and no ready-made whisper.cpp release ' +
+      'includes a GPU backend for other vendors — you have to compile one. Nothing is downloaded or ' +
+      'installed for you; point the app at your binary and model and it does the rest. ' +
+      'Removing this add-on leaves your build untouched.',
+    wip: true,
+    docSlug: 'add-ons-whisper-cpp',
+    async isReady() {
+      try {
+        await fs.access(whisperCppMarkerFile())
+        return true
+      } catch {
+        return false
+      }
+    },
+    async install(emit) {
+      // Deliberately downloads nothing. The whole point of this add-on is that
+      // the user owns the binary and its provenance — see the header of
+      // server/api/whisperCpp.ts for why we don't ship one.
+      const marker = whisperCppMarkerFile()
+      await fs.mkdir(path.dirname(marker), { recursive: true })
+      await fs.writeFile(marker, new Date().toISOString())
+      emit({ stream: 'stdout', line: 'whisper.cpp bridge enabled. Nothing was downloaded or installed.' })
+
+      const status = await whisperCppStatus()
+      if (!status.configured) {
+        emit({
+          stream: 'stdout',
+          line: 'Next: build or download whisper.cpp yourself, then set the binary and model paths in Settings.',
+        })
+        emit({
+          stream: 'stdout',
+          line: 'For GPU acceleration on AMD or Intel you need a build compiled with Vulkan — the official release binaries are CPU-only. Instructions: Help → whisper.cpp bridge.',
+        })
+      } else {
+        emit({ stream: status.binaryOk && status.modelOk ? 'stdout' : 'stderr', line: status.summary })
+      }
+      emit({ stream: 'stdout', line: 'Restart Tusk’s Tomes so the bridge loads.' })
+      return 0
+    },
+    async uninstall() {
+      // Removes only our marker + config. The user's whisper.cpp build and
+      // model files are theirs and are never touched.
+      await fs.rm(whisperCppMarkerFile(), { force: true })
+      await fs.rm(whisperCppConfigPath(), { force: true })
+    },
+    registerRoutes(app) {
+      app.use('/api/whisper-cpp', whisperCppRouter())
+    },
+  },
+  {
+    name: 'obsidian-vault-addon',
+    displayName: 'Obsidian Vault Lore',
+    description:
+      'Ground chronicles against a read-only Obsidian vault instead of the Tusks-Lore folder. ' +
+      'Point at your vault; the app derives an entity index from your notes\' frontmatter aliases ' +
+      '(cached outside the vault — the vault is never written to) and uses your notes as the Knowledge Base.',
+    wip: true,
+    docSlug: 'add-ons-obsidian-vault',
+    async isReady() {
+      try {
+        await fs.access(obsidianMarkerPath())
+        return true
+      } catch {
+        return false
+      }
+    },
+    async install(emit) {
+      const marker = obsidianMarkerPath()
+      await fs.mkdir(path.dirname(marker), { recursive: true })
+      await fs.writeFile(marker, new Date().toISOString())
+      // Seed a disabled config so enabling is an explicit, opt-in step
+      // (risky/experimental features ship OFF). Don't clobber an existing one.
+      try {
+        await fs.access(obsidianConfigPath())
+      } catch {
+        await writeJson(obsidianConfigPath(), {
+          enabled: false,
+          vaultPath: '',
+          modeB: false,
+          useClaudeMdContext: false,
+        })
+      }
+      emit({
+        stream: 'stdout',
+        line: 'Obsidian Vault add-on enabled. Restart npm run dev, then set your vault path in Settings (it stays OFF until you enable it).',
+      })
+      return 0
+    },
+    async uninstall() {
+      await fs.rm(obsidianMarkerPath(), { force: true })
+    },
+    registerRoutes(app) {
+      // loopbackOnly: every route on this router mutates host state —
+      // POST /config accepts an arbitrary absolute path and persists it as
+      // the app's lore read root, /generate-claude-md writes a file into
+      // it, /graphify-build spawns a process with cwd there, and
+      // /pick-folder opens a native dialog on the host desktop. Combined
+      // with GET /api/lore/documents (which returns the full body of every
+      // .md under that root) an ungated /config is arbitrary file read.
+      // Harmless on the default 127.0.0.1 bind, but TUSKS_HOST=0.0.0.0 is
+      // a documented option and would expose all of it unauthenticated.
+      app.use('/api/obsidian', loopbackOnly(), obsidianRouter())
+    },
+  },
+]
