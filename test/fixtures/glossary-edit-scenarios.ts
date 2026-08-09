@@ -17,12 +17,12 @@ import type { GlossaryDocument } from '@/lib/glossary'
 export const GLOSSARY_AT_PAUSE: GlossaryDocument = {
   version: 1,
   safeReplacements: [
-    { from: 'broady', to: 'Lucia' },
-    { from: 'kazle', to: 'Seoyeon' },
+    { from: 'broady', to: 'Yannick' },
+    { from: 'kazle', to: 'Anwen' },
   ],
   contextualHints: [
     {
-      canonical: 'Lucia',
+      canonical: 'Yannick',
       commonMishears: ['Broady', 'Brodie'],
       notes: 'Halfling rogue.',
     },
@@ -35,22 +35,22 @@ export const GLOSSARY_AT_PAUSE: GlossaryDocument = {
 export const GLOSSARY_AT_RESUME: GlossaryDocument = {
   version: 1,
   safeReplacements: [
-    { from: 'broady', to: 'Lucia' },
-    { from: 'kazle', to: 'Seoyeon' },
-    { from: 'broogo', to: 'Yuzuki' }, // NEW: another safe replacement
+    { from: 'broady', to: 'Yannick' },
+    { from: 'kazle', to: 'Anwen' },
+    { from: 'broogo', to: 'Niamh' }, // NEW: another safe replacement
   ],
   contextualHints: [
     {
-      canonical: 'Lucia',
+      canonical: 'Yannick',
       commonMishears: ['Broady', 'Brodie'],
       notes: 'Halfling rogue.',
     },
     {
-      canonical: 'Yuzuki',
-      commonMishears: ['Brewgo', 'Broogo', 'Yuzuki'],
+      canonical: 'Niamh',
+      commonMishears: ['Brewgo', 'Broogo', 'Niamh'],
       // 500-char block guarantees the preGround output diverges if applied.
       notes:
-        'Yuzuki is a half-orc barbarian recruited from the slums of Waterdeep. He carries a greataxe inherited from his grandfather, who fought in the wars of the southern reaches. Common mishearings include Brewgo and Broogo. Always treat any mention of a half-orc warrior with a greataxe as a probable Yuzuki reference even if the transcript spells it differently. Yuzuki speaks in short sentences and rarely uses complex vocabulary. He is fiercely loyal to Lucia despite their cultural differences.',
+        'Niamh is a half-orc barbarian recruited from the slums of Waterdeep. He carries a greataxe inherited from his grandfather, who fought in the wars of the southern reaches. Common mishearings include Brewgo and Broogo. Always treat any mention of a half-orc warrior with a greataxe as a probable Niamh reference even if the transcript spells it differently. Niamh speaks in short sentences and rarely uses complex vocabulary. He is fiercely loyal to Yannick despite their cultural differences.',
     },
   ],
 }
@@ -63,7 +63,7 @@ export const TRANSCRIPT_FOR_DRIFT_TEST = (() => {
   const lines: string[] = []
   // Realistic-ish dialogue that will be affected by the glossary above:
   // mishearings ("broady", "broogo") get replaced via preGround.
-  const speakers = ['Seoyeon', 'Lucia', 'Yuzuki', 'Thao', 'Eero']
+  const speakers = ['Anwen', 'Yannick', 'Niamh', 'Ngozi', 'Farida']
   for (let i = 0; i < 240; i++) {
     const speaker = speakers[i % speakers.length]
     // Sprinkle the mishearings the glossary will replace.

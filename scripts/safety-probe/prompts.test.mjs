@@ -48,7 +48,7 @@ describe('embedded prompts.mjs drift guard', () => {
 
   it('phase4Extras produces byte-identical output to src/lib/prompts.ts with empty dmAnswers', () => {
     const args = {
-      groundedChunk: '[Yuzuki (Zuri)] 36 damage',
+      groundedChunk: '[Niamh (Meera)] 36 damage',
       dmAnswers: {},
       index: 0,
       total: 1,
@@ -58,7 +58,7 @@ describe('embedded prompts.mjs drift guard', () => {
 
   it('phase4Extras matches when dmAnswers has answers', () => {
     const args = {
-      groundedChunk: '[Rania (Chenguang)] I cast Fireball',
+      groundedChunk: '[Bilal (Delphine)] I cast Fireball',
       dmAnswers: { 'q-1-1': 'It crit for 8d6.' },
       index: 0,
       total: 1,
@@ -84,7 +84,7 @@ describe('embedded prompts.mjs drift guard', () => {
 
   it('phase1Ground produces byte-identical output to src/lib/prompts.ts (no KB, no hints, not stripped)', () => {
     const args = {
-      chunk: '[Yuzuki (Zuri)] 36 damage on the smite.',
+      chunk: '[Niamh (Meera)] 36 damage on the smite.',
       kbConcat: '',
       index: 0,
       total: 1,
@@ -94,11 +94,11 @@ describe('embedded prompts.mjs drift guard', () => {
 
   it('phase1Ground matches with a populated KB + hints', () => {
     const args = {
-      chunk: '[Rania (Chenguang)] I cast Fireball.',
-      kbConcat: '### Speakers\nBrugo, Rania, Seoyeon.\n### Spells\nFireball, Healing Word.',
+      chunk: '[Bilal (Delphine)] I cast Fireball.',
+      kbConcat: '### Speakers\nBrugo, Bilal, Anwen.\n### Spells\nFireball, Healing Word.',
       index: 5,
       total: 10,
-      contextualHintsBlock: '## Contextual hints\n- "Yuzuki" should always be capitalised.',
+      contextualHintsBlock: '## Contextual hints\n- "Niamh" should always be capitalised.',
     }
     expect(embeddedPhase1(args)).toBe(canonicalPhase1(args))
   })
@@ -116,7 +116,7 @@ describe('embedded prompts.mjs drift guard', () => {
 
   it('phase3Chronicle matches with empty dmQuestions (no Q&A)', () => {
     const args = {
-      groundedChunk: '[Yuzuki (Zuri)] I roll a 20.\n[DM] Critical hit.',
+      groundedChunk: '[Niamh (Meera)] I roll a 20.\n[DM] Critical hit.',
       dmAnswers: {},
       dmQuestions: [],
       index: 0,
@@ -128,7 +128,7 @@ describe('embedded prompts.mjs drift guard', () => {
 
   it('phase3Chronicle matches with populated Q&A + priorTail', () => {
     const args = {
-      groundedChunk: '[Rania (Chenguang)] I dodge.',
+      groundedChunk: '[Bilal (Delphine)] I dodge.',
       dmAnswers: { 'q-1-1': 'They were attacked by goblins.' },
       dmQuestions: [{ id: 'q-1-1', question: 'Who attacked them?' }],
       index: 3,

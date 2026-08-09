@@ -47,7 +47,7 @@ function normalizeTurns(raw: unknown): QuoteTurn[] {
 }
 
 /** Participant list for an exchange: unique speakers in order of first
- *  appearance, e.g. `Seoyeon, Yuzuki & Thao`. */
+ *  appearance, e.g. `Anwen, Niamh & Ngozi`. */
 export function exchangeSpeakers(turns: QuoteTurn[]): string {
   const seen: string[] = []
   for (const t of turns) if (!seen.includes(t.speaker)) seen.push(t.speaker)

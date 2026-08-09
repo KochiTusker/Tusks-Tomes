@@ -9,7 +9,7 @@ import { docxBufferToMarkdown } from './docxToMarkdown.js'
 const EXTRAS = {
   jests: ['The bard tripped over a chicken.'],
   gore: ['The ogre was bisected.'],
-  quotes: [{ speaker: 'Seoyeon', line: 'We do not negotiate with mimics.', kind: 'funny' as const }],
+  quotes: [{ speaker: 'Anwen', line: 'We do not negotiate with mimics.', kind: 'funny' as const }],
 }
 
 const CONDENSED = {

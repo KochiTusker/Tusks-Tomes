@@ -4,11 +4,11 @@ import { parseExtras } from './restorePass'
 describe('parseExtras', () => {
   it('parses a well-formed extras object embedded in surrounding text', () => {
     const raw =
-      'Here is the JSON:\n{"jests":["a joke"],"gore":["a beheading"],"quotes":[{"speaker":"Seoyeon","line":"die"}]}\nDone.'
+      'Here is the JSON:\n{"jests":["a joke"],"gore":["a beheading"],"quotes":[{"speaker":"Anwen","line":"die"}]}\nDone.'
     expect(parseExtras(raw)).toEqual({
       jests: ['a joke'],
       gore: ['a beheading'],
-      quotes: [{ speaker: 'Seoyeon', line: 'die', kind: 'funny' }],
+      quotes: [{ speaker: 'Anwen', line: 'die', kind: 'funny' }],
     })
   })
 

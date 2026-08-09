@@ -6,18 +6,18 @@
 //
 // Findings inform the pricing table + routing options.
 
-const FIXTURE = `[Lucia (Tanvi)] Right, I'm going to charge the ogre. I roll a... twelve.
+const FIXTURE = `[Yannick (Magnus)] Right, I'm going to charge the ogre. I roll a... twelve.
 [DM (DM)] You leap forward and your hammer connects with a sickening crunch — the ogre's jaw shatters in a spray of yellow teeth.
-[Seoyeon (Amina)] My god. Lucia, that was beautiful.
-[Lucia (Tanvi)] That's for stealing my sandwich.
-[Thao (Devika)] I cast firebolt on the second ogre. Natural twenty!
+[Anwen (Tadeo)] My god. Yannick, that was beautiful.
+[Yannick (Magnus)] That's for stealing my sandwich.
+[Ngozi (Dagny)] I cast firebolt on the second ogre. Natural twenty!
 [DM (DM)] The firebolt explodes against the ogre's chest and you watch as it staggers backwards, its leather armour catching fire.
-[Adaeze (Jianyu)] Wait, can the leather armour give the ogre disadvantage?
-[Lucia (Tanvi)] He's literally on fire, Adaeze. He's having a worse day than getting disadvantage.
+[Esperanza (Fenna)] Wait, can the leather armour give the ogre disadvantage?
+[Yannick (Magnus)] He's literally on fire, Esperanza. He's having a worse day than getting disadvantage.
 [DM (DM)] The ogre's screams echo through the cavern as it falls to its knees.
-[Seoyeon (Amina)] I want to loot the body.
-[Thao (Devika)] It's still on fire.
-[Seoyeon (Amina)] I have gloves.`
+[Anwen (Tadeo)] I want to loot the body.
+[Ngozi (Dagny)] It's still on fire.
+[Anwen (Tadeo)] I have gloves.`
 
 const EXTRAS_PROMPT = `Extract three lists from the following D&D transcript chunk. Output ONLY valid JSON in this exact shape:
 {

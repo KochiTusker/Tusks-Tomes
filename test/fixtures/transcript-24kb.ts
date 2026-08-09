@@ -8,7 +8,7 @@
 //   - Hit ~24,000 characters total (close to one Phase 1 chunk on
 //     Gemini Paid; ~3 chunks on the conservative local profile).
 
-const CHARACTERS = ['Seoyeon', 'Lucia', 'Yuzuki', 'Thao', 'Eero']
+const CHARACTERS = ['Anwen', 'Yannick', 'Niamh', 'Ngozi', 'Farida']
 const ACTIONS = [
   'rolls a perception check',
   'casts shield of faith',

@@ -22,12 +22,12 @@ import type { Quote } from '@/types'
 const MULE_EXCHANGE = {
   kind: 'funny',
   exchange: [
-    { speaker: 'Seoyeon', line: 'Did you feed the mule this morning?' },
-    { speaker: 'Yuzuki', line: 'I always feed the mule.' },
-    { speaker: 'Seoyeon', line: 'Then why is it eating my cloak?' },
-    { speaker: 'Yuzuki', line: "It's a very hungry mule. That is not on me." },
-    { speaker: 'Thao', line: "You can't even see the mule from here." },
-    { speaker: 'Yuzuki', line: 'Have you heard of a window, Thao?' },
+    { speaker: 'Anwen', line: 'Did you feed the mule this morning?' },
+    { speaker: 'Niamh', line: 'I always feed the mule.' },
+    { speaker: 'Anwen', line: 'Then why is it eating my cloak?' },
+    { speaker: 'Niamh', line: "It's a very hungry mule. That is not on me." },
+    { speaker: 'Ngozi', line: "You can't even see the mule from here." },
+    { speaker: 'Niamh', line: 'Have you heard of a window, Ngozi?' },
   ],
 }
 
@@ -47,15 +47,15 @@ describe('normalizeQuoteKind', () => {
 
 describe('normalizeQuote — single line', () => {
   it('keeps the flat shape and trims', () => {
-    expect(normalizeQuote({ speaker: '  Thao ', line: " that's a rock ", kind: 'stupid' })).toEqual({
-      speaker: 'Thao',
+    expect(normalizeQuote({ speaker: '  Ngozi ', line: " that's a rock ", kind: 'stupid' })).toEqual({
+      speaker: 'Ngozi',
       line: "that's a rock",
       kind: 'stupid',
     })
   })
 
   it('drops entries missing a speaker or a line', () => {
-    expect(normalizeQuote({ speaker: 'Thao' })).toBeNull()
+    expect(normalizeQuote({ speaker: 'Ngozi' })).toBeNull()
     expect(normalizeQuote({ line: 'orphaned' })).toBeNull()
     expect(normalizeQuote({ speaker: '  ', line: '  ' })).toBeNull()
     expect(normalizeQuote('not an object')).toBeNull()
@@ -63,12 +63,12 @@ describe('normalizeQuote — single line', () => {
   })
 
   it('carries an optional context sentence', () => {
-    expect(normalizeQuote({ speaker: 'Yuzuki', line: 'Much obliged.', context: ' He had just been healed. ' }))
-      .toEqual({ speaker: 'Yuzuki', line: 'Much obliged.', kind: 'funny', context: 'He had just been healed.' })
+    expect(normalizeQuote({ speaker: 'Niamh', line: 'Much obliged.', context: ' He had just been healed. ' }))
+      .toEqual({ speaker: 'Niamh', line: 'Much obliged.', kind: 'funny', context: 'He had just been healed.' })
   })
 
   it('omits context entirely when blank', () => {
-    expect(normalizeQuote({ speaker: 'Thao', line: 'no', context: '   ' })).not.toHaveProperty('context')
+    expect(normalizeQuote({ speaker: 'Ngozi', line: 'no', context: '   ' })).not.toHaveProperty('context')
   })
 })
 
@@ -77,14 +77,14 @@ describe('normalizeQuote — exchange', () => {
     const q = normalizeQuote(MULE_EXCHANGE)!
     expect(q.exchange).toHaveLength(6)
     expect(q.exchange!.map((t) => t.speaker)).toEqual([
-      'Seoyeon', 'Yuzuki', 'Seoyeon', 'Yuzuki', 'Thao', 'Yuzuki',
+      'Anwen', 'Niamh', 'Anwen', 'Niamh', 'Ngozi', 'Niamh',
     ])
     // Participants are unique, in order of first appearance.
-    expect(q.speaker).toBe('Seoyeon, Yuzuki & Thao')
+    expect(q.speaker).toBe('Anwen, Niamh & Ngozi')
     // The flat `line` still reads as the whole exchange for any consumer
     // that only understands the pre-exchange shape.
-    expect(q.line).toContain('Seoyeon: "Did you feed the mule this morning?"')
-    expect(q.line).toContain('Yuzuki: "Have you heard of a window, Thao?"')
+    expect(q.line).toContain('Anwen: "Did you feed the mule this morning?"')
+    expect(q.line).toContain('Niamh: "Have you heard of a window, Ngozi?"')
     expect(q.kind).toBe('funny')
   })
 
@@ -92,23 +92,23 @@ describe('normalizeQuote — exchange', () => {
     const q = normalizeQuote({
       kind: 'dark',
       exchange: [
-        { speaker: 'Seoyeon', line: 'We march.' },
-        { speaker: 'Yuzuki' },
+        { speaker: 'Anwen', line: 'We march.' },
+        { speaker: 'Niamh' },
         'garbage',
         { line: 'no speaker' },
-        { speaker: 'Thao', line: 'Fine.' },
+        { speaker: 'Ngozi', line: 'Fine.' },
       ],
     })!
     expect(q.exchange).toEqual([
-      { speaker: 'Seoyeon', line: 'We march.' },
-      { speaker: 'Thao', line: 'Fine.' },
+      { speaker: 'Anwen', line: 'We march.' },
+      { speaker: 'Ngozi', line: 'Fine.' },
     ])
     expect(q.kind).toBe('dark')
   })
 
   it('folds a one-turn exchange back to the flat shape', () => {
-    const q = normalizeQuote({ kind: 'stupid', exchange: [{ speaker: 'Yuzuki', line: 'Solo.' }] })
-    expect(q).toEqual({ speaker: 'Yuzuki', line: 'Solo.', kind: 'stupid' })
+    const q = normalizeQuote({ kind: 'stupid', exchange: [{ speaker: 'Niamh', line: 'Solo.' }] })
+    expect(q).toEqual({ speaker: 'Niamh', line: 'Solo.', kind: 'stupid' })
     expect(q).not.toHaveProperty('exchange')
   })
 
@@ -119,7 +119,7 @@ describe('normalizeQuote — exchange', () => {
 
   it('ignores a stray speaker/line pair when a valid exchange is present', () => {
     const q = normalizeQuote({ speaker: 'Whoever', line: 'stray', ...MULE_EXCHANGE })!
-    expect(q.speaker).toBe('Seoyeon, Yuzuki & Thao')
+    expect(q.speaker).toBe('Anwen, Niamh & Ngozi')
     expect(q.line).not.toBe('stray')
   })
 })
@@ -127,7 +127,7 @@ describe('normalizeQuote — exchange', () => {
 describe('normalizeQuotes', () => {
   it('filters unusable entries out of a mixed array', () => {
     expect(normalizeQuotes([
-      { speaker: 'Thao', line: 'ok' },
+      { speaker: 'Ngozi', line: 'ok' },
       null,
       { speaker: 'X' },
       MULE_EXCHANGE,
@@ -156,10 +156,10 @@ describe('exchangeSpeakers / flattenExchange', () => {
 })
 
 describe('appendNovelQuotes', () => {
-  const single: Quote = { speaker: 'Thao', line: "that's a rock", kind: 'stupid' }
+  const single: Quote = { speaker: 'Ngozi', line: "that's a rock", kind: 'stupid' }
 
   it('appends novel entries', () => {
-    const out = appendNovelQuotes([single], [{ speaker: 'Yuzuki', line: 'The mule agrees.', kind: 'funny' }])
+    const out = appendNovelQuotes([single], [{ speaker: 'Niamh', line: 'The mule agrees.', kind: 'funny' }])
     expect(out).toHaveLength(2)
   })
 
@@ -169,12 +169,12 @@ describe('appendNovelQuotes', () => {
 
   it('drops a standalone line that already sits inside an accumulated exchange', () => {
     const exchange = normalizeQuote(MULE_EXCHANGE)!
-    const dupOfATurn: Quote = { speaker: 'Thao', line: "You can't even see the mule from here.", kind: 'funny' }
+    const dupOfATurn: Quote = { speaker: 'Ngozi', line: "You can't even see the mule from here.", kind: 'funny' }
     expect(appendNovelQuotes([exchange], [dupOfATurn])).toHaveLength(1)
   })
 
   it('drops an exchange that repeats a line already captured standalone', () => {
-    const alreadyHave: Quote = { speaker: 'Yuzuki', line: 'I always feed the mule.', kind: 'funny' }
+    const alreadyHave: Quote = { speaker: 'Niamh', line: 'I always feed the mule.', kind: 'funny' }
     const exchange = normalizeQuote(MULE_EXCHANGE)!
     expect(appendNovelQuotes([alreadyHave], [exchange])).toHaveLength(1)
   })
@@ -189,23 +189,23 @@ describe('appendNovelQuotes', () => {
 describe('quoteKeys', () => {
   it('claims one key per turn plus the entry key', () => {
     expect(quoteKeys(normalizeQuote(MULE_EXCHANGE)!)).toHaveLength(7)
-    expect(quoteKeys({ speaker: 'Thao', line: 'x' })).toEqual(['Thao::x'])
+    expect(quoteKeys({ speaker: 'Ngozi', line: 'x' })).toEqual(['Ngozi::x'])
   })
 })
 
 describe('quoteToPlainText', () => {
   it('quotes a single line', () => {
-    expect(quoteToPlainText({ speaker: 'Thao', line: 'a rock' })).toBe('Thao: "a rock"')
+    expect(quoteToPlainText({ speaker: 'Ngozi', line: 'a rock' })).toBe('Ngozi: "a rock"')
   })
 
   it('renders an exchange without nesting quotes inside quotes', () => {
     const text = quoteToPlainText(normalizeQuote(MULE_EXCHANGE)!)
-    expect(text.startsWith('Seoyeon: "Did you feed the mule')).toBe(true)
+    expect(text.startsWith('Anwen: "Did you feed the mule')).toBe(true)
     expect(text).not.toContain('""')
   })
 
   it('prefixes context when present', () => {
-    expect(quoteToPlainText({ speaker: 'Yuzuki', line: 'Thanks.', context: 'He was just healed.' }))
-      .toBe('(He was just healed.) Yuzuki: "Thanks."')
+    expect(quoteToPlainText({ speaker: 'Niamh', line: 'Thanks.', context: 'He was just healed.' }))
+      .toBe('(He was just healed.) Niamh: "Thanks."')
   })
 })

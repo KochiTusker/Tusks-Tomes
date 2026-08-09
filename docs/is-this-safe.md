@@ -17,7 +17,7 @@ quiet.
 
 The existing options didn't fit. Meeting transcribers are built for standups:
 you get a transcript and a bulleted summary, for £15 a month, forever, in
-somebody else's cloud. And none of them have the faintest idea who Seoyeon is —
+somebody else's cloud. And none of them have the faintest idea who Anwen is —
 they'd hear the name, invent a spelling, and confidently use the wrong one for
 three hours straight.
 

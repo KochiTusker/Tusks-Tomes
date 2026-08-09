@@ -125,17 +125,17 @@ export const SCENARIOS = [
 ]
 
 // Real lore canonical names for the Too Many Bruisers campaign. First names appear
-// in the raw SBV transcript (e.g. "Lucia"); the canonical full names (e.g.
-// "Lucia Crane") only show up if Phase 1 grounding consults the alias index
+// in the raw SBV transcript (e.g. "Yannick"); the canonical full names (e.g.
+// "Yannick Crane") only show up if Phase 1 grounding consults the alias index
 // and applies the substitution. This is the load-bearing grounding quality
 // signal.
 export const SEEDED_ENTITIES = [
-  'Lucia Crane',
-  'Yuzuki Osk',
-  'Seoyeon Corvel',
-  'Eero Gensai',
-  'Souta Corvel',
-  'Thao',
+  'Yannick Crane',
+  'Niamh Osk',
+  'Anwen Corvel',
+  'Farida Gensai',
+  'Camille Corvel',
+  'Ngozi',
   'CCW',
   'Stardust',
   'Pentagon',

@@ -116,13 +116,13 @@ describe('chronicle-library store', () => {
           chronicle: 'The party marched at dawn.',
           refusals,
           dmQuestions: [{ id: 'q1', question: 'Who opened the gate?' }],
-          dmAnswers: { q1: 'Lucia did.' },
+          dmAnswers: { q1: 'Yannick did.' },
         })
       ).json()
       const afterPost = await (await fetch(`${base}/${saved.id}`)).json()
       expect(afterPost.refusals).toEqual(refusals)
       expect(afterPost.dmQuestions).toEqual([{ id: 'q1', question: 'Who opened the gate?' }])
-      expect(afterPost.dmAnswers).toEqual({ q1: 'Lucia did.' })
+      expect(afterPost.dmAnswers).toEqual({ q1: 'Yannick did.' })
 
       // PUT flips the refusal to repaired; untouched fields persist.
       const repaired = [{ ...refusals[0], repaired: true }]

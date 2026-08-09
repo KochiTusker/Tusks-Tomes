@@ -15,17 +15,17 @@ import type { ExtrasOutput } from '@/types'
  *  must round-trip this exactly into priorExtras. */
 export const PARTIAL_AFTER_3_CHUNKS: ExtrasOutput = {
   jests: [
-    "Lucia's third pun this session",
-    'Eero mishearing "doom" as "Zoom"',
-    'Thao insisting the goblin was actually a Funko Pop',
+    "Yannick's third pun this session",
+    'Farida mishearing "doom" as "Zoom"',
+    'Ngozi insisting the goblin was actually a Funko Pop',
   ],
   gore: [
-    'Seoyeon cleaves the ogre lengthwise',
-    'Yuzuki critically fumbles, drops his own sword on his foot',
+    'Anwen cleaves the ogre lengthwise',
+    'Niamh critically fumbles, drops his own sword on his foot',
   ],
   quotes: [
-    { speaker: 'Lucia', line: 'It\'s half seven, let\'s start.' },
-    { speaker: 'Seoyeon', line: 'Yeah.', kind: 'funny' },
+    { speaker: 'Yannick', line: 'It\'s half seven, let\'s start.' },
+    { speaker: 'Anwen', line: 'Yeah.', kind: 'funny' },
   ],
 }
 

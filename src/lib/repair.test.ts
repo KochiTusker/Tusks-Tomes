@@ -64,7 +64,7 @@ describe('mergeExtras', () => {
   const base: ExtrasOutput = {
     jests: ['old jest'],
     gore: ['old gore'],
-    quotes: [{ speaker: 'Seoyeon', line: 'We march.', kind: 'funny' }],
+    quotes: [{ speaker: 'Anwen', line: 'We march.', kind: 'funny' }],
   }
 
   it('appends novel entries and dedupes jests/gore (string) + quotes (speaker+line)', () => {
@@ -72,14 +72,14 @@ describe('mergeExtras', () => {
       jests: ['old jest', 'new jest'],
       gore: ['new gore'],
       quotes: [
-        { speaker: 'Seoyeon', line: 'We march.', kind: 'funny' }, // dup
-        { speaker: 'Lucia', line: 'I roll to disbelieve.', kind: 'stupid' }, // novel
+        { speaker: 'Anwen', line: 'We march.', kind: 'funny' }, // dup
+        { speaker: 'Yannick', line: 'I roll to disbelieve.', kind: 'stupid' }, // novel
       ],
     }
     const merged = mergeExtras(base, incoming)
     expect(merged.jests).toEqual(['old jest', 'new jest'])
     expect(merged.gore).toEqual(['old gore', 'new gore'])
     expect(merged.quotes).toHaveLength(2)
-    expect(merged.quotes[1].speaker).toBe('Lucia')
+    expect(merged.quotes[1].speaker).toBe('Yannick')
   })
 })

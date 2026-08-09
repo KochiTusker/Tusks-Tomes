@@ -353,7 +353,7 @@ export function LiveTranscript({ sessionId, onSendToRefinement }: LiveTranscript
                         </Label>
                         <Input
                           id={`live-character-${participant.discordUserId}`}
-                          placeholder="e.g. Rania"
+                          placeholder="e.g. Bilal"
                           value={draft?.characterName ?? ''}
                           onChange={(e) =>
                             patchDraft(participant.discordUserId, {

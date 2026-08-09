@@ -1,6 +1,6 @@
 {
   "name": "tusks-tomes",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "type": "module",
   "description": "Tusk's Tomes — local-first D&D session chronicler with multi-provider AI",
@@ -20,6 +20,9 @@
     "site:card": "node scripts/site/make-social-card.mjs",
     "site:preview": "node scripts/site/build-site.mjs && node scripts/site/preview-site.mjs",
     "site:audit": "node scripts/site/audit-site.mjs",
+    "names:check": "node scripts/rotate-names.mjs --check",
+    "names:verify": "node scripts/rotate-names.mjs --verify",
+    "names:rotate": "node scripts/rotate-names.mjs --apply && npm run typecheck && npm test",
     "site:publish": "node scripts/site/build-site.mjs && node scripts/site/publish-site.mjs",
     "audit:tree": "node scripts/audit-current-tree.mjs",
     "audit:dev": "node scripts/audit-current-tree.mjs --dev-mode",

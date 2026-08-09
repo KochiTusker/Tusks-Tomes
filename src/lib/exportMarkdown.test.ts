@@ -121,7 +121,7 @@ describe('buildMarkdown (full export — back-compat)', () => {
         gore: [],
         quotes: [
           {
-            speaker: 'Seoyeon, Yuzuki & Thao',
+            speaker: 'Anwen, Niamh & Ngozi',
             line: 'flattened fallback',
             kind: 'funny',
             // Deliberately does NOT open with a character name. Rendered, this
@@ -131,19 +131,19 @@ describe('buildMarkdown (full export — back-compat)', () => {
             // would then move on while this expectation kept the old name.
             context: 'The mule had gone missing two days earlier.',
             exchange: [
-              { speaker: 'Seoyeon', line: 'Did you feed the mule this morning?' },
-              { speaker: 'Yuzuki', line: 'I always feed the mule.' },
-              { speaker: 'Thao', line: "You can't even see the mule from here." },
+              { speaker: 'Anwen', line: 'Did you feed the mule this morning?' },
+              { speaker: 'Niamh', line: 'I always feed the mule.' },
+              { speaker: 'Ngozi', line: "You can't even see the mule from here." },
             ],
           },
         ],
       },
       condensed: null,
     })
-    expect(md).toContain('- **Seoyeon, Yuzuki & Thao** — _The mule had gone missing two days earlier._')
-    expect(md).toContain('  - **Seoyeon:** "Did you feed the mule this morning?"')
-    expect(md).toContain('  - **Yuzuki:** "I always feed the mule."')
-    expect(md).toContain('  - **Thao:** "You can\'t even see the mule from here."')
+    expect(md).toContain('- **Anwen, Niamh & Ngozi** — _The mule had gone missing two days earlier._')
+    expect(md).toContain('  - **Anwen:** "Did you feed the mule this morning?"')
+    expect(md).toContain('  - **Niamh:** "I always feed the mule."')
+    expect(md).toContain('  - **Ngozi:** "You can\'t even see the mule from here."')
     // The flattened fallback is for legacy consumers, not the markdown export.
     expect(md).not.toContain('flattened fallback')
   })

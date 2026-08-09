@@ -12,23 +12,23 @@ import {
 
 describe('countMentions', () => {
   it('case-insensitive substring match', () => {
-    const r = countMentions('Yuzuki swung his axe at the troll.', ['Yuzuki', 'Troll'])
+    const r = countMentions('Niamh swung his axe at the troll.', ['Niamh', 'Troll'])
     expect(r.hits).toBe(2)
-    expect(r.perName.Yuzuki).toBe(true)
+    expect(r.perName.Niamh).toBe(true)
     expect(r.perName.Troll).toBe(true)
   })
 
   it('reports per-name miss for absent entities', () => {
-    const r = countMentions('Yuzuki swung his axe.', ['Yuzuki', 'Seoyeon'])
+    const r = countMentions('Niamh swung his axe.', ['Niamh', 'Anwen'])
     expect(r.hits).toBe(1)
-    expect(r.perName.Yuzuki).toBe(true)
-    expect(r.perName.Seoyeon).toBe(false)
+    expect(r.perName.Niamh).toBe(true)
+    expect(r.perName.Anwen).toBe(false)
   })
 
   it('handles null/undefined text gracefully', () => {
-    const r = countMentions(null, ['Yuzuki'])
+    const r = countMentions(null, ['Niamh'])
     expect(r.hits).toBe(0)
-    expect(r.perName.Yuzuki).toBe(false)
+    expect(r.perName.Niamh).toBe(false)
   })
 
   it('handles empty name list', () => {
@@ -38,7 +38,7 @@ describe('countMentions', () => {
 
 describe('scoreChronicle', () => {
   const seeded = {
-    speakers: ['Yuzuki', 'Rania', 'Seoyeon', 'Ondrej', 'Sam'],
+    speakers: ['Niamh', 'Bilal', 'Anwen', 'Chidi', 'Sam'],
     location: 'Thornholt',
     faction: 'The Three',
     magicSystem: 'Pact of Mor',
@@ -46,9 +46,9 @@ describe('scoreChronicle', () => {
 
   it('100% when all seeded entities appear', () => {
     const chronicle = `
-      The party arrived in Thornholt as the sun set. Yuzuki led the way,
-      with Rania and Seoyeon close behind. Sam, the Dungeon Master,
-      narrated the encounter. They met Ondrej in the tavern. The Three
+      The party arrived in Thornholt as the sun set. Niamh led the way,
+      with Bilal and Anwen close behind. Sam, the Dungeon Master,
+      narrated the encounter. They met Chidi in the tavern. The Three
       were said to watch over the city. Pact of Mor was the local magic.
     `
     const r = scoreChronicle(chronicle, seeded)
@@ -59,7 +59,7 @@ describe('scoreChronicle', () => {
 
   it('partial credit when some speakers missing', () => {
     const chronicle = `
-      Yuzuki and Rania entered Thornholt. They met The Three. Pact of Mor.
+      Niamh and Bilal entered Thornholt. They met The Three. Pact of Mor.
     `
     const r = scoreChronicle(chronicle, seeded)
     // 2/5 speakers, 3/3 entities
@@ -69,10 +69,10 @@ describe('scoreChronicle', () => {
   })
 
   it('records per-name pass/fail in details', () => {
-    const chronicle = 'Yuzuki and Rania.'
+    const chronicle = 'Niamh and Bilal.'
     const r = scoreChronicle(chronicle, seeded)
-    expect(r.details.speakers.Yuzuki).toBe(true)
-    expect(r.details.speakers.Seoyeon).toBe(false)
+    expect(r.details.speakers.Niamh).toBe(true)
+    expect(r.details.speakers.Anwen).toBe(false)
     expect(r.details.entities.Thornholt).toBe(false)
   })
 
@@ -95,7 +95,7 @@ describe('scoreExtras', () => {
     const r = scoreExtras({
       jests: ['One funny moment.'],
       gore: ['One brutal kill.', 'Another.'],
-      quotes: [{ speaker: 'Yuzuki', line: 'fuck', kind: 'funny' }],
+      quotes: [{ speaker: 'Niamh', line: 'fuck', kind: 'funny' }],
     })
     expect(r.jests).toBe(1)
     expect(r.gore).toBe(2)
@@ -125,13 +125,13 @@ describe('scoreExtras', () => {
 })
 
 describe('scoreExtrasSpeakerAttribution', () => {
-  const seeded = ['Yuzuki', 'Rania', 'Seoyeon']
+  const seeded = ['Niamh', 'Bilal', 'Anwen']
 
   it('100% when every quote attribution matches a seeded speaker', () => {
     const extras = {
       quotes: [
-        { speaker: 'Yuzuki (Zuri)', line: 'fuck', kind: 'funny' },
-        { speaker: 'Rania (Chenguang)', line: 'I dodge', kind: 'funny' },
+        { speaker: 'Niamh (Meera)', line: 'fuck', kind: 'funny' },
+        { speaker: 'Bilal (Delphine)', line: 'I dodge', kind: 'funny' },
       ],
     }
     const r = scoreExtrasSpeakerAttribution(extras, seeded)
@@ -142,7 +142,7 @@ describe('scoreExtrasSpeakerAttribution', () => {
   it('partial when some quotes attributed to non-seeded speakers', () => {
     const extras = {
       quotes: [
-        { speaker: 'Yuzuki (Zuri)', line: 'x', kind: 'funny' },
+        { speaker: 'Niamh (Meera)', line: 'x', kind: 'funny' },
         { speaker: 'Pentagon', line: 'y', kind: 'stupid' }, // hallucinated
       ],
     }
@@ -160,7 +160,7 @@ describe('scoreExtrasSpeakerAttribution', () => {
 
 describe('scoreRun', () => {
   const seeded = {
-    speakers: ['Yuzuki', 'Rania', 'Seoyeon', 'Ondrej', 'Sam'],
+    speakers: ['Niamh', 'Bilal', 'Anwen', 'Chidi', 'Sam'],
     location: 'Thornholt',
     faction: 'The Three',
     magicSystem: 'Pact of Mor',
@@ -168,13 +168,13 @@ describe('scoreRun', () => {
 
   it('produces a composite finalAccuracy when both Chronicle + Extras populated', () => {
     const chronicleText = `
-      Yuzuki, Rania, Seoyeon, Ondrej, Sam journeyed to Thornholt.
+      Niamh, Bilal, Anwen, Chidi, Sam journeyed to Thornholt.
       The Three watched. Pact of Mor was the local magic.
     `
     const extras = {
       jests: ['One.'],
       gore: ['One.'],
-      quotes: [{ speaker: 'Yuzuki', line: 'x', kind: 'funny' }],
+      quotes: [{ speaker: 'Niamh', line: 'x', kind: 'funny' }],
     }
     const r = scoreRun({ chronicleText, extras, seeded })
     expect(r.chronicle.overall).toBe(1)
@@ -184,7 +184,7 @@ describe('scoreRun', () => {
   })
 
   it('finalAccuracy falls back to chronicle.overall when extras is empty', () => {
-    const chronicleText = 'Yuzuki at Thornholt.'
+    const chronicleText = 'Niamh at Thornholt.'
     const extras = { jests: [], gore: [], quotes: [] }
     const r = scoreRun({ chronicleText, extras, seeded })
     expect(r.extras.nonEmpty).toBe(false)
@@ -193,7 +193,7 @@ describe('scoreRun', () => {
 
   it('penalises a hallucinated speaker in extras', () => {
     const chronicleText = `
-      Yuzuki, Rania, Seoyeon, Ondrej, Sam journeyed to Thornholt.
+      Niamh, Bilal, Anwen, Chidi, Sam journeyed to Thornholt.
       The Three. Pact of Mor.
     `
     const extras = {

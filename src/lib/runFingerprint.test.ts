@@ -12,18 +12,18 @@ const EMPTY_GLOSSARY: GlossaryDocument = {
 
 const SIMPLE_GLOSSARY: GlossaryDocument = {
   version: 1,
-  safeReplacements: [{ from: 'broady', to: 'Lucia' }],
+  safeReplacements: [{ from: 'broady', to: 'Yannick' }],
   contextualHints: [],
 }
 
 const RICHER_GLOSSARY: GlossaryDocument = {
   version: 1,
   safeReplacements: [
-    { from: 'broady', to: 'Lucia' },
-    { from: 'kazle', to: 'Seoyeon' },
+    { from: 'broady', to: 'Yannick' },
+    { from: 'kazle', to: 'Anwen' },
   ],
   contextualHints: [
-    { canonical: 'Lucia', commonMishears: ['Broady'], notes: 'Halfling rogue.' },
+    { canonical: 'Yannick', commonMishears: ['Broady'], notes: 'Halfling rogue.' },
   ],
 }
 
@@ -104,10 +104,10 @@ describe('computeRunFingerprint', () => {
       schema: 1,
       builtAt: '2026-05-01T00:00:00Z',
       byEntity: {
-        Lucia: { name: 'Lucia', type: 'character', aliases: ['broady'], affiliations: [], section: 'Lucia', file: 'Characters.md' },
+        Yannick: { name: 'Yannick', type: 'character', aliases: ['broady'], affiliations: [], section: 'Yannick', file: 'Characters.md' },
       },
-      aliases: { brody: 'Lucia', broady: 'Lucia' },
-      byType: { character: ['Lucia'], country: [], deity: [], faction: [], patron: [], location: [], other: [] },
+      aliases: { brody: 'Yannick', broady: 'Yannick' },
+      byType: { character: ['Yannick'], country: [], deity: [], faction: [], patron: [], location: [], other: [] },
       filesWithFrontmatter: ['Characters.md'],
       filesWithoutFrontmatter: [],
     }
@@ -115,10 +115,10 @@ describe('computeRunFingerprint', () => {
       ...indexA,
       byEntity: {
         ...indexA.byEntity,
-        Seoyeon: { name: 'Seoyeon', type: 'character', aliases: ['kazle'], affiliations: [], section: 'Seoyeon', file: 'Characters.md' },
+        Anwen: { name: 'Anwen', type: 'character', aliases: ['kazle'], affiliations: [], section: 'Anwen', file: 'Characters.md' },
       },
-      aliases: { ...indexA.aliases, kaziel: 'Seoyeon', kazle: 'Seoyeon' },
-      byType: { ...indexA.byType, character: ['Lucia', 'Seoyeon'] },
+      aliases: { ...indexA.aliases, kaziel: 'Anwen', kazle: 'Anwen' },
+      byType: { ...indexA.byType, character: ['Yannick', 'Anwen'] },
     }
     const a = await computeRunFingerprint({ ...base, aliasIndex: indexA })
     const b = await computeRunFingerprint({ ...base, aliasIndex: indexB })
@@ -132,11 +132,11 @@ describe('computeRunFingerprint', () => {
       phase1AliasHints: true,
     }
     const sharedEntities = {
-      Lucia: { name: 'Lucia', type: 'character' as const, aliases: ['broady'], affiliations: [], section: 'Lucia', file: 'Characters.md' },
+      Yannick: { name: 'Yannick', type: 'character' as const, aliases: ['broady'], affiliations: [], section: 'Yannick', file: 'Characters.md' },
     }
-    const sharedAliases = { brody: 'Lucia', broady: 'Lucia' }
+    const sharedAliases = { brody: 'Yannick', broady: 'Yannick' }
     const sharedByType = {
-      character: ['Lucia'], country: [], deity: [], faction: [], patron: [], location: [], other: [],
+      character: ['Yannick'], country: [], deity: [], faction: [], patron: [], location: [], other: [],
     }
     const indexA: AliasIndex = {
       schema: 1,

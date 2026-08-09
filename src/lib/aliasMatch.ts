@@ -189,7 +189,7 @@ export function annotateChunk(
         // First-sound discipline: if the first phonetic char differs on
         // BOTH primary and alternate codes, this is almost certainly a
         // different word (M-name vs B-name, etc.). Drops most of the
-        // iteration-2 false positives (Lucia→Bhargo passed because they
+        // iteration-2 false positives (Yannick→Bhargo passed because they
         // share PR; the cases that didn't share were already filtered).
         const firstPrimaryMatch =
           phraseCode.primary[0] && targetCode.primary[0] &&
