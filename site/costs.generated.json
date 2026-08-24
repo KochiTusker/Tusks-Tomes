@@ -1,0 +1,51 @@
+{
+  "generatedOn": "2026-08-24",
+  "source": "openrouter-live",
+  "presets": [
+    {
+      "id": "max-quality",
+      "label": "Gemini Pro everywhere",
+      "dollars": 4.847428
+    },
+    {
+      "id": "gemini-flash",
+      "label": "Gemini Flash everywhere",
+      "dollars": 0.9773386
+    },
+    {
+      "id": "gemini-smart-budget",
+      "label": "Gemini Smart Budget",
+      "dollars": 2.7707800000000002
+    },
+    {
+      "id": "gemini-measured-hybrid",
+      "label": "Gemini measured hybrid",
+      "dollars": 0.77947575
+    },
+    {
+      "id": "openrouter-best",
+      "label": "OpenRouter everywhere",
+      "dollars": 0.43899618838599996
+    },
+    {
+      "id": "openrouter-max",
+      "label": "OpenRouter, strongest models",
+      "dollars": 10.39301
+    },
+    {
+      "id": "balanced",
+      "label": "Gemini Pro prose + subscription grounding",
+      "dollars": 3.59773725
+    },
+    {
+      "id": "openrouter-hybrid",
+      "label": "OpenRouter prose + subscription grounding",
+      "dollars": 0.41803263733600005
+    },
+    {
+      "id": "free-subscription",
+      "label": "Subscription everywhere",
+      "dollars": 0
+    }
+  ]
+}

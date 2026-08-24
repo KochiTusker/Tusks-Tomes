@@ -1,0 +1,122 @@
+name: 🐛 Bug report
+description: Something in Tusk's Tomes is broken or behaving unexpectedly.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug! The more detail you give, the
+        faster it's fixable. If you'd rather sketch it informally first, drop a
+        note in the [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header).
+        A community Discord with a `#support` channel is on the roadmap.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of what went wrong, and what you expected to happen instead.
+      placeholder: I uploaded a Craig zip, Whisper started, then…
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: |
+        The exact clicks / commands that lead to the bug. Copy-paste from the
+        terminal where helpful.
+      placeholder: |
+        1. Run `npm run dev`
+        2. Open <http://localhost:5173>
+        3. Click Upload → drop `craig-session-1.zip`
+        4. …
+    validations:
+      required: true
+
+  - type: dropdown
+    id: workflow
+    attributes:
+      label: Which workflow were you using?
+      options:
+        - Workflow A — YouTube .sbv (caption repair)
+        - Workflow B — Craig multitrack
+        - Loose per-speaker WAV / FLAC files
+        - Local LLM only (no recording involved)
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows 10
+        - Windows 11
+        - macOS (Apple Silicon)
+        - macOS (Intel)
+        - Linux
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js version (`node -v`)
+      placeholder: v20.18.0
+    validations:
+      required: true
+
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version (`python --version`)
+      placeholder: Python 3.12.7
+    validations:
+      required: true
+
+  - type: input
+    id: commit
+    attributes:
+      label: Tusk's Tomes commit / version
+      description: Run `git rev-parse --short HEAD` in the repo, or check Settings → Updates in the dashboard.
+      placeholder: 485f96d
+    validations:
+      required: false
+
+  - type: dropdown
+    id: provider
+    attributes:
+      label: LLM provider in use
+      multiple: true
+      options:
+        - Gemini (free tier)
+        - Gemini (paid)
+        - Anthropic Claude
+        - OpenAI
+        - Ollama (local)
+        - LM Studio (local)
+        - Unsloth (local)
+        - Not applicable / not yet configured
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        Paste the relevant chunk of terminal output (the black window that runs
+        the server). Redact API keys if any appear.
+      render: shell
+
+  - type: checkboxes
+    id: confirms
+    attributes:
+      label: Before submitting
+      options:
+        - label: I've searched [existing issues](https://github.com/KochiTusker/Tusks-Tomes/issues) and this isn't a duplicate.
+          required: true
+        - label: I've redacted any API keys or personal session content from the logs above.
+          required: true

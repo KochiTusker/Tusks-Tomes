@@ -1,0 +1,54 @@
+# Force LF line endings for cross-platform shell scripts.
+#
+# Without this file, git's `core.autocrlf` setting on each contributor's
+# machine controls how line endings are committed. This repo is developed
+# on Windows with `core.autocrlf=true`, so historically these scripts
+# landed in commits with CRLF — which bash on macOS / Linux interprets
+# as `\r: command not found` and similar parse failures on the first
+# line of the script.
+#
+# The `text eol=lf` directive forces LF in the working tree on EVERY
+# platform regardless of the user's git config, AND normalises any
+# pre-existing CRLF when the file is touched.
+#
+# Re-normalise existing content after editing this file:
+#   git add --renormalize .
+
+# Shell scripts must be LF — bash cannot tolerate CRLF on a shebang line.
+*.sh              text eol=lf
+*.bash            text eol=lf
+
+# Git hooks are POSIX shell — same requirement.
+scripts/hooks/*   text eol=lf
+
+# Python venv scripts and setup helpers — these run via `python` directly
+# but mixed-encoding venvs cause cryptic activation errors on POSIX shells.
+*.py              text eol=lf
+
+# Other text formats — let git infer LF on POSIX-canonical formats.
+# These are conventional defaults; the load-bearing line is the *.sh
+# rule above.
+*.json            text
+*.md              text
+*.ts              text
+*.tsx             text
+*.mjs             text
+*.cjs             text
+*.css             text
+*.yml             text
+*.yaml            text
+*.toml            text
+
+# Binary formats — never normalise.
+*.png             binary
+*.jpg             binary
+*.jpeg            binary
+*.gif             binary
+*.ico             binary
+*.svg             text
+*.pdf             binary
+*.zip             binary
+*.tar             binary
+*.gz              binary
+*.woff            binary
+*.woff2           binary

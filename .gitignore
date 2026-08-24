@@ -1,0 +1,44 @@
+node_modules
+dist
+dist-server
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+.vite
+.claude/
+/sessions/
+/Sessions/
+vendor/
+*-err.txt
+*-out.json
+
+# Credential-bearing file shapes.
+*.pem
+*.key
+*.pfx
+*.p12
+*.crt
+*.cer
+*.csr
+.npmrc
+.netrc
+id_rsa*
+id_ed25519*
+id_ecdsa*
+credentials.json
+secrets.json
+service-account*.json
+gcp-key*.json
+aws-credentials
+
+# Editor / IDE workspace state.
+.vscode/
+.idea/
+
+# Generated locally, per machine.
+graphify-out/
+.diagnose/
+site-dist/
+TUSKS-TOMES-uninstall-notes.md

@@ -1,0 +1,475 @@
+{
+  "_comment": [
+    "Content data for the public GitHub Pages site. Edited by hand; consumed by",
+    "scripts/site/build-site.mjs.",
+    "",
+    "=== ADDING THE DEMO VIDEO — the whole recipe ===",
+    "",
+    "1. Record ONE video covering the whole journey. Upload it to YouTube",
+    "   (unlisted is fine) and add chapter markers in the description.",
+    "2. Put the video ID in video.id below (just the bit after ?v=).",
+    "3. Copy each chapter's timestamp straight from your YouTube chapter list",
+    "   into start/end. '5:45' and '1:02:03' both work — no converting to",
+    "   seconds. Leave end empty to run to the end of the video.",
+    "4. npm run site:build   — then npm run site:preview to check it.",
+    "5. npm run site:publish",
+    "",
+    "That's it. Nothing else needs editing — the page is already built around",
+    "the video and simply switches state when the id arrives.",
+    "",
+    "WHERE IT GOES ON THE PAGE:",
+    "Section IV, 'See it run' (id=demo) — between the pipeline explanation and",
+    "the two import routes. That is the only place the application itself",
+    "appears; every other section argues from its output. The player and the",
+    "chapter index both live there and need no template edit.",
+    "",
+    "Before video.id is set, that section still renders: a held-open 16:9 frame",
+    "saying a walkthrough is being recorded, with the chapters below it as a",
+    "written outline. Setting video.id turns the frame into the click-to-load",
+    "player and the outline into clickable timestamps. So the chapter labels and",
+    "blurbs below are PUBLISHED COPY TODAY — write them for a reader, not as",
+    "private notes to yourself.",
+    "",
+    "Chapters may ALSO be embedded inline elsewhere via {{CLIP:<slug>}} in",
+    "site/index.template.html — none are today, on purpose: a clip strip",
+    "repeated down one page competes with the section it sits in. A slug",
+    "referenced by a CLIP placeholder but missing here FAILS THE BUILD, so a",
+    "typo can't silently drop a video from the page.",
+    "",
+    "video.id — the YouTube video ID only (the part after ?v=), NOT a full URL.",
+    "Leave it as an empty string until a demo video exists: the builder then",
+    "renders the pending state and omits the VideoObject structured data, so",
+    "nothing false is ever published. Setting it switches on a click-to-load",
+    "facade (no YouTube request until the visitor clicks) plus rich-result",
+    "markup.",
+    "",
+    "video.chapters — sections of ONE uploaded video. Each becomes a row in the",
+    "chapter index, and, once video.id is set, a schema.org Clip — which is what",
+    "Google's 'Key Moments' rich result reads, so the sections can surface and",
+    "be linked individually in search.",
+    "",
+    "  slug   — matches a CLIP placeholder in site/index.template.html.",
+    "           An unknown slug fails the build rather than rendering nothing.",
+    "  start  — seconds (90) or a timestamp copied from your YouTube chapter",
+    "  end      list ('1:30', '1:02:03'). end may be omitted to play to the end.",
+    "  poster — local screenshot shown before the visitor clicks. Never a",
+    "           YouTube thumbnail: fetching one would leak the visitor to",
+    "           Google on page load and defeat the facade.",
+    "",
+    "faq — each entry becomes BOTH a visible question on the page and one",
+    "Question node in FAQPage structured data. Google requires the answer text",
+    "to be visible, which is why there is only one list. Answers may contain",
+    "simple HTML; the BASE placeholder expands to the site base path."
+  ],
+  "video": {
+    "id": "",
+    "title": "Tusk's Tomes — turning a D&D session recording into a chronicle",
+    "description": "A walkthrough of the six-phase AI pipeline: importing a session recording, grounding names and lore against a campaign glossary, and exporting a narrative chronicle plus a Discord-ready recap.",
+    "uploadDate": "",
+    "duration": "",
+    "poster": "docs/assets/pipeline-six-phase-ai-dnd-chronicle.png",
+    "chapters": [
+      {
+        "slug": "install",
+        "label": "Install and first launch",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Node, one command, first run in the browser",
+        "poster": "docs/assets/gemini-api-key-setup.png"
+      },
+      {
+        "slug": "keys",
+        "label": "Add a provider key",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Encrypted at rest and machine-bound",
+        "poster": "docs/assets/gemini-api-key-setup.png"
+      },
+      {
+        "slug": "import",
+        "label": "Import a Craig recording",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Multi-track Discord audio, transcribed locally",
+        "poster": "docs/assets/craig-discord-whisper-audio-upload.png"
+      },
+      {
+        "slug": "speakers",
+        "label": "Map speakers to characters",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Set once per campaign; persists across sessions",
+        "poster": "docs/assets/speaker-character-mapping.png"
+      },
+      {
+        "slug": "run",
+        "label": "Run the pipeline",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Six phases, with pause and resume",
+        "poster": "docs/assets/pipeline-six-phase-ai-dnd-chronicle.png"
+      },
+      {
+        "slug": "output",
+        "label": "The finished chronicle",
+        "start": "0:00",
+        "end": "",
+        "blurb": "Chronicle, recap and quote lists",
+        "poster": "docs/assets/pipeline-six-phase-ai-dnd-chronicle.png"
+      }
+    ]
+  },
+  "storyVideo": {
+    "_comment": [
+      "THE PROJECT VIDEO — section I, \"Why this exists\". Narrated, not a screen",
+      "capture: the problem, what Tomes does, how it got there, and the pipeline.",
+      "",
+      "Separate from `video` above, which is the walkthrough for section V and is",
+      "still pending. Two slots because they do different jobs — this one argues,",
+      "that one demonstrates. Do not merge them.",
+      "",
+      "Renders NOTHING until id is set. No pending frame, unlike section V: that",
+      "frame exists to keep a promise the page makes, and section I makes none.",
+      "",
+      "TO PUBLISH:",
+      "  1. Upload, then put the id (the part after ?v=) in id below.",
+      "  2. Download the thumbnail so it is served from this origin, not hotlinked.",
+      "     A hotlink is blocked by the page CSP and would hand every visitor to",
+      "     Google on load:",
+      "       curl -o docs/assets/tusks-tomes-project-video.jpg https://i.ytimg.com/vi/ID/maxresdefault.jpg",
+      "     then set poster to docs/assets/tusks-tomes-project-video.jpg",
+      "  3. uploadDate as YYYY-MM-DD. Fills the VideoObject; omit rather than guess.",
+      "  4. npm run site:build && npm run site:preview",
+      "",
+      "Chapter starts are read off the caption file, so they match the spoken",
+      "beats rather than round numbers. Re-cutting the video means re-reading",
+      "them — a chapter pointing into the middle of a sentence is worse than none."
+    ],
+    "id": "sbEfcRyb1NU",
+    "title": "Tusk's Tomes — why getting the names right is the whole problem",
+    "description": "Why tabletop session transcription runs into a ceiling that is not about software quality: a single mixed recording makes every speaker attribution an inference. How per-speaker Discord audio via Craig, local Faster Whisper transcription, and grounding against your own lore remove the guess — and what each of the five pipeline phases does with the result.",
+    "uploadDate": "2026-08-24",
+    "duration": "PT7M42S",
+    "poster": "docs/assets/tusks-tomes-project-video.jpg",
+    "chapters": [
+      {
+        "slug": "story-problem",
+        "label": "The problem",
+        "start": "0:00",
+        "end": "",
+        "blurb": "A record of the table without rewatching three hours"
+      },
+      {
+        "slug": "story-landscape",
+        "label": "What's already out there",
+        "start": "0:24",
+        "end": "",
+        "blurb": "Meeting software, and the tabletop tools that beat it"
+      },
+      {
+        "slug": "story-attribution",
+        "label": "Why attribution is the ceiling",
+        "start": "1:05",
+        "end": "",
+        "blurb": "One mixed track makes every name a guess"
+      },
+      {
+        "slug": "story-approach",
+        "label": "What Tomes does differently",
+        "start": "2:25",
+        "end": "",
+        "blurb": "Attribution first, then find what is worth keeping"
+      },
+      {
+        "slug": "story-paths",
+        "label": "Two ways in, and why they differ",
+        "start": "3:37",
+        "end": "",
+        "blurb": "YouTube captions, or Discord audio per person"
+      },
+      {
+        "slug": "story-pipeline",
+        "label": "The pipeline, phase by phase",
+        "start": "5:37",
+        "end": "",
+        "blurb": "Grounding, audit, chronicle, extras, condensed"
+      },
+      {
+        "slug": "story-close",
+        "label": "Free, open source, and how to help",
+        "start": "7:12",
+        "end": "",
+        "blurb": "Clone it, fork it, tell me what broke"
+      }
+    ]
+  },
+  "videos": {
+    "_comment": [
+      "GUIDE VIDEOS — one short upload per how-to page, keyed by page slug.",
+      "",
+      "Why per-page rather than one long walkthrough: a video costs a re-record",
+      "every time the thing it shows changes, so the split that pays is along",
+      "change-rate boundaries. A guide covering a third-party tool (Craig,",
+      "YouTube Studio) never churns with this project at all. A guide covering",
+      "the app itself churns with every interface change — so keep the in-app",
+      "steps TOGETHER in one video, since they change together, and split the",
+      "external ones out. That lands at a handful of videos, not one per page.",
+      "",
+      "TO ADD ONE:",
+      "  1. Upload to YouTube. Unlisted is fine; Private will NOT embed.",
+      "  2. Add an entry below keyed by the page slug (path minus the .md).",
+      "     An unknown slug FAILS THE BUILD rather than rendering nothing.",
+      "  3. anchor — the id of the heading it belongs under. Heading ids come",
+      "     from the heading text, so renaming a heading changes the id and the",
+      "     build fails rather than silently moving the video up the page.",
+      "  4. poster — the video's OWN thumbnail, downloaded and served from this",
+      "     repo. Never an i.ytimg.com URL: the site CSP is img-src 'self' data:,",
+      "     so a hotlink renders as a broken image, and it would hand every",
+      "     visitor to Google on page load before they clicked anything.",
+      "     Refresh it after changing the thumbnail in YouTube Studio:",
+      "       curl -o docs/assets/<name>.jpg https://i.ytimg.com/vi/<id>/maxresdefault.jpg",
+      "",
+      "Each entry emits a VideoObject on that page. Combined with the howTo",
+      "markup already in seo.pages, that is what makes a short guide video",
+      "eligible for a video rich result on the query the page is written for.",
+      "",
+      "The landing-page promo is separate — see `video` above."
+    ],
+    "docs/importing/session-audio": {
+      "id": "3X6fc73XYH0",
+      "title": "Recording a D&D session with Craig and exporting the tracks",
+      "description": "Adding the Craig bot to a Discord server, recording a session with every player on a separate track, and downloading the finished multitrack zip ready to transcribe.",
+      "caption": "Adding Craig to a Discord server, recording a session, and downloading the multitrack zip.",
+      "anchor": "stage-1-record-the-session",
+      "poster": "docs/assets/craig-session-recording-walkthrough.jpg",
+      "uploadDate": "",
+      "duration": ""
+    }
+  },
+  "seo": {
+    "_comment": [
+      "The search-facing half of the site: strings a visitor never reads, but",
+      "that decide whether they ever arrive. See seoFor() in",
+      "scripts/site/build-site.mjs for the rule this file follows —",
+      "invisible METADATA is fair game, invisible CONTENT is not. There is no",
+      "hidden keyword block anywhere in this site and there must not be one:",
+      "keyword-stuffed off-screen text is an explicit Google spam-policy",
+      "violation, and the penalty lands on the whole domain.",
+      "",
+      "landing.title — the <title>, which is the headline in a search result.",
+      "  Aim for under ~60 characters; past that Google truncates mid-word.",
+      "  Front-load the words someone actually types. They search",
+      "  'dnd transcriber free' — not 'session chronicler', which is the",
+      "  project's own vocabulary and nobody else's.",
+      "  The current value deliberately departs from that and leads with the",
+      "  brand: a considered trade of some ranking signal for a title that",
+      "  reads as the project's own. It is not an oversight — the keyword tail",
+      "  is what keeps the page rankable for anything but its own name, so",
+      "  keep a descriptive tail if you edit it, and do not shorten to the",
+      "  bare brand.",
+      "",
+      "landing.description — not a ranking factor, purely a click factor. It is",
+      "  the two lines under the headline, so it should answer 'is this the",
+      "  thing I wanted?' in the first six words. ~155 characters renders.",
+      "",
+      "keywords / about / audience — schema.org properties. NOT the dead",
+      "  <meta name=\"keywords\"> tag, which Google has ignored since 2009 and",
+      "  which this site does not emit. These end up in the JSON-LD graph,",
+      "  where they are read by search engines and by the AI crawlers robots.txt",
+      "  explicitly invites.",
+      "",
+      "pages — per-slug overrides. `title` replaces the <title> only; the H1 on",
+      "  the page is unchanged, which is the point. A page can be headed 'Session",
+      "  audio to a lore-grounded chronicle' for someone reading it and titled",
+      "  'Transcribe a D&D Session into a Written Chronicle' for someone who has",
+      "  not arrived yet. `howTo` emits HowTo structured data and belongs ONLY on",
+      "  pages that really are a start-to-finish procedure — mislabelling a",
+      "  reference page to chase the rich result gets structured data distrusted",
+      "  site-wide. `priority` is a within-site hint for sitemap.xml."
+    ],
+    "landing": {
+      "title": "Tusk's Tomes — AI D&D Session Recap & Chronicle Generator",
+      "description": "Turn a D&D, Pathfinder or TTRPG session recording — or a YouTube transcript — into a narrative chronicle and a Discord-ready recap. Free, open source, runs locally."
+    },
+    "audience": "Game masters, tabletop RPG players, actual-play podcasters and streamers, VTT archivists",
+    "about": [
+      "Tabletop role-playing games",
+      "Dungeons & Dragons",
+      "Speech transcription",
+      "Automatic summarization",
+      "Open-source software"
+    ],
+    "keywords": [
+      "D&D transcriber",
+      "DnD transcriber",
+      "free D&D transcriber",
+      "TTRPG transcriber",
+      "tabletop RPG transcription",
+      "D&D session transcription",
+      "transcribe D&D session",
+      "D&D session recap generator",
+      "D&D session summary AI",
+      "D&D session notes generator",
+      "campaign journal generator",
+      "TTRPG session recap",
+      "Pathfinder session summary",
+      "Call of Cthulhu session write-up",
+      "actual play transcription",
+      "Craig Discord recording transcript",
+      "Discord D&D recording to text",
+      "YouTube captions to session recap",
+      "Whisper D&D transcription",
+      "local AI session chronicler",
+      "self-hosted transcription",
+      "open source D&D tools",
+      "AI dungeon master notes"
+    ],
+    "pages": {
+      "docs/importing/session-audio": {
+        "title": "Transcribe a D&D Session Recording into a Written Chronicle",
+        "description": "Record, transcribe locally with Whisper, and turn a D&D or TTRPG session recording into a narrative chronicle grounded in your own campaign lore. Free and open source.",
+        "priority": "0.9",
+        "keywords": [
+          "transcribe D&D session",
+          "D&D session recording to text",
+          "Craig Discord recording transcript",
+          "Whisper D&D transcription",
+          "multitrack Discord recording",
+          "D&D session chronicle generator",
+          "tabletop RPG transcription"
+        ],
+        "howTo": {
+          "name": "Turn a tabletop RPG session recording into a written chronicle",
+          "totalTime": "PT1H",
+          "supply": [
+            "An audio recording of one session",
+            "A glossary or vault of campaign lore"
+          ],
+          "tool": [
+            "Tusk's Tomes",
+            "Node.js 20 or newer",
+            "The Audio Transcription add-on",
+            "An NVIDIA GPU (recommended)"
+          ],
+          "steps": [
+            {
+              "name": "Record the session",
+              "text": "Record the game. Recording each player to a separate track — the Craig Discord bot does this on its free tier — makes every line in the finished chronicle attributable to the right character.",
+              "anchor": "stage-1-record-the-session"
+            },
+            {
+              "name": "Transcribe it on your own machine",
+              "text": "Drop the recording into the Upload tab. A local Whisper sidecar transcribes each track separately and interleaves them into one timestamped transcript with speakers attached. Nothing is uploaded.",
+              "anchor": "stage-2-transcribe-it-on-your-own-machine"
+            },
+            {
+              "name": "Ground the names against your lore",
+              "text": "Phase 1 corrects the transcript against your glossary or Obsidian vault before any prose is written, so misheard fantasy names are fixed rather than confidently repeated. Phase 2 returns whatever it could not resolve as questions.",
+              "anchor": "stage-3-ground-the-names-against-your-lore"
+            },
+            {
+              "name": "Write it up",
+              "text": "Phase 3 writes the narrative chronicle, Phase 4 extracts quotes, jests and combat highlights, and Phase 6 optionally condenses the chronicle to a length you set. Export as .docx or Markdown.",
+              "anchor": "stage-4-write-it-up"
+            }
+          ]
+        }
+      },
+      "docs/importing/youtube-captions": {
+        "title": "Turn a YouTube Transcript into a D&D Session Write-Up",
+        "description": "No GPU needed: upload your session to YouTube as unlisted, let automatic captions transcribe it, and turn the transcript into a narrative chronicle grounded in your campaign lore.",
+        "priority": "0.9",
+        "keywords": [
+          "YouTube transcript to session recap",
+          "D&D transcriber no GPU",
+          "free D&D transcriber",
+          "SBV caption file",
+          "YouTube automatic captions transcript",
+          "TTRPG session summary from video",
+          "transcribe D&D without a GPU"
+        ],
+        "howTo": {
+          "name": "Turn a YouTube transcript into a tabletop RPG session write-up",
+          "supply": [
+            "A recording of one session",
+            "A glossary or vault of campaign lore"
+          ],
+          "tool": [
+            "Tusk's Tomes",
+            "Node.js 20 or newer",
+            "A YouTube account"
+          ],
+          "steps": [
+            {
+              "name": "Record the session",
+              "text": "Capture the game with OBS Studio, Zoom, or anything else that produces a file YouTube will accept. Video is not needed — audio with a still image uploads fine.",
+              "anchor": "step-1-record-the-session"
+            },
+            {
+              "name": "Upload it as unlisted or private",
+              "text": "Upload to YouTube and set visibility to Unlisted or Private, so the recording is neither indexed nor listed on your channel.",
+              "anchor": "step-2-upload-it-as-unlisted-or-private"
+            },
+            {
+              "name": "Wait for automatic captions",
+              "text": "YouTube generates captions on its own schedule. They appear under Subtitles in YouTube Studio once ready.",
+              "anchor": "step-3-wait-for-automatic-captions"
+            },
+            {
+              "name": "Get the transcript out",
+              "text": "Either copy the caption text straight into the Raw transcript box, or download the .sbv file and run it through the Caption Repair tab, which keeps the timestamps.",
+              "anchor": "step-4-get-the-transcript-out"
+            },
+            {
+              "name": "Ground it against your lore",
+              "text": "Phase 1 corrects misheard names against your glossary or Obsidian vault before any prose is written. Expect more clarifying questions than on the audio route, because caption files carry no speaker labels at all.",
+              "anchor": "step-5-ground-it-against-your-lore"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "faq": [
+    {
+      "q": "Why would I choose Tusk’s Tomes?",
+      "a": "Because of where it runs, and what it is fed. There are good tools built for tabletop now — several ground names against your lore much as this does, and if one of them suits your table you should use it. What none of them do is leave the recording on your own machine. Tusk’s Tomes transcribes locally and corrects the transcript against your own glossary <em>before</em> any prose is written, so the write-up spells your world the way your table spells it. It takes per-speaker Craig tracks, so who said what is known rather than inferred from one mixed recording. And you choose the model, the narrator and the prompts — it is MIT-licensed, so if the answer you want is not in the settings, it is in the source."
+    },
+    {
+      "q": "I’m new to this. Where do I start?",
+      "a": "Install Node and Git, clone the repository, and run the setup script — that is the whole of it, and the <a href=\"/Tusks-Tomes/docs/getting-started/installation/\">installation guide</a> walks through each step. If you have never used a terminal, there is <a href=\"/Tusks-Tomes/docs/getting-started/without-a-terminal/\">a version of the same setup written for you</a> that assumes nothing. Start by pasting in a transcript you already have; audio can wait until you have seen what it produces."
+    },
+    {
+      "q": "How much better is the Craig and Whisper route?",
+      "a": "Two ways, and the second one surprises people. <strong>Attribution:</strong> <a href=\"https://craig.chat\" rel=\"noopener\">Craig</a> records each player to a separate track, so Whisper transcribes one voice at a time and every line stays attached to the right character with nothing having to guess. A YouTube caption file is one undifferentiated stream with no speaker labels at all, so the pipeline reconstructs who spoke from context and asks you a good many more questions before it can. <strong>Language:</strong> YouTube’s automatic captions censor swearing — profanity comes back as <code>[ __ ]</code>, already gone by the time you download the file, and nothing downstream can put it back. Whisper transcribes what was actually said. If your table swears, and the way people really talk is part of what you want on the record, the multitrack route is the only one that keeps it."
+    },
+    {
+      "q": "I don’t have an NVIDIA GPU. Can I still transcribe audio?",
+      "a": "Today, in two ways: let YouTube transcribe the recording on Google’s hardware and bring the text back, or compile a <a href=\"/Tusks-Tomes/docs/extras/whisper-cpp/\">whisper.cpp build</a>, which can use an AMD, Intel or Apple GPU. Cloud transcription is also in progress and will remove the requirement entirely — it is measured at roughly $0.20 for a three-hour, five-speaker session, and will need only an OpenRouter key. See the <a href=\"/Tusks-Tomes/docs/about/roadmap/\">roadmap</a> for where that has got to."
+    },
+    {
+      "q": "What is OpenRouter, and why does Tusk’s Tomes use it?",
+      "a": "OpenRouter is a single API that fronts most of the commercial model landscape — around 400 models, including every Anthropic and OpenAI model, at the same prices the vendors charge directly. One key reaches all of them. Tusk’s Tomes used to carry separate integrations for each vendor, each with its own key to manage and its own model list to keep current; one OpenRouter key replaced all of that and opened several hundred models that were never reachable before. Gemini stays available as a direct connection because it is measurably cheaper that way."
+    },
+    {
+      "q": "How do I choose which model to use through OpenRouter?",
+      "a": "The picker does the narrowing for you. It offers three orderings — by measured performance, by what that particular phase would cost, and by the maintainer’s own ranking, which weighs speed and reliability that no grade captures — and they deliberately disagree. Two filters cut the catalogue down: <em>tested only</em> restricts it to models actually graded on real session material, and <em>handles mature content</em> to models measured relaying graphic violence and crude dialogue without softening them. If you would rather not choose at all, the guided routing presets are complete recipes you can apply in one click."
+    },
+    {
+      "q": "Is it actually better than a paid app, or just cheaper?",
+      "a": "Cheaper is not the argument, and against the tabletop-native services it is not reliably true either — several sell credit by the session much as this spends your own API credit. Against a meeting transcriber it is doing a different job: those produce a transcript and bullet points about what was discussed, with no mechanism for knowing your characters’ names. Against the tools built for tabletop, the differences are narrower and worth stating plainly — your audio never leaves your machine, per-speaker Craig tracks mean attribution is known rather than inferred, and you pick which model writes each phase. On chronicle quality specifically, the honest answer is that it depends on which model you route to: the strongest routings tested — a subscription CLI on the mechanical passes with Gemini Pro writing the prose — produce the best output measured so far, while the OpenRouter catalogue ranges from noticeably worse to better than Gemini on individual phases. The project deliberately does not publish a single quality score, because chronicle quality is not one number and any tool that claims otherwise is flattering itself."
+    },
+    {
+      "q": "What actually gets put on my PC?",
+      "a": "The repository itself, plus <code>node_modules</code> inside it. Outside that folder it writes one configuration directory in the standard place for your operating system, holding your glossary, routing choices and encrypted keys, and a data directory for sessions if you transcribe audio. That is all, unless you install the transcription module — which adds a Python environment of about 1.5 GB, inside the repository folder. No PATH changes, no registry entries, no system-wide packages, and nothing installed as administrator. <a href=\"/Tusks-Tomes/docs/security/what-it-installs/\">The full list, file by file</a>."
+    },
+    {
+      "q": "How can I keep track of what it changes on my machine?",
+      "a": "Everything it writes outside its own folder is documented in one place, and there is an uninstall script that removes it. The design rule is that installing something must never change anything outside the repository working directory, and uninstalling must remove every byte the install wrote — your system Python, Node, PATH and registry are left alone. That is written down as a contract rather than a promise: see <a href=\"/Tusks-Tomes/docs/extras/isolation-contract/\">module isolation</a> for what a module may and may not touch, and <a href=\"/Tusks-Tomes/docs/security/what-it-installs/\">what it installs</a> for the complete inventory."
+    },
+    {
+      "q": "How can I support the project?",
+      "a": "Use it and tell me what broke — that is genuinely the most useful thing, and the <a href=\"https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header\" rel=\"noopener\">feedback form</a> is the fastest route. Starring the repository helps other people find it, bug reports and pull requests are welcome, and if you would like to put money towards it there is <a href=\"https://buymeacoffee.com/kochitusker\" rel=\"noopener\">Buy Me a Coffee</a>. None of it unlocks anything — there is no paid tier and there will not be one."
+    }
+  ]
+}

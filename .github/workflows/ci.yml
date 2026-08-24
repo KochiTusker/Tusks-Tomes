@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    strategy:
+      # Don't stop at the first failure — it is useful to see whether a
+      # failure is OS-specific or a real bug.
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      # Standalone runner (a shebang keeps it out of vitest). Path handling
+      # differs per platform, so it runs on both.
+      - run: npm run uninstall:test
+      # Scoped to dependencies that ship. Advisories against build-only
+      # packages would fail builds that changed nothing.
+      - name: npm audit (shipping deps, high+)
+        if: matrix.os == 'ubuntu-latest'
+        run: npm audit --omit=dev --audit-level=high

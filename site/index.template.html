@@ -1,0 +1,726 @@
+<!doctype html>
+<!--
+  Landing page source. Double-brace placeholders are filled in by
+  scripts/site/build-site.mjs — edit this file, then `npm run site:build`.
+
+  Do NOT write a placeholder name inside a comment: substitution is a plain
+  string replace over the whole file, so a name mentioned here would be
+  expanded here too. (The builder strips comments before substituting, which
+  makes that safe, but keep the habit.)
+
+  The copy here is deliberately NOT a paste of README.md. Two near-identical
+  pages would compete with each other in search results instead of covering
+  different queries; the README serves people already on GitHub, this page
+  serves people who have not heard of the project yet.
+
+  STRUCTURE — "the ruled page".
+  Every section below hangs off one page grid: a narrow ruled margin carrying
+  a numeral and, occasionally, a note in the maintainer's own voice; then a
+  text block at a fixed measure. That rail is the through-line, and it is the
+  reason the sections read as one document rather than as a stack of
+  independently-designed blocks, which is what this page had become.
+
+  The order answers a visitor's questions in the order they actually ask them:
+  what is it, what does it produce, why not the tool I already have, how does
+  it work, what is it like to use, how do I get a session in, what will it
+  cost, what happens to my friends' voices, and only then how to install.
+-->
+<html lang="en-GB">
+<head>
+{{HEAD}}
+</head>
+<body class="landing">
+<a class="skip" href="#main">Skip to content</a>
+{{SVG_DEFS}}
+{{EMBER_FIELD}}
+{{HEADER}}
+
+<main id="main">
+
+  <!-- ===================================================================
+       HERO — the thesis.
+       Not a screenshot of the app. The product IS the transformation from a
+       mangled transcript into prose that spells your world correctly, so the
+       hero shows that happening rather than describing it.
+       =================================================================== -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Free · Open source · Runs on your own machine</p>
+      <h1>Your campaign, written up properly</h1>
+      <p class="lede">
+        Point it at a recording of your D&amp;D, Pathfinder or Call of Cthulhu game — or at a
+        transcript you already have — and get back a narrative account of what actually happened.
+        Spelled the way your table spells things, because it reads your campaign's own lore before
+        it writes a word.
+      </p>
+      <p class="cta">
+        <a class="btn primary" href="{{BASE}}/docs/getting-started/installation/">Install it</a>
+        <a class="btn" href="#writes">Read what it writes</a>
+      </p>
+      <ul class="runestones">
+        <li><b>MIT</b> licensed</li>
+        <li><b>No</b> account</li>
+        <li><b>No</b> subscription</li>
+        <li><b>Zero</b> telemetry</li>
+        <li>v<b>{{VERSION}}</b></li>
+      </ul>
+    </div>
+
+    <!-- The one thing no meeting transcriber does. Two states of the same
+         line: what speech-to-text heard, and what Tomes wrote down. -->
+    <figure class="grounding" aria-labelledby="grounding-cap">
+      <div class="grounding-row is-before">
+        <p class="grounding-label">What the microphone heard</p>
+        <p class="grounding-line">
+          &ldquo;<span class="mis">Kaz eel</span> swears on the <span class="mis">crimson cathedral</span>
+          and draws the <span class="mis">sun blaid</span>&rdquo;
+        </p>
+      </div>
+      <div class="grounding-arrow" aria-hidden="true">
+        <span>checked against your lore</span>
+      </div>
+      <div class="grounding-row is-after">
+        <p class="grounding-label">What Tomes wrote down</p>
+        <p class="grounding-line">
+          &ldquo;<span class="fix">Kaziel</span> swears on the <span class="fix">Crimson Cathedral</span>
+          and draws the <span class="fix">Sun Blade</span>&rdquo;
+        </p>
+      </div>
+      <figcaption id="grounding-cap">
+        Every name in your campaign, corrected before a single sentence of prose is written.
+      </figcaption>
+    </figure>
+  </section>
+
+
+  <!-- ===================================================================
+       I — Why this exists. The origin story, at its sharpest. No meeting
+       transcriber can claim this, which is why it comes first.
+       =================================================================== -->
+  <section class="leaf" id="why" aria-labelledby="why-h">
+    <div class="rail">
+      <span class="numeral">I</span>
+      <p class="rail-label">Why this exists</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="why-h">Everyone says they'll write it up. Almost nobody does.</h2>
+      <p class="measure">
+        I wanted a record of my campaign. Not minutes — the actual story. The bit where the plan fell
+        apart in an interesting way, the joke that had everyone crying, the line the DM delivered
+        that made the table go quiet for a second.
+      </p>
+      <p class="measure">
+        The obvious tools didn't fit. They're built for meetings, and they have no idea who your
+        characters are &mdash; they hear an invented fantasy name, guess a spelling, and then use
+        that guess with total confidence for four hours straight.
+      </p>
+      <p class="measure">
+        And a session isn't minutes. What you want back is the story: something you would actually
+        read again, the lines worth quoting, and a recap short enough that whoever missed the last
+        one can catch up before they sit down. That is as much use to a player as it is to whoever
+        runs the game.
+      </p>
+      <p class="measure">So I wrote this instead.</p>
+
+      <!-- The project video, and the reason it sits in section I rather than
+           in "See it run" below: it is this section's argument in a voice,
+           plus a walk through everything the rest of the page explains. Offered
+           here it is an alternative to reading; offered at section V it would
+           be a recap of what the reader just read.
+
+           Both hooks render nothing at all until storyVideo.id is set in
+           site/site.json — unlike {{VIDEO}}, which holds a frame open on
+           purpose. There is no promise to keep here, so there is nothing to
+           hold open. -->
+{{STORY_VIDEO}}
+
+{{STORY_CHAPTERS}}
+
+      <p class="marginalia">
+        It's a niche tool for a niche group of people, and I'm fine with that.
+        <span class="sign">If you're one of them, hello.</span>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       II — What comes back.
+       One session fans out into five artefacts, drawn rather than listed,
+       and one paragraph of the real prose to prove the tone. The full set
+       of samples is its own page: five stacked collapsibles here read as a
+       wall to get past rather than as evidence.
+       =================================================================== -->
+  <section class="leaf" id="writes" aria-labelledby="writes-h">
+    <div class="rail">
+      <span class="numeral">II</span>
+      <p class="rail-label">What comes back</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="writes-h">One evening in, five things out</h2>
+      <p class="measure">
+        A single run produces everything below. You choose which of them you actually want;
+        nothing is mandatory except the chronicle itself.
+      </p>
+
+      <figure class="fan" aria-labelledby="fan-cap">
+        <p class="fan-source">One session &mdash; three or four hours of six people talking</p>
+        <div class="fan-spread" aria-hidden="true"></div>
+        <ol class="fan-out">
+          <li class="artefact is-primary">
+            <h3>The chronicle</h3>
+            <p>
+              A chapter of your campaign's book rather than a summary of it &mdash; continuous
+              narrative prose, about 16,000 words for a full session.
+            </p>
+          </li>
+          <li class="artefact">
+            <h3>A short recap</h3>
+            <p>
+              One paragraph and catch-up bullets. What you send whoever missed last week, so they
+              sit down already knowing.
+            </p>
+          </li>
+          <li class="artefact">
+            <h3>Lines worth keeping</h3>
+            <p>
+              Quotes, jests and the gorier highlights as their own lists. The stupid thing someone
+              said in hour three, still there in a year.
+            </p>
+          </li>
+          <li class="artefact">
+            <h3>Questions for the DM</h3>
+            <p>Everything it could not resolve, asked rather than guessed at.</p>
+          </li>
+          <li class="artefact">
+            <h3>The clean transcript</h3>
+            <p>
+              The raw text with every name corrected &mdash; and the end of &ldquo;I definitely
+              never agreed to that&rdquo;.
+            </p>
+          </li>
+        </ol>
+        <figcaption id="fan-cap">
+          Saved as <code>.docx</code> and Markdown, into a folder you choose.
+        </figcaption>
+      </figure>
+
+      <h3 class="lead-in">And this is how it reads</h3>
+{{EXCERPT}}
+      <p class="outro measure">
+        That is one paragraph of one scene.
+        <a href="{{BASE}}/examples/">Read a full session, the recap and the quotes &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       III — How it compares.
+       Most visitors arrive having already tried something, and the question
+       in their head is "why not the thing I already have?". It is answered
+       here, straight after the proof of what comes out, because answering it
+       later means answering it after they have left.
+
+       The rows are a deliberate feature set — what a table actually wants
+       from a session recorder — not a list of this project's strengths.
+       Three rules keep it honest, and they matter more than the ticks.
+
+       One: every claim is a capability that can be checked, never a quality
+       judgement. The project's own model bake-off refuses to reduce prose
+       quality to a number, so this page will not either.
+
+       Two: the crosses are drawn quietly, in the muted colour. A comparison
+       that shouts is one nobody believes, including the true parts.
+
+       Three: the tabletop-native column earns a lot of ticks, and they stay.
+       That category is built for exactly this job and several of them do it
+       well; a grid that quietly marked them down would be the kind of
+       comparison rule one and two exist to prevent. What separates this
+       project from them is three rows, not eleven, and the table should show
+       that plainly rather than manufacture a sweep. The browser row is there
+       for the same reason and points the other way -- it is the row this
+       project loses, and it is the honest cost of the attribution row.
+
+       Four, and the easiest to get wrong: the last column is a PERSON, and
+       a person is not scored on software criteria. An earlier draft marked
+       them unable to revise part of a write-up, which is plainly false —
+       anyone can edit a paragraph — and left them looking beaten on rows
+       like "choose the model" that were never part of that conversation.
+       The only axis where the comparison with doing it yourself is real is
+       time and setup. Someone who does the work produces the best version
+       there is; the claim is that this gets close for an evening less
+       effort, and the paragraph under the table says so outright.
+
+       The long, fair version lives in the docs and is linked underneath.
+       =================================================================== -->
+  <section class="leaf" id="compare" aria-labelledby="compare-h">
+    <div class="rail">
+      <span class="numeral">III</span>
+      <p class="rail-label">How it compares</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="compare-h">Why not use something that already exists?</h2>
+      <p class="measure">
+        Often you should. Most people find this page having already tried a meeting transcriber &mdash;
+        good software, built for standups, where nobody is called Vellichor the Pale, nobody needs
+        the joke from hour two written down, and &ldquo;the group discussed next steps&rdquo; is a
+        useful sentence.
+      </p>
+      <p class="measure">
+        There is also a set of tools built specifically for tabletop &mdash; Tabletop Scribe, DnD
+        Scrybe, Kazkar, SessionKeeper, Saga20 and more arriving. They are made by people who play,
+        several handle speaker attribution well, and they will take a recording without asking you
+        to install anything. If one of them suits your table, use it.
+      </p>
+      <p class="measure">
+        These are the things worth checking first, including the one where this project comes off
+        worse.
+      </p>
+
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <caption>What a table actually needs from a session recorder</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="vh">Capability</span></th>
+              <th scope="col" class="is-us">Tusk&rsquo;s Tomes</th>
+              <th scope="col">Tabletop services <small>Tabletop Scribe, Kazkar, Saga20</small></th>
+              <th scope="col">Meeting transcribers <small>Otter, Read.ai</small></th>
+              <th scope="col">General AI assistants <small>NotebookLM, ChatGPT</small></th>
+              <th scope="col">Writing it up yourself <small>the benchmark, not a rival</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Spells your characters, places and items the way your table does</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Keeps every line attached to the character who said it</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Reads your own lore documents before it writes</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Writes continuous narrative prose, not bullet points</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Collects the quotes, the jokes and the grisly bits as their own lists</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Produces a catch-up recap for whoever missed the session</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">The recording never leaves your machine</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">You choose the model &mdash; or run the whole thing offline</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark na" aria-hidden="true">&mdash;</i><span class="vh">Not applicable</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Change one part later without redoing the rest</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Runs unattended while you do something else</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Yours to read, change and fork</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark na" aria-hidden="true">&mdash;</i><span class="vh">Not applicable</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Works from a browser, with nothing to install</th>
+              <td class="m is-us"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark na" aria-hidden="true">&mdash;</i><span class="vh">Not applicable</span></td>
+            </tr>
+            <tr class="matrix-cost">
+              <th scope="row">What it costs you</th>
+              <td class="is-us">Cloud credit by the session, or nothing at all on a local model. No subscription, no account.</td>
+              <td>A subscription, or credit by the session, depending which.</td>
+              <td>A monthly fee, whether or not you played that week.</td>
+              <td>A free tier, then a monthly fee.</td>
+              <td>An evening. And you would probably do it better.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="measure outro">
+        Three rows carry the whole argument: where the recording goes, whether attribution is known
+        or guessed, and who decides how it gets written. Everywhere else the tabletop services are
+        genuinely competitive, and the browser row is one they simply win. That is the trade, and it
+        is worth being plain about why it exists &mdash; no software can attribute dialogue to the
+        right player unless it is handed something that already knows who was speaking. The only way
+        to know rather than guess is to record each person separately, and that means Discord, a bot
+        and an afternoon of setup you would not otherwise spend.
+      </p>
+      <p class="measure outro">
+        The last column is the benchmark, not a rival. Someone who actually sits down and writes
+        their session up produces the best version of it there is &mdash; the catch is the evening
+        it takes, and that almost nobody does it twice. The middle columns get a fairer hearing than
+        a grid can give them in <a href="{{BASE}}/docs/about/comparison/">the full comparison</a>,
+        including the case for using one of them instead.
+      </p>
+      <p class="marginalia">
+        None of this is about price. It is about the recording staying yours, the names staying
+        right, and you deciding how the story comes out.
+        <span class="sign">That is the whole pitch.</span>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       IV — How it works. A drawn pipeline rather than a list of nouns.
+       Phase 1 is emphasised because it is the whole differentiator.
+       =================================================================== -->
+  <section class="leaf" id="how" aria-labelledby="how-h">
+    <div class="rail">
+      <span class="numeral">IV</span>
+      <p class="rail-label">How it works</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="how-h">Six passes, each doing one job</h2>
+      <p class="measure">
+        A transcript goes in one end. Each pass hands off to the next, so a failure is recoverable
+        and a long run can be paused and picked up tomorrow.
+      </p>
+
+      <ol class="pipeline" aria-label="The six-phase pipeline">
+        <li class="stage is-key">
+          <span class="stage-n" aria-hidden="true">1</span>
+          <h3>Ground the names</h3>
+          <p>
+            Your glossary and lore are applied to the raw transcript first, so everything downstream
+            is working from your canon instead of the model's guesses.
+          </p>
+          <p class="stage-note">The reason this exists</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">2</span>
+          <h3>Audit</h3>
+          <p>Compares raw against grounded and hands you a list of what it couldn't resolve, rather than guessing quietly.</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">3</span>
+          <h3>Write the chronicle</h3>
+          <p>The narrative pass. Player dialogue stays dialogue; the DM's narration reads as narration.</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">4</span>
+          <h3>Pull the extras</h3>
+          <p>Quotes, jests and the gorier highlights, extracted as separate lists.</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">5</span>
+          <h3>Polish</h3>
+          <p>A final review pass, used when you're running the pipeline on a model on your own machine.</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">6</span>
+          <h3>Condense</h3>
+          <p>Optional. Boils the chronicle down to the short version for posting to the group.</p>
+        </li>
+      </ol>
+
+      <p class="measure outro">
+        You can send different passes to different models — the cheap ones do the mechanical work,
+        the good one writes the prose.
+        <a href="{{BASE}}/docs/models/per-phase-routing/">How per-phase routing works →</a>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       V — See it run.
+       Placed here on purpose: III has just described the mechanism in the
+       abstract, and this is the moment a reader wants to know what that
+       actually looks like. It is also the ONLY place on the page where the
+       application itself appears — every other section argues from output —
+       so it earns a numeral rather than being tucked into a corner.
+
+       The section renders in two states from one hook. Today {{VIDEO}} is a
+       held-open frame and {{CHAPTERS}} is a written outline; setting
+       `video.id` in site/site.json turns the first into the click-to-load
+       player and the second into clickable timestamps, and adds the page's
+       VideoObject markup. Nothing here changes.
+
+       id="demo" is load-bearing — site.js finds the main player as
+       `#demo .video` so a chapter click plays in place instead of
+       navigating away.
+       =================================================================== -->
+  <section class="leaf" id="demo" aria-labelledby="demo-h">
+    <div class="rail">
+      <span class="numeral">V</span>
+      <p class="rail-label">See it run</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="demo-h">What it looks like to actually use</h2>
+      <p class="measure">
+        Everything above is what comes out. This is the part in the middle: importing a session,
+        pointing it at your campaign's lore, and watching six passes go by.
+      </p>
+
+{{VIDEO}}
+
+{{CHAPTERS}}
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       VI — Getting a session in. A genuine either/or, so cards earn their
+       place here and only here.
+       =================================================================== -->
+  <section class="leaf" id="routes" aria-labelledby="routes-h">
+    <div class="rail">
+      <span class="numeral">VI</span>
+      <p class="rail-label">Getting a session in</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="routes-h">Two roads, depending on your hardware</h2>
+      <p class="measure">
+        The hard part was never the writing — it's getting four hours of six people talking over each
+        other into text at all. Both roads end at the same grounding pass.
+      </p>
+
+      <div class="choice">
+        <article class="option">
+          <p class="option-flow"><span>Session audio</span><span>Whisper, on your PC</span><span>Chronicle</span></p>
+          <h3>Record it and transcribe it yourself</h3>
+          <p>
+            A Discord multitrack, a Zoom export, or a phone on the table. Whisper runs locally, so the
+            audio never goes anywhere. Record each player to their own track and every line in the
+            finished chronicle stays attached to the right character — one track means one person, and
+            nothing has to guess. It also transcribes what was actually said, swearing included.
+          </p>
+          <p class="option-needs"><strong>Wants</strong> an NVIDIA GPU, and one module installed.</p>
+          <p class="cta"><a class="btn" href="{{BASE}}/docs/importing/session-audio/">The audio route</a></p>
+        </article>
+
+        <article class="option">
+          <p class="option-flow"><span>Session video</span><span>YouTube captions</span><span>Chronicle</span></p>
+          <h3>Let YouTube do the transcribing</h3>
+          <p>
+            Upload the recording unlisted, wait for the automatic captions, bring the transcript back.
+            The transcription happens on Google's hardware instead of yours. Captions carry no speaker
+            labels and censor swearing, so the audit pass asks more questions and the language comes
+            back tamer than your table — but it needs nothing you do not already have.
+          </p>
+          <p class="option-needs"><strong>Wants</strong> nothing. No GPU, no Python, nothing to install.</p>
+          <p class="cta"><a class="btn" href="{{BASE}}/docs/importing/youtube-captions/">The YouTube route</a></p>
+        </article>
+      </div>
+
+      <p class="measure outro">
+        Already have a transcript from somewhere else? Paste it in and skip both.
+        <a href="{{BASE}}/docs/importing/">Compare every way in →</a>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       VII — Cost. The competitive argument, not a footnote. Figures are
+       regenerated from the live model catalogue on every publish.
+       =================================================================== -->
+  <section class="leaf" id="cost" aria-labelledby="cost-h">
+    <div class="rail">
+      <span class="numeral">VII</span>
+      <p class="rail-label">What it costs</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="cost-h">A session, not a month</h2>
+      <p class="measure">
+        Tusk's Tomes is free. The only money involved is whatever your chosen AI provider charges for
+        the tokens, and you pay it on the weeks you actually play.
+      </p>
+
+{{LEDGER}}
+
+      <p class="measure outro">
+        Figures are for a three-hour session, priced against the live model catalogue each time this
+        site is published.
+        <a href="{{BASE}}/docs/models/costs/">The full breakdown, per routing →</a>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       VIII — What it does with your friends' voices. The concern that stops
+       people, drawn rather than asserted.
+       =================================================================== -->
+  <section class="leaf" id="trust" aria-labelledby="trust-h">
+    <div class="rail">
+      <span class="numeral">VIII</span>
+      <p class="rail-label">What leaves your machine</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="trust-h">You're handing this a recording of your friends</h2>
+      <p class="measure">
+        So it's worth being exact about where everything goes. Almost all of it stays on the machine
+        you installed it on.
+      </p>
+
+      <figure class="boundary" aria-labelledby="boundary-cap">
+        <div class="boundary-box">
+          <p class="boundary-title">Your machine</p>
+          <ul class="boundary-items">
+            <li>The recording</li>
+            <li>Whisper, transcribing it</li>
+            <li>Your lore and glossary</li>
+            <li>Every chronicle it writes</li>
+            <li>Your API keys, encrypted</li>
+          </ul>
+        </div>
+        <div class="boundary-link" aria-hidden="true">
+          <span class="boundary-arrow"></span>
+          <span class="boundary-what">the transcript text, and only when you press Run</span>
+        </div>
+        <div class="boundary-box is-remote">
+          <p class="boundary-title">The model you chose</p>
+          <ul class="boundary-items">
+            <li>Reads the text</li>
+            <li>Writes the prose</li>
+            <li>Keeps nothing afterwards</li>
+          </ul>
+        </div>
+        <figcaption id="boundary-cap">
+          Choose a model that runs on your own machine and the right-hand side disappears entirely —
+          nothing leaves at all.
+        </figcaption>
+      </figure>
+
+      <ul class="nevers">
+        <li>No account, no sign-up, no licence check.</li>
+        <li>No telemetry, no analytics, nothing phoning home. Ever.</li>
+        <li>Keys encrypted at rest and tied to the machine — copying the file elsewhere gains nothing.</li>
+        <li>MIT licensed, every line readable, including the setup scripts.</li>
+      </ul>
+
+      <p class="marginalia">
+        And the honest part: this is one person's project, built and tested on one Windows PC. It is
+        not a company and there is no support desk.
+        <a href="{{BASE}}/docs/security/what-it-installs/">The unvarnished version is here.</a>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       IX — The questions people actually send. Kept on this page rather
+       than moved into the FAQ doc because the answers must be visible here
+       for this page's FAQ structured data to be legitimate.
+       =================================================================== -->
+  <section class="leaf" id="faq" aria-labelledby="faq-h">
+    <div class="rail">
+      <span class="numeral">IX</span>
+      <p class="rail-label">Questions</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="faq-h">The ones people actually ask</h2>
+{{FAQ}}
+    </div>
+  </section>
+
+
+  <!-- ===================================================================
+       X — Start. Requirements fold in here, where they are finally
+       relevant, rather than occupying a section of their own.
+       =================================================================== -->
+  <section class="leaf is-final" id="start" aria-labelledby="start-h">
+    <div class="rail">
+      <span class="numeral">X</span>
+      <p class="rail-label">Start</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="start-h">Two things, then one command</h2>
+      <p class="measure">
+        You need <strong>Node 20 or newer</strong> and <strong>Git</strong>. That is the whole
+        requirement. Python and a graphics card matter only if you later want the machine to
+        transcribe audio for you, and you can add them whenever.
+      </p>
+
+      <p class="cta">
+        <a class="btn primary" href="{{BASE}}/docs/getting-started/installation/">Install it</a>
+        <a class="btn" href="{{BASE}}/docs/getting-started/without-a-terminal/">I've never used a terminal</a>
+      </p>
+
+      <div class="doc-index">
+{{DOCS_LINKS}}
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine. No telemetry.</p>
+  <p>
+    <a href="{{REPO}}" rel="noopener">GitHub</a> ·
+    <a href="{{BASE}}/docs/">Documentation</a> ·
+    <a href="{{BASE}}/docs/getting-started/requirements/">What you'll need</a> ·
+    <a href="{{REPO}}/blob/main/LICENSE" rel="noopener">Licence</a> ·
+    <a href="https://buymeacoffee.com/kochitusker" rel="noopener">Buy me a coffee</a>
+  </p>
+</footer>
+
+<script src="{{BASE}}/site.js" defer></script>
+</body>
+</html>

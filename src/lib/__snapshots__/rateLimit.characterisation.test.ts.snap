@@ -1,0 +1,69 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`pacing characterisation > KNOWN BUG 1 — shared lastCallAt anchor bleeds across models 1`] = `
+[
+  0,
+  132,
+  440.00000000000006,
+  132,
+]
+`;
+
+exports[`pacing characterisation > KNOWN BUG 2 — seeding after pacing prices a call on the previous row 1`] = `
+[
+  0,
+  132,
+]
+`;
+
+exports[`pacing characterisation > an independent state per model gives different (correct) spacing 1`] = `
+[
+  0,
+  0,
+  440.00000000000006,
+  0,
+]
+`;
+
+exports[`pacing characterisation > single-model run: 8 chunks on Gemini FREE Pro (2 RPM — the slow path) 1`] = `
+[
+  0,
+  33000,
+  33000,
+  33000,
+  33000,
+  33000,
+  33000,
+  33000,
+]
+`;
+
+exports[`pacing characterisation > single-model run: 8 chunks on Gemini paid Pro 1`] = `
+[
+  0,
+  440.00000000000006,
+  440.00000000000006,
+  440.00000000000006,
+  440.00000000000006,
+  440.00000000000006,
+  440.00000000000006,
+  440.00000000000006,
+]
+`;
+
+exports[`pacing characterisation > the 3x slowdown dial multiplies spacing 1`] = `
+{
+  "normal": [
+    0,
+    6600.000000000001,
+    6600.000000000001,
+    6600.000000000001,
+  ],
+  "slow": [
+    0,
+    19800,
+    19800,
+    19800,
+  ],
+}
+`;
