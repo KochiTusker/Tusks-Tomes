@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Known issues — Tusk's Tomes</title>
+<meta name="description" content="Tusk's Tomes is open-source software in active development. This page tracks two things separately:">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/troubleshooting/known-issues/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Known issues — Tusk's Tomes">
+<meta property="og:description" content="Tusk's Tomes is open-source software in active development. This page tracks two things separately:">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/troubleshooting/known-issues/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Known issues — Tusk's Tomes">
+<meta name="twitter:description" content="Tusk's Tomes is open-source software in active development. This page tracks two things separately:">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Known issues",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/troubleshooting/known-issues/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Known issues",
+  "description": "Tusk's Tomes is open-source software in active development. This page tracks two things separately:",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/troubleshooting/known-issues/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/" aria-current="page">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Known issues</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#severity-legend">Severity legend</a></li><li><a href="#phase-6-condense-ratio-overshoot-now-controllable-via-the-condense-slider">Phase 6 condense ratio overshoot — now controllable via the Condense Slider</a></li><li><a href="#phase-6-bullet-point-duplication-on-long-sessions">Phase 6 bullet-point duplication on long sessions</a></li><li><a href="#phase-6-overshoot-no-warning-when-the-model-exceeded-the-slider-target">Phase 6 overshoot — no warning when the model exceeded the slider target</a></li><li><a href="#shell-scripts-shipped-with-crlf-line-endings-broke-macos-linux-first-run">Shell scripts shipped with CRLF line endings — broke macOS / Linux first run</a></li><li><a href="#npm-run-whispersetup-was-windows-only">npm run whisper:setup was Windows-only</a></li><li><a href="#walkthrough-doc-claimed-phase-6-was-user-triggered-actually-now-auto-runs">Walkthrough doc claimed Phase 6 was &quot;user-triggered&quot; — actually now auto-runs</a></li><li><a href="#doc-anchor-in-setupmd-pointed-at-the-old-free-tier-available-heading">Doc anchor in SETUP.md pointed at the old &quot;Free tier available&quot; heading</a></li><li><a href="#stale-phase-6-min2000-25-formula-in-recommended-settings-faq">Stale Phase 6 min(2000, 25%) formula in recommended-settings + faq</a></li><li><a href="#apirunsid-returns-200-on-structurally-malformed-checkpoint-files">/api/runs/:id returns 200 on structurally-malformed checkpoint files</a></li><li><a href="#active-provider-banner-flash-on-first-paint">Active-provider banner flash on first paint</a></li><li><a href="#npm-run-smoke-test-mis-classified-ready-and-skipped-as-failures">npm run smoke-test mis-classified ready and skipped as failures</a></li><li><a href="#localstorage-quota-loss-mid-run">localStorage quota loss mid-run</a></li><li><a href="#addon-config-corruption-silently-enabled-every-add-on">Addon-config corruption silently enabled every add-on</a></li><li><a href="#provider-switch-mid-run-used-stale-singleton">Provider switch mid-run used stale singleton</a></li><li><a href="#vault-export-path-traversal-defence-in-depth">Vault export path-traversal defence-in-depth</a></li><li><a href="#free-tier-gemini-pro-is-slow-repositioned-no-longer-a-recommended-workflow">Free-tier Gemini Pro is slow — repositioned, no longer a recommended workflow</a></li><li><a href="#windows-configdir-documentation-drift">Windows configDir documentation drift</a></li><li><a href="#glossary-speakers-personas-editors-silently-hide-on-fetch-failure">Glossary / Speakers / Personas editors silently hide on fetch failure</a></li><li><a href="#qsexpress-moderate-vulnerability-in-transitive-dependencies">qs/express moderate vulnerability in transitive dependencies</a></li><li><a href="#add-on-install-requires-server-restart">Add-on install requires server restart</a></li><li><a href="#run-resume-fingerprint-doesnt-tolerate-trailing-whitespace-edits-to-the-glossary">Run resume fingerprint doesn't tolerate trailing-whitespace edits to the glossary</a></li><li><a href="#diagnoselatestmd-may-include-api-key-fingerprints">.diagnose/latest.md may include API-key fingerprints</a></li><li><a href="#extras-list-may-mention-the-dungeon-master-in-summary-form">Extras list may mention &quot;the Dungeon Master&quot; in summary form</a></li><li><a href="#addon-install-sse-response-not-drained-on-disconnect">Addon install SSE response not drained on disconnect</a></li><li><a href="#anthropic-aisdk-shipped-into-the-browser-bundle">@anthropic-ai/sdk shipped into the browser bundle</a></li><li><a href="#phase-1-speaker-detach-toggle-change-during-pauseresume-produces-stale-brackets">Phase-1 speaker-detach toggle change during pause+resume produces stale brackets</a></li><li><a href="#whats-not-a-bug">What's NOT a bug</a></li></ul></aside>
+    <article class="prose">
+<h1>Known issues</h1>
+<p>Tusk's Tomes is open-source software in active development. This page tracks two things separately:</p>
+<ol>
+<li>** Fixed in v1.1.0** — bugs that the v1.1.0 bug-hunt surfaced and resolved, kept here so you can see what changed and why. (Fixes landed in later releases are in the <a href="/Tusks-Tomes/docs/about/roadmap/">roadmap's "Recently shipped"</a> and the commit log rather than repeated here.)</li>
+<li>** Still open / by-design limitations** — issues we either can't fix yet, won't fix (by design), or have planned for a future release.</li>
+</ol>
+<p>If you hit something that isn't listed here, please <a href="https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose" rel="noopener">open an issue</a> or send a note via the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a>.</p>
+<h2 id="severity-legend">Severity legend</h2>
+<ul>
+<li><strong>MEDIUM</strong> — degrades a secondary flow or shows up under unusual conditions; ship-conditional with a workaround.</li>
+<li><strong>LOW</strong> — cosmetic, classification, or polish; documented for transparency.</li>
+</ul>
+<p>There are no HIGH-severity known issues at ship time. HIGH would mean a core flow (key entry, Begin pipeline, Resume, Export) is broken — none are.</p>
+<hr>
+<h1>Platform and testing coverage</h1>
+<p>Not bugs — just an honest statement of what has actually been exercised, so
+you know where you're likely to be the first person down a path.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Area</th><th>Status</th></tr></thead><tbody><tr><td><strong>Windows</strong></td><td>The tested platform. Day-to-day development and all release verification happen here.</td></tr><tr><td><strong>Linux / macOS</strong></td><td><strong>Not tested.</strong> The current build is expected to work — the codebase is cross-platform and CI runs the suite on Ubuntu — but no one has run the full app end-to-end on either. Assume rough edges and please <a href="https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose" rel="noopener">report them</a>.</td></tr><tr><td><strong>Cloud providers (Gemini / Claude / OpenAI)</strong></td><td>Well exercised. This is the main path.</td></tr><tr><td><strong>Claude Code add-on</strong></td><td>Exercised.</td></tr><tr><td><strong>Codex add-on</strong></td><td><strong>Partially tested.</strong> The provider, routing and usage-limit handling are covered by tests, but it has had far less real-session mileage than the cloud path.</td></tr><tr><td><strong>Local LLMs add-on</strong></td><td><strong>Partially tested — nothing above 4B parameters has been run</strong>, for want of VRAM on the test machine. Everything larger is unverified for quality, timing and memory behaviour. Note the awkward gap this leaves: the sizes that produce genuinely good prose start well above the sizes that have been tested. See the prose-quality note below.</td></tr><tr><td><strong>Audio Transcription (Whisper)</strong></td><td>Exercised on NVIDIA GPU. CPU-only transcription works but is very slow — see <a href="/Tusks-Tomes/docs/importing/">workflows.md</a>.</td></tr></tbody></table>
+<h3 id="local-llm-prose-quality-set-expectations-before-you-route-phase-3">Local LLM prose quality — set expectations before you route Phase 3</h3>
+<p>Local models are not generally as good at long-form narrative prose as the
+cloud models, and the gap is most obvious in exactly the phase you care about
+most. Concretely:</p>
+<ul>
+<li><strong>Below roughly 15–20B parameters</strong>, the chronicle tends to read like a
+<strong>log or a bullet summary rather than a story</strong> — events in sequence, little
+narrative voice.</li>
+<li><strong>Grounding is also less reliable at those sizes.</strong> Name and lore correction
+is a genuinely hard instruction-following task, and smaller models drift
+from the glossary more often.</li>
+<li><strong>Mileage varies a lot</strong> between models of nominally similar size, far more
+than it does between cloud models.</li>
+</ul>
+<p>A reasonable compromise if you want to keep spend down: route the mechanical
+phases (grounding, audit, extras) locally and send <strong>Phase 3 — the chronicle —
+to a cloud model or a Claude Code / Codex subscription</strong>. That is what per-phase
+<a href="/Tusks-Tomes/docs/about/roadmap/">hybrid routing</a> exists for, and it keeps the prose quality where
+it matters while cutting most of the token cost.</p>
+<hr>
+<h1>Fixed in v1.1.0</h1>
+<p>Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what changed.</p>
+<h2 id="phase-6-condense-ratio-overshoot-now-controllable-via-the-condense-slider">Phase 6 condense ratio overshoot — now controllable via the Condense Slider</h2>
+<p><strong>Was:</strong> Phase 6's static formula (<code>min(2000 words, 25% of chronicle)</code>) overshot on short chronicles (a 600-word chronicle returned a 270-word condense, ~45% of source instead of the documented 25%). On real 3-hour sessions the 2,000-word cap bound, so the issue only surfaced on test-fixture sizes.</p>
+<p><strong>Fixed:</strong> v1.1.0 replaces the static formula with the <strong>Condense Slider</strong> — an animated-wand UI in the Output Picker that lets you pick the target length as a percentage of the chronicle's word count (0-100% in 5% steps, default 20%). The slider preview shows the projected word count live; Phase 6 recomputes the actual target at runtime against the real chronicle and instructs the model to aim within ±10%.</p>
+<h2 id="phase-6-bullet-point-duplication-on-long-sessions">Phase 6 bullet-point duplication on long sessions</h2>
+<p><strong>Was:</strong> When a notable event sat at a chunk boundary (last few lines of chunk N, first few of chunk N+1), both chunks' condensed bullet sets often mentioned it with slightly different phrasing. A long session could land 60-90 bullets where ~15 was intended.</p>
+<p><strong>Fixed:</strong> <code>runPhase6()</code> now applies a two-pass dedup after chunk accumulation — exact-after-normalisation first, then Levenshtein-distance against already-kept bullets at the 0.8 similarity threshold. First-occurrence wins so chronological order is preserved.</p>
+<h2 id="phase-6-overshoot-no-warning-when-the-model-exceeded-the-slider-target">Phase 6 overshoot — no warning when the model exceeded the slider target</h2>
+<p><strong>Was:</strong> The Condense Slider asks the model to aim within ±10% of a user-picked target word count, but the runtime check only warned when output was catastrophically <em>short</em> (<code>warnIfCondenseShort</code>, ≤200 words). If the user picked 10% (target 600 words on a 6,000-word chronicle) and the model returned 1,800 words, no warning fired — the user might not realise the recap was three times its intended length.</p>
+<p><strong>Fixed:</strong> new <code>warnIfCondenseOvershoot</code> symmetric warning at <code>RefinementTool.tsx</code>. Fires above 1.5× the user-picked target with a toast showing the actual word count, the target, and the percentage overshoot. Called at all 4 Phase 6 completion sites (happy path + 2 resume paths + the standalone Regenerate Phase 6 button).</p>
+<h2 id="shell-scripts-shipped-with-crlf-line-endings-broke-macos-linux-first-run">Shell scripts shipped with CRLF line endings — broke macOS / Linux first run</h2>
+<p><strong>Was:</strong> Every tracked <code>.sh</code> script (<code>setup.sh</code>, <code>start.sh</code>, <code>scripts/whisper/setup.sh</code>, <code>scripts/update/apply.sh</code>) was 100% CRLF because it was authored on Windows with <code>core.autocrlf=true</code>. A Linux / macOS user who cloned from public and ran <code>bash setup.sh</code> would hit <code>\r: command not found</code> on the first line. <strong>The "clone + run setup" experience was broken on every non-Windows platform.</strong></p>
+<p><strong>Fixed:</strong> added <code>.gitattributes</code> at the repo root that forces <code>text eol=lf</code> on <code>*.sh</code>, <code>*.bash</code>, and <code>*.py</code> regardless of the cloning user's git config. Existing CRLF bytes were normalised to LF in-place. Future contributors on any OS will land LF when these file types are touched.</p>
+<h2 id="npm-run-whispersetup-was-windows-only"><code>npm run whisper:setup</code> was Windows-only</h2>
+<p><strong>Was:</strong> The <code>whisper:setup</code> npm script hardcoded <code>powershell -ExecutionPolicy Bypass -File scripts/whisper/setup.ps1</code>. A macOS / Linux user typing the documented <code>npm run whisper:setup</code> command would see <code>powershell: command not found</code>. They had to know to use the (also documented) <code>whisper:setup:posix</code> variant instead. The in-app "Install Audio Transcription" button was always platform-aware via <code>runSetup</code> in <code>server/whisper/bootstrap.ts</code> — only the CLI path was broken.</p>
+<p><strong>Fixed:</strong> new <code>scripts/whisper/run-setup.mjs</code> Node dispatcher selects <code>setup.ps1</code> on Windows and <code>setup.sh</code> on POSIX, streams the child's stdout/stderr inline. <code>npm run whisper:setup</code> now works on every OS. The legacy <code>npm run whisper:setup:posix</code> and a new explicit <code>whisper:setup:windows</code> remain available if users want platform-pinned scripts.</p>
+<h2 id="walkthrough-doc-claimed-phase-6-was-user-triggered-actually-now-auto-runs">Walkthrough doc claimed Phase 6 was "user-triggered" — actually now auto-runs</h2>
+<p><strong>Was:</strong> <code>docs/walkthrough.md</code> described Phase 6 Condense as <em>"Optional, user-triggered. One click after Phase 4 finishes."</em> That described the v1.0 behaviour. v1.1.0's OutputPicker runs Phase 6 automatically when the "Condensed" checkbox is checked at run-start. The walkthrough is the canonical first-time-user entry point linked from the README, so this drift was a real first-impression mismatch.</p>
+<p><strong>Fixed:</strong> walkthrough.md table now describes Phase 6 as <em>"Length controlled by the Condense Slider on the Output Picker (default 20%). Runs automatically when Condensed is checked at run start."</em> The audio-addon install estimate was also corrected from "~2-minute" to a more honest "5-15 minutes" since the Whisper venv + <code>torch</code> wheels are ~1.5 GB.</p>
+<h2 id="doc-anchor-in-setupmd-pointed-at-the-old-free-tier-available-heading">Doc anchor in <code>SETUP.md</code> pointed at the old "Free tier available" heading</h2>
+<p><strong>Was:</strong> <code>SETUP.md:34</code> linked to <code>docs/providers.md#google-gemini--free-tier-available-</code> — but the v1.1.0 doc rewrite renamed that heading to "Google Gemini — paid key required ". The anchor silently 404'd. A first-time user clicking the "How to get a Gemini key" link from the setup page jumped to nowhere.</p>
+<p><strong>Fixed:</strong> anchor corrected to <code>#google-gemini--paid-key-required-</code>. The link's surrounding copy ("Google Gemini — has a free tier; the path with the lowest barrier") was also rewritten to match the v1.1.0 positioning.</p>
+<h2 id="stale-phase-6-min2000-25-formula-in-recommended-settings-faq">Stale Phase 6 <code>min(2000, 25%)</code> formula in recommended-settings + faq</h2>
+<p><strong>Was:</strong> Two docs still described Phase 6 with the legacy static formula — <code>docs/recommended-settings.md:71</code> table row, and <code>docs/faq.md:30</code> end-to-end walkthrough. Users reading either would expect a static formula that no longer exists in the UI.</p>
+<p><strong>Fixed:</strong> both lines now describe the <strong>Condense Slider</strong> (0-100%, default 20%, set per run on the Output Picker) and the ±10% target contract.</p>
+<h2 id="apirunsid-returns-200-on-structurally-malformed-checkpoint-files"><code>/api/runs/:id</code> returns 200 on structurally-malformed checkpoint files</h2>
+<p><strong>Was:</strong> The list endpoint correctly excluded malformed checkpoint files from the Resume banner, but the detail endpoint only validated the file as parseable JSON — not that it matched the checkpoint schema. Clicking Resume on a corrupted card could result in a blank screen or a JavaScript error.</p>
+<p><strong>Fixed:</strong> Both endpoints now run the same <code>summariseOrReject</code> validator; the detail endpoint returns 404 for structurally-malformed files. Phase K.7 test in <code>server/api/runs.test.ts</code> locks the contract.</p>
+<h2 id="active-provider-banner-flash-on-first-paint">Active-provider banner flash on first paint</h2>
+<p><strong>Was:</strong> For roughly half a second after the Chronicle tab loaded, the banner showed the red "No cloud API key configured" warning even when keys were configured. It snapped to "Running with [provider]" once the providers fetch resolved.</p>
+<p><strong>Fixed:</strong> <code>ActiveProviderBanner</code> now tracks a <code>hasLoaded</code> state and renders nothing on the first paint, so users with configured keys never see the false-positive error banner. Catch path also flips the state so a <code>/api/providers</code> fetch failure surfaces the destructive banner intentionally.</p>
+<h2 id="npm-run-smoke-test-mis-classified-ready-and-skipped-as-failures"><code>npm run smoke-test</code> mis-classified <code>ready</code> and <code>skipped</code> as failures</h2>
+<p><strong>Was:</strong> Running <code>npm run smoke-test</code> on a healthy install reported <code>Whisper: ready</code> and <code>Claude: skipped (no key)</code> under a "<strong>Failed</strong>" heading and exited with code 1.</p>
+<p><strong>Fixed:</strong> The categoriser in <code>scripts/smoke-test.mjs</code> now buckets <code>ready</code>, <code>skipped</code>, <code>not configured</code>, <code>not installed</code>, <code>no local backends running</code>, and <code>installed, restart required</code> as "Not configured" instead of falling through to "Failed". Exit code is 0 unless something actually failed.</p>
+<h2 id="localstorage-quota-loss-mid-run">localStorage quota loss mid-run</h2>
+<p><strong>Was:</strong> Long session + large Knowledge Base + tab close mid-run → the next <code>safeSet</code> from a <code>chunk_done</code> event silently failed and the user could lose everything from the last successful checkpoint.</p>
+<p><strong>Fixed:</strong> v1.1.0 adds a pre-flight <code>STORAGE_QUOTA_WARNING_EVENT</code> that fires BEFORE <code>setItem</code> when projected total localStorage usage would cross the 90% threshold (~4.5 MB of a typical 5 MB browser quota). The warning detail includes the full serialized payload so the UI can pre-emptively persist to a server-side disk checkpoint. The existing failure event also now includes the serialized payload as a recovery target.</p>
+<h2 id="addon-config-corruption-silently-enabled-every-add-on">Addon-config corruption silently enabled every add-on</h2>
+<p><strong>Was:</strong> A malformed <code>addons.json</code> (power loss during settings save, hand-edit gone wrong) triggered the catch handler at <code>loadAddons</code>, which returned an empty config object. Because the loader defaults unseen names to enabled, EVERY add-on was treated as enabled — including ones with missing or stale prerequisites, producing cryptic pipeline crashes at run time.</p>
+<p><strong>Fixed:</strong> <code>readAddonsConfig</code> now schema-validates the parsed shape via the new <code>validateAddonsConfig</code> exported function. Malformed JSON or schema mismatch flips a corruption signal exposed via <code>getAddonsConfigCorruption()</code>; <code>loadAddons</code> respects the signal and skips ALL add-ons (conservative-disabled) rather than the previous all-enabled fallback. The UI can read the corruption status to render a clear startup warning.</p>
+<h2 id="provider-switch-mid-run-used-stale-singleton">Provider switch mid-run used stale singleton</h2>
+<p><strong>Was:</strong> If a user opened Settings and changed a provider key while a pipeline run was in flight, the cached singletons stayed in place and subsequent chunks dispatched to the stale provider. The user could see unexpected charges on the wrong account.</p>
+<p><strong>Fixed:</strong> <code>refreshProviders()</code> now dispatches a <code>PROVIDERS_CHANGED_EVENT</code> window-level CustomEvent with a <code>changedKeys</code> detail listing which slots flipped between configured states. <code>RefinementTool</code> listens and, if a run is in progress, surfaces a 12-second toast telling the user the next chunk will dispatch to the new key and to halt if the change was unintentional.</p>
+<h2 id="vault-export-path-traversal-defence-in-depth">Vault export path-traversal defence-in-depth</h2>
+<p><strong>Was:</strong> Vault export composes <code>&#x3C;vaultRoot>/Lore/Tomes/&#x3C;sanitizedCampaign>/&#x3C;sanitizedFileName>.md</code>. <code>sanitizeSegment</code> already strips path separators + control chars + Windows reserved names, but there was no second-layer check confirming the resolved path stayed under the safe root — a hypothetical future sanitiser regression would have landed bytes outside the Tomes tree.</p>
+<p><strong>Fixed:</strong> <code>exportChronicleToVault</code> now resolves both the target path and the <code>&#x3C;loreDir>/Tomes</code> root via <code>path.resolve</code> and throws if the target isn't a descendant. A 19-case malicious-input table in <code>server/api/vault.test.ts</code> locks the sanitiser contract against the standard traversal vectors.</p>
+<h2 id="free-tier-gemini-pro-is-slow-repositioned-no-longer-a-recommended-workflow">Free-tier Gemini Pro is slow — repositioned, no longer a recommended workflow</h2>
+<p><strong>Was:</strong> A 3-hour session on Free Gemini Pro could take 30-60 minutes vs ~6-10 minutes on Paid Pro, because Free's per-minute quota is 2 RPM.</p>
+<p><strong>Fixed (by repositioning):</strong> Since Google moved Pro models behind billing, a fully free workflow is no longer viable for the main pipeline. v1.1.0 documents this honestly: Paid is required, Free remains as an optional secondary key used only by the Smart Budget preset for Phase 4 (extras) where the Free Flash quota is comfortable. The Free-tier-slow problem is now unreachable in normal use.</p>
+<h2 id="windows-configdir-documentation-drift">Windows configDir documentation drift</h2>
+<p><strong>Was:</strong> Multiple docs (<code>configuration.md</code>, <code>dependencies.md</code>, <code>node-isolation.md</code>, <code>SETUP.md</code>) said the encrypted keystore + glossary + speakers + routing all lived under <code>%LOCALAPPDATA%\tusks-tomes\Config\</code>. Code actually uses <code>env-paths</code>, which puts config under <code>%APPDATA%</code> (Roaming) on Windows. Users following the docs to back up keys before reinstalling Windows would find an empty folder and conclude their keys vanished.</p>
+<p><strong>Fixed:</strong> All five doc files now correctly identify Windows config as <code>%APPDATA%\tusks-tomes\Config\</code> (Roaming), with explicit notes that data + cache stay under <code>%LOCALAPPDATA%</code>.</p>
+<hr>
+<h1>Still open / by-design</h1>
+<p>Bugs we know about and either haven't fixed yet, have a deliberate trade-off, or are upstream-blocked.</p>
+<h2 id="glossary-speakers-personas-editors-silently-hide-on-fetch-failure">Glossary / Speakers / Personas editors silently hide on fetch failure</h2>
+<p><strong>Affects:</strong> Tome of Lore tab when the <code>/api/lore/*</code> endpoint fails on first load.</p>
+<p><strong>What you'll see:</strong> The editor card flashes "Loading…" briefly, then disappears. No error toast, no retry button.</p>
+<p><strong>Workaround:</strong> Reload the page. If the failure persists, the diagnostics surface (Help → Diagnose) will tell you whether the server endpoint or the client request is the culprit.</p>
+<p><strong>Status:</strong> Slated for the next release — error state + retry button.</p>
+<hr>
+<h2 id="qsexpress-moderate-vulnerability-in-transitive-dependencies">qs/express moderate vulnerability in transitive dependencies</h2>
+<p><strong>Affects:</strong> Anyone exposing Tusk's Tomes to the network (<code>TUSKS_HOST=0.0.0.0</code>).</p>
+<p><strong>What you'll see:</strong> Running <code>npm audit</code> reports 2 moderate-severity advisories: <code>qs</code> is exposed to a <code>qs.stringify</code> DoS when handling untrusted comma-format arrays with <code>encodeValuesOnly</code> set.</p>
+<p><strong>Why:</strong> Indirect dependency via <code>express</code>. The fix requires Express to bump its qs dependency, which is pending upstream.</p>
+<p><strong>Workaround:</strong> The default deployment binds to <code>127.0.0.1</code> (loopback only), so the vulnerable surface is unreachable from the network. The <code>qs.stringify</code> path is not in our own code's request handling. The vuln is genuinely safe to defer for local-only use.</p>
+<p><strong>Status:</strong> Will be patched as soon as Express ships the fix.</p>
+<hr>
+<h2 id="add-on-install-requires-server-restart">Add-on install requires server restart</h2>
+<p><strong>Affects:</strong> First-time install of the Audio Transcription, Local LLMs, or Personas add-ons via Settings → Add-ons.</p>
+<p><strong>What you'll see:</strong> Installing an add-on shows "Installed". But the Upload/Sessions tabs (Audio) or Hybrid Routing card (Local LLMs) don't appear until you restart <code>npm run dev</code>.</p>
+<p><strong>Workaround:</strong> Stop and restart the dev server after installing an add-on. The state persists; no re-install needed.</p>
+<p><strong>Status:</strong> Architectural; loading add-ons at startup keeps the codebase simple. Hot-reload of add-ons is a future-release item.</p>
+<hr>
+<h2 id="run-resume-fingerprint-doesnt-tolerate-trailing-whitespace-edits-to-the-glossary">Run resume fingerprint doesn't tolerate trailing-whitespace edits to the glossary</h2>
+<p><strong>Affects:</strong> Pause/Resume flow specifically when you edit the glossary between pause and resume.</p>
+<p><strong>What you'll see:</strong> Resume Banner switches to "Start over" instead of "Resume" if you edit the glossary mid-pause — even if your edit was just adding a trailing space.</p>
+<p><strong>Why:</strong> The fingerprint is a hash of the canonical glossary JSON; whitespace counts. This is a load-bearing safety check (we don't want to resume Phase 3 with a chunk plan based on a stale glossary), so we err on the side of "restart" when in doubt.</p>
+<p><strong>Workaround:</strong> If you genuinely want to resume after a glossary tweak, the unsaved transcript is still in localStorage — click Start over and it'll re-chunk and resume from chunk 0.</p>
+<p><strong>Status:</strong> Working as designed. Trading a small UX wart for a serious correctness guarantee.</p>
+<hr>
+<h2 id="diagnoselatestmd-may-include-api-key-fingerprints"><code>.diagnose/latest.md</code> may include API-key fingerprints</h2>
+<p><strong>Affects:</strong> Anyone sharing a diagnose bundle for support.</p>
+<p><strong>What you'll see:</strong> When you send <code>.diagnose/latest.md</code> to Claude (or anyone else) for one-round-trip debugging, it includes the 6-character SHA-256 fingerprint of any configured provider keys.</p>
+<p><strong>Why:</strong> The fingerprint is one-way (you cannot recover the key from it), and it's the only way to confirm whether the key the diagnose run saw matches the key you have today — load-bearing for diagnosing routing issues.</p>
+<p><strong>Workaround:</strong> None needed. Fingerprints are safe to share publicly. The full key never leaves your machine.</p>
+<p><strong>Status:</strong> Documented; not a leak.</p>
+<hr>
+<h2 id="extras-list-may-mention-the-dungeon-master-in-summary-form">Extras list may mention "the Dungeon Master" in summary form</h2>
+<p><strong>Affects:</strong> Phase 4 Extras output (quotes / jests / gore).</p>
+<p><strong>What you'll see:</strong> Even though Phase 3 Chronicle treats DM out-of-character speech as scene-setting (not as quoted dialogue), the Extras phase is more literal — it might surface a "Quote" attributed to the Dungeon Master.</p>
+<p><strong>Workaround:</strong> Edit the .docx / .md before publishing if the quote feels off-tone.</p>
+<p><strong>Status:</strong> Phase 3 voice contract has been tuned across three iterations; Phase 4 is next in line. Expected to land in the next release.</p>
+<hr>
+<h2 id="addon-install-sse-response-not-drained-on-disconnect">Addon install SSE response not drained on disconnect</h2>
+<p><strong>Affects:</strong> Server logs only — no user-visible impact.</p>
+<p><strong>What you'll see:</strong> If you cancel an in-flight add-on install (e.g. close the Add-ons panel mid-install), the server may log "write after close" errors as it tries to write SSE events to the closed socket.</p>
+<p><strong>Workaround:</strong> Cosmetic — ignore the log noise.</p>
+<p><strong>Status:</strong> Deferred to v1.2.0. Wrap the <code>res.write</code> calls in try/catch or listen to <code>res.on('close')</code> and break early.</p>
+<hr>
+<h2 id="anthropic-aisdk-shipped-into-the-browser-bundle"><code>@anthropic-ai/sdk</code> shipped into the browser bundle</h2>
+<p><strong>Affects:</strong> Theoretical regression risk only — not active in v1.1.0.</p>
+<p><strong>What you'll see:</strong> Nothing today. <code>ClaudeProvider</code> is currently only instantiated server-side; the SDK's <code>node:fs</code> imports are externalised at build time. If a future change ever instantiates <code>ClaudeProvider</code> client-side, the browser will crash with "fs is not defined."</p>
+<p><strong>Workaround:</strong> Don't construct <code>ClaudeProvider</code> in a code path that runs in the browser.</p>
+<p><strong>Status:</strong> Documented for future contributors. Deferred to v1.2.0 — proper fix is to lazy-load the SDK only on the server path or guard the constructor with a <code>typeof window</code> check.</p>
+<hr>
+<h2 id="phase-1-speaker-detach-toggle-change-during-pauseresume-produces-stale-brackets">Phase-1 speaker-detach toggle change during pause+resume produces stale brackets</h2>
+<p><strong>Affects:</strong> Dev-settings path only. The toggle isn't surfaced in the production UI for general users.</p>
+<p><strong>What you'll see:</strong> If you pause a Phase 1 run with speaker-detach ON, change the dev setting to OFF, then resume, the cached <code>inputSnapshot</code> still has <code>detachAttached: true</code> but the resumed pipeline won't reattach speaker brackets. The grounded transcript ends up missing its bracket prefixes.</p>
+<p><strong>Workaround:</strong> Don't toggle the dev setting between pause and resume. The toggle is a developer affordance, not a production knob.</p>
+<p><strong>Status:</strong> Deferred to v1.2.0. Proper fix is to store the detach setting in the checkpoint rather than reading it from live settings at resume time.</p>
+<hr>
+<h2 id="whats-not-a-bug">What's NOT a bug</h2>
+<p>For transparency, a few common questions that aren't bugs:</p>
+<ul>
+<li><strong>Phase 5 is always skipped on cloud providers.</strong> This is by design — cloud outputs don't need a local-polish pass. If you see "Phase 5 skipped" in the run log, that's intentional.</li>
+<li><strong>A 3-hour session costs more than your friend's NotebookLM workflow.</strong> True. We're an open-source app paying per-token at retail rates; NotebookLM is Google subsidising a free tier. We trade higher cost for local-first privacy and per-campaign grounding. See <a href="/Tusks-Tomes/docs/about/comparison/">comparison.md</a>.</li>
+<li><strong>The chronicle is verbose.</strong> Also by design — see <a href="/Tusks-Tomes/docs/troubleshooting/faq/#what-running-one-session-actually-looks-like">feedback-chronicle-voice in the FAQ</a>. The Phase 6 condense is the version to share; the chronicle is the canonical record.</li>
+<li><strong>The app starts on <code>127.0.0.1</code>, not <code>localhost</code>.</strong> Default for security. Set <code>TUSKS_HOST=0.0.0.0</code> in <code>.env</code> to expose to LAN; do so only on a trusted network.</li>
+</ul>
+<p>If something not in this list is causing pain, please tell us through the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a> or <a href="https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose" rel="noopener">open an issue</a> — that's how this list gets shorter.</p>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/troubleshooting/known-issues.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>

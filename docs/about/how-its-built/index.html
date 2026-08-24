@@ -1,0 +1,1887 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it's built — Tusk's Tomes</title>
+<meta name="description" content="A local-first D&amp;D session chronicler. The core install handles paste-a-transcript chronicling through a cloud LLM — Gemini directly, or around 400 models…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/about/how-its-built/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="How it's built — Tusk's Tomes">
+<meta property="og:description" content="A local-first D&amp;D session chronicler. The core install handles paste-a-transcript chronicling through a cloud LLM — Gemini directly, or around 400 models…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/about/how-its-built/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How it's built — Tusk's Tomes">
+<meta name="twitter:description" content="A local-first D&amp;D session chronicler. The core install handles paste-a-transcript chronicling through a cloud LLM — Gemini directly, or around 400 models…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How it's built",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/about/how-its-built/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "How it's built",
+  "description": "A local-first D&D session chronicler. The core install handles paste-a-transcript chronicling through a cloud LLM — Gemini directly, or around 400 models…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/about/how-its-built/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/" aria-current="page">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/" aria-current="page">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>How it's built</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#1-system-overview">1. System overview</a></li><li><a href="#2-tech-stack">2. Tech stack</a></li><li><a href="#3-file-layout">3. File layout</a></li><li><a href="#4-persistence-model">4. Persistence model</a></li><li><a href="#5-provider-abstraction">5. Provider abstraction</a></li><li><a href="#6-encrypted-key-storage">6. Encrypted key storage</a></li><li><a href="#7-profiles-routing-and-run-start-session-resolution">7. Profiles, routing, and run-start session resolution</a></li><li><a href="#8-the-multi-track-upload-pipeline">8. The multi-track upload pipeline</a></li><li><a href="#9-the-whisper-sidecar">9. The Whisper sidecar</a></li><li><a href="#10-the-refinement-pipeline">10. The refinement pipeline</a></li><li><a href="#11-local-llm-detection-probing">11. Local-LLM detection + probing</a></li><li><a href="#12-rate-limiting-safety">12. Rate limiting + safety</a></li><li><a href="#13-security-privacy">13. Security &amp; privacy</a></li><li><a href="#14-build-deployment">14. Build + deployment</a></li><li><a href="#15-add-on-system">15. Add-on system</a></li><li><a href="#16-tusks-lore-shared-sibling-folder">16. Tusks-Lore — shared sibling folder</a></li><li><a href="#17-in-app-docs-viewer">17. In-app docs viewer</a></li><li><a href="#18-run-checkpoints-resume">18. Run checkpoints + resume</a></li><li><a href="#19-rate-limit-dialog">19. Rate-limit dialog</a></li><li><a href="#20-operational-notes">20. Operational notes</a></li></ul></aside>
+    <article class="prose">
+<h1>How it's built</h1>
+<p>A local-first D&#x26;D session chronicler. The core install handles paste-a-transcript
+chronicling through a cloud LLM — Gemini directly, or around 400 models through a
+single OpenRouter key — a Claude Code or Codex subscription you already pay for,
+or a local runner.</p>
+<p>Seven optional modules extend it, and exactly one installs anything:
+<strong>Audio Transcription</strong> downloads a Python environment for Whisper and Craig
+multitrack upload. The other six (whisper.cpp bridge, Local LLMs, Chronicle
+Personas, Claude Code, Codex, Obsidian Vault lore) ship in the bundle and mount
+unconditionally — see §15 for why that distinction is a type, not a
+convention.</p>
+<p>A six-phase pipeline produces a clean grounded transcript, a narrative chronicle,
+a condensed retelling with catch-up bullets, and a curated extras list (jests,
+gore, quotes). Pacing between cloud calls is adaptive per provider — Claude /
+OpenAI rate-limit response headers drive the inter-chunk delay, Gemini uses a
+static tier map. Paid users routinely see 4–5× faster runs than the legacy
+fixed-pacing.</p>
+<p>Everything except the chosen cloud LLM API runs on the user's machine. API keys
+are encrypted at rest, never leave the host, and never appear in plaintext over
+the wire. The server binds to <code>127.0.0.1</code> by default and a same-origin middleware
+on <code>/api/*</code> rejects cross-origin POSTs so a malicious page can't drive-by-trigger
+an add-on install. Finished chronicles are saved back into the repo tree as
+portable Markdown, and (when the optional sibling <code>Tusks-Lore/</code> folder is set
+up) also as structured <code>.docx</code> files inside a shared archive both Tomes and
+Tusk's Vault read from.</p>
+<hr>
+<details class="docs-section" open>
+<summary><h2 id="1-system-overview">1. System overview</h2></summary>
+<div class="docs-section-body">
+<pre><code>                ┌────────────────────────────────────────────────────┐
+                │  User's machine                                    │
+                │                                                    │
+                │  Express server (Node, tsx) — binds 127.0.0.1      │
+                │  ├─ Encrypted keystore (AES-256-GCM, machine-bound)│
+                │  ├─ Same-origin /api/* middleware (CSRF gate)      │
+                │  ├─ Add-on registry + loader (configEnabled flag)  │
+                │  ├─ JSON APIs (glossary, speakers, addons, docs,   │
+                │  │             sessions, chronicle, lore, vault)   │
+                │  │                                                 │
+                │  ├─ [audio-addon, opt-in]                          │
+                │  │   ├─ Multi-track upload + extraction            │
+                │  │   ├─ Whisper sidecar (Python venv)              │
+                │  │   └─ faster-whisper large-v3                    │
+                │  └─ [local-llm-addon, opt-in]                      │
+                │      ├─ /api/local/* same-origin proxy             │
+                │      └─ /api/local-llm/detect + capability probes  │
+                │                                                    │
+                │  React 19 + Vite SPA  (same-origin)                │
+                │  ├─ Pipeline orchestrator                          │
+                │  │   └─ LLMProvider.generate(...) ────────────────────► Cloud
+                │  │       └─ RateLimitState paces per provider      │   (Gemini /
+                │  │                                                 │    Claude /
+                │  │                                                 │    OpenAI)
+                │  │  Local LLM (only if add-on loaded)              │
+                │  │  ←──── /api/local/* proxy ────┘                 │
+                │  │                                                 │
+                │  └─ Help tab — /api/docs renders every .md in-app  │
+                │                                                    │
+                │  Finished chronicle → Sessions/&#x3C;campaign>/….md     │
+                │  ──── optional: Tusks-Lore sibling ────────────────►─ ../Tusks-Lore/
+                │                                                    │   Sessions/
+                │                                                    │   &#x3C;campaign>/*.docx
+                └────────────────────────────────────────────────────┘
+</code></pre>
+<p>The server is launched as <code>npm run dev</code> (Vite middleware in dev) or
+<code>npm start</code> (static <code>dist/</code> in prod). Both modes serve a single bundle to
+<code>http://localhost:5173</code> — there is no remote tier and the server binds to
+<code>127.0.0.1</code> by default. Override the interface via the <code>TUSKS_HOST</code> env var
+(e.g. <code>TUSKS_HOST=0.0.0.0</code> for LAN exposure).</p>
+<p>There are three entry points to the refinement pipeline:</p>
+<ol>
+<li><strong>Multi-track upload → Whisper → SBV → refinement.</strong> The user records
+their D&#x26;D session in Discord with Craig Bot (or any other multi-track
+recorder), downloads the resulting zip of per-speaker FLAC / WAV
+tracks, and drops the file(s) onto the <strong>Sessions</strong> tab, where the
+upload panel is the list's primary action.
+The server extracts the archive, lays out the audio per speaker,
+builds a manifest, and runs Whisper one utterance at a time. The
+result is a speaker-tagged <code>.sbv</code> that's one click away from the
+refinement pipeline.</li>
+<li><strong><code>.sbv</code> upload from YouTube auto-captions.</strong> Caption repair — which
+lives inside the <strong>Chronicle</strong> tab, next to the transcript input it
+feeds — accepts an SBV directly and runs the SBV-aware variant of Phase 1
+grounding before handing off to the refinement pipeline.</li>
+<li><strong>Raw transcript paste.</strong> The Chronicle tab accepts free-form text.</li>
+</ol>
+<p>All three converge on the same chunked, multi-phase generation in
+<code>src/lib/pipeline.ts</code>.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="2-tech-stack">2. Tech stack</h2></summary>
+<div class="docs-section-body">
+<h3 id="frontend">Frontend</h3>
+<ul>
+<li><strong>React 19</strong> + <strong>Vite 6</strong> (single-page app, same-origin with the server).</li>
+<li><strong>Tailwind CSS v4</strong> + shadcn/Radix UI primitives + <code>lucide-react</code> icons.</li>
+<li><strong><code>sonner</code></strong> toast notifications.</li>
+<li><strong><code>motion</code></strong> + <strong><code>tw-animate-css</code></strong> for tasteful CSS-driven micro-animation.</li>
+</ul>
+<h3 id="backend-local-server">Backend (local server)</h3>
+<ul>
+<li><strong>Node 20+</strong> via <strong><code>tsx</code></strong> for native TypeScript execution.</li>
+<li><strong>Express 4</strong> with Vite middleware in dev; serves <code>dist/</code> static in prod.</li>
+<li><strong><code>multer</code></strong> with disk storage for large multi-track uploads (per-file
+cap 4 GB, up to 32 files per request).</li>
+<li><strong><code>adm-zip</code></strong> for in-process Craig-zip extraction.</li>
+<li><strong><code>ffmpeg-static</code></strong> + the user's FFmpeg, used to probe per-track
+durations during upload extraction.</li>
+<li><strong><code>env-paths</code></strong> for cross-platform app-data resolution.</li>
+<li><strong><code>crypto</code></strong> (Node built-in) for AES-256-GCM + scrypt key derivation.</li>
+<li><strong><code>mammoth</code></strong> + <strong><code>pdfjs-dist</code></strong> for KB document text extraction. <code>pdfjs-dist</code> is pure JavaScript, which is why a Windows <code>npm install</code> needs no C++ build toolchain.</li>
+</ul>
+<h3 id="llm-providers">LLM providers</h3>
+<ul>
+<li><strong><code>@google/genai</code></strong> (Gemini 2.5+ / 3.x) with Paid / Free tier handling.</li>
+<li><strong>OpenRouter</strong> over its OpenAI-compatible HTTP API — one key, around 400
+models. This is how Anthropic and OpenAI models are reached now; the
+direct-key integrations for both were retired, though the
+<code>@anthropic-ai/sdk</code> and <code>openai</code> SDKs remain in the tree.</li>
+<li><strong>Subscription CLIs</strong> — the signed-in <code>claude</code> and <code>codex</code> binaries, invoked
+headlessly. No API key is involved and the app never handles the login.</li>
+<li><strong>OpenAI-compatible HTTP</strong> for Ollama / LM Studio / llama.cpp /
+Unsloth Studio.</li>
+</ul>
+<h3 id="whisper-sidecar">Whisper sidecar</h3>
+<ul>
+<li><strong>Python 3.10–3.12</strong> in <code>vendor/python-venv/</code>.</li>
+<li><strong><code>faster-whisper</code> 1.0.3</strong> with the <strong>large-v3</strong> model at
+<code>int8_float16</code> (CUDA) or <code>int8</code> (CPU).</li>
+<li><strong><code>torch</code> ≥ 2.2 &#x3C; 3</strong> matched to the user's CUDA toolkit. (The old <code>&#x3C; 2.6</code>
+upper bound was dropped: 2.6 is the first release with cp313 wheels, so
+pinning below it would have hard-blocked Python 3.13. See
+<code>scripts/whisper/requirements.txt</code>.)</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="3-file-layout">3. File layout</h2></summary>
+<div class="docs-section-body">
+<pre><code>server/
+  index.ts                # Express boot, Vite middleware, same-origin /api/* gate
+  appData.ts              # env-paths + atomic JSON IO (includes addonsFile())
+  pdfParse.ts             # PDF text extractor for KB uploads
+  addons/
+    registry.ts           # ADDON_REGISTRY: audio-addon, local-llm-addon
+    loader.ts             # loadAddons(): mounts when isReady() &#x26;&#x26; configEnabled
+  api/
+    glossary.ts           # GET/PUT /api/glossary
+    speakers.ts           # GET/PUT /api/speakers
+    providers.ts          # encrypted keystore CRUD + test endpoint
+    providerKeys.ts       # internal: returns decrypted keys to the SPA
+    profiles.ts           # per-provider model profiles
+    routing.ts            # last selected provider + per-phase hybrid routing
+    addons.ts             # GET /api/addons, POST /:name/install (SSE),
+                          #   PATCH /:name (toggle), DELETE /:name
+    docs.ts               # GET /api/docs, GET /api/docs/:slug (allowlist)
+    lore.ts               # GET /api/lore/status, POST /create,
+                          #   POST /save-chronicle (renders .docx)
+    sessions.ts           # list / read / delete sessions, stream SBV, live state
+    chronicle.ts          # POST /api/chronicle/save → Sessions/&#x3C;campaign>/*.md
+    system.ts             # CPU / RAM / GPU info for the routing recommender
+    vault.ts              # GET /api/vault/pair, POST /export-chronicle
+    [opt-in audio-addon]
+    whisper.ts            # /api/whisper/status, POST /api/whisper/setup (SSE)
+    transcribe.ts         # POST /api/sessions/:id/transcribe (legacy/replay)
+    upload.ts             # multi-track upload + transcribe-multitrack
+    [opt-in local-llm-addon]
+    localProxy.ts         # /api/local/list-models|generate|launch (CORS proxy)
+    localLLM.ts           # local-provider detection + persisted probe results
+    probe.ts              # POST /api/local-llm/probe (mini-probe runner)
+  lore/
+    detection.ts          # Sibling Tusks-Lore folder detection + create
+    docxRenderer.ts       # Chronicle → .docx Buffer (full + condensed modes)
+  sessions/
+    liveSessionBridge.ts  # Decouples sessions.ts from the audio addon
+    sessionManifest.ts    # Session-folder manifest reader / writer
+  upload/
+    extractMultitrack.ts  # Craig zip / loose-audio → per-speaker session layout
+  whisper/
+    bootstrap.ts          # venv probing + runSetup() SSE
+    invoke.ts             # spawn transcribe.py, parse JSON, build initial prompt
+    liveQueue.ts          # in-process per-utterance Whisper worker queue
+    sessionPipeline.ts    # legacy "process session" wrapper around liveQueue
+  crypto/
+    keyStore.ts           # AES-256-GCM keystore (scrypt + machine identity)
+  localProbe/
+    fixtures.ts           # 5 JSON + 1 grounding fixture
+    runner.ts             # scores structuredJsonScore + groundingScore
+
+scripts/
+  smoke-test.mjs          # end-to-end provider + whisper + local-LLM ping
+  whisper/
+    transcribe.py         # faster-whisper sidecar
+    requirements.txt
+    setup.ps1             # Windows venv bootstrap (CUDA-aware)
+    setup.sh              # POSIX venv bootstrap
+
+src/
+  App.tsx                 # Tabs: Sessions (audio module only), Chronicle,
+                          #       Tome of Lore, Settings, Help. Caption
+                          #       repair sits inside Chronicle; uploading
+                          #       sits inside Sessions.
+  contexts/
+    AddonContext.tsx      # React context: addon list + isLoaded() / isEnabled()
+  lib/
+    pipeline.ts           # Phase 1–6 chunked orchestration
+    sbvGround.ts          # SBV-cue-preserving variant of Phase 1
+    prompts.ts            # All prompt builders (cloud + local + split forms)
+    chunker.ts            # \n\n-aware splitter with hard-cut fallback
+    chunking.ts           # Per-provider/per-phase chunk size table
+    rateLimit.ts          # RateLimitState — header parsing + delay math
+    preGround.ts          # deterministic safeReplacements + hints formatter
+    transcriptCleanup.ts  # [Music]/[Laughter] markers, fillers, whitespace
+    kbCompact.ts          # heuristic glossary extraction for tight local contexts
+    multitrackUpload.ts   # XHR-based multipart upload client + progress events
+    sessions.ts           # RunSession resolver (autoResolve + buildSession)
+    sessionsClient.ts     # /api/sessions client + session list helpers
+    liveSession.ts        # live SBV polling + speaker mapping refresh
+    routing.ts            # /api/routing client
+    profiles.ts           # /api/profiles client
+    cloudKeys.ts          # per-key option resolver for the ProviderSelectModal
+    glossary.ts           # /api/glossary client + in-memory cache
+    speakers.ts           # /api/speakers client + cache
+    providerSettings.ts   # /api/providers client (UI summary)
+    localLLM.ts           # /api/local-llm client (only used when addon loaded)
+    lore.ts               # /api/lore client (status / create / save-chronicle)
+    vault.ts              # /api/vault client (pair / export-chronicle)
+    pipelineToasts.ts     # Shared cleanup/preGround toast helpers (with tests)
+    system.ts             # /api/system/info client
+    recommendations.ts    # routing recommender (RAM / VRAM / model heuristics)
+    reasoning.ts          # OpenAI reasoning-effort + Gemini thinking budget
+    gemini.ts             # Back-compat shim (hasApiKey, listAvailableModels)
+    constants.ts          # MAX_OUTPUT_TOKENS + retry constants (chunk sizes
+                          #   moved to chunking.ts; pacing moved to rateLimit.ts)
+    sbv.ts                # SBV parser + formatter (with tests)
+    storage.ts            # localStorage helpers + quota-exceeded event bridge
+    providers/
+      llm.ts              # LLMProvider interface (incl. getNextDelayMs)
+      gemini.ts           # GeminiProvider (paid/free + static tier RateLimitState)
+      openrouter.ts       # OpenRouterProvider — one key, ~400 models
+      claude.ts           # ClaudeProvider — retired as a user-facing
+                          #   connection; kept for its cache_control and
+                          #   rate-limit header handling
+      openai.ts           # OpenAIProvider — likewise retired as a
+                          #   connection; Responses API + header harvest
+      local.ts            # Legacy free-function local proxy
+      localAdapter.ts     # LLMProvider wrapper for the user-selected local provider
+      localInstance.ts    # Per-instance LocalInstanceProvider (hybrid routing)
+      settings.ts         # localStorage-backed provider/tier selection
+      hardware.ts         # VRAM advisories for local models
+      types.ts            # ProviderId + ProviderSettings
+      index.ts            # Registry: ensureProvidersInitialized, getActiveProvider
+  components/
+    RefinementTool.tsx    # Chronicle tab orchestrator
+    PhaseProgress.tsx     # In-flight phase progress card
+    DMQuestionsModal.tsx  # Phase 2 clarification surface
+    ChronicleView.tsx     # Finished chronicle, extras, condensed, auto-save,
+                          #   Send-to-Vault + Save-to-Lore (.docx) buttons
+    UploadPanel.tsx       # Multi-track upload UI (audio-addon)
+    LiveTranscript.tsx    # During/after-transcription view (audio-addon)
+    CaptionRepair.tsx     # SBV-mode entry point
+    SessionsList.tsx      # Sessions tab (audio-addon): list, replay, delete
+    KnowledgeBaseManager.tsx
+    GlossaryEditor.tsx
+    SpeakerEditor.tsx
+    ProviderSettings.tsx
+    ModelProfileEditor.tsx
+    ProviderSelectModal.tsx
+    AddonsManager.tsx     # Settings card: install/uninstall/toggle each add-on
+    DocsViewer.tsx        # Help tab content; renders /api/docs with react-markdown
+    LoreCard.tsx          # Settings card: detect/create sibling Tusks-Lore folder
+    LocalLLMPanel.tsx     # Only rendered when local-llm-addon loaded
+    HybridRoutingEditor.tsx # Only rendered when local-llm-addon loaded
+    WhisperSettings.tsx   # Only rendered when audio-addon loaded
+    VaultPairCard.tsx     # Settings: Tusk's Vault pairing status
+    ModelDiagnostics.tsx  # "Check available models" + per-provider picker
+    RunnerInstructions.tsx# How to start Ollama / LM Studio / Unsloth
+    ui/                   # shadcn-style primitives (button, card, tabs, …)
+</code></pre>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="4-persistence-model">4. Persistence model</h2></summary>
+<div class="docs-section-body">
+<p>All durable state lives at the platform app-data root via <code>env-paths</code>. The
+React app never touches the filesystem directly — it goes through Express
+APIs. <code>localStorage</code> is reserved for ephemeral UI state (refinement
+workflow position, KB documents, last-active-tab feel).</p>
+<h3 id="files-on-disk">Files on disk</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Path</th><th>Owner</th><th>Format</th></tr></thead><tbody><tr><td><code>{configDir}/glossary.json</code></td><td>Glossary editor</td><td>JSON (seeded)</td></tr><tr><td><code>{configDir}/speakers.json</code></td><td>Speaker editor</td><td>JSON</td></tr><tr><td><code>{configDir}/providers.enc</code></td><td>Keystore</td><td>AES-256-GCM</td></tr><tr><td><code>{configDir}/.salt</code></td><td>Keystore</td><td>16 random bytes</td></tr><tr><td><code>{configDir}/profiles.json</code></td><td>Per-provider phase models</td><td>JSON</td></tr><tr><td><code>{configDir}/routing.json</code></td><td>Routing rows + guided presets</td><td>JSON</td></tr><tr><td><code>{configDir}/settings.json</code></td><td>App settings</td><td>JSON</td></tr><tr><td><code>{configDir}/personas.json</code></td><td>Personas (seeded on first read, never deleted by the app)</td><td>JSON</td></tr><tr><td><code>{configDir}/model-availability.json</code></td><td>Per-key probe results</td><td>JSON</td></tr><tr><td><code>{configDir}/openrouter-models.json</code></td><td>Cached OpenRouter catalogue</td><td>JSON</td></tr><tr><td><code>{configDir}/addons.json</code></td><td>Module toggle (installable modules only)</td><td>JSON <code>{ [name]: { configEnabled } }</code></td></tr><tr><td><code>{cacheDir}/capability.json</code></td><td>Local-model probe runner</td><td>JSON</td></tr><tr><td><code>{dataDir}/sessions/{id}/manifest.json</code></td><td>Upload extractor + live queue (audio-addon)</td><td>JSON</td></tr><tr><td><code>{dataDir}/sessions/{id}/audio/{speakerId}/*.{wav,flac,…}</code></td><td>Upload extractor (audio-addon)</td><td>per-speaker audio</td></tr><tr><td><code>{dataDir}/sessions/{id}/transcripts/{speakerId}/*.json</code></td><td>Whisper sidecar (audio-addon)</td><td>JSON</td></tr><tr><td><code>{dataDir}/sessions/{id}/session.sbv</code></td><td>Live queue (audio-addon)</td><td>SBV plaintext</td></tr><tr><td><code>&#x3C;repo>/vendor/python-venv/</code></td><td>audio-addon install</td><td>Python venv (~1.5 GB)</td></tr><tr><td><code>&#x3C;repo>/Sessions/&#x3C;campaign>/Silence Beyond the Sea - &#x3C;campaign> - Session &#x3C;n>.md</code></td><td>Chronicle auto-save</td><td>Markdown</td></tr><tr><td><code>&#x3C;parent>/Tusks-Lore/tusks-lore.json</code></td><td>Lore detection marker</td><td>JSON <code>{ version, createdAt, notes? }</code></td></tr><tr><td><code>&#x3C;parent>/Tusks-Lore/Sessions/&#x3C;campaign>/Session-NN-YYYY-MM-DD-&#x3C;full|condensed>.docx</code></td><td>Save-to-Lore button</td><td>Word <code>.docx</code> (via <code>docx</code> package)</td></tr></tbody></table>
+<p>Env-var overrides for the disk roots:</p>
+<ul>
+<li><code>TUSKS_SESSIONS_DIR</code> — session audio + transcripts root (handy when a
+multi-GB session is better kept on a roomier drive than the default
+<code>%LOCALAPPDATA%</code> / <code>~/.local/share</code>).</li>
+<li><code>TUSKS_VAULT_DIR</code> — explicit path to a Tusk's Vault checkout when the
+sibling-directory auto-detect doesn't find it.</li>
+<li><code>TUSKS_LORE_DIR</code> — explicit path to the shared <code>Tusks-Lore/</code> folder
+when it isn't a sibling of the repo root.</li>
+</ul>
+<h3 id="writes-are-atomic">Writes are atomic</h3>
+<p><code>server/appData.ts → writeJson</code> always writes to a randomly-named temp
+file in the same directory, then renames over the target. A crash
+mid-write either leaves the previous file intact or the new file fully
+present — never a truncated half-write. The chronicle save endpoint
+follows the same pattern for its <code>.md</code> output.</p>
+<h3 id="seed-migration">Seed migration</h3>
+<p>Files seed themselves on first read after upgrade. The glossary seeds
+from <code>src/data/corrections.ts</code> if the on-disk doc is absent; the
+encrypted keystore seeds from <code>process.env.PAID_GEMINI_API_KEY</code> /
+<code>VITE_GEMINI_API_KEY</code> / <code>OPENROUTER_API_KEY</code> if any are present, then logs a
+notice that the GUI is the recommended path.
+The app was previously named "Silence Beyond the Sea"; the
+<code>migrateLegacyAppData()</code> helper at server boot moves any pre-rename
+<code>env-paths</code> tree to the new <code>tusks-tomes</code> locations.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="5-provider-abstraction">5. Provider abstraction</h2></summary>
+<div class="docs-section-body">
+<p>The pipeline never speaks to a vendor SDK directly. Every phase calls
+<code>provider.generate({...})</code> against <code>LLMProvider</code> (defined in
+<code>src/lib/providers/llm.ts</code>).</p>
+<pre><code class="language-ts">interface LLMProvider {
+  readonly name: 'gemini' | 'claude' | 'openai' | 'local'
+  generate(req: GenerateRequest, opts?: GenerateOptions): Promise&#x3C;GenerateResponse>
+  listModels(): Promise&#x3C;string[]>
+  estimateCost?(usage: Usage, model: string): number
+}
+
+type GenerateRequest = {
+  systemPrompt: string
+  cacheablePrefix?: string   // KB + glossary; identical across chunks in a run
+  userPrompt: string         // chunk + dynamic content
+  model: string
+  maxOutputTokens: number
+  temperature?: number
+  responseFormat?: 'text' | 'json'
+  safetyMode?: 'permissive' | 'default'
+}
+</code></pre>
+<p>The <code>cacheablePrefix</code> split is what unlocks provider-native caching.
+Phases 1, 3, and 6 all emit a split <code>{ cacheablePrefix, userPrompt }</code> —
+Phase 1's prefix carries the KB + glossary; Phase 3's carries the
+speaker-attribution rules + DM Q&#x26;A; Phase 6's carries the KB + DM Q&#x26;A</p>
+<ul>
+<li>JSON format spec. The per-chunk userPrompt holds only the variable
+parts (transcript chunk, prior chronicle tail, etc.).</li>
+</ul>
+<ul>
+<li><strong>Claude</strong> — attaches <code>cache_control: { type: 'ephemeral' }</code> to the
+cacheable system block. The TTRPG framing + user system prompt is the
+first (uncached) block.</li>
+<li><strong>OpenAI</strong> — the <code>instructions</code> field carries framing + system +
+cacheable prefix as a stable string; OpenAI's automatic prefix cache
+hits at ≥1024 tokens.</li>
+<li><strong>Gemini</strong> — concatenates the prefix into the system content. The
+implicit prefix cache on Gemini 2.5 still rebates ~75% on a stable
+prefix; explicit <code>cachedContent</code> wiring is a separate follow-up.</li>
+</ul>
+<p>Each implementation owns its own retry/backoff and surfaces token usage
+in a unified <code>Usage { inputTokens, cachedInputTokens?, outputTokens }</code>
+shape.</p>
+<h3 id="registry-initialization">Registry + initialization</h3>
+<p><code>src/lib/providers/index.ts</code> exports <code>ensureProvidersInitialized()</code>,
+which fetches the decrypted bundle from <code>/api/provider-keys</code> and
+constructs all four singletons (Gemini × 3 tiers — <code>auto</code> / <code>paid</code> /
+<code>free</code> — plus OpenRouter, the subscription CLIs, and Local). The pipeline awaits this at the
+start of every run.</p>
+<p><code>getActiveProvider()</code> returns the singleton matching the user's selected
+provider (legacy single-provider mode), while <code>getCloudProvider(name, { geminiTier })</code> resolves a specific cloud provider for the per-phase
+dispatcher.</p>
+<h3 id="gemini-paid-free-tiers">Gemini Paid / Free tiers</h3>
+<p>Gemini exposes two key slots in the keystore (<code>gemini</code> for Paid /
+billing-enabled, <code>geminiFallback</code> for the Free tier). The pipeline can
+run in three modes:</p>
+<ul>
+<li><strong><code>auto</code></strong> — Paid first, fail over to Free on hard-zero quota or
+repeated exhaustion.</li>
+<li><strong><code>paid</code></strong> — Paid only; never touches the Free key.</li>
+<li><strong><code>free</code></strong> — Free only, except that any phase whose model is in the
+pre-computed <em>paid-only</em> list (Gemini 3.x identifiers that 404 against
+the Free key) is escalated to Paid for that phase, with a warning
+banner shown before the run starts.</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="6-encrypted-key-storage">6. Encrypted key storage</h2></summary>
+<div class="docs-section-body">
+<p>Keys live in <code>{configDir}/providers.enc</code> under AES-256-GCM. The
+encryption key is derived from a stable machine identity
+(<code>hostname + username + platform</code>) via <code>scryptSync</code>, salted by a random
+16-byte value at <code>{configDir}/.salt</code>. This is <strong>obfuscation</strong>, not
+high-grade cryptography — keys are recoverable on the same machine. The
+Settings UI states this explicitly.</p>
+<pre><code>File format (after decryption):
+{
+  "gemini":         "AIza…",     // Paid / billing-enabled
+  "geminiFallback": "AIza…",     // Free tier
+  "claude":         "sk-ant-…",
+  "openai":         "sk-…"
+}
+</code></pre>
+<p>The decrypted bundle is fetched <strong>once</strong> at React app boot via
+<code>/api/provider-keys</code> (server-internal, localhost-only). Cloud SDKs run
+in-browser. The keys never appear in any user-facing endpoint response —
+the public <code>/api/providers</code> only returns a summary of which slots are
+set.</p>
+<p>A built-in <strong>Test</strong> action runs a 1-token call (or, for Gemini, a free
+<code>ListModels</code> lookup) to verify the key works without persisting
+anything.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="7-profiles-routing-and-run-start-session-resolution">7. Profiles, routing, and run-start session resolution</h2></summary>
+<div class="docs-section-body">
+<h3 id="profiles">Profiles</h3>
+<p><code>{configDir}/profiles.json</code> stores per-provider, per-phase model
+assignments:</p>
+<pre><code class="language-json">{
+  "gemini":     { "phase1Model": "gemini-2.5-pro",
+                  "phase2Model": "gemini-2.5-flash",
+                  "phase3Model": "gemini-2.5-pro",
+                  "phase4Model": "gemini-2.5-flash",
+                  "phase6Model": "gemini-2.5-pro" },
+  "openrouter": { "phase1Model": "google/gemini-2.5-flash",
+                  "phase3Model": "google/gemini-2.5-pro" },
+  "claudeCode": { "phase1Model": "sonnet",
+                  "phase3Model": "sonnet",
+                  "phase4Model": "haiku" }
+}
+</code></pre>
+<p>Keys are the four <code>CloudProvider</code> values — <code>gemini</code>, <code>openrouter</code>,
+<code>claudeCode</code>, <code>codex</code>. Direct <code>claude</code> and <code>openai</code> keys were retired along
+with the direct-API integrations; those models are reached through OpenRouter
+now.</p>
+<p>Defaults: prose-heavy phases (1, 3, 5, 6) go to the mid-tier model;
+JSON-shaped phases (2, 4) go to the cheapest model that holds the
+schema. For the subscription CLIs the defaults are bare aliases
+(<code>sonnet</code>, <code>haiku</code>, <code>default</code>) rather than pinned IDs, so a CLI upgrade
+moves them forward on its own — a pinned ID does not, which is how a
+profile ends up still naming a superseded model months later.</p>
+<p>There is no Model Profiles editor in the UI any more; the routing rows are
+the single surface for choosing a model per phase.</p>
+<h3 id="routing">Routing</h3>
+<p><code>{configDir}/routing.json</code> tracks both the last cloud provider used and
+optional per-phase hybrid overrides. Each of the five model phases
+(1–4, 6) can independently route to a specific local model:</p>
+<pre><code class="language-json">{
+  "version": 3,
+  "lastSelectedProvider": "openrouter",
+  "perPhase": {
+    "phase1": { "target": "local", "modelId": "qwen2.5:14b" },
+    "phase2": { "target": "local", "modelId": "qwen2.5:14b" },
+    "phase3": { "target": "cloud" },
+    "phase4": { "target": "local", "modelId": "qwen2.5:14b" },
+    "phase6": { "target": "cloud" }
+  }
+}
+</code></pre>
+<h3 id="runsession-at-run-start"><code>RunSession</code> at run start</h3>
+<p>When the user clicks <strong>Run</strong>, <code>RefinementTool</code> calls
+<code>autoResolveSession()</code>:</p>
+<ul>
+<li>If no cloud keys are configured: error, with a pointer to Settings.</li>
+<li>Otherwise the session is built directly from the persisted routing —
+<code>lastSelectedProvider</code> plus any per-phase overrides.</li>
+</ul>
+<p>There is no run-start provider modal. Choosing a provider at the moment you
+press Run was asking the question at the point of least context; an
+<code>ActiveProviderBanner</code> above the Chronicle controls now states which
+connection the next run will use, with a "change" link that lands you on the
+right Settings card. The phase rail below it names the model that will run
+each phase, and lights up as the run progresses, so the routing is legible
+before you commit rather than only afterwards.</p>
+<p>The resolved session carries
+<code>{ provider, profile, models, routing, geminiTier?, geminiPaidOnlyModels? }</code>,
+and each <code>runPhase*</code> accepts both <code>model</code> (string) and <code>phaseTarget</code>
+(cloud or local) so a single phase can route to a local model
+independently of the rest of the run.</p>
+<h3 id="guided-routing-presets">Guided routing presets</h3>
+<p>Above the per-phase rows sits a ladder of complete recipes, from maximum
+quality down to free. Each rung is a one-click apply of a full per-phase
+recipe built by a pure helper in <code>src/lib/budgetMode.ts</code>, unit-tested
+independently of React.</p>
+<p>Presentation rules, learned from looking at the previous version rendered
+rather than in source — it was five stacked walls of prose:</p>
+<ul>
+<li>Each rung shows <strong>one line</strong>. Rationale, measurements and caveats live
+behind an information control.</li>
+<li>The saving chip states whether its number is <strong>measured or estimated</strong>.
+An extrapolation must never look like a measurement.</li>
+<li>The rung matching current routing is badged <strong>Current</strong>, so the user can
+see where they stand, not only where they could go.</li>
+<li>The recommended rung is visually distinct. Equal-weight cards are not a
+recommendation.</li>
+<li>The plan/usage hint is stated once in the plan bar, not repeated per rung.</li>
+</ul>
+<p>Availability resolves live: API-key rungs need the key, subscription rungs
+need a signed-in CLI. Applying a rung only <strong>stages</strong> the recipe — the
+parent's Save button commits it.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="8-the-multi-track-upload-pipeline">8. The multi-track upload pipeline</h2></summary>
+<div class="docs-section-body">
+<p>This is the canonical way audio gets into the app. Recording happens
+externally (Craig Bot in Discord is what we test against; any multi-
+track recorder that produces per-speaker audio files works). Tusk's
+Tomes is purely a post-processor — it does not connect to Discord, does
+not join voice channels, and does not need a Discord bot token.</p>
+<h3 id="what-the-user-uploads">What the user uploads</h3>
+<p>The <strong>Sessions</strong> tab's upload panel accepts any combination of:</p>
+<ul>
+<li><strong>One or more <code>.zip</code> files</strong> containing per-speaker audio tracks
+(e.g. four 1-hour Craig zips of the same session). Each zip is
+treated as an ordered <em>chunk</em>; cross-chunk speakers with the same
+Craig-derived ID are merged into one participant.</li>
+<li><strong>Loose audio files</strong> (<code>.wav</code>, <code>.flac</code>, <code>.ogg</code>, <code>.opus</code>, <code>.mp3</code>,
+<code>.m4a</code>, <code>.aac</code>). All loose files in a single upload form one chunk
+at the position they appear in the user-controlled file order.</li>
+</ul>
+<p>Per-file size limit is 4 GB, with up to 32 files per request — well
+above what a 4-hour, 8-speaker FLAC capture produces.</p>
+<h3 id="stage-1-extraction-post-apisessionsupload-multitrack">Stage 1 — extraction (<code>POST /api/sessions/upload-multitrack</code>)</h3>
+<p><code>server/upload/extractMultitrack.ts</code> streams the upload to disk via
+multer disk storage, then:</p>
+<ol>
+<li>Partitions inputs into ordered chunks (one zip = one chunk; loose
+files cluster into one chunk at their first appearance).</li>
+<li>Creates a fresh <code>{dataDir}/sessions/{sessionId}/</code> and writes a stub
+<code>manifest.json</code> (atomic).</li>
+<li>For each chunk:
+<ul>
+<li>Extracts the zip (<code>adm-zip</code>) into a temp workdir, or accepts the
+loose audio files in place.</li>
+<li>Parses speaker identity from each filename (<code>{numericPrefix}-{name}</code>
+handles Craig and most index-prefixed conventions; falls back to a
+stable hash of the stem when no numeric prefix exists).</li>
+<li>Moves the audio file into
+<code>audio/{speakerId}/{utteranceId}.{ext}</code> (preserving the original
+codec — no FFmpeg re-encode at this stage).</li>
+<li>Probes the duration via FFmpeg (<code>-i</code>, parse the <code>Duration:</code> line)
+and records a <code>UtteranceEntry</code> with chunk-relative timing.</li>
+<li>Appends the participant + utterance to the manifest.</li>
+</ul>
+</li>
+<li>Maintains a running <code>cumulativeMs</code> so utterances in chunk N+1
+start where chunk N ended — the time-stitching that lets four
+sequential 1-hour zips replay as one 4-hour session.</li>
+</ol>
+<p>The response shape is <code>{ sessionId, chunks: [...], tracks: [...] }</code>.
+The UI uses this to render a speaker preview table where the user can
+rename loose-file speakers before transcription begins. Zip-internal
+speakers are derived from filenames at extraction time and can be
+adjusted later through the Speaker editor.</p>
+<h3 id="stage-2-transcribe-post-apisessionsidtranscribe-multitrack">Stage 2 — transcribe (<code>POST /api/sessions/:id/transcribe-multitrack</code>)</h3>
+<p>The handler returns 202 immediately and kicks off
+<code>transcribeExistingSession(sessionId)</code> against the live queue (§9). The
+UI then polls <code>/api/sessions/:id/live</code> every couple of seconds for
+running progress, the in-flight SBV, and a list of observed
+participants.</p>
+<h3 id="stage-3-cleanup-affordances">Stage 3 — cleanup affordances</h3>
+<ul>
+<li><code>DELETE /api/sessions/:id/upload-multitrack</code> — drop the partially-
+uploaded session before transcription starts.</li>
+<li><code>DELETE /api/sessions/:id/audio</code> — keep the manifest, per-utterance
+transcript JSONs, and <code>session.sbv</code>, but wipe the multi-GB audio
+tracks once the user is satisfied with the transcript. Surfaced as
+the <em>Delete audio (keep transcript)</em> button in the Sessions tab.</li>
+</ul>
+<h3 id="session-manifest-schema">Session manifest schema</h3>
+<p><code>server/bot/sessionManifest.ts</code> (so named for historical reasons; it's
+now the manifest module for the upload pipeline) owns the on-disk
+shape:</p>
+<pre><code class="language-ts">type SessionManifest = {
+  version: 1
+  sessionId: string
+  guildId: string             // empty for uploads
+  voiceChannelId: string      // empty for uploads
+  voiceChannelName: string    // user-supplied "session label" or "Uploaded session"
+  startedAt: string           // ISO-8601
+  endedAt: string | null
+  participants: ParticipantEntry[]
+  processing: {
+    transcribedAt: string | null
+    sbvPath: string | null    // 'session.sbv' once finalised
+    errors?: string[]         // per-utterance Whisper failures
+  }
+}
+</code></pre>
+<p>The upload extractor and Whisper queue are the only writers; the
+React-side Sessions tab is a read-only consumer (plus a delete
+button).</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="9-the-whisper-sidecar">9. The Whisper sidecar</h2></summary>
+<div class="docs-section-body">
+<h3 id="contract">Contract</h3>
+<p><code>scripts/whisper/transcribe.py</code> is invoked once per utterance:</p>
+<pre><code>python transcribe.py
+  --audio &#x3C;file>
+  --speaker-id &#x3C;speakerId>
+  --speaker-display "&#x3C;Character (Player)>"
+  --initial-prompt "&#x3C;glossary biasing string>"
+  --model large-v3
+  --device cuda          # or cpu
+  --compute-type int8_float16
+</code></pre>
+<p>It runs <code>faster-whisper.transcribe(...)</code> with:</p>
+<ul>
+<li><code>vad_filter=True</code> (Silero VAD)</li>
+<li><code>word_timestamps=True</code></li>
+<li><code>condition_on_previous_text=False</code> (avoid hallucination cascades)</li>
+<li><code>beam_size=5</code></li>
+<li><code>temperature=[0.0, 0.2, 0.4]</code> (graceful fallback ladder)</li>
+<li><code>no_speech_threshold=0.6</code></li>
+</ul>
+<p>Output is a single JSON document on stdout with
+<code>{speakerDisplay, durationMs, segments[{startMs, endMs, text, words, confidence}]}</code>.
+Errors go to stderr; non-zero exit code on failure.</p>
+<h3 id="initial-prompt-200-token-glossary-bias">Initial prompt (~200-token glossary bias)</h3>
+<p><code>server/whisper/invoke.ts → buildInitialPrompt(canonicalNames)</code> builds
+the biasing string from the glossary's <code>contextualHints[].canonical</code>
+and capitalised <code>safeReplacements[].to</code> entries. The string is capped
+at ~800 chars (Whisper's hard limit). Distinct names come first,
+truncated when full.</p>
+<h3 id="setup-readiness">Setup + readiness</h3>
+<p><code>scripts/whisper/setup.ps1</code> (Windows) / <code>setup.sh</code> (POSIX) create
+<code>vendor/python-venv/</code> and install torch + faster-whisper. The Windows
+script detects <code>nvidia-smi</code> and installs the CUDA wheel; POSIX
+defaults to CPU with <code>--cuda 12.4</code> as an opt-in.</p>
+<p><code>/api/whisper/status</code> reports <code>{ ready, pythonPath, venvPath, scriptPath, error? }</code>. <code>/api/whisper/setup</code> streams the setup script's
+stdout/stderr as Server-Sent Events so the UI can show live progress.</p>
+<h3 id="the-live-queue">The live queue</h3>
+<p><code>server/whisper/liveQueue.ts</code> is a single in-process worker that drains
+a serial queue of utterances against the sidecar. Both the upload path
+and the legacy "process session" endpoint enqueue into the same queue,
+so there is only one downstream code path. On a single-GPU machine the
+serial drain is correct; on a multi-GPU machine the bottleneck is the
+sidecar's load-once-per-process model warm-up rather than the queue.</p>
+<p>Per utterance:</p>
+<ol>
+<li>Resolve <code>speakerDisplay</code> via the speakers map
+(<code>Character (Player)</code> / <code>Character</code> / <code>Player</code> / filename fallback).</li>
+<li>Invoke the sidecar on CUDA. On a <code>STATUS_STACK_BUFFER_OVERRUN</code>
+(0xC0000409) — a known Windows CUDA/cuDNN re-init flake when one
+sidecar process exits and the next loads the model — the queue
+retries the same utterance on CPU with <code>int8</code> once before giving up.
+CPU is 6–10× slower but reliable.</li>
+<li>Persist the sidecar JSON to
+<code>transcripts/{speakerId}/{utteranceId}.json</code>.</li>
+<li>Split each Whisper segment at any internal word-gap longer than
+2 seconds. Without this, faster-whisper occasionally returns a
+single segment covering a multi-minute stretch with several minutes
+of silence inside, which then sorts to the head of the SBV and
+confuses Phase 3 into reading it as the opening monologue.</li>
+<li>Append the resulting sub-segments to an in-memory timeline with
+<code>absStartMs = utterance.startedAtMs + segment.startMs</code> (the
+utterance's chunk-relative start was set during extraction).</li>
+<li>Re-emit <code>session.sbv</code> after every utterance, sorted by absolute
+start time, with cue bodies prefixed <code>[Character (Player)] &#x3C;text></code>.</li>
+</ol>
+<p>Re-writing the SBV after every utterance means:</p>
+<ul>
+<li>A server crash mid-session loses at most one utterance's worth of
+work.</li>
+<li>The same <code>session.sbv</code> file is the artifact the refinement pipeline
+consumes — there is no separate "live" code path downstream.</li>
+<li>Updates to <code>speakers.json</code> (e.g. filling in a missing player name)
+can be picked up by <code>refreshLiveSbv(sessionId)</code>, which re-emits the
+cues against the new mapping without re-running Whisper.</li>
+</ul>
+<p>Errors during transcription are appended both to the in-memory
+<code>state.errors</code> array (surfaced in the live status endpoint) and to
+<code>manifest.processing.errors</code> (durable once the in-memory state is
+forgotten on server restart).</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="10-the-refinement-pipeline">10. The refinement pipeline</h2></summary>
+<div class="docs-section-body">
+<p>Lives in <code>src/lib/pipeline.ts</code>. Five model-driven phases, plus
+deterministic pre-processing in Phase 1 and an optional sixth pass
+(Condense) that the user triggers from the finished chronicle view.</p>
+<p>Display order:
+<strong>Phase 1 → Phase 2 → DM clarifications → Phase 3 → Phase 5 (polish, local only) → Phase 4 → Phase 6 (condense, optional)</strong></p>
+<h3 id="phase-1-grounding">Phase 1 — Grounding</h3>
+<ul>
+<li><strong>Input:</strong> raw transcript (or uploaded multi-track SBV cue text).</li>
+<li><strong>Chunk size:</strong> 15,000 chars cloud / 5,000 chars local.</li>
+<li><strong>Pre-processing (deterministic, before any LLM call):</strong>
+<ul>
+<li><code>transcriptCleanup</code> strips <code>[Music]</code> / <code>[Laughter]</code> markers,
+collapses runaway fillers, normalises whitespace, quotes, and
+dashes.</li>
+<li><code>preGround</code> applies whole-word <code>safeReplacements</code> (the built-in
+<code>dndDictionary</code> first, then the user glossary).</li>
+</ul>
+</li>
+<li><strong>LLM step:</strong> correct lore spellings against the KB, restore
+censored expletives, preserve speaker tags exactly. The system
+prompt + KB + contextual hints are emitted as the
+<strong><code>cacheablePrefix</code></strong>; the per-chunk text is the <strong><code>userPrompt</code></strong>
+— Claude's <code>cache_control</code> and OpenAI's automatic prefix cache hit
+from chunk 2 onwards.</li>
+<li><strong>Output:</strong> grounded transcript.</li>
+</ul>
+<h3 id="phase-2-audit">Phase 2 — Audit</h3>
+<ul>
+<li><strong>Input:</strong> raw + grounded transcripts (paired by chunk index).</li>
+<li><strong>Chunk size:</strong> 15,000 chars cloud / 5,000 chars local.</li>
+<li><strong>LLM step:</strong> surface DM clarification questions when phonetic
+ambiguity, unresolvable attribution, consequential unclear plot
+beats, or canon contradictions remain. The cloud prompt is
+conservative ("only ask when necessary"); the local prompt is
+aggressive ("better to over-ask than ship wrong").</li>
+<li><strong>Output:</strong> <code>DMQuestion[]</code> (JSON) shown in the DMQuestionsModal.</li>
+</ul>
+<p>After Phase 2 the user reviews the questions, optionally answers
+them, and triggers Phase 3.</p>
+<h3 id="phase-3-chronicle">Phase 3 — Chronicle</h3>
+<ul>
+<li><strong>Input:</strong> grounded transcript + DM answers.</li>
+<li><strong>Chunk size:</strong> 35,000 chars cloud / 8,000 chars local.</li>
+<li><strong>LLM step:</strong> novel-style narrative prose, ruthlessly filtering OOC
+chatter. Each chunk receives the last 2,000 chars of the previously
+emitted prose as a <strong><code>priorTail</code></strong> so continuity holds across
+seams. The prompt enforces character attribution: lines prefixed
+<code>[CharacterName (PlayerName)]</code> get incorporated into the prose,
+never printed verbatim.</li>
+<li><strong>Output:</strong> continuous chronicle text.</li>
+</ul>
+<h3 id="phase-5-polish-local-only">Phase 5 — Polish (local only)</h3>
+<ul>
+<li><strong>Pass-through for cloud.</strong> Runs only when the active provider is
+local — cloud chronicles from Phase 3 are already coherent.</li>
+<li><strong>Input:</strong> the rough chronicle from Phase 3.</li>
+<li><strong>Chunk size:</strong> 6,000 chars.</li>
+<li><strong>LLM step:</strong> spell-correct names against the (compact) KB, smooth
+chunk-boundary seams, cut residual OOC chatter that slipped past
+Phase 3. Same bardic voice, same length or shorter.</li>
+<li><strong>Output:</strong> polished chronicle.</li>
+</ul>
+<h3 id="phase-4-extras">Phase 4 — Extras</h3>
+<ul>
+<li><strong>Input:</strong> grounded transcript + DM answers.</li>
+<li><strong>Chunk size:</strong> 35,000 chars cloud / 8,000 chars local.</li>
+<li><strong>LLM step:</strong> extract <code>{ jests, gore, quotes }</code> per chunk. Quotes
+are classified by <code>kind</code> (<code>funny</code> / <code>stupid</code> / <code>dark</code>). Hard skips
+on dice rolls, real-world refs, table chatter.</li>
+<li><strong>Output:</strong> merged <code>ExtrasOutput</code>.</li>
+</ul>
+<h3 id="phase-6-condense-optional-user-triggered">Phase 6 — Condense (optional, user-triggered)</h3>
+<ul>
+<li><strong>Input:</strong> the finished chronicle + DM answers + campaign/session
+context.</li>
+<li><strong>Chunk size:</strong> 60,000 chars cloud / 10,000 chars local — the
+chronicle is usually coherent enough to fit in one chunk so the
+condenser can see the whole arc.</li>
+<li><strong>LLM step:</strong> produce
+<code>{ narrative, bulletPoints }</code> — a tightened retelling (~30–50% of
+the source) plus 10–15 catch-up bullets covering events, NPC
+interactions, and party state.</li>
+<li><strong>Output:</strong> <code>CondenseOutput</code>. The Chronicle view exposes new
+<strong>Condensed</strong> and <strong>Recap</strong> tabs once present, and the auto-save
+re-runs to fold the new sections into the on-disk Markdown.</li>
+</ul>
+<h3 id="chunking-pacing">Chunking + pacing</h3>
+<ul>
+<li>
+<p>Chunks split on <code>\n\n</code> when possible, falling back to a hard
+substring cut. See <code>src/lib/chunker.ts</code>.</p>
+</li>
+<li>
+<p>Chunk <strong>sizes</strong> are per-(provider, model-tier)-per-phase, owned by
+<code>src/lib/chunking.ts</code>. The model tier is resolved by
+<code>classifyModelTier(model, provider)</code> in <code>src/lib/modelTier.ts</code> —
+Pro / Sonnet / GPT-5 land on <code>flagship</code>; Flash / Haiku / GPT-5-mini
+/ GPT-5-nano land on <code>fast</code>; Opus lands on <code>frontier</code>. Numbers
+(chars per chunk, Phase 1 / 2 / 3 / 4 / 6):</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Profile</th><th>flagship</th><th>fast</th></tr></thead><tbody><tr><td>geminiPaid</td><td>30k / 30k / 60k / 60k / 100k</td><td>15k / 15k / 30k / 30k / 50k</td></tr><tr><td>geminiFree</td><td>15k / 15k / 35k / 35k / 60k</td><td>8k / 8k / 18k / 18k / 30k</td></tr><tr><td>claude</td><td>20k / 20k / 40k / 40k / 60k</td><td>10k / 10k / 20k / 20k / 30k</td></tr><tr><td>openai</td><td>15k / 15k / 30k / 30k / 50k</td><td>8k / 8k / 15k / 15k / 25k</td></tr></tbody></table>
+<p><code>frontier</code> mirrors flagship — Opus has comparable context but we
+don't push it past flagship sizes without data to justify it. Local
+LLMs share a single conservative table regardless of runner. The
+default tier is <code>flagship</code>, so callers that omit the model fall back
+to the same numbers as before A3 — byte-for-byte back-compat.</p>
+</li>
+<li>
+<p>Chunk <strong>pacing</strong> is per-provider, derived from response headers (see
+<code>src/lib/rateLimit.ts</code>). Header-bearing providers populate <code>RateLimitState</code>
+from <code>anthropic-ratelimit-*</code> and <code>x-ratelimit-*</code> headers each call;
+Gemini seeds static <code>RPM</code> / <code>TPM</code> values from <code>GEMINI_STATIC_LIMITS</code>
+based on which key is in play (<code>PAID_GEMINI_API_KEY</code> vs
+<code>VITE_GEMINI_API_KEY</code>). The pipeline calls
+<code>provider.getNextDelayMs(estimatedInputTokens)</code> between chunks; the
+delay is <code>max(60_000 / RPM, tokens / TPM × 60_000) × 1.1</code>. 429
+<code>Retry-After</code> overrides the calculated delay precisely. The legacy
+fixed 65-second <code>INTER_CHUNK_DELAY_MS</code> constant is gone.</p>
+</li>
+<li>
+<p>Local providers return 0 from <code>getNextDelayMs</code> — no API rate limit
+to respect. Per-phase <code>target: 'local'</code> overrides skip pacing for
+just that phase even on a cloud-default run.</p>
+</li>
+<li>
+<p>Inside each phase, abort signals propagate to provider calls
+(browser fetch + every cloud SDK honour AbortSignal).</p>
+</li>
+</ul>
+<h3 id="per-phase-routing-dispatch">Per-phase routing dispatch</h3>
+<p><code>chunkedGenerate</code> checks <code>args.phaseTarget</code>. When <code>target === 'local'</code>,
+it instantiates a <code>LocalInstanceProvider</code> against that model's
+<code>{ baseUrl, modelId }</code> for the duration of the phase, instead of
+dispatching through <code>getActiveProvider()</code>. The local provider routes
+via the existing <code>/api/local/generate</code> server proxy (single-origin to
+avoid CORS).</p>
+<p>When <code>target === 'cloud'</code>, the explicit <code>cloudProvider</code> from
+<code>RunSession</code> is honoured, with the optional Gemini tier escalation
+described in §5.</p>
+<h3 id="caching-summary">Caching summary</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Phase</th><th>Provider</th><th>Caching mechanism</th></tr></thead><tbody><tr><td>1</td><td>Claude</td><td><code>cache_control: ephemeral</code> on system block</td></tr><tr><td>1</td><td>OpenAI</td><td>Automatic prefix cache (≥1024 tokens prefix)</td></tr><tr><td>1</td><td>Gemini</td><td>Implicit prefix cache (~75% rebate on stable prefix; explicit <code>cachedContent</code> deferred)</td></tr><tr><td>3</td><td>All cloud providers</td><td>Same split as Phase 1 — speaker rules + DM Q&#x26;A live in <code>cacheablePrefix</code>, transcript + prior tail in <code>userPrompt</code></td></tr><tr><td>6</td><td>All cloud providers</td><td>Same split as Phase 1 — KB + DM Q&#x26;A + JSON format spec live in <code>cacheablePrefix</code>, campaign + chronicle chunk in <code>userPrompt</code></td></tr><tr><td>2, 4</td><td>All</td><td>No caching today; the audit and extras prompts pair raw + grounded inputs that can't share a stable prefix</td></tr><tr><td>1–6</td><td>Local</td><td>None (no provider primitive)</td></tr><tr><td>SBV</td><td>Cloud</td><td>Same split as Phase 1</td></tr></tbody></table>
+<p>Persona templates opt out of the cacheable split — their user-authored
+text interleaves variables in ways we can't safely partition. Persona
+users get the legacy uncached path; the default bardic voice gets the
+cache rebate.</p>
+<h3 id="chronicle-persistence">Chronicle persistence</h3>
+<p>When the chronicle reaches the "done" state (Phase 4 complete) and
+again whenever Phase 6 lands, <code>ChronicleView</code> posts the composed
+Markdown to <code>POST /api/chronicle/save</code>. The server writes it
+atomically to
+<code>&#x3C;repo>/Sessions/&#x3C;campaign>/Silence Beyond the Sea - &#x3C;campaign> - Session &#x3C;n>.md</code>,
+sanitising the campaign segment for path safety. Auto-save de-dupes
+by content fingerprint so an unrelated re-render doesn't cause an
+extra write; failures clear the fingerprint so the next change
+retries. The <code>Sessions/</code> directory is gitignored — users decide
+whether to commit individual chronicles.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="11-local-llm-detection-probing">11. Local-LLM detection + probing</h2></summary>
+<div class="docs-section-body">
+<h3 id="detection">Detection</h3>
+<p><code>/api/local-llm/detect</code> probes three default backends in parallel:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Backend</th><th>Default URL</th><th>Models endpoint</th></tr></thead><tbody><tr><td>Ollama</td><td><code>http://localhost:11434</code></td><td><code>/api/tags</code></td></tr><tr><td>LM Studio</td><td><code>http://localhost:1234</code></td><td><code>/v1/models</code></td></tr><tr><td>llama.cpp</td><td><code>http://localhost:8080</code></td><td><code>/v1/models</code></td></tr><tr><td>Unsloth</td><td><code>http://localhost:8888</code></td><td><code>/v1/models</code></td></tr></tbody></table>
+<p>Each reports <code>{ reachable, models[], error? }</code>. The Local LLM panel
+shows reachable backends with their installed models, and the
+<strong>Launch</strong> button can spawn a runner (Ollama with FlashAttention +
+4-bit KV cache, LM Studio CLI, or Unsloth Studio with auto-open of
+the login page).</p>
+<h3 id="authentication">Authentication</h3>
+<p>The local-LLM proxy supports three auth schemes per backend:</p>
+<ol>
+<li>Explicit <code>bearerToken</code> — sent verbatim.</li>
+<li><code>username</code> + <code>password</code> — exchanged at <code>/token</code> via OAuth2 password
+flow; the resulting JWT is cached for 30 minutes. Used by Unsloth
+Studio's FastAPI-style auth.</li>
+<li><code>username</code> + <code>password</code> fallback to HTTP Basic when OAuth2 isn't
+available.</li>
+</ol>
+<p>The proxy refuses to forward to anything outside loopback or RFC-1918
+private LAN addresses (validated by <code>PRIVATE_HOST_RE</code> in
+<code>server/index.ts</code>) — it is not an open proxy.</p>
+<h3 id="mini-probe-2-tests">Mini-probe (2 tests)</h3>
+<p><code>server/localProbe/runner.ts</code>:</p>
+<ol>
+<li><strong>Structured JSON adherence</strong> — 5 short prompts requiring
+strict-JSON replies matching a hand-crafted schema. Score =
+passes / 5; threshold for Phase 2 / 4 eligibility is <code>0.8</code>.</li>
+<li><strong>Grounding fidelity</strong> — a 200-word transcript snippet with 5
+known mishearings + 5 distractors in the glossary; the model must
+apply only the 5 expected corrections without inventing anything
+else. Score = <code>corrected/5 − 0.2 × invented</code>, clamped to <code>[0, 1]</code>.
+Threshold for Phase 1 eligibility is <code>0.7</code>. Phase 3 is currently
+held back from local regardless of score (deferred work: a richer
+prose-quality probe).</li>
+</ol>
+<p>Results persist in <code>{cacheDir}/capability.json</code> so probes survive
+restarts. The routing rows read from this cache when
+offering local models per phase.</p>
+<h3 id="hardware-aware-recommender">Hardware-aware recommender</h3>
+<p><code>src/lib/recommendations.ts</code> combines <code>/api/system/info</code> (RAM, CPU,
+NVIDIA VRAM via <code>nvidia-smi</code>) with the user's chosen local model to
+flag obvious mismatches before the user commits — e.g. a 32B model
+on 8 GB VRAM gets a "won't fit" badge in the routing editor.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="12-rate-limiting-safety">12. Rate limiting + safety</h2></summary>
+<div class="docs-section-body">
+<h3 id="retry-strategy">Retry strategy</h3>
+<ul>
+<li>4 retry attempts (<code>MAX_RETRIES</code>) before a phase fails.</li>
+<li>Transient 429 / 5xx (when the response did <strong>not</strong> include a
+<code>Retry-After</code> header): 35-second backoff (<code>TRANSIENT_RETRY_MS</code>).</li>
+<li>Final attempt fallback: 65-second backoff (<code>EXHAUSTION_RETRY_MS</code>).</li>
+<li>When a 429 response <strong>does</strong> include <code>Retry-After</code>, the provider
+parses it via <code>retryAfterFromError</code> and waits
+exactly that long instead of the static constant; the same delay is
+also fed into <code>RateLimitState.noteRetryAfter()</code> so the next chunk
+honours the window too.</li>
+<li>Gemini-specific: hard-zero-quota (<code>limit: 0</code>) triggers an immediate
+swap to the fallback key in <code>auto</code> mode, provided both <code>gemini</code> and
+<code>geminiFallback</code> were decrypted at boot. Two consecutive exhaustion
+errors also swap; on swap, the <code>RateLimitState</code> is re-seeded with
+the free-tier RPM/TPM so pacing stays accurate after the flip.</li>
+</ul>
+<h3 id="output-token-budget">Output token budget</h3>
+<p><code>MAX_OUTPUT_TOKENS = 32,768</code> by default (overridable via
+<code>VITE_MAX_OUTPUT_TOKENS</code>). Comfortably above what any single chunk
+needs (~4× typical chunk output size) so <code>MAX_TOKENS</code> finish reasons
+are rare. The 8,192 default that shipped earlier was a Gemini
+1.0-era leftover that bit on grounding work.</p>
+<h3 id="mature-content">Mature content</h3>
+<p>Cloud providers receive <code>safetyMode: 'permissive'</code>. Gemini applies
+<code>HarmBlockThreshold.BLOCK_NONE</code> across all four user-tier categories.
+Claude and OpenAI rely on a TTRPG framing line ("Mature themes are
+expected: profanity, violence, dark humour, sexual references, gore —
+preserve them verbatim") injected as the first system block.</p>
+<h3 id="inter-chunk-pacing">Inter-chunk pacing</h3>
+<p>Adaptive per-provider, not a fixed constant. See "Chunking + pacing" in
+§10 for the full formula. Drops to 0 for local providers (the
+<code>LocalProviderAdapter</code> doesn't implement <code>getNextDelayMs</code>) and for
+individual phases marked <code>target: 'local'</code>.</p>
+<h3 id="safety-multiplier-the-slow-down-dial">Safety multiplier — the slow-down dial</h3>
+<p>The rate-limit dialog (see §19) offers a <strong>Slow down</strong> option that
+multiplies inter-chunk pacing by 3×. The multiplier threads through
+<code>chunkedGenerate</code> as either a literal <code>number</code> or a <code>() => number</code>
+getter; when the dialog mid-run sets the multiplier, the chunk loop
+reads the latest value before each chunk's pacing call. Default <code>1.0</code>
+preserves byte-for-byte spacing for existing callers — only users who
+explicitly pick "slow down" see the dilated pacing.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="13-security-privacy">13. Security &#x26; privacy</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li>The server <strong>binds to <code>127.0.0.1</code> by default</strong>. Override with
+<code>TUSKS_HOST</code> (e.g. <code>TUSKS_HOST=0.0.0.0</code> for LAN exposure on a trusted
+network). No external IP is exposed by default.</li>
+<li>A same-origin middleware mounted on <code>/api/*</code> rejects any
+state-changing request (POST/PUT/PATCH/DELETE) whose <code>Origin</code> header
+doesn't match the listener — closes drive-by-CSRF (e.g. a malicious
+tab triggering an add-on install). Missing <code>Origin</code> is allowed so
+curl / smoke-test / other non-browser tooling still works.</li>
+<li>API keys are encrypted at rest under a machine-bound passphrase.
+They are fetched in-memory once at React app boot and live in JS
+heap only.</li>
+<li>KB documents, transcripts, recordings, and chronicles never leave
+the user's machine. Cloud LLM calls send only the chunk text +
+system prompt + KB excerpts the user uploaded.</li>
+<li>No telemetry, no analytics, no third-party tracking.</li>
+<li>Whisper (when the audio-addon is installed) runs locally; no audio
+leaves the host.</li>
+<li>The local-LLM proxy at <code>/api/local/*</code> (mounted by the local-llm-addon
+only) accepts requests to loopback / RFC1918 private LAN addresses
+only, validated via <code>PRIVATE_HOST_RE</code> in <code>server/api/localProxy.ts</code>.
+It is not an open proxy. Default installs return 404 on these routes
+because the add-on isn't loaded.</li>
+<li>Add-on install endpoints (<code>POST /api/addons/:name/install</code>, <code>POST /api/whisper/setup</code>) are POST + same-origin-gated. The previous GET
+variants were converted to close drive-by <code>&#x3C;img src=…></code> triggering.</li>
+<li>Add-on disable: even after install, a user can flip the
+<code>configEnabled</code> toggle in Settings → Transcription. The loader skips
+toggled-off add-ons at next start; their routes are never mounted.</li>
+<li>Audio files are written to disk in the codec they arrived in
+(FLAC / WAV / OGG…) by design, so the user can audit them. Delete
+via the Sessions UI (audio-only or whole-session) or by removing
+the session directory.</li>
+<li>The chronicle save endpoint refuses path traversal (campaign
+segments are stripped of <code>\/:*?"&#x3C;>|</code> and control characters before
+composition) and always writes inside the repo's <code>Sessions/</code>
+directory. The Tusks-Lore <code>.docx</code> writer uses the same sanitizer
+before composing <code>&#x3C;loreRoot>/Sessions/&#x3C;campaign>/...</code>.</li>
+<li>The docs viewer (<code>/api/docs/:slug</code>) uses an allowlist-based slug map
+built at startup: slugs match <code>/^[a-z0-9-]+$/</code> AND must exist in the
+precomputed Map. There is no string-concatenation of user input with
+filesystem paths — path traversal is impossible by construction.</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="14-build-deployment">14. Build + deployment</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li><code>npm run dev</code> — Express + Vite middleware on <code>127.0.0.1:5173</code>.</li>
+<li><code>npm run build</code> — <code>vite build</code> (SPA bundle) +
+<code>tsc -p tsconfig.server.json</code> (<code>dist-server/</code>).</li>
+<li><code>npm start</code> — production: static <code>dist/</code> served by Express, same
+routes.</li>
+<li><code>npm run typecheck</code> — frontend + server type-check (both
+<code>tsconfig.json</code> and <code>tsconfig.server.json</code>).</li>
+<li><code>npm test</code> — Vitest runs <code>src/**/*.test.{ts,tsx}</code> and
+<code>server/**/*.test.ts</code>. Covers chunking, rate limiting, SBV
+round-trip, pipeline toasts, add-on loader (error isolation +
+configEnabled gating), liveSessionBridge no-op default, docs router
+slug allowlist, and Tusks-Lore detection.</li>
+<li><code>npm run smoke-test</code> — end-to-end ping of every configured provider
+plus Whisper readiness across three lifecycles (not-installed /
+installed-restart-required / ready). Non-zero exit on real failures;
+"skipped" results don't count as failures.</li>
+<li><code>npm run setup</code> — first-time-install path: checks Node/Python, runs
+<code>npm install</code>. Does <strong>not</strong> run <code>whisper:setup</code> — Whisper is now an
+optional module installed from the in-app Settings → Transcription UI.</li>
+<li><code>npm run whisper:setup</code> / <code>npm run whisper:setup:posix</code> — bootstrap
+the Python venv. Called by the audio-addon's <code>install()</code> handler;
+also runnable from the CLI for advanced users.</li>
+<li><strong>CI</strong> — <code>.github/workflows/ci.yml</code> runs <code>npm ci</code> + <code>npm run typecheck</code> + <code>npm test</code> on every push and pull-request against
+<code>main</code>. Smoke-test stays out of CI (needs live provider keys).</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="15-add-on-system">15. Add-on system</h2></summary>
+<div class="docs-section-body">
+<p>The core install ships paste-a-transcript chronicling through cloud LLMs.
+Anything genuinely heavier — today that means only the Whisper audio
+environment — sits behind a registry so a user who never wants it never pays
+the disk or dependency cost. Everything else that used to live here ships in
+the bundle and simply mounts.</p>
+<h3 id="registry-loader">Registry + loader</h3>
+<p><code>server/addons/registry.ts</code> exports <code>ADDON_REGISTRY: AddonDefinition[]</code>.
+Each <code>AddonDefinition</code> declares:</p>
+<p>Every definition declares:</p>
+<ul>
+<li><code>kind</code> — <code>'install'</code> or <code>'builtin'</code>. The discriminant; see below.</li>
+<li><code>name</code> — machine-stable identifier (<code>audio-addon</code>, <code>local-llm-addon</code>).</li>
+<li><code>displayName</code> / <code>description</code> / <code>wip</code> — UI metadata.</li>
+<li><code>docSlug</code> — optional <code>/api/docs</code> slug for the "Read docs" link.</li>
+<li><code>registerRoutes(app: Express): void</code> — mount the module's endpoints.</li>
+</ul>
+<p>A <code>kind: 'install'</code> definition adds the install lifecycle:</p>
+<ul>
+<li><code>isReady(): Promise&#x3C;boolean></code> — prerequisites present? Called on every
+server start, and the sole source of truth for "installed".</li>
+<li><code>install(emit): Promise&#x3C;number></code> — returns the underlying script's
+exit code; non-zero means failure.</li>
+<li><code>uninstall(): Promise&#x3C;void></code> — remove prerequisites.</li>
+</ul>
+<p><code>server/addons/loader.ts → loadAddons(app)</code> runs at server start. For each
+registered module it:</p>
+<ol>
+<li>Mounts a <code>builtin</code> unconditionally — neither <code>isReady()</code> nor the
+<code>addons.json</code> toggle applies, because there is no install state for
+either to describe.</li>
+<li>For an <code>install</code> module: reads <code>{configDir}/addons.json</code> and skips if
+<code>configEnabled === false</code>, then calls <code>await addon.isReady()</code> and skips
+if false.</li>
+<li>Mounts routes via <code>addon.registerRoutes(app)</code>.</li>
+<li>Records the name in an in-memory <code>Set</code> exposed as <code>isAddonLoaded(name)</code>.</li>
+</ol>
+<p>Failure of any step (a thrown <code>isReady</code>, a thrown <code>registerRoutes</code>) is
+caught and logged; the loader continues to the next module so one bad
+one can't brick startup. Tests in <code>server/addons/loader.test.ts</code>
+pin this behaviour.</p>
+<h3 id="two-kinds-of-module">Two kinds of module</h3>
+<p><code>AddonDefinition</code> is a discriminated union on <code>kind</code>, and the discriminant
+answers one question: <strong>does turning this on put bytes on disk that weren't
+there before?</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th><code>kind</code></th><th>Lifecycle</th><th>Today</th></tr></thead><tbody><tr><td><code>install</code></td><td>Carries <code>isReady()</code>, <code>install()</code>, <code>uninstall()</code>. <code>isReady()</code> gates mounting and is the sole source of truth for "installed".</td><td>Exactly one: <code>audio-addon</code>, whose payload is a Python environment.</td></tr><tr><td><code>builtin</code></td><td>None. Ships with the app and always mounts.</td><td>The other six.</td></tr></tbody></table>
+<p>The union is what makes the distinction structural rather than conventional:
+a <code>builtin</code> <strong>cannot</strong> carry an <code>uninstall()</code> body, because the type has no
+such field. The old Personas uninstall — which deleted the user's authored
+<code>personas.json</code> — is therefore no longer expressible, rather than merely
+discouraged by a comment.</p>
+<p>Six modules moved from <code>install</code> to <code>builtin</code> because their <code>install()</code> bodies
+only ever wrote a marker file and then demanded a server restart: install-shaped
+ceremony for features that already shipped in the bundle. Whether a builtin is
+<em>usable</em> — CLI on <code>PATH</code>, runner reachable, vault path set — is a detection
+question its own status endpoint answers, not an installation question.</p>
+<p>Marker files older versions wrote (<code>{configDir}/*.enabled</code>) are simply no longer
+consulted. They are deliberately not deleted: the change alters what the user is
+asked to understand, not the contents of their disk. For the same reason a stale
+<code>configEnabled: false</code> left over from the add-on era is ignored for builtins.</p>
+<h3 id="three-state-model-installable-modules-only">Three-state model (installable modules only)</h3>
+<p>For a <code>kind: 'install'</code> module the UI surfaces three distinct flags, all
+returned by <code>GET /api/addons</code>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Source</th><th>Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td><code>addon.isReady()</code></td><td>Prerequisites installed on disk</td></tr><tr><td><code>configEnabled</code></td><td><code>{configDir}/addons.json</code></td><td>User hasn't toggled this module off</td></tr><tr><td><code>loaded</code></td><td><code>isAddonLoaded(name)</code></td><td>Routes are mounted in the current process</td></tr></tbody></table>
+<p>The three diverge between install/uninstall/toggle and the next server
+restart — <code>loaded</code> only updates at boot. <code>AddonsManager.tsx</code> shows a
+"Restart required to activate/deactivate" pill when
+<code>loaded !== (enabled &#x26;&#x26; configEnabled)</code>, covering install, uninstall, and
+toggle in a single rule.</p>
+<p>A failing <code>isReady()</code> is caught per module and returned inline as
+<code>readyError</code> rather than failing the whole list with a 500 — one module's
+broken prerequisite check must not hide the others.</p>
+<h3 id="endpoints-serverapiaddonsts">Endpoints (<code>server/api/addons.ts</code>)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>Path</th><th>Behaviour</th></tr></thead><tbody><tr><td>GET</td><td><code>/api/addons</code></td><td>List <strong>installable</strong> modules with all three flags + <code>docSlug</code>. Builtins are deliberately absent: they configure themselves through their own surfaces (connection rows, the lore-source switch), so an install/uninstall row for them would be ceremony around nothing.</td></tr><tr><td>POST</td><td><code>/api/addons/:name/install</code></td><td>SSE stream of install logs; final <code>done</code> event carries the real <code>exitCode</code></td></tr><tr><td>PATCH</td><td><code>/api/addons/:name</code></td><td><code>{ configEnabled: boolean }</code> toggle; persists to <code>addons.json</code></td></tr><tr><td>DELETE</td><td><code>/api/addons/:name</code></td><td>Calls <code>addon.uninstall()</code></td></tr></tbody></table>
+<p>Install endpoints are POST (not GET) so an <code>&#x3C;img src=…></code> can't trigger
+them. The SSE response shape works fine over POST because the React
+side consumes it via <code>fetch().body.getReader()</code>, not <code>EventSource</code>.</p>
+<h3 id="currently-registered-modules">Currently registered modules</h3>
+<p><code>server/addons/registry.ts</code> is the source of truth.</p>
+<ul>
+<li><strong><code>audio-addon</code></strong> <em>(install)</em> — Whisper sidecar + the Sessions tab.
+<code>isReady()</code> checks for <code>vendor/python-venv/</code> via <code>whisperStatus()</code>.
+<code>install()</code> runs <code>scripts/whisper/setup.{ps1,sh}</code> and forwards the
+child process's exit code. Routes: <code>/api/sessions/*</code> (transcribe +
+upload extensions), <code>/api/whisper/*</code>.</li>
+<li><strong><code>personas-addon</code></strong> <em>(builtin)</em> — Chronicle Personas. The router seeds the
+six presets on first read, so <code>personas.json</code> never needs to exist and
+nothing deletes it. Routes: <code>/api/personas/*</code>.</li>
+<li><strong><code>local-llm-addon</code></strong> <em>(builtin)</em> — Ollama / LM Studio / Unsloth routing.
+Routes: <code>/api/local/*</code> (proxy + launch) and <code>/api/local-llm/*</code> (detection,
+capability probes, Unsloth auth config).</li>
+<li><strong><code>claude-code-addon</code></strong> <em>(builtin)</em> — routes phases through a signed-in
+Claude Code CLI. Routes: <code>/api/claude-code/*</code>.</li>
+<li><strong><code>codex-addon</code></strong> <em>(builtin)</em> — the same against the OpenAI Codex CLI, and
+deliberately independent of the Claude Code module. Routes: <code>/api/codex/*</code>.</li>
+<li><strong><code>whisper-cpp-addon</code></strong> <em>(builtin)</em> — bridges to a whisper.cpp build the user
+compiles, covering AMD, Intel and Apple GPUs. Routes: <code>/api/whisper-cpp/*</code>.</li>
+<li><strong><code>obsidian-vault-addon</code></strong> <em>(builtin)</em> — read-only Obsidian vault as a lore
+source. Routes: <code>/api/obsidian/*</code>, behind a <code>loopbackOnly()</code> gate.</li>
+</ul>
+<div class="docs-alert docs-alert-caution">
+<div class="docs-alert-label">Warning</div>
+<p>The <code>loopbackOnly()</code> gate on the Obsidian router is load-bearing. Every
+route on it mutates host state: <code>POST /config</code> accepts an arbitrary absolute
+path and persists it as the app's lore read root, <code>/generate-claude-md</code>
+writes a file into it, <code>/graphify-build</code> spawns a process with its cwd there,
+and <code>/pick-folder</code> opens a native dialog on the host desktop. Combined with
+<code>GET /api/lore/documents</code> — which returns the full body of every <code>.md</code> under
+that root — an ungated <code>/config</code> is arbitrary file read. Harmless on the
+default <code>127.0.0.1</code> bind, but <code>TUSKS_HOST=0.0.0.0</code> is a documented option and
+would expose all of it unauthenticated. Mounting unconditionally as a builtin
+makes this gate <strong>more</strong> important, not less.</p>
+</div>
+<h3 id="future-add-ons">Future add-ons</h3>
+<p>The registry is open. The roadmap names three candidates that fit the
+current contract cleanly:</p>
+<ul>
+<li><strong>Whisper diarisation</strong> for single-track audio — adds speaker labels
+to recordings that don't have per-speaker source files (podcast
+VODs, Zoom recordings). Sits alongside the audio-addon's existing
+per-utterance transcription queue.</li>
+<li><strong>SRT / VTT caption parsers</strong> — sister formats to <code>.sbv</code> that share
+Phase 1's grounding pipeline; adds one router and a small parser.</li>
+<li><strong>In-PDF image OCR</strong> — handles scanned session notes and
+handwritten lore. Sits in the lore pipeline as a pre-extract step
+before <code>pdf-parse</code>.</li>
+</ul>
+<p>Each would follow the same <code>AddonDefinition</code> contract: <code>isReady()</code>
+probes its prerequisites, <code>install()</code> runs an SSE-streamed setup
+script, <code>registerRoutes(app)</code> mounts its endpoints, the loader
+respects the <code>configEnabled</code> toggle.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="16-tusks-lore-shared-sibling-folder">16. Tusks-Lore — shared sibling folder</h2></summary>
+<div class="docs-section-body">
+<p>Optional sibling folder both Tusk's Tomes and Tusk's Vault read from.
+Holds a <code>.docx</code> archive of finished chronicles and (in future) a
+shared lore corpus. Not an add-on — it's a sibling-detected
+filesystem feature analogous to Vault pairing.</p>
+<h3 id="detection-serverloredetectionts">Detection (<code>server/lore/detection.ts</code>)</h3>
+<p>First match wins:</p>
+<ol>
+<li><code>$TUSKS_LORE_DIR</code> env override (absolute or relative to repo root).</li>
+<li>Sibling lookup: <code>&#x3C;repoRoot>/../{Tusks-Lore, tusks-lore, tusks_lore}</code>.</li>
+</ol>
+<p>A directory counts as a Lore install if it has a <code>tusks-lore.json</code>
+marker file with a parseable <code>version</code> field. The marker prevents
+random folders named "Tusks-Lore" from triggering false positives.</p>
+<p><code>createLoreFolder()</code> writes the marker + an empty <code>Sessions/</code>
+subdirectory at the default sibling path. Idempotent: re-running
+preserves an existing marker's <code>createdAt</code>.</p>
+<h3 id="docx-rendering-serverloredocxrendererts">DOCX rendering (<code>server/lore/docxRenderer.ts</code>)</h3>
+<p><code>renderChronicleDocx({ campaign, sessionNumber, chronicle, extras, condensed, mode })</code> returns a <code>Buffer</code> via the <code>docx</code> npm package.
+Document structure:</p>
+<ol>
+<li>Title block — campaign · session # · mode · date.</li>
+<li>Body — full chronicle prose (<code>mode='full'</code>) or condensed
+narrative + bullet recap (<code>mode='condensed'</code>). Falls back to full
+when <code>condensed</code> is null.</li>
+<li>Gallery of Jests (bullets).</li>
+<li>Gallery of Gore (bullets).</li>
+<li>Memorable Quotes grouped by kind (Funny / Stupid / Dark) with
+speaker bolded + quote italicised.</li>
+</ol>
+<p>The extras blocks render in <strong>both</strong> modes — only the chronicle body
+differs.</p>
+<h3 id="endpoints-serverapilorets">Endpoints (<code>server/api/lore.ts</code>)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>Path</th><th>Behaviour</th></tr></thead><tbody><tr><td>GET</td><td><code>/api/lore/status</code></td><td>Detection result + sessions count + <code>defaultPath</code></td></tr><tr><td>POST</td><td><code>/api/lore/create</code></td><td>Scaffold the sibling folder; idempotent</td></tr><tr><td>POST</td><td><code>/api/lore/save-chronicle</code></td><td>Render the .docx and write to <code>&#x3C;lore>/Sessions/&#x3C;campaign>/Session-NN-YYYY-MM-DD-&#x3C;mode>.docx</code></td></tr></tbody></table>
+<h3 id="client-surface">Client surface</h3>
+<ul>
+<li><code>src/components/LoreCard.tsx</code> — Settings card showing detection
+status, sessions count, writability, and the <strong>Create Tusk's Lore</strong>
+button when not detected.</li>
+<li><code>src/components/ChronicleView.tsx</code> — adds <strong>Save full .docx</strong> and
+<strong>Save condensed .docx</strong> buttons (the condensed one only when a
+Phase 6 output exists) when the Lore folder is detected.</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="17-in-app-docs-viewer">17. In-app docs viewer</h2></summary>
+<div class="docs-section-body">
+<p>The Help tab renders the same <code>.md</code> files that live in the GitHub
+repo, inside the app. Stays consistent with the GitHub render because
+both consume the same files.</p>
+<h3 id="endpoint-serverapidocsts">Endpoint (<code>server/api/docs.ts</code>)</h3>
+<p>At startup the docs router walks <code>docs/**/*.md</code> + repo-root <code>README.md</code>,
+<code>CONTRIBUTING.md</code>, <code>ROADMAP.md</code> (contributor guides are excluded) and
+builds a slug→absPath Map. Slugs derive from the
+relative path: <code>docs/add-ons/audio-transcription.md</code> →
+<code>add-ons-audio-transcription</code>. Slugs must match <code>/^[a-z0-9-]+$/</code> AND
+exist in the precomputed Map — there is no string-concatenation of user
+input with disk paths, so path traversal is impossible by construction.</p>
+<h3 id="client-srccomponentsdocsviewertsx">Client (<code>src/components/DocsViewer.tsx</code>)</h3>
+<p>Uses <code>react-markdown</code> + <code>remark-gfm</code> (the only new runtime deps).
+Sidebar groups docs by their parent folder; defaults to the README on
+open. Add-on cards (and <code>WhisperSettings</code>) dispatch a
+<code>sbts:open-doc</code> CustomEvent that flips the active tab to <strong>Help</strong>
+and asks the viewer to load a specific slug.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="18-run-checkpoints-resume">18. Run checkpoints + resume</h2></summary>
+<div class="docs-section-body">
+<p>Long-running cloud pipelines can hit per-day quotas on free-tier keys
+that don't reset until midnight UTC. The pause / resume feature lets a
+user save a full snapshot of an in-flight run to disk, close the app,
+come back tomorrow when the quota refills, and resume from the exact
+chunk they paused on.</p>
+<h3 id="on-disk-schema-srclibruncheckpointts">On-disk schema (<code>src/lib/runCheckpoint.ts</code>)</h3>
+<pre><code class="language-ts">type RunCheckpoint = {
+  schemaVersion: 1
+  runId: string
+  createdAt: string
+  pausedAt: string
+  pausedReason: 'user' | 'quota' | 'error'
+  routing: RoutingDocument      // snapshot, so resume re-uses the same providers
+  safetyMultiplier: number      // the slow-down dial state at pause time
+  refinementState: RefinementState  // grounded, dmQuestions/Answers, chronicle, extras, condensed
+  progress: { phase: 1|2|3|4|6, chunkIndex: number, totalChunks: number }
+}
+</code></pre>
+<p><code>schemaVersion</code> is bumped when the on-disk shape changes; resume
+refuses to load mismatched versions and surfaces an "export the partial
+output, then delete this checkpoint" path instead.</p>
+<h3 id="storage-serverapirunsts">Storage (<code>server/api/runs.ts</code>)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>Path</th><th>Behaviour</th></tr></thead><tbody><tr><td>GET</td><td><code>/api/runs</code></td><td>Lists summaries (campaign, session #, paused phase, paused timestamp). Sorted most-recently-paused first.</td></tr><tr><td>GET</td><td><code>/api/runs/:id</code></td><td>Full checkpoint payload</td></tr><tr><td>PUT</td><td><code>/api/runs/:id</code></td><td>Atomic write to <code>{configDir}/runs/{runId}.json</code>. 20 MB cap → 413</td></tr><tr><td>DELETE</td><td><code>/api/runs/:id</code></td><td>Idempotent — already-gone returns 200</td></tr></tbody></table>
+<p>Path-safety: <code>:id</code> is validated against <code>/^[a-zA-Z0-9_-]{1,64}$/</code> so
+traversal attempts can't reach disk.</p>
+<h3 id="client-surface-2">Client surface</h3>
+<ul>
+<li><strong>Pause</strong> option in the rate-limit dialog (§19) writes the checkpoint
+via <code>saveRun()</code> then aborts the chunk loop.</li>
+<li><strong>ResumeRunBanner</strong> (<code>src/components/ResumeRunBanner.tsx</code>) renders
+above the Chronicle tab when checkpoints exist. Lists each with
+campaign / paused-phase / chunk-progress; Resume + Delete buttons.</li>
+<li><strong>Resume click</strong> hydrates <code>RefinementState</code> from the checkpoint,
+restores the safetyMultiplier, and (per the planner in
+<code>src/lib/resumeFlow.ts</code>) decides whether to continue at
+<code>startChunkIndex</code> or restart the paused phase from chunk 0. Mid-chunk
+auto-continuation for Phase 3+ is wired for the next release; for now
+the user re-triggers the remaining phases from the restored state.</li>
+<li><strong>Clean finish</strong> (after Phase 4 success) automatically calls
+<code>deleteRun(id)</code> so the banner stops nagging once a run completes.</li>
+</ul>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="19-rate-limit-dialog">19. Rate-limit dialog</h2></summary>
+<div class="docs-section-body">
+<p>When Gemini emits a 429 mid-pipeline, the provider classifies it
+(<code>classifyExhaustion</code> in <code>src/lib/providers/gemini.ts</code>) as one of
+<code>rate_limit</code> / <code>daily_quota</code> / <code>transient</code>. The classification looks
+at quotaId/quotaMetric shape (<code>PerDay</code> vs <code>PerMinute</code>) and falls back
+to a heuristic — three exhaustions within five minutes on the same key
+upgrades a generic <code>rate_limit</code> to <code>daily_quota</code>, on the assumption
+that sustained 429s without a per-minute qualifier mean the daily
+bucket is empty.</p>
+<p>The provider emits a <code>quota_exhausted</code> <code>ProviderEvent</code>; the pipeline's
+<code>providerEventForwarder</code> translates it into a <code>quota_exhausted</code>
+<code>PipelineEvent</code> tagged with the active phase; the React subscriber in
+<code>RefinementTool</code> opens <code>RateLimitDialog</code>. Four choices:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Choice</th><th>Action</th></tr></thead><tbody><tr><td><strong>Stop and export</strong></td><td>Aborts the run + downloads the partial chronicle as Markdown (via <code>buildPartialMarkdown</code> in <code>src/lib/exportMarkdown.ts</code>)</td></tr><tr><td><strong>Slow down (3×)</strong></td><td>Sets <code>safetyMultiplierRef.current = 3</code>; the next chunk's pacing call reads this. Disabled when <code>quotaKind === 'daily_quota'</code></td></tr><tr><td><strong>Pause and save for later</strong></td><td>Writes a checkpoint (§18) then aborts</td></tr><tr><td><strong>Switch to paid key for the rest</strong></td><td>Aborts + advisory toast pointing the user at Settings → Providers &#x26; models. Disabled when no paid Gemini key is configured. Live mid-run flip is a follow-up.</td></tr></tbody></table>
+<p>The same <code>ProviderEvent</code> channel also surfaces <code>auto_fallback</code> events
+when Gemini's existing free→paid soft-swap fires — those land as
+toasts so the previously-silent swap is now visible.</p>
+<hr>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="20-operational-notes">20. Operational notes</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li>A 4-hour D&#x26;D session with 6 active speakers recorded by Craig Bot
+ships as roughly <strong>0.5–1.5 GB</strong> of FLAC across one or more zips.
+Tusk's Tomes preserves the original codec — the upload extractor
+does not re-encode — so on-disk size mirrors what came out of Craig.
+The Sessions tab shows running disk usage and offers an <em>audio-only</em>
+delete once the transcript looks good.</li>
+<li>Whisper large-v3 on an RTX 3070 Ti at <code>int8_float16</code> runs 5–10×
+realtime per utterance; total transcription on a 4-hour session
+typically finishes in well under an hour.</li>
+<li>The cloud refinement on a typical session (~30k words grounded)
+takes 10–20 minutes wall-clock with Tier-1 pacing on Gemini, faster
+on pay-as-you-go OpenRouter tiers.</li>
+<li>Logs: server <code>console.*</code> to the terminal running <code>npm run dev</code>;
+browser <code>console.*</code> to devtools (F12).</li>
+<li>Finished chronicles land at
+<code>&#x3C;repo>/Sessions/&#x3C;campaign>/Silence Beyond the Sea - &#x3C;campaign> - Session &#x3C;n>.md</code>.
+The folder is gitignored — commit a specific session by adding it
+explicitly if you want it tracked.</li>
+<li>The legacy <code>localStorage</code> schema keys (<code>kb_documents</code>,
+<code>refinement_state</code>, <code>provider_settings</code>, <code>campaign</code>,
+<code>sessionNumber</code>, etc.) are still in use for items classified as
+ephemeral. Any new persistent state goes to disk via the Express
+APIs.</li>
+</ul>
+</div>
+</details>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/about/how-its-built.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>

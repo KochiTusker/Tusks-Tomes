@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local LLMs — Tusk's Tomes</title>
+<meta name="description" content="Optional add-on that adds Ollama, LM Studio, and Unsloth Studio routing to Tusk's Tomes. Out of the box the pipeline runs cloud-only (Gemini / Claude /…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/extras/local-llms/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Local LLMs — Tusk's Tomes">
+<meta property="og:description" content="Optional add-on that adds Ollama, LM Studio, and Unsloth Studio routing to Tusk's Tomes. Out of the box the pipeline runs cloud-only (Gemini / Claude /…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/extras/local-llms/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Local LLMs — Tusk's Tomes">
+<meta name="twitter:description" content="Optional add-on that adds Ollama, LM Studio, and Unsloth Studio routing to Tusk's Tomes. Out of the box the pipeline runs cloud-only (Gemini / Claude /…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Local LLMs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/extras/local-llms/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Local LLMs",
+  "description": "Optional add-on that adds Ollama, LM Studio, and Unsloth Studio routing to Tusk's Tomes. Out of the box the pipeline runs cloud-only (Gemini / Claude /…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/extras/local-llms/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/" aria-current="page">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Local LLMs</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#when-this-is-worth-it">When this is worth it</a></li><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#setting-it-up">Setting it up</a></li><li><a href="#turning-it-off">Turning it off</a></li><li><a href="#picking-a-model">Picking a model</a></li><li><a href="#hybrid-routing">Hybrid routing</a></li><li><a href="#removing-it">Removing it</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#see-also">See also</a></li></ul></aside>
+    <article class="prose">
+<h1>Local LLMs</h1>
+<p>Optional add-on that adds Ollama, LM Studio, and Unsloth Studio routing to
+Tusk's Tomes. Out of the box the pipeline runs cloud-only (Gemini / Claude /
+OpenAI). Install this add-on if you want some or all phases to run on a
+local model instead.</p>
+<div class="docs-alert docs-alert-note">
+<div class="docs-alert-label">Note</div>
+<p><strong>View in app:</strong> this doc renders inside Tusk's Tomes too — open the <strong>Help</strong> tab and pick "Local LLMs", or click <strong>Read docs</strong> from the Local LLMs row in Settings.</p>
+</div>
+<details class="docs-section" open>
+<summary><h2 id="when-this-is-worth-it">When this is worth it</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li>You already run a local LLM and want to avoid cloud spend for routine
+phases (especially Phase 1 grounding on a long transcript).</li>
+<li>You want sensitive transcripts to stay on-device.</li>
+<li>You want to experiment with hybrid routing — cloud for chronicle, local
+for grounding.</li>
+</ul>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="prerequisites">Prerequisites</h2></summary>
+<div class="docs-section-body">
+<p>This add-on doesn't install a local runner for you. Pick one (or more):</p>
+<ul>
+<li><strong>Ollama</strong> — <code>ollama serve</code> running on <code>localhost:11434</code>. Install from
+<a href="https://ollama.com" rel="noopener">ollama.com</a>. After install: <code>ollama pull llama3.1</code>
+(or any model you prefer).</li>
+<li><strong>LM Studio</strong> — OpenAI-compatible API on <code>localhost:1234</code>. Install
+from <a href="https://lmstudio.ai" rel="noopener">lmstudio.ai</a> and start the server from the UI
+or via <code>lms server start</code>.</li>
+<li><strong>Unsloth Studio</strong> — OpenAI-compatible API on <code>localhost:8888</code> with
+OAuth2 password auth. The <code>unsloth</code> CLI must be on your <code>PATH</code>.</li>
+<li>Any other OpenAI-compatible local runner (vLLM, llama.cpp server,
+koboldcpp). Point Tusk's Tomes at its base URL.</li>
+</ul>
+<p>Tusk's Tomes can launch Ollama / LM Studio / Unsloth for you (the Local LLM
+panel has a "Launch runner" button) but you still need the binary
+installed on <code>PATH</code>.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="setting-it-up">Setting it up</h2></summary>
+<div class="docs-section-body">
+<div class="docs-alert docs-alert-note">
+<div class="docs-alert-label">Note</div>
+<p>Nothing to install on the Tomes side. Install a runner, start it, and its
+models appear in the routing rows.</p>
+</div>
+<ol>
+<li>Install and start a runner — <a href="https://ollama.com" rel="noopener">Ollama</a>, <a href="https://lmstudio.ai" rel="noopener">LM Studio</a> or Unsloth Studio.</li>
+<li>Open <strong>Settings → Providers &#x26; models</strong> inside Tusk's Tomes.</li>
+<li>Use <strong>Detect</strong> on the runner's row. Tomes probes localhost on that
+backend's default port and lists the models it finds. Enter auth
+credentials here if your runner needs them, and run a capability probe.</li>
+<li>Assign individual phases to the model you want in the routing rows — for
+example Phase 1 on Ollama, Phase 3 on a cloud model.</li>
+</ol>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="turning-it-off">Turning it off</h2></summary>
+<div class="docs-section-body">
+<p>Point every phase back at a cloud connection in the routing rows, or just stop
+the runner — a runner that isn't running has no models to offer, and the
+routing rows say so rather than failing mid-run.</p>
+<p>Your <code>routing.json</code> stays on disk either way, so going back to a local model
+later restores your setup unchanged.</p>
+<p>If you previously had a local provider selected and then disable this
+add-on, Tusk's Tomes auto-switches the active provider back to Gemini and
+shows a toast explaining what happened.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="picking-a-model">Picking a model</h2></summary>
+<div class="docs-section-body">
+<blockquote>
+<p>** Read this before you route Phase 3 locally.**</p>
+<p><strong>Testing coverage is limited: no local model above 4B parameters has been
+run on the maintainer's hardware</strong>, for want of VRAM. Everything larger is
+unverified here — the sizes listed below are <em>guidance based on general
+model behaviour</em>, not measured results. Treat them accordingly, and please
+report what you find.</p>
+<p><strong>Prose quality is the real constraint.</strong> Local models are not as good at
+long-form narrative as the cloud models, and it shows most in the phase that
+matters most:</p>
+<ul>
+<li>Below roughly <strong>15–20B parameters</strong>, the chronicle tends to read like a
+<strong>log or bullet summary rather than a story</strong> — events in sequence, little
+narrative voice.</li>
+<li><strong>Grounding is also weaker at those sizes.</strong> Correcting names and lore
+against a glossary is a demanding instruction-following task and smaller
+models drift from it more often.</li>
+<li><strong>Mileage varies considerably</strong> between models of nominally similar size —
+far more than between cloud models.</li>
+</ul>
+<p>Note the awkward gap: the sizes that start producing genuinely good prose
+are well above the sizes that have been tested here.</p>
+</blockquote>
+<p>Local models on consumer GPUs (8–16 GB VRAM) don't have the accuracy of
+Gemini 2.5 Pro on long-context grounding. Tusk's Tomes already chunks
+local-phase work much tighter than cloud-phase work to keep accuracy
+acceptable.</p>
+<p><strong>The recommended compromise:</strong> run the mechanical phases (1 grounding,
+2 audit, 4 extras) locally and send <strong>Phase 3 — the chronicle — to a cloud
+model or a Claude Code / Codex subscription</strong>. Per-phase hybrid routing exists
+for exactly this. You keep most of the cost saving and all of the prose
+quality.</p>
+<p>Commonly-used models and what to expect. <strong>These are starting points, not
+verified benchmarks</strong> — see the coverage warning above:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>VRAM</th><th>Expectation</th></tr></thead><tbody><tr><td><code>qwen2.5:7b-instruct</code></td><td>~8 GB</td><td>Reasonable for Phases 1/2/4. Expect log-like, verbose Phase 3 prose.</td></tr><tr><td><code>qwen2.5:14b-instruct</code></td><td>~10–12 GB</td><td>Approaching the size where chronicle prose becomes acceptable; slower.</td></tr><tr><td><code>llama3.1:8b-instruct-q4_K_M</code></td><td>~6 GB</td><td>Faster; expect more drift on lore terms.</td></tr><tr><td><code>phi4</code></td><td>~10 GB</td><td>Structured extraction (Phase 4) is its strength; Phase 1 wants a fuller glossary.</td></tr></tbody></table>
+<p>The capability probe in the Local LLM panel runs a fixed Phase 1 / Phase 4
+fixture, so you can measure how a model actually performs on <em>your</em> hardware
+rather than relying on the table above — which is the right way to settle it.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="hybrid-routing">Hybrid routing</h2></summary>
+<div class="docs-section-body">
+<p>Open <strong>Settings → Providers &#x26; models</strong> and use the per-phase routing rows.
+Each phase has a target:</p>
+<ul>
+<li><strong>Cloud</strong> — uses the cloud provider chosen at run start.</li>
+<li><strong>Local</strong> — uses the runner + model you specify per phase.</li>
+</ul>
+<p>Common patterns:</p>
+<ul>
+<li><em>All cloud</em> — default. Best quality, costs the most.</li>
+<li><em>All local</em> — pick a 14B+ instruct model; expect slower runs and some
+accuracy loss on lore grounding.</li>
+<li><em>Local Phase 1 + cloud rest</em> — grounding chunks are short and Phase 1
+is the longest phase. Saves the most cloud cost.</li>
+<li><em>Cloud Phase 1 + local Phase 4</em> — Phase 4 extras (jests, gore, quotes)
+is structured-JSON output and benefits least from a heavy model.</li>
+</ul>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="removing-it">Removing it</h2></summary>
+<div class="docs-section-body">
+<p>There is nothing to uninstall — Local LLMs ships with the app. Removing the
+runner itself (Ollama, LM Studio, Unsloth) is done through that tool's own
+uninstaller; Tomes never installed it and never touches it.</p>
+<div class="docs-alert docs-alert-note">
+<div class="docs-alert-label">Note</div>
+<p>Older versions wrote a marker file at <code>{configDir}/local-llm.enabled</code>. It is
+no longer read. It is deliberately not deleted either — this change altered
+what you have to understand, not the contents of your disk.</p>
+</div>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="troubleshooting">Troubleshooting</h2></summary>
+<div class="docs-section-body">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Symptom</th><th>Likely cause</th></tr></thead><tbody><tr><td>"Runner offline" in the Local LLM panel</td><td>The runner isn't running on its default port. Click <strong>Launch runner</strong> or start it manually.</td></tr><tr><td>Unsloth probe returns 401</td><td>Stored credentials are stale. Re-enter them in the Unsloth section of the Local LLM panel.</td></tr><tr><td>Phase 1 result is gibberish on a local model</td><td>Glossary or KB content is too large for the model's context. Try a smaller KB or a model with a larger context window.</td></tr><tr><td>Pipeline halfway through Phase 3 throws "fetch failed"</td><td>The local runner crashed or unloaded the model. Restart it, then resume from the last completed chunk.</td></tr></tbody></table>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="see-also">See also</h2></summary>
+<div class="docs-section-body">
+<ul>
+<li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription add-on</a> — same install pattern, different feature.</li>
+<li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Providers</a> — overall provider model.</li>
+<li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a> — <code>TUSKS_HOST</code>, env vars, paths.</li>
+</ul>
+</div>
+</details>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/extras/local-llms.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>

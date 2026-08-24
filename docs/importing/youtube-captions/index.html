@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turn a YouTube Transcript into a D&amp;D Session Write-Up — Tusk's Tomes</title>
+<meta name="description" content="No GPU needed: upload your session to YouTube as unlisted, let automatic captions transcribe it, and turn the transcript into a narrative chronicle grounded in your campaign lore.">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Turn a YouTube Transcript into a D&amp;D Session Write-Up — Tusk's Tomes">
+<meta property="og:description" content="No GPU needed: upload your session to YouTube as unlisted, let automatic captions transcribe it, and turn the transcript into a narrative chronicle grounded in your campaign lore.">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Turn a YouTube Transcript into a D&amp;D Session Write-Up — Tusk's Tomes">
+<meta name="twitter:description" content="No GPU needed: upload your session to YouTube as unlisted, let automatic captions transcribe it, and turn the transcript into a narrative chronicle grounded in your campaign lore.">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Import YouTube captions",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Import YouTube captions",
+  "description": "No GPU needed: upload your session to YouTube as unlisted, let automatic captions transcribe it, and turn the transcript into a narrative chronicle grounded in your campaign lore.",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB",
+  "keywords": "YouTube transcript to session recap, D&D transcriber no GPU, free D&D transcriber, SBV caption file, YouTube automatic captions transcript, TTRPG session summary from video, transcribe D&D without a GPU"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Turn a YouTube transcript into a tabletop RPG session write-up",
+  "description": "No GPU needed: upload your session to YouTube as unlisted, let automatic captions transcribe it, and turn the transcript into a narrative chronicle grounded in your campaign lore.",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/",
+  "supply": [
+    {
+      "@type": "HowToSupply",
+      "name": "A recording of one session"
+    },
+    {
+      "@type": "HowToSupply",
+      "name": "A glossary or vault of campaign lore"
+    }
+  ],
+  "tool": [
+    {
+      "@type": "HowToTool",
+      "name": "Tusk's Tomes"
+    },
+    {
+      "@type": "HowToTool",
+      "name": "Node.js 20 or newer"
+    },
+    {
+      "@type": "HowToTool",
+      "name": "A YouTube account"
+    }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Record the session",
+      "text": "Capture the game with OBS Studio, Zoom, or anything else that produces a file YouTube will accept. Video is not needed — audio with a still image uploads fine.",
+      "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/#step-1-record-the-session"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Upload it as unlisted or private",
+      "text": "Upload to YouTube and set visibility to Unlisted or Private, so the recording is neither indexed nor listed on your channel.",
+      "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/#step-2-upload-it-as-unlisted-or-private"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Wait for automatic captions",
+      "text": "YouTube generates captions on its own schedule. They appear under Subtitles in YouTube Studio once ready.",
+      "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/#step-3-wait-for-automatic-captions"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Get the transcript out",
+      "text": "Either copy the caption text straight into the Raw transcript box, or download the .sbv file and run it through the Caption Repair tab, which keeps the timestamps.",
+      "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/#step-4-get-the-transcript-out"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 5,
+      "name": "Ground it against your lore",
+      "text": "Phase 1 corrects misheard names against your glossary or Obsidian vault before any prose is written. Expect more clarifying questions than on the audio route, because caption files carry no speaker labels at all.",
+      "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/youtube-captions/#step-5-ground-it-against-your-lore"
+    }
+  ]
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/" aria-current="page">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Import YouTube captions</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#the-short-version">The short version</a></li><li><a href="#step-1-record-the-session">Step 1 — Record the session</a></li><li><a href="#step-2-upload-it-as-unlisted-or-private">Step 2 — Upload it as unlisted or private</a></li><li><a href="#step-3-wait-for-automatic-captions">Step 3 — Wait for automatic captions</a></li><li><a href="#step-4-get-the-transcript-out">Step 4 — Get the transcript out</a></li><li><a href="#step-5-ground-it-against-your-lore">Step 5 — Ground it against your lore</a></li><li><a href="#the-trade-off-stated-plainly">The trade-off, stated plainly</a></li><li><a href="#what-this-costs">What this costs</a></li><li><a href="#next">Next</a></li></ul></aside>
+    <article class="prose">
+<h1>Import YouTube captions</h1>
+<p>Upload the session recording to YouTube as unlisted, let Google's automatic
+captions transcribe it, and bring the result back as a narrative chronicle
+written in your world's own vocabulary. No GPU, no Python, nothing to install
+— the transcription happens on Google's hardware instead of yours.</p>
+<p>This is the easiest way to start, and it is the route to use if your graphics
+card is not an NVIDIA one. It is also, honestly, not the best output available;
+<a href="/Tusks-Tomes/docs/importing/session-audio/">the audio route</a> is better, and the gap is entirely
+about knowing who said what. That trade-off is explained properly below rather
+than buried.</p>
+<hr>
+<h2 id="the-short-version">The short version</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>You start with</strong></td><td>A video or audio recording you can upload to YouTube</td></tr><tr><td><strong>You end with</strong></td><td>A narrative chronicle, a condensed version, catch-up bullets, quotes, jests and combat highlights</td></tr><tr><td><strong>You need</strong></td><td>Node.js, a YouTube account, and one way to reach an AI model. That is the whole list</td></tr><tr><td><strong>Time</strong></td><td>However long YouTube takes to caption, then ~30 minutes unattended</td></tr><tr><td><strong>Cost</strong></td><td><a href="/Tusks-Tomes/docs/models/costs/">Roughly $1–$5 of your own API credit</a>, or $0 fully local</td></tr><tr><td><strong>The catch</strong></td><td>Caption files carry no speaker labels at all — see below</td></tr></tbody></table>
+<hr>
+<h2 id="step-1-record-the-session">Step 1 — Record the session</h2>
+<p>Anything that produces a file YouTube will accept. <a href="https://obsproject.com" rel="noopener">OBS Studio</a>
+is free and records a Discord call and your desktop together; a Zoom recording
+or a phone on the table works too. Video is not needed for anything — audio with
+a still image uploads fine.</p>
+<hr>
+<h2 id="step-2-upload-it-as-unlisted-or-private">Step 2 — Upload it as unlisted or private</h2>
+<p>In YouTube Studio, upload the file and set visibility to <strong>Unlisted</strong> or
+<strong>Private</strong>. Unlisted means it is not indexed, not searchable and not shown on
+your channel; only someone holding the link can open it. Private restricts it
+further, to you and to accounts you name.</p>
+<p>Worth being deliberate here. This route means your session audio reaches Google,
+which is exactly what the local Whisper route avoids. If that matters to you —
+if your table talks about things it would rather not have sitting on someone
+else's servers — use <a href="/Tusks-Tomes/docs/importing/session-audio/">the audio route</a> instead, or read
+<a href="/Tusks-Tomes/docs/security/what-it-installs/">is this safe?</a> first. It is a real trade and you should make
+it on purpose.</p>
+<hr>
+<h2 id="step-3-wait-for-automatic-captions">Step 3 — Wait for automatic captions</h2>
+<p>YouTube generates them on its own schedule. A three-hour upload is typically
+ready within an hour or two of finishing processing; there is no way to hurry
+it. The captions appear under <strong>Subtitles</strong> in YouTube Studio once done.</p>
+<hr>
+<h2 id="step-4-get-the-transcript-out">Step 4 — Get the transcript out</h2>
+<p>Two ways, and they land in the same place.</p>
+<p><strong>Copy the text.</strong> Open the caption track, copy the transcript, and paste it
+straight into the <strong>Raw transcript</strong> box on the Chronicle tab. Quickest.</p>
+<p><strong>Download the <code>.sbv</code>.</strong> In <strong>Subtitles</strong>, use the <strong>⋮</strong> menu on the caption
+track and choose <strong>Download <code>.sbv</code></strong>. Drop that file into the <strong>Caption Repair</strong>
+tab, run <strong>Repair captions</strong>, then <strong>Send to refinement</strong>.</p>
+<p>The <code>.sbv</code> route keeps the timestamps, which helps the pipeline segment the
+session sensibly, and Caption Repair does a grounding pass over the cues before
+they reach the chronicle pipeline. Pasting plain text is faster. Either way you
+end up in the same six-phase pipeline.</p>
+<hr>
+<h2 id="step-5-ground-it-against-your-lore">Step 5 — Ground it against your lore</h2>
+<p>Identical to the audio route, and just as load-bearing here.</p>
+<p>Automatic captions have never heard of your setting. Unfamiliar proper nouns
+come out phonetically — a homebrew city ends up spelled three ways in one
+session, a character's name lands as whatever common word it sounds nearest.
+Hand that to a general-purpose model and it will pick a plausible spelling,
+commit to it, and stay consistently wrong for the length of the write-up.</p>
+<p>Phase 1 corrects the transcript before any prose is written, against a glossary
+you maintain in the <strong>Tome of Lore</strong> tab or against an existing vault via the
+<a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian Vault lore</a>. Phase 2 then hands you the
+things it could not resolve as questions rather than guessing.</p>
+<p>Expect more questions on this route than on the audio one. That is the pipeline
+doing its job — see the next section for why.</p>
+<hr>
+<h2 id="the-trade-off-stated-plainly">The trade-off, stated plainly</h2>
+<p><strong>A YouTube caption file contains no speaker labels whatsoever.</strong> It is one
+undifferentiated stream of text. Everything about who said what has to be
+reconstructed from context.</p>
+<p>Tomes does reconstruct it, and it asks you a fair number of clarifying questions
+in order to. Even after you answer them, attribution is a best guess in places —
+where the multitrack route simply knows, because each track held one person.</p>
+<div class="docs-alert docs-alert-warning">
+<div class="docs-alert-label">Notice</div>
+<p><strong>YouTube censors swearing, and the censorship is in the file.</strong> Automatic
+captions replace profanity with <code>[ __ ]</code>, so the transcript you download has
+already lost it. Nothing downstream can put it back — the chronicle is written
+from what the captions say, not from the audio. If your table swears, and the
+way people actually talk is part of what you want recorded, that is a real
+loss rather than a cosmetic one. Whisper transcribes what was said.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>YouTube captions</th><th>Craig multitrack + Whisper</th></tr></thead><tbody><tr><td>Speaker labels in the source</td><td>None</td><td>One track per person</td></tr><tr><td>Swearing and mature language</td><td>Censored to <code>[ __ ]</code></td><td>Kept verbatim</td></tr><tr><td>Attribution in the chronicle</td><td>Inferred, usually right</td><td>Known</td></tr><tr><td>DM questions to answer</td><td>More</td><td>Fewer</td></tr><tr><td>GPU needed</td><td>No</td><td>NVIDIA, realistically</td></tr><tr><td>Audio leaves your machine</td><td>Yes, to YouTube</td><td>No</td></tr><tr><td>Needs installing</td><td>Nothing</td><td>Audio Transcription</td></tr></tbody></table>
+<p>So: if you want the chronicle to reliably say which character did what, record
+multitrack. If you mainly want a readable account of the session and can live
+with some fuzziness on attribution, this is a perfectly good place to start —
+and switching later costs you nothing, because the glossary and lore you build
+now carry straight over.</p>
+<hr>
+<h2 id="what-this-costs">What this costs</h2>
+<p>Nothing to install and nothing to subscribe to. YouTube's captioning is free.
+The only spend is whatever your chosen model provider charges: roughly $1–$5 per
+three-hour session depending on routing, $0 extra through a Claude Code or Codex
+subscription you already pay for, or $0 fully local. <a href="/Tusks-Tomes/docs/models/costs/">What it costs</a>
+has the current figure for each routing.</p>
+<p>See <a href="/Tusks-Tomes/docs/models/costs/">what it costs</a> for the full breakdown, and
+<a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">recommended settings</a> for the routing that gives the
+best results per pound.</p>
+<hr>
+<h2 id="next">Next</h2>
+<ul>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">What you'll need first</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/installation/">Setup guide</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/">Caption repair in detail</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">The audio route</a> — better output, more setup</li>
+</ul>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/importing/youtube-captions.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>

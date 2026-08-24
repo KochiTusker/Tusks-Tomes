@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installation — Tusk's Tomes</title>
+<meta name="description" content="This page gets you from a fresh git clone to a running app, in about five minutes on a clean machine. Everything past the 60-second path is collapsed by…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/getting-started/installation/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Installation — Tusk's Tomes">
+<meta property="og:description" content="This page gets you from a fresh git clone to a running app, in about five minutes on a clean machine. Everything past the 60-second path is collapsed by…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/getting-started/installation/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Installation — Tusk's Tomes">
+<meta name="twitter:description" content="This page gets you from a fresh git clone to a running app, in about five minutes on a clean machine. Everything past the 60-second path is collapsed by…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Installation",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/getting-started/installation/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Installation",
+  "description": "This page gets you from a fresh git clone to a running app, in about five minutes on a clean machine. Everything past the 60-second path is collapsed by…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/getting-started/installation/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/" aria-current="page">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Installation</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#the-60-second-path">The 60-second path</a></li><li><a href="#add-an-llm-key">Add an LLM key</a></li><li><a href="#cross-device-use-reading-and-uploading-from-another-machine-on-the-same-wi-fi">Cross-device use — reading and uploading from another machine on the same Wi-Fi</a></li><li><a href="#prerequisites-what-you-need-before-setupbat-runs">Prerequisites — what you need before setup.bat runs</a></li><li><a href="#troubleshooting-common-gotchas">Troubleshooting — common gotchas</a></li><li><a href="#updating-after-the-first-install">Updating after the first install</a></li><li><a href="#uninstalling">Uninstalling</a></li><li><a href="#advanced-developer-setup">Advanced — developer setup</a></li><li><a href="#optional-modules">Optional modules</a></li><li><a href="#where-to-go-next">Where to go next</a></li></ul></aside>
+    <article class="prose">
+<h1>Installation</h1>
+<p>This page gets you from a fresh <code>git clone</code> to a running app, in about five minutes on a clean machine. Everything past the 60-second path is collapsed by default — open the sections you need, ignore the rest.</p>
+<blockquote>
+<p><strong>Just want the app, not the source?</strong> A signed Windows installer is on the <a href="/Tusks-Tomes/docs/about/roadmap/">roadmap</a>. For now, you'll do a one-time clone + setup; after that, updating is a one-click button inside the app.</p>
+</blockquote>
+<hr>
+<h2 id="the-60-second-path">The 60-second path</h2>
+<pre><code>git clone https://github.com/KochiTusker/Tusks-Tomes.git
+cd Tusks-Tomes
+</code></pre>
+<p>Then, depending on your OS:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Platform</th><th>First-time setup</th><th>Run afterwards</th></tr></thead><tbody><tr><td><strong>Windows</strong></td><td>Double-click <code>setup.bat</code></td><td>Double-click <code>Start_Tusks_Tomes.bat</code></td></tr><tr><td><strong>macOS / Linux</strong></td><td><code>bash setup.sh</code></td><td><code>bash start.sh</code></td></tr><tr><td><strong>Power users</strong></td><td><code>npm run setup</code></td><td><code>npm run dev</code></td></tr></tbody></table>
+<p>The setup step installs ~370 npm packages (~250 MB). One-time only.</p>
+<p>Open <a href="http://localhost:5173" rel="noopener">http://localhost:5173</a> in your browser. The first thing the app needs is at least one LLM API key — see the next section.</p>
+<hr>
+<h2 id="add-an-llm-key">Add an LLM key</h2>
+<p>Open <strong>Settings → Providers &#x26; models</strong> and paste at least one:</p>
+<ul>
+<li><strong>Google Gemini</strong> — paid key required for the main pipeline; typically the cheapest cloud option per session. <a href="/Tusks-Tomes/docs/models/choosing-a-provider/#google-gemini--paid-key-required">How to get a Gemini key</a></li>
+<li><strong>OpenRouter</strong> — one key reaches around 400 models, including every Anthropic and OpenAI model, at pass-through rates. <a href="/Tusks-Tomes/docs/models/choosing-a-provider/#openrouter--one-key-around-400-models">How to get an OpenRouter key</a></li>
+</ul>
+<p>Keys are encrypted at rest in <code>{configDir}/providers.enc</code> using a machine-bound key — they don't appear in <code>.env</code>, don't leave the host, and the GUI is the only place to manage them.</p>
+<div class="docs-alert docs-alert-tip">
+<div class="docs-alert-label">Streamlined</div>
+<p>Want to keep everything offline (no API key, no cost, no cloud)? Local
+routing ships with the app — no install and no restart. Start
+<a href="https://ollama.com" rel="noopener">Ollama</a>, <a href="https://lmstudio.ai" rel="noopener">LM Studio</a>, or Unsloth,
+then hit <strong>Detect</strong> in <strong>Settings → Providers &#x26; models</strong>. See
+<a href="/Tusks-Tomes/docs/extras/">AddOns.md</a>.</p>
+</div>
+<hr>
+<details open>
+<summary><h2 id="cross-device-use-reading-and-uploading-from-another-machine-on-the-same-wi-fi">Cross-device use — reading and uploading from another machine on the same Wi-Fi</h2></summary>
+<p>By default, Tusk's Tomes only listens on <code>127.0.0.1</code> — the machine running the server is the only one that can open the UI. Two environment variables let you broaden that to your home network. They're independent — the second only matters if the first is set.</p>
+<h3 id="should-you-turn-this-on">Should you turn this on?</h3>
+<p><strong>Yes if:</strong> your Tomes machine is in another room (basement PC, study desktop) and you want to read chronicles from your phone / tablet on the couch · you have a home server and want every device in the house to reach it · a different machine on your network has the audio recording you want to upload (you record on a laptop, run Tomes on a desktop) · a player wants to view session transcripts in real time from their own device.</p>
+<p><strong>No if:</strong> you only use Tomes on the same machine you installed it on · you're on a network you don't fully control (apartment Wi-Fi, dorm, hotel / café / airport / library / conference) · you have smart TVs / IoT devices / guest devices on your network that you wouldn't want browsing your campaign chronicle · you're not sure (the default is safe; you can always flip it on later).</p>
+<h3 id="option-a-read-only-lan-access-the-safe-default">Option A — read-only LAN access (the safe default)</h3>
+<p>Sets the server to listen on every network interface, but keeps writes blocked from non-loopback callers:</p>
+<pre><code class="language-powershell"># Windows (PowerShell, persistent across reboots):
+[Environment]::SetEnvironmentVariable("TUSKS_HOST", "0.0.0.0", "User")
+# Then restart Tomes. From another device on the same Wi-Fi, open:
+#   http://&#x3C;host-machine-IP>:5173
+# (Find the IP by running `ipconfig` in PowerShell on the host machine.)
+</code></pre>
+<p>macOS / Linux: <code>export TUSKS_HOST=0.0.0.0</code> then restart, or add the line to <code>~/.bashrc</code> / <code>~/.zshrc</code>.</p>
+<p><strong>Other devices on your Wi-Fi can now:</strong> open the UI · browse the session list · read saved chronicles · view session transcripts (raw + cleaned) · download chronicle <code>.docx</code> files · download <code>.sbv</code> transcripts · watch live transcription progress · read the Help / Docs tab.</p>
+<p><strong>They cannot:</strong> upload audio · save / edit / delete chronicles · modify glossary or speakers · add or remove lore documents · change Settings · see your API keys · test cloud provider connections · trigger the in-app updater · launch Ollama / LM Studio / Unsloth · install or uninstall Audio Transcription.</p>
+<p>This is the "view from the couch" mode and is the right setting for the vast majority of cross-device use cases.</p>
+<h3 id="option-b-full-lan-readwrite-access-only-if-you-actually-need-it">Option B — full LAN read+write access (only if you actually need it)</h3>
+<p>Add the second variable too:</p>
+<pre><code class="language-powershell">[Environment]::SetEnvironmentVariable("TUSKS_LAN_WRITES", "1", "User")
+# Restart Tomes. The boot banner now reads "LAN writes: ENABLED".
+</code></pre>
+<p><strong>Now other devices can also:</strong> upload audio recordings (Craig zip, FLAC, WAV, MP3) · drop in <code>.pdf</code> / <code>.docx</code> lore documents · save chronicles to your Tusks-Lore folder · edit glossary, speakers, model profiles · run the 6-phase pipeline · pause and resume runs · delete sessions.</p>
+<p><strong>They still cannot:</strong> see your API keys · run the "Test connection" button against a cloud provider (it spends money) · trigger the in-app updater (it runs <code>git pull</code> on your host) · manage Unsloth credentials · launch local LLM runners · toggle dev-mode. These stay loopback-only <strong>always</strong>.</p>
+<h3 id="what-it-means-in-plain-language">What it means in plain language</h3>
+<p>Setting <strong><code>TUSKS_HOST=0.0.0.0</code> alone</strong> means: anyone connected to your Wi-Fi who knows your machine's IP can BROWSE everything Tomes shows you. They can read your campaign chronicles, see the players' real names if you've captured them, and watch live transcription. They cannot break anything or take anything.</p>
+<p>Setting <strong>both flags</strong> means: anyone connected to your Wi-Fi who knows your machine's IP can also CHANGE everything. They can upload garbage audio, delete chronicles, edit your glossary, or run pipelines against attacker-supplied content to burn your LLM quota.</p>
+<p><strong>Your API keys are safe in both modes.</strong> They're encrypted on disk AND the route that returns them is loopback-only AND the route that spends money via "Test connection" is loopback-only. A LAN attacker cannot drain your account even if they get full write access to everything else.</p>
+<p><strong>The threat model that makes LAN exposure safe:</strong> you trust every device that's allowed on your Wi-Fi. That includes the smart TV, the smart speakers, the kid's tablet, the visiting friend's laptop, and every IoT thing you've connected. If you're not confident about all of those, leave the toggle off.</p>
+<h3 id="turning-it-off">Turning it off</h3>
+<p>When you're done (e.g. you took the laptop to a coffee shop):</p>
+<pre><code class="language-powershell"># Wipe the persistent setting (Windows):
+[Environment]::SetEnvironmentVariable("TUSKS_HOST", $null, "User")
+[Environment]::SetEnvironmentVariable("TUSKS_LAN_WRITES", $null, "User")
+# Restart Tomes. Banner should NOT mention LAN exposure.
+</code></pre>
+<p>The toggle is binary — there's no "trust this device only" partial mode. If you need that, put an authenticating reverse proxy (Caddy with basic auth, Tailscale with ACLs) in front of Tomes, but that's beyond the default install.</p>
+<p><strong>Full security primer:</strong> <a href="/Tusks-Tomes/docs/security/overview/">docs/security-quickref.md</a></p>
+</details>
+<hr>
+<details open>
+<summary><h2 id="prerequisites-what-you-need-before-setupbat-runs">Prerequisites — what you need before <code>setup.bat</code> runs</h2></summary>
+<p>Two things, and that is the whole core requirement:</p>
+<ul>
+<li><strong>Node.js 20+</strong> — <a href="https://nodejs.org/" rel="noopener">download from nodejs.org</a>. The LTS release is fine. Run <code>node -v</code> to confirm; it should print <code>v20</code> or higher.</li>
+<li><strong>Git</strong> — <a href="https://git-scm.com/" rel="noopener">download from git-scm.com</a>. If you cloned this repo, you already have it.</li>
+</ul>
+<p>Python and an NVIDIA GPU matter only if you later install Audio Transcription,
+and you can add them at any point.</p>
+<p><strong><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></strong> is the full picture: what each dependency is
+for, what happens if you skip it, and what the optional ones actually buy you.</p>
+</details>
+<hr>
+<details open>
+<summary><h2 id="troubleshooting-common-gotchas">Troubleshooting — common gotchas</h2></summary>
+<h3 id="windows-npm-install-fails-with-running-scripts-is-disabled-on-this-system">Windows: <code>npm install</code> fails with "running scripts is disabled on this system"</h3>
+<p>PowerShell's default ExecutionPolicy blocks <code>npm.ps1</code>. Three fixes — pick one:</p>
+<pre><code class="language-powershell"># Option A — go through cmd just for this install:
+cmd /c "npm install --no-audit --no-fund"
+
+# Option B — fix it once for your user account (Microsoft-recommended dev setting):
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+
+# Option C — easiest: just double-click setup.bat (it uses cmd.exe internally).
+</code></pre>
+<h3 id="macos-linux-dont-sudo-bash-setupsh">macOS / Linux: don't <code>sudo bash setup.sh</code></h3>
+<p>A <code>sudo npm install</code> leaves <code>node_modules/</code> root-owned and breaks every later non-sudo update. If you already did this, recover with:</p>
+<pre><code class="language-sh">sudo chown -R $USER:$(id -gn) .
+# then re-run without sudo:
+bash setup.sh
+</code></pre>
+<h3 id="port-5173-in-use">Port 5173 in use</h3>
+<p>Set <code>PORT=5174</code> (or any free port) in <code>.env</code>. Restart <code>npm run dev</code> or <code>Start_Tusks_Tomes.bat</code>.</p>
+<h3 id="npm-install-errors-mentioning-node-gyp-windows"><code>npm install</code> errors mentioning <code>node-gyp</code> (Windows)</h3>
+<p>This shouldn't happen any more, and if it does the fix isn't what older guides
+say. <strong>You do not need Visual Studio Build Tools.</strong> Nothing in the dependency
+tree compiles native code — <code>pdf-parse</code> was the only thing that did, and it was
+replaced with a pure-JavaScript PDF reader. The only packages with install
+steps are <code>esbuild</code> and <code>ffmpeg-static</code>, and both just download a prebuilt
+binary.</p>
+<p>If you're seeing a node-gyp error, it's almost certainly a stale
+<code>node_modules</code>. Delete that folder and run setup again.</p>
+<h3 id="cloned-into-program-files-onedrive-a-network-drive">Cloned into Program Files / OneDrive / a network drive</h3>
+<p><code>setup.bat</code> / <code>setup.sh</code> do a write-probe and refuse to proceed if the working directory is read-only or sync-locked. Move the repo to a normal user folder (Documents, Desktop, home) and re-run.</p>
+<h3 id="python-313-detected-whisper-setup-fails">Python 3.13 detected, Whisper setup fails</h3>
+<p><code>faster-whisper</code> (the engine behind Audio Transcription) needs <strong>Python 3.10, 3.11, or 3.12</strong> — torch wheels for Python 3.13 have CUDA-availability gaps that silently break the install. <code>npm run setup</code> now warns about this. Fix:</p>
+<pre><code class="language-sh"># Windows:
+winget install Python.Python.3.12
+# macOS (with pyenv):
+pyenv install 3.12 &#x26;&#x26; pyenv local 3.12
+# Linux (Debian/Ubuntu):
+sudo apt install python3.12 python3.12-venv
+</code></pre>
+<p>Then re-run <code>npm run whisper:setup</code> — the script picks the lowest compatible interpreter on <code>PATH</code>.</p>
+<h3 id="nvidia-driver-too-old-for-cuda-12-whisper-still-on-cpu">NVIDIA driver too old for CUDA 12 (Whisper still on CPU)</h3>
+<p>Default Whisper install uses CUDA 12 wheels (driver ≥ 525). On older drivers (game-rig boxes that haven't updated in a year), the wheels download but PyTorch fails to initialise at runtime → falls back to CPU silently. Two fixes:</p>
+<ul>
+<li><strong>A</strong> — update the driver: GeForce Experience / NVIDIA App → check for updates.</li>
+<li><strong>B</strong> — keep the old driver, re-run with CUDA 11 wheels: <code>bash scripts/whisper/setup.sh --cuda 11.8</code> (POSIX) or set <code>CUDA_WHEEL=cu118</code> and re-run setup (Windows). CUDA 11 is supported by GTX 10-series and newer.</li>
+</ul>
+<h3 id="config-directory-not-writable">Config directory not writable</h3>
+<p>The app refuses to start with a clear message like <em>"Config directory is not writable: <code>&#x3C;path></code>"</em>. This usually means:</p>
+<ul>
+<li>The repo lives in <code>Program Files</code>, OneDrive sync folder, or a read-only network drive → move the repo to <code>Documents</code>, <code>Desktop</code>, or your home folder.</li>
+<li>Antivirus / corporate-policy tooling has locked <code>%APPDATA%\Tusks-Tomes</code> → right-click the folder → <strong>Properties → Security → Edit</strong> → grant your user "Modify" permission.</li>
+</ul>
+<p>Restart the dev server after fixing.</p>
+<h3 id="couldnt-decrypt-providersenc-after-restoring-from-backup-switching-machines">"Couldn't decrypt providers.enc" after restoring from backup / switching machines</h3>
+<p>API keys are encrypted with a key derived from <code>hostname + username + platform</code>. If any of those change (renamed PC, copied AppData to a new machine, restored from a backup made on a different host), the encrypted blob becomes unreadable. <strong>This is intentional</strong> — it means a leaked AppData folder is useless on another machine.</p>
+<p>Fix: delete <code>%APPDATA%\Tusks-Tomes\Config\providers.enc</code> (Windows) or <code>~/Library/Application Support/Tusks-Tomes/Config/providers.enc</code> (macOS) and re-enter your keys in Settings → Providers &#x26; models. The <code>.salt</code> file stays — it's machine-bound but not secret.</p>
+<h3 id="render-error-shows-the-chronicle-stalled-page">Render error shows "The Chronicle stalled" page</h3>
+<p>That's the top-level error boundary catching a React crash. Your settings are safe, paused runs on disk are safe. Click <strong>Try again</strong> — most render errors are recoverable. If it returns immediately, check <code>.diagnose/latest.md</code> (auto-refreshed on every error) and share with Claude Code or open an issue with that file attached.</p>
+</details>
+<hr>
+<details open>
+<summary><h2 id="updating-after-the-first-install">Updating after the first install</h2></summary>
+<h3 id="from-inside-the-app-recommended">From inside the app (recommended)</h3>
+<p><strong>Settings → Maintenance → Check for updates → Apply update.</strong> Most updates skip <code>npm install</code> and finish in seconds.</p>
+<p>When dependencies change, the in-app updater pulls the code and surfaces a yellow banner with a copy-paste command — the dev server holds file locks on <code>node_modules</code>, so it can't run <code>npm install</code> for you safely while you're using the app. Stop the dev server, run the suggested command, restart.</p>
+<h3 id="from-the-terminal">From the terminal</h3>
+<pre><code class="language-sh"># Stop the dev server first.
+git pull
+npm install --no-audit --no-fund          # (Windows PowerShell: cmd /c npm install --no-audit --no-fund)
+# Restart with npm run dev or Start_Tusks_Tomes.bat.
+</code></pre>
+<h3 id="your-data-is-safe-across-updates">Your data is safe across updates</h3>
+<p>Chronicles, glossary, speaker mappings, encrypted keystore, model profiles, and routing all live in the platform config directory <strong>outside the repo</strong> — <code>git pull</code> can never touch them. Specifically:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Path</th><th>What's in it</th></tr></thead><tbody><tr><td><code>%APPDATA%\tusks-tomes\Config\</code> (Windows — Roaming, not Local) / <code>~/Library/Application Support/tusks-tomes/</code> (macOS) / <code>~/.config/tusks-tomes/</code> (Linux)</td><td>API keys (encrypted), glossary, speakers, model profiles, routing, personas, module toggles, paused-run checkpoints</td></tr><tr><td><code>&#x3C;repo>/Sessions/&#x3C;campaign>/...</code></td><td>Auto-saved chronicle Markdown (gitignored — won't be touched by <code>git pull</code>)</td></tr><tr><td><code>&#x3C;repo>/vendor/python-venv/</code></td><td>Whisper sidecar venv (only if Audio Transcription is installed; gitignored)</td></tr></tbody></table>
+</details>
+<hr>
+<details open>
+<summary><h2 id="uninstalling">Uninstalling</h2></summary>
+<p><strong>Important contract before you run this.</strong> The uninstaller is only safe if you invoke it exactly as documented below. Specifically:</p>
+<ol>
+<li><strong>Run it as your normal user — never with <code>sudo</code> or "Run as administrator".</strong> The script does not need elevation; running it elevated only widens what it <em>could</em> touch if a bug existed.</li>
+<li><strong>Run it from inside the repo's root directory</strong> (the same place you'd run <code>npm install</code>). The script refuses to start unless <code>package.json</code> says <code>name: "tusks-tomes"</code>.</li>
+<li><strong>Don't override <code>TUSKS_CONFIG_DIR</code> / <code>TUSKS_DATA_DIR</code> / <code>TUSKS_CACHE_DIR</code> / <code>TUSKS_SESSIONS_DIR</code></strong> unless you set them up deliberately and know exactly where they point. The script's safety check will reject any deletion whose resolved path doesn't contain a <code>tusks-tomes</code> or <code>silence-beyond-the-sea</code> exact path segment, but the simplest defence is just not to override them.</li>
+<li><strong>The final-step "remove the repo" command the script prints must be pasted exactly as printed</strong> — paths inside quotes, no edits. The script can only guard its own deletions; a hand-edited <code>Remove-Item</code> / <code>rm -rf</code> you run yourself is on you.</li>
+</ol>
+<p>Before any deletion, the script will require you to type <code>I UNDERSTAND</code> to acknowledge the above. Press Enter (or Ctrl-C) without typing the phrase to exit cleanly without touching anything.</p>
+<p>If you follow this contract, the uninstaller will only ever remove paths that Tusk's Tomes itself installed.</p>
+<h3 id="run-it">Run it</h3>
+<pre><code class="language-sh">npm run uninstall -- --list-locations    # print every path Tusks-Tomes installs/writes
+                                         # on this machine, then exit. No deletions.
+                                         # Use this if you want to clean up manually.
+npm run uninstall -- --dry-run           # preview what the script would delete
+                                         # (no deletions, no acknowledgement prompt)
+npm run uninstall                        # interactive: acknowledgement + final Y/N.
+                                         # Preserves your authored content.
+npm run uninstall -- --purge-user-data   # also remove glossary, speakers, personas,
+                                         # API keys, session audio, and chronicles
+</code></pre>
+<p>The acknowledgement notice itself includes the same manual-cleanup reference, so if you decide partway through that you'd rather do it by hand, you've got the path list in front of you. Press Enter without typing the phrase to exit cleanly.</p>
+<p><strong>What it removes</strong> (by default — recreatable from a fresh setup):</p>
+<ul>
+<li><code>node_modules/</code>, <code>dist/</code>, <code>dist-server/</code> build outputs</li>
+<li><code>vendor/python-venv/</code> (the Whisper Python venv — usually the heaviest single item, ~1.5–4 GB)</li>
+<li>The Tusks cache directory + machine-bound state (probe cache, encryption salt, run checkpoints, model profiles, routing, settings)</li>
+<li>All module state + auto-generated files:
+<ul>
+<li>Audio Transcription → the Python venv above</li>
+<li>Local LLMs → <code>&#x3C;configDir>/local-llm.enabled</code> marker</li>
+<li>Personas → <code>&#x3C;configDir>/personas-addon.enabled</code> marker</li>
+</ul>
+</li>
+<li>Any leftover empty "silence-beyond-the-sea" legacy directories from before the project rename</li>
+</ul>
+<p><strong>What it preserves</strong> (your content — pass <code>--purge-user-data</code> to remove these too):</p>
+<ul>
+<li>Glossary, speakers, and personas JSON files</li>
+<li>Encrypted API keystore (so a reinstall doesn't lose your keys)</li>
+<li>Session recordings + transcripts under the data dir's <code>sessions/</code> tree</li>
+<li>Auto-saved chronicle Markdown under <code>&#x3C;repo>/Sessions/</code></li>
+<li>Unsloth Studio credentials (they're inside the encrypted keystore)</li>
+</ul>
+<p><strong>Things the uninstaller will never touch:</strong></p>
+<ul>
+<li>A <code>Tusks-Lore</code> folder anywhere on disk — your lore documents are yours</li>
+<li><code>TUSKS_SESSIONS_DIR</code> if you set it to a custom location</li>
+<li>The repo source itself — the script prints the exact <code>rm -rf</code> / <code>Remove-Item</code> command for your platform at the end</li>
+<li>Anything outside the repo, the Tusks app-data dir, and the legacy app-data dir</li>
+<li>External tools you installed separately for the modules — <strong>Python, Node.js, Ollama, LM Studio, Unsloth Studio, Tusk's Vault</strong>. These may be used by other apps on your machine; the script lists them at the end so you can decide per-tool.</li>
+</ul>
+<p>The script is pure Node.js stdlib (no npm dependencies of its own) so it still runs after <code>node_modules</code> is removed: <code>node scripts/uninstall.mjs --help</code>.</p>
+<p><strong>For a complete revert</strong> (Tusk's Tomes ever ran here): run <code>npm run uninstall -- --purge-user-data</code>, follow the printed final-step commands to remove the repo, then uninstall the external tools you no longer need.</p>
+</details>
+<hr>
+<details open>
+<summary><h2 id="advanced-developer-setup">Advanced — developer setup</h2></summary>
+<p>If you're hacking on the code rather than just running it:</p>
+<pre><code class="language-sh">npm run dev          # Express + Vite middleware on http://localhost:5173 (HMR)
+npm run typecheck    # tsc --noEmit for both client (tsconfig.json) and server (tsconfig.server.json)
+npm run build        # vite build + tsc -p tsconfig.server.json → dist/ + dist-server/
+npm run start        # Production mode: NODE_ENV=production node dist-server/index.js
+npm run smoke-test   # End-to-end health check; pings every configured provider + Whisper sidecar
+npm test             # Vitest run; covers src/**/*.test.{ts,tsx} and server/**/*.test.ts
+</code></pre>
+<p>Run <code>npm run typecheck &#x26;&#x26; npm test</code> before every commit.</p>
+<h3 id="repo-layout">Repo layout</h3>
+<pre><code>src/                React 19 + Vite SPA (the chronicler/refiner UI)
+  components/       Tabs, panels, dialogs
+  lib/              Pipeline, glossary cache, SBV parser, provider abstraction
+  hooks/            useLocalStorage, useEta, useRefinementState
+
+server/             Express server (tsx in dev, compiled in prod)
+  index.ts          Server entrypoint
+  api/              HTTP route handlers (one router per resource)
+  sessions/         Session manifest reader/writer
+  upload/           Multitrack zip / loose-audio extractor (audio module)
+  whisper/          Whisper sidecar invocation (audio module)
+  crypto/           Encrypted keystore for API keys
+  addons/           Add-on registry + loader
+  appData.ts        Cross-platform config / data / cache directory helpers
+
+scripts/
+  setup/            First-time setup orchestrator (check-deps.mjs)
+  whisper/          Python venv bootstrap (setup.ps1, setup.sh, requirements.txt)
+  smoke-test.mjs    Health-check script
+
+setup.bat / setup.sh    Platform wrappers — call `node scripts/setup/check-deps.mjs`
+Start_Tusks_Tomes.bat   Windows convenience launcher (calls npm run dev)
+start.sh                POSIX equivalent
+
+architecture.md     Full pipeline / phase-by-phase design doc
+ROADMAP.md          Every milestone and the rationale behind it
+README.md           End-user-facing walkthrough
+AddOns.md           The optional modules
+</code></pre>
+<h3 id="pre-flight-checks-before-opening-a-pr">Pre-flight checks before opening a PR</h3>
+<ul>
+<li><code>npm run typecheck</code> clean</li>
+<li><code>npm test</code> clean</li>
+<li><code>npm run smoke-test</code> clean (if you can reach the configured providers)</li>
+<li>New behaviour has a test (see <a href="/Tusks-Tomes/docs/contributing/">CONTRIBUTING.md</a>)</li>
+</ul>
+</details>
+<hr>
+<h2 id="optional-modules">Optional modules</h2>
+<p>The core install does paste-a-transcript chronicling against any cloud LLM. Seven modules extend it:</p>
+<ul>
+<li><strong>Audio Transcription</strong> — Whisper + Craig multitrack + direct audio ingest</li>
+<li><strong>whisper.cpp bridge</strong> — transcription on AMD, Intel and Apple GPUs, using a build you compile</li>
+<li><strong>Local LLMs</strong> — route any phase to Ollama / LM Studio / Unsloth</li>
+<li><strong>Chronicle Personas</strong> — swap the narrator voice for one of six presets or your own</li>
+<li><strong>Claude Code</strong> / <strong>Codex</strong> — spend a subscription you already pay for instead of API credit</li>
+<li><strong>Obsidian Vault lore</strong> — ground chronicles against a read-only Obsidian vault</li>
+</ul>
+<div class="docs-alert docs-alert-tip">
+<div class="docs-alert-label">Streamlined</div>
+<p><strong>Only Audio Transcription installs anything</strong>, from <strong>Settings →
+Transcription</strong>. The other six ship with the app — no Install button, no
+restart. What used to be an install step for them is now simple detection.</p>
+</div>
+<p>Full details in <a href="/Tusks-Tomes/docs/extras/">AddOns.md</a>.</p>
+<hr>
+<h2 id="where-to-go-next">Where to go next</h2>
+<ul>
+<li><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/README.md" rel="noopener">README</a> — what Tusk's Tomes is, who it's for, the project story.</li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Walkthrough</a> — your first session, end to end.</li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">Architecture</a> — full system diagram, pipeline phases, module-level walkthrough.</li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Beginner's guide</a> — zero-terminal walkthrough for first-time GitHub users.</li>
+<li><a href="/Tusks-Tomes/docs/contributing/">Contributing</a> — how to send PRs and file bugs.</li>
+<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">Feedback form</a> — drop questions, feature ideas, or chronicle snippets. A community Discord is on the <a href="/Tusks-Tomes/docs/about/roadmap/">roadmap</a>; the form is the interim channel.</li>
+</ul>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/getting-started/installation.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>

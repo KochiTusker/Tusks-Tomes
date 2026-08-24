@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Requirements — Tusk's Tomes</title>
+<meta name="description" content="Read this before you clone anything. It's the page I wish I'd written first — three tiers, so you can see at a glance what's genuinely required versus what…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/getting-started/requirements/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Requirements — Tusk's Tomes">
+<meta property="og:description" content="Read this before you clone anything. It's the page I wish I'd written first — three tiers, so you can see at a glance what's genuinely required versus what…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/getting-started/requirements/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Requirements — Tusk's Tomes">
+<meta name="twitter:description" content="Read this before you clone anything. It's the page I wish I'd written first — three tiers, so you can see at a glance what's genuinely required versus what…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Requirements",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/getting-started/requirements/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Requirements",
+  "description": "Read this before you clone anything. It's the page I wish I'd written first — three tiers, so you can see at a glance what's genuinely required versus what…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/getting-started/requirements/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/" aria-current="page">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Requirements</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#critical-nothing-runs-without-these">Critical — nothing runs without these</a></li><li><a href="#advised-for-a-noticeably-better-result">Advised — for a noticeably better result</a></li><li><a href="#nice-to-have-quality-of-life">Nice to have — quality of life</a></li><li><a href="#bundled-you-dont-install-these">Bundled — you don't install these</a></li><li><a href="#what-gets-created-on-your-disk">What gets created on your disk</a></li></ul></aside>
+    <article class="prose">
+<h1>Requirements</h1>
+<p>Read this before you clone anything. It's the page I wish I'd written first —
+three tiers, so you can see at a glance what's genuinely required versus what
+just makes things better.</p>
+<p><strong>The short version:</strong> you need <strong>Node.js</strong> and <strong>one way to talk to an AI
+model</strong>. Everything else on this page is optional, and you can add any of it
+later without reinstalling.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tier</th><th>Meaning</th></tr></thead><tbody><tr><td><strong>Critical</strong></td><td>Nothing works without these.</td></tr><tr><td><strong>Advised</strong></td><td>Not required, but the output is meaningfully better with them.</td></tr><tr><td><strong>Nice to have</strong></td><td>Quality-of-life. Skip freely.</td></tr></tbody></table>
+<hr>
+<details class="docs-section" open>
+<summary><h2 id="critical-nothing-runs-without-these">Critical — nothing runs without these</h2></summary>
+<div class="docs-section-body">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>What</th><th>Version</th><th>Why</th><th>Check it with</th></tr></thead><tbody><tr><td><strong><a href="https://nodejs.org/" rel="noopener">Node.js</a></strong></td><td>20 or newer (LTS)</td><td>The app is a Node program. This is the one hard prerequisite.</td><td><code>node -v</code></td></tr><tr><td><strong>npm</strong></td><td>comes with Node</td><td>Installs the libraries. You don't install this separately.</td><td><code>npm -v</code></td></tr><tr><td><strong><a href="https://git-scm.com/downloads" rel="noopener">Git</a></strong></td><td>any recent</td><td>How you download the project, and how the in-app updater fetches new versions. Without it you'd be re-downloading a ZIP by hand every release.</td><td><code>git --version</code></td></tr><tr><td><strong>A way to reach an AI model</strong></td><td>—</td><td>Pick <strong>one</strong> of the three options below. The pipeline has nothing to run on otherwise.</td><td>—</td></tr></tbody></table>
+<h3 id="the-model-pick-one-of-these-three">The model — pick one of these three</h3>
+<p>You need exactly one. They're interchangeable and you can switch later.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Cost</th><th>Best for</th></tr></thead><tbody><tr><td><strong>A paid API key</strong> — <a href="https://aistudio.google.com/apikey" rel="noopener">Gemini</a> direct, or <a href="https://openrouter.ai/keys" rel="noopener">OpenRouter</a> for around 400 models on one key</td><td><a href="/Tusks-Tomes/docs/models/costs/">Roughly $1–$5 a session</a></td><td>Most people. Gemini is the best value for this particular workload.</td></tr><tr><td><strong>A subscription you already pay for</strong> — Claude Code or the Codex CLI</td><td>$0 extra</td><td>Anyone already paying for Claude or ChatGPT. See <a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a> / <a href="/Tusks-Tomes/docs/extras/codex/">Codex</a>.</td></tr><tr><td><strong>A local model</strong> — Ollama, LM Studio or Unsloth</td><td>$0</td><td>Total privacy, no network. Read the <a href="/Tusks-Tomes/docs/extras/local-llms/">quality caveats</a> first — below ~15–20B the prose gets noticeably worse.</td></tr></tbody></table>
+<p><strong>You do NOT need Visual Studio Build Tools</strong>, whatever older guides say.
+Nothing in the dependency tree compiles native code.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="advised-for-a-noticeably-better-result">Advised — for a noticeably better result</h2></summary>
+<div class="docs-section-body">
+<p>None of this is needed to get a chronicle. All of it improves what you get.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>What</th><th>Why you'd want it</th><th>Without it</th></tr></thead><tbody><tr><td><strong><a href="https://python.org" rel="noopener">Python 3.10–3.12</a></strong></td><td>Runs Whisper, which transcribes your recordings locally. On Windows, tick <strong>"Add python.exe to PATH"</strong> during install.</td><td>You supply a transcript another way — pasted text or <a href="/Tusks-Tomes/docs/importing/">YouTube captions</a>.</td></tr><tr><td><strong>An NVIDIA GPU specifically</strong></td><td>Transcribing a 3-hour session drops from <em>several hours</em> to 20–30 minutes. Detected automatically via <code>nvidia-smi</code>. Read the note below before assuming your card counts.</td><td>Whisper still works, on your processor, slowly. Or use the YouTube route.</td></tr><tr><td><strong><a href="https://discord.com" rel="noopener">Discord</a> + <a href="https://craig.chat" rel="noopener">Craig</a></strong></td><td>Craig is a Discord bot that records <strong>one audio track per person</strong>, which is what makes speaker attribution reliable end to end. Craig's free tier is enough.</td><td>Single-stream audio, so the AI has to guess who said what — and it will ask you a lot of questions.</td></tr></tbody></table>
+<blockquote>
+<h3 id="on-gpus-it-really-is-nvidia-or-nothing-and-thats-worth-spelling-out">On GPUs — it really is NVIDIA or nothing, and that's worth spelling out</h3>
+<p>"I've got a dedicated graphics card, I'll be fine" is a completely reasonable
+assumption and an expensive one to get wrong, so here are the actual facts.</p>
+<p>Transcription uses <a href="https://github.com/SYSTRAN/faster-whisper" rel="noopener"><code>faster-whisper</code></a>,
+which is built on CTranslate2. That library implements exactly <strong>two</strong> compute
+devices: <code>cuda</code> and <code>cpu</code>. There is no ROCm backend, no Metal backend, no
+Intel Arc backend, no DirectML backend.</p>
+<p>So an <strong>AMD Radeon, an Intel Arc, or the GPU in an Apple Silicon Mac is not
+used at all.</strong> This isn't "slower but works" — the card sits idle and
+everything runs on your processor. A $900 AMD card gets you exactly the same
+transcription speed as no graphics card whatsoever.</p>
+<p>That isn't a preference for NVIDIA on my part; it's the only GPU backend the
+engine has. And before you go looking for a Whisper build that <em>does</em> use
+your card — I did, and here's what's actually out there:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Project</th><th>Prebuilt GPU backends</th><th>Verdict</th></tr></thead><tbody><tr><td><a href="https://github.com/ggml-org/whisper.cpp" rel="noopener">whisper.cpp</a></td><td>CPU, BLAS <em>(still CPU)</em>, CUDA</td><td>Has a Vulkan backend <strong>in source only</strong> — it isn't in any release build. Compiling it yourself works.</td></tr><tr><td><a href="https://github.com/k2-fsa/sherpa-onnx" rel="noopener">sherpa-onnx</a></td><td>CPU, CUDA</td><td>No DirectML build shipped.</td></tr><tr><td><a href="https://github.com/Const-me/Whisper" rel="noopener">Const-me/Whisper</a></td><td>DirectCompute — <strong>any DirectX 11 GPU</strong></td><td>Actually works on AMD and Intel. Windows-only, no release since July 2023.</td></tr></tbody></table>
+<p>So the honest summary: <strong>there is no maintained, ready-made Whisper build
+that will use an AMD or Intel GPU.</strong> Const-me/Whisper does, and has been
+unmaintained for years. Everything else prebuilt is CPU or CUDA.</p>
+<p>Which leaves you three practical options:</p>
+<ol>
+<li><strong><a href="/Tusks-Tomes/docs/importing/">The YouTube route</a></strong> — Google's hardware does the
+transcribing, no GPU of any kind needed. This is what I'd suggest.</li>
+<li><strong>CPU transcription.</strong> Slow, but it works if you set it going and walk
+away.</li>
+<li><strong>Transcribe elsewhere and paste it in</strong> — <a href="/Tusks-Tomes/docs/importing/">Workflow A</a>
+accepts a transcript from any source, so a self-compiled whisper.cpp or
+Const-me output drops straight in.</li>
+</ol>
+<p>Apple Silicon is at least the best case for the CPU path — those cores are
+quick enough that CPU-only transcription hurts far less than it does on an
+older x86 laptop.</p>
+</blockquote>
+<blockquote>
+<p><strong>Python 3.13+ is untested, not broken.</strong> The restriction originally existed
+because PyTorch shipped no 3.13 builds at all. Upstream has since released
+them and this project's requirements permit them — but nobody has verified
+the whole stack on 3.13 here, so setup warns rather than blocks. Try it if
+you like, and please report what happens. If it fails, install 3.12 alongside
+and the Whisper setup picks it up automatically.</p>
+</blockquote>
+<p>Everything Python-related lives inside <code>vendor/python-venv/</code>, a self-contained
+environment. Uninstalling deletes that folder; your system Python is
+never touched.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="nice-to-have-quality-of-life">Nice to have — quality of life</h2></summary>
+<div class="docs-section-body">
+<p>Genuinely optional. Add them if they appeal.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>What</th><th>What it gets you</th></tr></thead><tbody><tr><td><strong><a href="https://obsidian.md/download" rel="noopener">Obsidian</a></strong></td><td>Somewhere pleasant to keep campaign lore. The <a href="/Tusks-Tomes/docs/extras/obsidian-vault/">vault module</a> reads your notes to get names right — though <strong>any folder of markdown works</strong>, so this is about your comfort, not a requirement.</td></tr><tr><td><strong><a href="https://docs.claude.com/en/docs/claude-code" rel="noopener">Claude Code</a> or the Codex CLI</strong></td><td>If you already pay for Claude or ChatGPT, routes the mechanical phases through that allowance instead of API credit. Roughly 85% cheaper than the baseline.</td></tr><tr><td><strong><a href="https://ollama.com" rel="noopener">Ollama</a> / <a href="https://lmstudio.ai" rel="noopener">LM Studio</a></strong></td><td>Run some or all phases offline. Good for the cheap mechanical phases even if you keep the chronicle itself on a cloud model.</td></tr><tr><td><strong>A second, free-tier Gemini key</strong></td><td>Used only for one small phase under the Smart Budget preset. Shaves a little off the bill.</td></tr><tr><td><strong>Windows Terminal</strong></td><td>The launcher opens in a tidy tab instead of a bare console window if it's installed. Purely cosmetic.</td></tr><tr><td><strong><a href="https://github.com/KochiTusker/Tusks-Vault" rel="noopener">Tusk's Vault</a></strong></td><td>The sibling project — ask questions of your finished chronicles in Discord. See <a href="/Tusks-Tomes/docs/extras/tusks-vault/">vault.md</a>.</td></tr></tbody></table>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="bundled-you-dont-install-these">Bundled — you don't install these</h2></summary>
+<div class="docs-section-body">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>What</th><th>Note</th></tr></thead><tbody><tr><td><strong>ffmpeg</strong></td><td>Comes with the <code>ffmpeg-static</code> package. No separate install on any normal setup.</td></tr><tr><td><strong>PDF and DOCX readers</strong></td><td>Pure JavaScript, installed with everything else.</td></tr><tr><td><strong>The Whisper model</strong></td><td>Downloaded by the audio add-on when you install it, into <code>vendor/python-venv/</code>.</td></tr></tbody></table>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="what-gets-created-on-your-disk">What gets created on your disk</h2></summary>
+<div class="docs-section-body">
+<p>None of this is in the repo — it's all made at runtime.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Path</th><th>What</th><th>Created by</th></tr></thead><tbody><tr><td><code>node_modules/</code></td><td>The JavaScript libraries (~360 MB)</td><td><code>npm install</code></td></tr><tr><td><code>.env</code></td><td>Per-machine settings</td><td><code>setup.bat</code> / <code>setup.sh</code></td></tr><tr><td><code>vendor/python-venv/</code></td><td>Whisper (1.5–2.5 GB)</td><td>The audio add-on, if you install it</td></tr><tr><td><code>Sessions/&#x3C;campaign>/*.md</code></td><td>Your finished chronicles</td><td>The app, when you save one</td></tr><tr><td><code>%APPDATA%\tusks-tomes</code></td><td>Settings, glossary, encrypted API key</td><td>Saving anything in Settings</td></tr><tr><td><code>%LOCALAPPDATA%\tusks-tomes</code></td><td>Recordings, transcripts, run checkpoints</td><td>Uploading audio or pausing a run</td></tr></tbody></table>
+<p>A fresh clone contains <strong>no personal state at all</strong> — source, scripts and
+templates only. For the full account of what's written where and what could go
+wrong, see <a href="/Tusks-Tomes/docs/security/what-it-installs/">How safe is this?</a>.</p>
+</div>
+</details>
+<hr>
+<p>Ready? <a href="/Tusks-Tomes/docs/getting-started/installation/">The setup guide</a> walks through it, or the
+<a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">beginner's guide</a> assumes no terminal experience at all.</p>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/getting-started/requirements.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>

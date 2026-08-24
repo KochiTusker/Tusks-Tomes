@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Per-phase routing — Tusk's Tomes</title>
+<meta name="description" content="The question this page answers: can a mix of cheaper models match a single strong one, and if so, how do you arrange it?">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/models/per-phase-routing/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Per-phase routing — Tusk's Tomes">
+<meta property="og:description" content="The question this page answers: can a mix of cheaper models match a single strong one, and if so, how do you arrange it?">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/models/per-phase-routing/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Per-phase routing — Tusk's Tomes">
+<meta name="twitter:description" content="The question this page answers: can a mix of cheaper models match a single strong one, and if so, how do you arrange it?">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Per-phase routing",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/models/per-phase-routing/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Per-phase routing",
+  "description": "The question this page answers: can a mix of cheaper models match a single strong one, and if so, how do you arrange it?",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/models/per-phase-routing/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/" aria-current="page">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Per-phase routing</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#start-here-the-change-that-matters-more-than-model-choice">Start here: the change that matters more than model choice</a></li><li><a href="#what-the-benchmarks-are-worth">What the benchmarks are worth</a></li><li><a href="#per-phase-recommendations">Per-phase recommendations</a></li><li><a href="#making-cheap-models-safe-verify-then-escalate">Making cheap models safe: verify, then escalate</a></li><li><a href="#request-settings-that-materially-change-cheap-model-quality">Request settings that materially change cheap-model quality</a></li><li><a href="#does-a-mix-actually-beat-one-good-model">Does a mix actually beat one good model?</a></li><li><a href="#what-is-not-known">What is not known</a></li><li><a href="#where-the-savings-actually-are">Where the savings actually are</a></li><li><a href="#splitting-audit-in-two">Splitting Audit in two</a></li><li><a href="#which-models-suit-ground-and-audit">Which models suit Ground and Audit</a></li><li><a href="#testing-plan-for-the-prose-phases">Testing plan for the prose phases</a></li><li><a href="#hybrid-combinations-priced">Hybrid combinations, priced</a></li><li><a href="#what-to-test-first-in-order">What to test first, in order</a></li></ul></aside>
+    <article class="prose">
+<h1>Per-phase routing</h1>
+<p>The question this page answers: <strong>can a mix of cheaper models match a single
+strong one, and if so, how do you arrange it?</strong></p>
+<p>The short answer is yes for four of the five phases, no for one, and the
+biggest single improvement is not a model swap at all.</p>
+<p>Read <a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How each phase works</a> first if you have not — the
+recommendations below only make sense against what each phase actually asks
+for.</p>
+<hr>
+<h2 id="start-here-the-change-that-matters-more-than-model-choice">Start here: the change that matters more than model choice</h2>
+<p>Phases 1 and 3 both ask a model to emit roughly as many tokens as it was given.
+At the default chunk sizes that is around <strong>7,500 output tokens for Ground</strong> and
+<strong>15,000 for Chronicle</strong>.</p>
+<p>Every piece of published work on long-form output fidelity points the same way:
+<strong>quality falls off sharply somewhere around 2,000–4,000 output tokens, and this
+is true of frontier models too.</strong> A few concrete numbers, all from independent
+groups:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Evidence</th><th>Finding</th></tr></thead><tbody><tr><td>LongProc (Princeton), 8K-token tier</td><td>Gemini 1.5 Pro <strong>54.0</strong>, GPT-4o <strong>38.1</strong>, Claude 3.5 Sonnet <strong>22.0</strong>, Qwen2.5-72B <strong>20.0</strong> — against 89.2 / 94.8 / 78.4 / 68.7 at the 500-token tier</td></tr><tr><td>LIFEBench, exact-length control</td><td>Average <strong>49.1</strong> across 26 models; past ~4,096 words "no models consistently exceed 40"; "lazy generation" (giving up early) exceeds <strong>10%</strong> at 8,192 words</td></tr><tr><td>Chroma "Context Rot", pure copy task</td><td>Degradation accelerates from ~2,500 words; hallucinated tokens appear from 500–750 words</td></tr><tr><td>Verbatim transcription study</td><td><strong>Zero perfect runs at 300 items across all 11 models tested</strong></td></tr></tbody></table>
+<p>Long <em>input</em> independently makes it worse: LIFEBench found 21 of 26 models
+degraded once input passed ~5,000 words. A 30,000-character chunk is about
+5,000 words.</p>
+<p><strong>So the pipeline is currently operating past the fidelity cliff on every
+model, including the expensive ones.</strong> Reducing Phase 1 chunk size is therefore
+not a concession made for cheap models — it improves Gemini Pro too. It just
+improves cheap models more, because they fall off the cliff sooner.</p>
+<p>The cost of doing it is modest and quantified: splitting a Phase 1 chunk in two
+costs about <strong>$0.0013</strong> extra on Gemini Pro, because Phase 1's cacheable prefix
+is small. What it really spends is <em>request count</em>, which matters only if you
+are on a rate-limited free tier.</p>
+<p><strong>Recommended:</strong> Ground at ~8,000–10,000 characters per chunk rather than
+15,000–30,000. Chronicle is a different case — see below.</p>
+<h3 id="why-chronicle-cannot-simply-follow-suit">Why Chronicle cannot simply follow suit</h3>
+<p>Phase 3 has a competing constraint: every chunk boundary is a seam in the
+narrative, and the 2,000-character prior tail only partly bridges it. There is a
+documented floor below which coherence degrades faster than focus improves.</p>
+<p>So Chronicle wants a <em>moderate</em> reduction, not the aggressive one Ground can
+take — and it is the phase where paying for a stronger model is most justified.</p>
+<hr>
+<h2 id="what-the-benchmarks-are-worth">What the benchmarks are worth</h2>
+<p>Worth stating plainly, because it changes how you read model marketing:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Signal</th><th>Predictive value here</th></tr></thead><tbody><tr><td>LongProc, LIFEBench, Context Rot</td><td><strong>High</strong> — these measure long-form output fidelity, which is the thing</td></tr><tr><td>IFBench (the Copy category especially)</td><td>Medium — the only mainstream instruction benchmark with a span-reproduction task</td></tr><tr><td>RULER / needle-in-a-haystack</td><td><strong>Low</strong> — correlation with long <em>output</em> performance is r≈0.51 at 16K. Confirms a model can read your input; says little about whether it will reproduce it</td></tr><tr><td>IFEval</td><td><strong>Low</strong> — saturated, short outputs, and its length constraints are one-sided ("at least N") where yours is an implicit equality</td></tr><tr><td>MMLU / GPQA / AIME</td><td><strong>None</strong> — the correct answer to these is a letter or an integer. They cannot measure output fidelity</td></tr><tr><td>LMArena Elo</td><td><strong>Anti-predictive.</strong> Style-control analysis puts the answer-length coefficient at <strong>0.249</strong>, about 8× any formatting feature. Arena rewards writing <em>more</em>; this pipeline needs a model that writes <em>exactly as much as the input and adds nothing</em></td></tr></tbody></table>
+<p>The practical upshot: <strong>a model being "the best conversationally" is close to
+irrelevant for Ground, Audit and Extras.</strong> It matters for Chronicle, and even
+there the axis is sustained coherent prose rather than chat quality.</p>
+<p>There is also a domain-specific warning worth taking seriously. On LibriSpeech,
+zero-shot LLM correction of ASR output made word error rate <em>worse in every
+configuration tested</em> — 2.2% baseline rising to between 8.8% and 32.0%, with
+3–12% hallucination rates. The published fix is exactly what this pipeline
+already does: correct in segments with context, not the whole document at once,
+and keep a specialised narrow task rather than asking for general improvement.</p>
+<hr>
+<h2 id="per-phase-recommendations">Per-phase recommendations</h2>
+<p>Evidence quality is flagged throughout. Where nobody publishes the relevant
+number, this page says so rather than substituting a related one.</p>
+<h3 id="phase-1-ground">Phase 1 — Ground</h3>
+<p>Wants: long output without drift, no moderation filter, no reasoning written
+into the reply, and ideally non-thinking (deliberation is wasted on a mechanical
+transformation, and long chains of thought are documented to <em>reduce</em>
+constraint adherence).</p>
+<p><strong>Avoid for this phase:</strong></p>
+<ul>
+<li><strong>Models that write reasoning into the reply body.</strong> Measured directly against
+the live API: two models emitted 12× the expected output because their
+chain-of-thought landed in the response. Neither <code>reasoning: {exclude: true}</code>
+nor a lower effort setting reliably suppressed it, and the built-in stripper
+only removes <em>tagged</em> blocks. The picker flags these.</li>
+<li><strong>Model families with documented character drift.</strong> Both the GLM and DeepSeek
+families have vendor-acknowledged issues with non-Latin characters appearing
+in long English output — DeepSeek shipped an entire release to reduce it, and
+one report describes it appearing specifically "when it was just repeating
+back input", which is this phase exactly. Reports concentrate on quantised
+third-party hosting.</li>
+<li><strong>Models optimised for brevity.</strong> At least one very cheap model is explicitly
+trained toward "shortest correct response", which is the opposite of what this
+phase needs.</li>
+</ul>
+<p><strong>Reasonable choices:</strong> the Qwen 2507 instruct line is non-thinking by
+construction and publishes the strongest instruction-following numbers in the
+cheap tier (though see the caveat about IFEval above). DeepSeek V4 Flash is
+strong at this input size and is not mandatory-reasoning — but pair it with a
+character check. Among free models, the Nemotron Ultra and Super variants
+passed a live grounding probe cleanly.</p>
+<h3 id="phase-2-audit">Phase 2 — Audit</h3>
+<p>The easiest phase to serve. Needs reliable structured output and nothing else;
+the output is a few hundred tokens.</p>
+<p>Put the cheapest model that emits clean JSON here. Verify it actually does —
+some otherwise-capable free models cannot, including the largest free one.</p>
+<h3 id="phase-3-chronicle">Phase 3 — Chronicle</h3>
+<p><strong>This is the phase where a strong model earns its cost</strong>, and the one where
+"comparable output for cheaper" is hardest to achieve honestly.</p>
+<p>Needs: sustained coherent prose over a long output, no moderation filter, and
+narrative continuity across seams. No published benchmark measures the
+combination well. Long-form writing benchmarks measure whether a model <em>can</em>
+produce length; they use an LLM judge for quality, which a fluent summary can
+satisfy while failing the actual requirement.</p>
+<p>Moderation is the hard constraint. All Anthropic and most current OpenAI models
+carry a prompt-level filter, and this phase routinely handles violence and
+profanity. Google, DeepSeek, NVIDIA, Z-AI, Moonshot and xAI models generally do
+not.</p>
+<p><strong>Recommendation: keep a strong model here.</strong> If you are optimising, optimise
+Phases 1, 2, 4 and 6 and leave this one alone. The measured saving from moving
+Ground to a cheap model is about 37% of the run; moving Chronicle as well saves
+another 33% but is where quality risk concentrates.</p>
+<h3 id="phase-4-extras">Phase 4 — Extras</h3>
+<p>Needs structured output <strong>and</strong> no moderation filter, because it is extracting
+gore into a JSON field. That intersection is narrower than it looks and rules
+out most Anthropic and OpenAI options.</p>
+<p>Watch chunk boundaries here: the unit of capture is a multi-speaker exchange,
+and one split across a boundary is lost from both sides.</p>
+<h3 id="phase-6-condense">Phase 6 — Condense</h3>
+<p>Context window is the binding constraint, not quality. With the full vault
+attached this phase needs roughly 560,000 tokens of context; with retrieval on
+it needs about 70,000, which nearly everything can serve.</p>
+<p>Turn retrieval on and the model choice opens up enormously. Leave it off and
+you are restricted to million-token-context models regardless of budget.</p>
+<hr>
+<h2 id="making-cheap-models-safe-verify-then-escalate">Making cheap models safe: verify, then escalate</h2>
+<p>The most useful structural idea here is that <strong>Phase 1's output is mechanically
+checkable</strong>. It should be roughly the same length as its input, contain the
+glossary terms, and consist of the same speaker turns. So you do not have to
+<em>trust</em> a cheap model — you can check it, cheaply, and only pay for a better one
+where it failed.</p>
+<p>A verification gate on Ground would test:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Check</th><th>Catches</th></tr></thead><tbody><tr><td>Output/input length ratio within band</td><td>summarising, early stopping, truncation</td></tr><tr><td>No characters outside the expected script</td><td>the documented character-drift failures</td></tr><tr><td>Glossary terms present in output</td><td>failure to apply the knowledge base</td></tr><tr><td>Speaker-marker count preserved</td><td>dropped lines</td></tr><tr><td>No untagged reasoning preamble</td><td>chain-of-thought written into the reply</td></tr></tbody></table>
+<p>Fail → retry once → escalate that chunk alone to a stronger model. Because a
+typical session is a couple of dozen chunks and failures are per-chunk, the
+escalation cost is small even at a fairly high failure rate.</p>
+<p>This is what "giving cheap models the best chance" looks like in practice: not
+hoping, and not levelling anything down, but making failure cheap to detect and
+cheap to recover from.</p>
+<blockquote>
+<p><strong>Status:</strong> the verification gate is described here as a design, not as
+shipped behaviour. The checks are all straightforward, but nothing in the
+pipeline performs them today.</p>
+</blockquote>
+<hr>
+<h2 id="request-settings-that-materially-change-cheap-model-quality">Request settings that materially change cheap-model quality</h2>
+<p>These matter more than they sound, and several are the difference between a
+model working and not.</p>
+<p><strong>Pin the provider.</strong> The same model ID on OpenRouter is served by many hosts
+with wildly different output ceilings — one model ranges from 7,168 to 1,048,576
+tokens depending on who answers. Routing is price-weighted, so it <em>prefers</em> the
+cheapest host, which is often the most aggressively quantised one. Character
+corruption and repetition loops are both reported far more on low-bit
+quantisation.</p>
+<p><strong>Set <code>max_tokens</code> explicitly.</strong> Besides bounding output, it restricts routing to
+providers that support that length — which is a free way to avoid the 7,168-token
+host above.</p>
+<p><strong>Require the parameters you depend on.</strong> OpenRouter passes structured-output
+requests upstream rather than enforcing them, and its own documentation notes
+some providers "treat it as a strong hint" rather than a guarantee. For the JSON
+phases, require the parameter so routing only considers hosts that honour it.</p>
+<p><strong>Decide the reasoning setting deliberately.</strong> Defaults vary and none of them are
+chosen for this pipeline. Some models reason by default at high effort; a few
+cannot be stopped at all. Reasoning tokens bill as output and count against the
+budget before your actual text starts. For mechanical phases, off is usually
+right — but note that on at least one family, disabling it also substantially
+reduces long-context accuracy, so it is a real trade rather than a free win.</p>
+<p><strong>Validate JSON and retry.</strong> No vendor publishes a JSON-reliability benchmark for
+any of the candidate models. Assume one-shot reliability is not guaranteed.</p>
+<hr>
+<h2 id="does-a-mix-actually-beat-one-good-model">Does a mix actually beat one good model?</h2>
+<p>On cost, comfortably. On quality, it depends entirely on which phase you move.</p>
+<p>For a three-hour session:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Arrangement</th><th>Cost</th><th>Where the risk sits</th></tr></thead><tbody><tr><td>Strong model everywhere</td><td>~$1.70</td><td>none</td></tr><tr><td>Cheap on Ground/Audit/Extras/Condense, strong on Chronicle</td><td>~$0.57</td><td>Ground, and it is checkable</td></tr><tr><td>Cheap everywhere</td><td>~$0.05</td><td>Chronicle, and it is not checkable</td></tr></tbody></table>
+<p>The middle row is the interesting one. It removes about two-thirds of the cost
+while leaving the phase that most determines how the chronicle <em>reads</em> on a
+model you trust — and the phase it does move is the one whose output can be
+verified automatically.</p>
+<p>Going further and moving Chronicle too takes cost to almost nothing, but that is
+where the honest answer is: <strong>no published evidence supports the claim that a
+cheap model matches a frontier one at exhaustive long-form narrative prose, and
+the benchmarks people usually cite for it do not measure the right thing.</strong> If
+you want to try it, A/B the same session and read both.</p>
+<hr>
+<h2 id="what-is-not-known">What is not known</h2>
+<p>Stated plainly, because a lot of confident-sounding material on this topic is
+not well founded:</p>
+<ul>
+<li><strong>No vendor publishes instruction-following or long-output-fidelity numbers
+for most of the candidate models.</strong> Every model card in this space optimises
+for agentic coding benchmarks. The axis this pipeline loads is unmeasured.</li>
+<li><strong>The long-output benchmark ecosystem is roughly a year behind the models.</strong>
+The leaderboards that do measure the right thing contain none of the current
+candidates.</li>
+<li><strong>Refusal behaviour on fictional violence is untested</strong> for essentially every
+candidate. The moderation flag tells you a platform filter exists; it does not
+tell you what the model itself does with a gore-heavy scene.</li>
+<li>Several benchmark figures circulating for these models could not be traced to
+any vendor source and appear to be fabricated by aggregator sites.</li>
+</ul>
+<p>Given that, the highest-value thing you can do is not read more benchmarks. It
+is to run one real transcript chunk through three candidates and compare the
+outputs against the source directly — length ratio, glossary-term retention,
+and a read-through. That will out-predict every leaderboard mentioned here.</p>
+<hr>
+<h2 id="where-the-savings-actually-are">Where the savings actually are</h2>
+<p>Worth being precise, because "cost" and "call count" point at different phases
+and the free tier rations the second one.</p>
+<p>One three-hour session on a single Pro-tier model:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Phase</th><th>Calls</th><th>Input tokens</th><th>Output tokens</th><th>Cost</th><th>Share of cost</th></tr></thead><tbody><tr><td>1 Ground</td><td>8</td><td>69,000</td><td>55,000</td><td>$0.63</td><td><strong>37%</strong></td></tr><tr><td>2 Audit</td><td>8</td><td><strong>114,000</strong></td><td>1,104</td><td>$0.15</td><td>9%</td></tr><tr><td>3 Chronicle</td><td>4</td><td>57,000</td><td>49,500</td><td>$0.56</td><td><strong>33%</strong></td></tr><tr><td>4 Extras</td><td>4</td><td>57,000</td><td>2,752</td><td>$0.10</td><td>6%</td></tr><tr><td>6 Condense</td><td>2</td><td>75,500</td><td>14,850</td><td>$0.23</td><td>14%</td></tr></tbody></table>
+<p>Two readings, both true:</p>
+<ul>
+<li><strong>By money, the answer is Phases 1 and 3</strong> — 70% between them. Output tokens
+cost several times what input tokens do, and those are the two phases that
+emit output on the scale of their input.</li>
+<li><strong>By calls, the answer is Phases 1 and 2</strong> — 16 of 26. That matters because
+the free tier rations <em>requests</em>, not tokens. If you are trying to fit a
+session inside 50 requests a day, Phase 2 is as expensive as Phase 1.</li>
+</ul>
+<p><strong>Audit has by far the worst shape in the pipeline: 114,000 input tokens to
+produce about 1,100 output tokens, and most chunks correctly return an empty
+list.</strong> It is 31% of all input in the run for 1% of all output. It is cheap in
+money only because its output is tiny.</p>
+<p>So the instinct that Phases 1 and 2 are where the grunt work is, and that a
+cheaper non-prose model belongs there, is right — but the reason is the call
+count and the input volume, not the bill.</p>
+<h2 id="splitting-audit-in-two">Splitting Audit in two</h2>
+<p>Audit currently does two jobs in one call: it compares the raw and grounded text
+<em>and</em> it composes questions for the game master. That is why it ships both
+copies of the chunk, and why its input is double everything else.</p>
+<p>Separating them is worth doing:</p>
+<p><strong>A deterministic diff first.</strong> Comparing raw against grounded is a string
+operation, not a judgement. Most chunks differ only by the proper-noun
+substitutions Phase 1 was asked to make, which are already known — they came
+from the glossary. A chunk whose only differences are expected substitutions
+has nothing to ask about, and needs no model call at all.</p>
+<p><strong>Then a question pass, only on chunks that survive.</strong> Those are the chunks
+where something unexpected changed, or where the grounded text still contains
+an unresolved candidate. Far fewer calls, each carrying one chunk rather than
+two.</p>
+<p>The gain is mostly in calls rather than money — perhaps $0.10 of a $1.70 run,
+but potentially 5 or 6 of 26 requests, which on a 50-request daily allowance is
+the difference between one session and two. It also removes the need for the
+audit model to reason at all on most chunks, which suits exactly the cheap
+non-prose models this page has been pointing at.</p>
+<p>It has a second benefit worth naming: a chunk can be assessed <em>before</em> being
+sent. If a chunk is going to trip a moderation filter, knowing that from the
+diff stage means routing it elsewhere rather than losing the call to a refusal.</p>
+<blockquote>
+<p><strong>Status:</strong> proposed, not built. The pipeline currently runs Audit as a single
+combined pass.</p>
+</blockquote>
+<h2 id="which-models-suit-ground-and-audit">Which models suit Ground and Audit</h2>
+<p>These two phases want the opposite of a good conversationalist. They want
+faithful transformation, stable output length, no editorialising, and no
+deliberation in the reply. Prose ability is close to irrelevant.</p>
+<p>That is a real opening for the models usually described as data-transformation
+rather than writing models, and the evidence for them on this specific axis is
+better than it is for the prose phases:</p>
+<ul>
+<li><strong>The Qwen 2507 instruct line</strong> is the strongest documented fit. It is
+non-thinking <em>by construction</em> — the model cards state plainly that it does
+not emit thinking blocks, so there is nothing to strip and no reasoning
+tokens to pay for. It publishes the highest instruction-following scores in
+the cheap tier and long-context retrieval in the mid-80s. One caveat from
+Qwen's own card: do not raise <code>presence_penalty</code>, which it links to language
+mixing.</li>
+<li><strong>Kimi K2.6</strong> carries the strongest evidence of sustained long output of any
+candidate — its own evaluations ran to 98,304 tokens. Thinking must be turned
+off explicitly, which also sidesteps a reported repetition loop that only
+occurs while reasoning. Pin the provider: one host caps its output at 16,384.</li>
+<li><strong>DeepSeek V4 Flash</strong> is strong at the input size these phases actually use.
+Thinking is on by default at high effort and should be disabled. Pair it with
+a character check — the family has a vendor-acknowledged issue with non-Latin
+characters in long English output, and one report describes it occurring
+specifically while reproducing input, which is what Ground does.</li>
+</ul>
+<p>For the prose phases the ordering is different and the evidence is thinner. The
+providers usually named as the best conversationalists probably are, and none of
+the research contradicts that. What it does establish is that the gap is not
+uniform across phases: on Extras and Condense a Flash-tier model is already
+near-parity with Pro, so the premium is only clearly worth paying on the
+chronicle.</p>
+<h2 id="testing-plan-for-the-prose-phases">Testing plan for the prose phases</h2>
+<p>The grades in the picker will stay blank for the prose phases until something is
+actually run, and the useful question is not "which model is best" but which of
+three buckets each model falls into:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Bucket</th><th>What it means</th><th>How to tell</th></tr></thead><tbody><tr><td><strong>Surpasses</strong></td><td>Better than the reference on this phase</td><td>Read both. A judge model will not reliably see this.</td></tr><tr><td><strong>Comparable, cheaper</strong></td><td>Same standard, less money</td><td>Side-by-side read plus cost</td></tr><tr><td><strong>Close enough</strong></td><td>Visibly weaker, acceptable for the price</td><td>Side-by-side read</td></tr><tr><td><strong>Not viable</strong></td><td>Would change what the chronicle is</td><td>Any of: refusals, drift, summarising</td></tr></tbody></table>
+<p>For each candidate: same session, same routing except the phase under test,
+reference model on everything else. Then compare on named-entity fidelity,
+absence of refusal artefacts, continuity across chunk boundaries, whether
+Phase 3 stayed exhaustive rather than summarising, and — for Extras — whether
+the "funny" list is actually funny, which is the one dimension where a
+first-hand read has already found a clear difference between providers.</p>
+<hr>
+<h2 id="hybrid-combinations-priced">Hybrid combinations, priced</h2>
+<p>Reference workload throughout: one three-hour session with 10,000 words of lore,
+at the conservative chunk sizes the OpenRouter provider falls back to (15 calls
+on Ground, 8 on Chronicle). Gemini rates are the direct-API ones.</p>
+<p><strong>Cost per phase:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>in/out per M</th><th>Ground</th><th>Audit</th><th>Chronicle</th><th>Extras</th><th>Condense</th><th>Total</th></tr></thead><tbody><tr><td>gemini-pro (direct)</td><td>1.25 / 10.00</td><td>$0.698</td><td>$0.159</td><td>$0.584</td><td>$0.109</td><td>$0.288</td><td><strong>$1.84</strong></td></tr><tr><td>gemini-2.5-flash</td><td>0.30 / 2.50</td><td>$0.173</td><td>$0.038</td><td>$0.145</td><td>$0.026</td><td>$0.071</td><td>$0.45</td></tr><tr><td>grok-4.20</td><td>1.25 / 2.50</td><td>$0.285</td><td>$0.151</td><td>$0.213</td><td>$0.088</td><td>$0.176</td><td>$0.91</td></tr><tr><td>grok-4.6</td><td>2.00 / 6.00</td><td>$0.567</td><td>$0.243</td><td>$0.439</td><td>$0.147</td><td>$0.312</td><td>$1.71</td></tr><tr><td>kimi-k2.6</td><td>0.56 / 2.36</td><td>$0.196</td><td>$0.069</td><td>$0.157</td><td>$0.043</td><td>$0.097</td><td>$0.56</td></tr><tr><td><strong>kimi-k3</strong></td><td><strong>3.00 / 15.00</strong></td><td>$1.180</td><td>$0.372</td><td>$0.956</td><td>$0.237</td><td>$0.557</td><td><strong>$3.30</strong></td></tr><tr><td>qwen3-235b-2507</td><td>0.09 / 0.55</td><td>$0.041</td><td>$0.011</td><td>$0.034</td><td>$0.007</td><td>$0.018</td><td>$0.11</td></tr><tr><td>deepseek-v4-flash</td><td>0.083 / 0.165</td><td>$0.019</td><td>$0.010</td><td>$0.014</td><td>$0.006</td><td>$0.012</td><td>$0.06</td></tr><tr><td>gpt-oss-120b</td><td>0.03 / 0.17</td><td>$0.013</td><td>$0.004</td><td>$0.011</td><td>$0.002</td><td>$0.006</td><td>$0.04</td></tr><tr><td>claude-sonnet-4.5</td><td>3.00 / 15.00</td><td>$1.180</td><td>$0.372</td><td>$0.956</td><td>$0.237</td><td>$0.557</td><td>$3.30</td></tr></tbody></table>
+<p><strong>Kimi K3 is not a cheap option.</strong> At $3.00/$15.00 it is the joint most
+expensive model here, level with Claude Sonnet and nearly twice Gemini Pro. If
+you want Kimi, K2.6 is the one — a fifth of the price and the family's strongest
+published evidence for sustained long output.</p>
+<p><strong>Combinations</strong>, split by how much lands on the Google bill:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Combination</th><th>Google</th><th>Elsewhere</th><th>Total</th></tr></thead><tbody><tr><td>All Gemini Pro</td><td>$1.84</td><td>—</td><td>$1.84</td></tr><tr><td><strong>Current balanced</strong> — Claude Code 1–2, Pro 3, Flash 4/6</td><td><strong>$0.68</strong></td><td>$0.00</td><td><strong>$0.68</strong></td></tr><tr><td>Qwen 1–2, Pro 3, Flash 4/6 (no subscription needed)</td><td>$0.68</td><td>$0.05</td><td>$0.73</td></tr><tr><td>DeepSeek 1–2, Pro 3, Flash 4/6</td><td>$0.68</td><td>$0.03</td><td>$0.71</td></tr><tr><td>Kimi K2.6 1–2, Pro 3, Flash 4/6</td><td>$0.68</td><td>$0.26</td><td>$0.95</td></tr><tr><td>Qwen 1–2, Pro 3, Flash 4, <strong>Grok 6</strong></td><td>$0.61</td><td>$0.23</td><td>$0.84</td></tr><tr><td><strong>Qwen 1–2, Grok 3, Flash 4, Grok 6</strong></td><td><strong>$0.03</strong></td><td>$0.44</td><td><strong>$0.47</strong></td></tr><tr><td>Cheapest viable everywhere</td><td>—</td><td>$0.04</td><td>$0.04</td></tr></tbody></table>
+<p>Three things fall out of this.</p>
+<p><strong>Dropping Claude Code costs almost nothing.</strong> Swapping it for Qwen on Ground
+and Audit takes the total from $0.68 to $0.73 — five pence. The subscription is
+buying convenience, not a meaningful saving, and a run that no longer depends on
+it is one fewer thing to have configured.</p>
+<p><strong>Every penny of the current preset is a Google bill.</strong> Claude Code contributes
+nothing to it because it bills against a subscription, so the $0.68 is entirely
+Pro on Chronicle plus Flash on Extras and Condense. Moving the mechanical phases
+around cannot reduce it, because they are already free. <strong>Only Chronicle and
+Condense can.</strong></p>
+<p><strong>Chronicle is where the Google bill lives.</strong> At $0.584 it is 86% of the
+preset's cost. Grok 4.20 does the same phase for $0.213 — 2.7× less — with 2M
+of context, no moderation filter, and reasoning that can be left off. Whether
+its prose stands up is the open question, and the one worth testing first.</p>
+<p>Condense is the easier win: Grok 4.20 at $0.176 against Pro's $0.288, on a
+phase where Flash is already near-parity, so the quality bar is lower.</p>
+<h2 id="what-to-test-first-in-order">What to test first, in order</h2>
+<ol>
+<li><strong>Grok 4.20 on Chronicle.</strong> Biggest single saving available and the whole
+argument turns on it. Unmoderated and cheap on output, which is what this
+phase spends. If its prose holds, the Google bill drops by about 85%.</li>
+<li><strong>Grok 4.20 on Condense.</strong> Lower bar, decent saving, and Flash already
+proves this phase does not need Pro.</li>
+<li><strong>Qwen 2507 on Ground and Audit</strong>, as the no-subscription path. Cost is
+already known to be negligible; what needs checking is whether it grounds as
+cleanly as Claude Code.</li>
+<li><strong>Kimi K2.6 on Chronicle</strong>, as the fallback if Grok disappoints — it has the
+best documented long-output behaviour of the cheap models, at $0.157.</li>
+</ol>
+<p>Do not start with Kimi K3. It costs more than the model it would replace.</p>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/models/per-phase-routing.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>

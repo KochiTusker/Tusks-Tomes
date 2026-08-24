@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transcribe a D&amp;D Session Recording into a Written Chronicle — Tusk's Tomes</title>
+<meta name="description" content="Record, transcribe locally with Whisper, and turn a D&amp;D or TTRPG session recording into a narrative chronicle grounded in your own campaign lore. Free and open source.">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Transcribe a D&amp;D Session Recording into a Written Chronicle — Tusk's Tomes">
+<meta property="og:description" content="Record, transcribe locally with Whisper, and turn a D&amp;D or TTRPG session recording into a narrative chronicle grounded in your own campaign lore. Free and open source.">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Transcribe a D&amp;D Session Recording into a Written Chronicle — Tusk's Tomes">
+<meta name="twitter:description" content="Record, transcribe locally with Whisper, and turn a D&amp;D or TTRPG session recording into a narrative chronicle grounded in your own campaign lore. Free and open source.">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Import session audio",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Import session audio",
+  "description": "Record, transcribe locally with Whisper, and turn a D&D or TTRPG session recording into a narrative chronicle grounded in your own campaign lore. Free and open source.",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB",
+  "keywords": "transcribe D&D session, D&D session recording to text, Craig Discord recording transcript, Whisper D&D transcription, multitrack Discord recording, D&D session chronicle generator, tabletop RPG transcription"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Turn a tabletop RPG session recording into a written chronicle",
+  "description": "Record, transcribe locally with Whisper, and turn a D&D or TTRPG session recording into a narrative chronicle grounded in your own campaign lore. Free and open source.",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/",
+  "totalTime": "PT1H",
+  "supply": [
+    {
+      "@type": "HowToSupply",
+      "name": "An audio recording of one session"
+    },
+    {
+      "@type": "HowToSupply",
+      "name": "A glossary or vault of campaign lore"
+    }
+  ],
+  "tool": [
+    {
+      "@type": "HowToTool",
+      "name": "Tusk's Tomes"
+    },
+    {
+      "@type": "HowToTool",
+      "name": "Node.js 20 or newer"
+    },
+    {
+      "@type": "HowToTool",
+      "name": "The Audio Transcription add-on"
+    },
+    {
+      "@type": "HowToTool",
+      "name": "An NVIDIA GPU (recommended)"
+    }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Record the session",
+      "text": "Record the game. Recording each player to a separate track — the Craig Discord bot does this on its free tier — makes every line in the finished chronicle attributable to the right character.",
+      "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/#stage-1-record-the-session"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Transcribe it on your own machine",
+      "text": "Drop the recording into the Upload tab. A local Whisper sidecar transcribes each track separately and interleaves them into one timestamped transcript with speakers attached. Nothing is uploaded.",
+      "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/#stage-2-transcribe-it-on-your-own-machine"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Ground the names against your lore",
+      "text": "Phase 1 corrects the transcript against your glossary or Obsidian vault before any prose is written, so misheard fantasy names are fixed rather than confidently repeated. Phase 2 returns whatever it could not resolve as questions.",
+      "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/#stage-3-ground-the-names-against-your-lore"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Write it up",
+      "text": "Phase 3 writes the narrative chronicle, Phase 4 extracts quotes, jests and combat highlights, and Phase 6 optionally condenses the chronicle to a length you set. Export as .docx or Markdown.",
+      "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/#stage-4-write-it-up"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Recording a D&D session with Craig and exporting the tracks",
+  "description": "Adding the Craig bot to a Discord server, recording a session with every player on a separate track, and downloading the finished multitrack zip ready to transcribe.",
+  "thumbnailUrl": "https://i.ytimg.com/vi/3X6fc73XYH0/maxresdefault.jpg",
+  "embedUrl": "https://www.youtube-nocookie.com/embed/3X6fc73XYH0",
+  "contentUrl": "https://www.youtube.com/watch?v=3X6fc73XYH0",
+  "isPartOf": {
+    "@type": "WebPage",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/docs/importing/session-audio/"
+  }
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/" aria-current="page">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Import session audio</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#the-short-version">The short version</a></li><li><a href="#stage-1-record-the-session">Stage 1 — Record the session</a></li><li><a href="#stage-2-transcribe-it-on-your-own-machine">Stage 2 — Transcribe it, on your own machine</a></li><li><a href="#stage-3-ground-the-names-against-your-lore">Stage 3 — Ground the names against your lore</a></li><li><a href="#stage-4-write-it-up">Stage 4 — Write it up</a></li><li><a href="#what-the-output-actually-reads-like">What the output actually reads like</a></li><li><a href="#what-this-costs">What this costs</a></li><li><a href="#where-this-route-is-weak">Where this route is weak</a></li><li><a href="#next">Next</a></li></ul></aside>
+    <article class="prose">
+<h1>Import session audio</h1>
+<p>Start with a recording of your game — a Discord multitrack, a Zoom export, a
+phone on the table — and end with a narrative account of the session written in
+your world's own vocabulary. This page follows that one journey end to end: what
+happens at each stage, what it costs, how long it takes, and where it is weakest.</p>
+<p>If you have no way to record, or no GPU to transcribe with, the
+<a href="/Tusks-Tomes/docs/importing/youtube-captions/">YouTube transcript route</a> reaches the same
+chronicle by a different road. If you already have a transcript from somewhere
+and just want to know which import to use, <a href="/Tusks-Tomes/docs/importing/">Getting a session in</a>
+is the mechanical version of this page.</p>
+<hr>
+<h2 id="the-short-version">The short version</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>You start with</strong></td><td>An audio recording of one session</td></tr><tr><td><strong>You end with</strong></td><td>A narrative chronicle, a condensed version, catch-up bullets, quotes, jests and combat highlights</td></tr><tr><td><strong>Time</strong></td><td>About an hour for a three-hour session, unattended</td></tr><tr><td><strong>Cost</strong></td><td><a href="/Tusks-Tomes/docs/models/costs/">Roughly $1–$5 of your own API credit</a>, or $0 fully local</td></tr><tr><td><strong>Uploaded anywhere?</strong></td><td>The audio never leaves your machine. Only text reaches a model, and only if you choose a cloud one</td></tr></tbody></table>
+<hr>
+<h2 id="stage-1-record-the-session">Stage 1 — Record the session</h2>
+<div class="doc-video">
+<div class="video" data-video-id="3X6fc73XYH0">
+  <button type="button" class="video-play" aria-label="Recording a D&amp;D session with Craig and exporting the tracks (loads YouTube when clicked)">
+    <img src="/Tusks-Tomes/docs/assets/craig-session-recording-walkthrough.jpg" alt="Recording a D&amp;D session with Craig and exporting the tracks" width="1200" height="675" loading="lazy" decoding="async">
+    <span class="video-btn" aria-hidden="true"></span>
+    <span class="video-note">Click to play — YouTube only loads when you do</span>
+  </button>
+  <noscript><p><a href="https://www.youtube.com/watch?v=3X6fc73XYH0" rel="noopener">Watch this section on YouTube</a></p></noscript>
+</div>
+  <p class="doc-video-cap">Adding Craig to a Discord server, recording a session, and downloading the multitrack zip.</p>
+</div>
+
+<p>Any recording works. The one that works <em>best</em> records each player to their own
+track, because that removes the hardest problem in the whole pipeline before it
+starts.</p>
+<p><strong>Multitrack, via Discord.</strong> <a href="https://craig.chat" rel="noopener">Craig</a> is a Discord bot that
+records every participant to a separate file. Its free tier is enough for this.
+When each track contains exactly one person, every line in the finished
+chronicle is attributable to the right character without anything having to
+guess.</p>
+<p><strong>Single track.</strong> A Zoom recording, an OBS capture, a phone on the table — all
+fine, and all land in the same pipeline. You lose per-speaker separation, which
+means attribution becomes inference rather than fact. The chronicle will still
+read well; it will occasionally put a line in the wrong character's mouth.</p>
+<p>There is no minimum quality bar worth stating. Sessions recorded on a laptop
+microphone across a kitchen table produce usable chronicles. Crosstalk hurts far
+more than bitrate does.</p>
+<hr>
+<div class="docs-alert docs-alert-tip">
+<div class="docs-alert-label">Streamlined</div>
+<p><strong>Whisper keeps the swearing.</strong> It transcribes what was said, including
+profanity and crude dialogue. YouTube's automatic captions replace those with
+<code>[ __ ]</code> before you ever see the file, and nothing downstream can recover
+them. If the way your table actually talks matters to the record, this route
+is the one that keeps it.</p>
+</div>
+<h2 id="stage-2-transcribe-it-on-your-own-machine">Stage 2 — Transcribe it, on your own machine</h2>
+<p><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a> installs a local Whisper
+sidecar. Drop the recording — or the whole Craig zip — into the <strong>Upload</strong> tab
+and it transcribes each track separately, then interleaves them into one
+timestamped transcript with speakers already attached.</p>
+<p><strong>This is the stage that wants an NVIDIA GPU</strong>, and the word is doing real work.
+The engine underneath is <code>faster-whisper</code>, whose backend implements exactly two
+devices: CUDA and CPU. There is no AMD, Intel Arc or Apple GPU backend, so those
+cards are not used at all — a machine with a Radeon in it transcribes at exactly
+the same speed as a machine with no graphics card.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Hardware</th><th>Three hours of audio takes</th></tr></thead><tbody><tr><td>NVIDIA GPU</td><td>20–30 minutes</td></tr><tr><td>Anything else</td><td>Several hours</td></tr></tbody></table>
+<p>Either way it runs unattended. If "several hours" is not acceptable, the
+<a href="/Tusks-Tomes/docs/importing/youtube-captions/">YouTube route</a> does the transcribing on
+Google's hardware instead of yours and needs no GPU, no Python and nothing installed.</p>
+<p>Nothing is uploaded at this stage under any configuration. Whisper runs as a
+local process against a local file.</p>
+<hr>
+<h2 id="stage-3-ground-the-names-against-your-lore">Stage 3 — Ground the names against your lore</h2>
+<p>This is the stage the whole project exists for, and it is worth understanding
+before you judge the output.</p>
+<p>Speech-to-text has never heard of your setting. It renders unfamiliar proper
+nouns phonetically — a homebrew city becomes three different spellings in one
+session, a character's name lands as whatever common word it sounds nearest. If
+you hand that transcript straight to a general-purpose model and ask for prose,
+the model picks a plausible spelling, commits to it, and stays consistently
+wrong for forty pages. Consistency reads as confidence, which makes it worse,
+not better.</p>
+<p>So Phase 1 corrects the transcript <em>before</em> any narrative is written:</p>
+<ol>
+<li>A deterministic pass strips <code>[Music]</code> and <code>[Laughter]</code> markers and normalises
+whitespace.</li>
+<li>A second deterministic pass applies your glossary's safe replacements and a
+general D&#x26;D dictionary.</li>
+<li>Only then does a model pass over it, resolving the rest against your lore.</li>
+</ol>
+<p>Your lore can come from either of two places. The <strong>Tome of Lore</strong> tab holds
+documents and a glossary you maintain in-app. The
+<a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian Vault lore</a> instead reads an existing
+vault, read-only, and grounds against that — which in head-to-head testing
+grounded names more reliably, mostly because a vault someone actually maintains
+is richer than a glossary they had to remember to fill in.</p>
+<p>A large library is not expensive. Up to roughly 100,000 words of lore made no
+noticeable difference to the bill.</p>
+<p>Phase 2 then compares the raw and corrected transcripts and hands you a list of
+what it could not resolve — as questions, rather than as a guess buried in
+prose. Answering them takes a few minutes and improves everything downstream.</p>
+<hr>
+<h2 id="stage-4-write-it-up">Stage 4 — Write it up</h2>
+<p>Phase 3 turns the grounded transcript into continuous narrative. Phase 4 pulls
+the quotes, jests and combat highlights out as structured lists. Phase 6
+optionally condenses the chronicle to whatever length you set with a slider.</p>
+<p>A three-hour session lands at roughly 16,000–18,000 words in full. At the
+default condense setting it comes back nearer 3,000.</p>
+<p>Everything is editable before you export, and every output is optional. Export
+is <code>.docx</code> or Markdown.</p>
+<hr>
+<h2 id="what-the-output-actually-reads-like">What the output actually reads like</h2>
+<p>Continuous prose in a consistent voice, not minutes with bullet points. Player
+dialogue is kept where it carries the scene; the DM's narration comes back as
+narration rather than as quoted lines attributed to a person called "the Dungeon
+Master". <a href="/Tusks-Tomes/docs/about/features/">What it does</a> covers each of the five outputs, and the
+project's home page carries sample extracts from a real session.</p>
+<hr>
+<h2 id="what-this-costs">What this costs</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Route</th><th>Per three-hour session</th></tr></thead><tbody><tr><td>Paid Gemini key</td><td><a href="/Tusks-Tomes/docs/models/costs/">~$1–$5, by routing</a></td></tr><tr><td>Claude Code or Codex CLI subscription</td><td>$0 extra — draws on an allowance you already pay for</td></tr><tr><td>Fully local (Ollama, LM Studio, Unsloth)</td><td>$0</td></tr><tr><td>Mixed — mechanical phases local, chronicle to cloud</td><td>Pennies</td></tr></tbody></table>
+<p>The honest caveat on fully local: below roughly 15–20B parameters the chronicle
+phase tends to read like a log rather than a story, and grounding is less
+reliable too. Running the mechanical phases locally and sending only Phase 3 to
+a cloud model keeps most of the saving and all of the prose quality.</p>
+<p>See <a href="/Tusks-Tomes/docs/models/costs/">what it costs</a> for the full breakdown.</p>
+<hr>
+<h2 id="where-this-route-is-weak">Where this route is weak</h2>
+<ul>
+<li><strong>Crosstalk.</strong> Multitrack solves attribution, not people talking over each
+other. Heavy overlap degrades the transcript itself.</li>
+<li><strong>Non-NVIDIA hardware.</strong> Not slow — unaccelerated. Plan around it.</li>
+<li><strong>Out-of-character tangents.</strong> Twenty minutes of pizza logistics is
+transcribed as faithfully as the boss fight. The chronicle handles it better
+than you would expect, but it is not magic.</li>
+<li><strong>Platform maturity.</strong> Windows is the tested platform. Linux and macOS are
+expected to work and have not been through a real session here.</li>
+</ul>
+<hr>
+<h2 id="next">Next</h2>
+<ul>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">What you'll need first</a> — including how to check what you
+already have</li>
+<li><a href="/Tusks-Tomes/docs/getting-started/installation/">Setup guide</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a> — the routing that produced
+the samples</li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">The YouTube transcript route</a> — no GPU,
+nothing to install</li>
+</ul>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/importing/session-audio.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+<script src="/Tusks-Tomes/site.js" defer></script>
+</body>
+</html>

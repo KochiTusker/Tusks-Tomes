@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extras &amp; integrations — Tusk's Tomes</title>
+<meta name="description" content="The core app does one thing: you give it a transcript, it gives you a chronicle. Everything heavier — transcribing audio, running local models, changing the…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/extras/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Extras &amp; integrations — Tusk's Tomes">
+<meta property="og:description" content="The core app does one thing: you give it a transcript, it gives you a chronicle. Everything heavier — transcribing audio, running local models, changing the…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/extras/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Extras &amp; integrations — Tusk's Tomes">
+<meta name="twitter:description" content="The core app does one thing: you give it a transcript, it gives you a chronicle. Everything heavier — transcribing audio, running local models, changing the…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Extras & integrations",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/extras/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Extras & integrations",
+  "description": "The core app does one thing: you give it a transcript, it gives you a chronicle. Everything heavier — transcribing audio, running local models, changing the…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/extras/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/" aria-current="page">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Extras &amp; integrations</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#one-question-decides-how-a-module-behaves">One question decides how a module behaves</a></li><li><a href="#the-modules">The modules</a></li><li><a href="#future-modules">Future modules</a></li><li><a href="#related-reading">Related reading</a></li></ul></aside>
+    <article class="prose">
+<h1>Extras &#x26; integrations</h1>
+<p>The core app does one thing: you give it a transcript, it gives you a chronicle.
+Everything heavier — transcribing audio, running local models, changing the
+narrator's voice, reading your Obsidian vault — is optional, and you only deal
+with it if you actually want it.</p>
+<p>This wasn't an architectural preference so much as a reaction to being on the
+other end of it. I've installed plenty of tools that dragged in a couple of
+gigabytes of machine-learning dependencies I never used, for a feature I didn't
+want, on a first run. If you only ever paste transcripts, you should never need
+Python, never sit through a large download, and never see a GPU detection
+script. So you don't.</p>
+<p>Nothing here is a paid tier or a feature gate. It's all MIT-licensed and it's
+all in the repo already.</p>
+<hr>
+<h2 id="one-question-decides-how-a-module-behaves">One question decides how a module behaves</h2>
+<p>The question is: <strong>does turning this on put bytes on your disk that weren't
+there before?</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>What it means</th><th>How you turn it on</th></tr></thead><tbody><tr><td><strong>Installs</strong></td><td>A real installation with real prerequisites. Today there is exactly one: Audio Transcription, which downloads a Python environment.</td><td><strong>Settings → Transcription</strong>, then Install. The log streams live; you restart the server once when it finishes.</td></tr><tr><td><strong>Built in</strong></td><td>Ships with the app and is always mounted. Nothing to download, nothing to restart.</td><td>Nothing to turn on. Whether it's <em>usable</em> — a CLI on your PATH, a runner that's actually running, a vault path you've set — is something each module detects and tells you.</td></tr></tbody></table>
+<p>So for six of the seven modules below, there is no install step and no restart.
+You point them at something (a CLI, a local runner, a vault folder), and the
+app checks whether it's there.</p>
+<div class="docs-alert docs-alert-note">
+<div class="docs-alert-label">Note</div>
+<p>A built-in module has no uninstall path, so turning one off cannot remove
+anything you have authored. Personas you write yourself are safe by
+construction rather than by care.</p>
+</div>
+<p>The architectural details (registry, the <code>builtin</code> / <code>install</code> union, route
+mounting) live in <a href="/Tusks-Tomes/docs/about/how-its-built/">architecture.md</a>.</p>
+<hr>
+<h2 id="the-modules">The modules</h2>
+<h3 id="audio-transcription-the-only-one-that-installs">Audio Transcription — the only one that installs</h3>
+<p><strong>The premium path.</strong> Lets you drop a <a href="https://craig.chat" rel="noopener">Craig</a> Discord recording zip directly into Tomes; the Whisper sidecar transcribes it offline; the resulting transcript carries per-speaker attribution end-to-end into the chronicle.</p>
+<p><strong>Why it beats the YouTube <code>.sbv</code> workflow:</strong> YouTube's auto-captions are single-track. They give you all the words, but they have no idea which player or character said what. Craig records every speaker as a separate FLAC stream, so when the chronicle finishes, every line in the prose is attributed to the right character. No more "wait, did the rogue or the bard say that?" arguments.</p>
+<p><strong>What it unlocks:</strong></p>
+<ul>
+<li><strong>Sessions</strong> tab — appears once the module is installed. Uploading is the first thing on it: Craig multitrack zip ingest, loose-file audio drop, staged-batch uploads. Your transcribed sessions list below, with replay / export / delete.</li>
+<li><strong>Whisper sidecar</strong> — offline transcription via <code>faster-whisper</code> large-v3 (CUDA auto-detected; CPU fallback works)</li>
+<li><strong>Speaker mapping editor</strong> — pre-populated from filenames, editable before transcription kicks off</li>
+</ul>
+<p><strong>Cost:</strong> a Python virtual environment of roughly 1.5 GB, plus model weights. Python 3.10–3.12 required on your PATH. An <strong>NVIDIA</strong> GPU cuts a 3-hour session from hours on CPU to minutes.</p>
+<div class="docs-alert docs-alert-warning">
+<div class="docs-alert-label">Notice</div>
+<p><strong>On AMD or Intel?</strong> This engine won't use your card — <code>faster-whisper</code> only
+has CUDA and CPU backends. See the <strong>whisper.cpp bridge</strong> below, or the
+<a href="/Tusks-Tomes/docs/importing/">YouTube route</a>, which needs no GPU at all.</p>
+</div>
+<p><strong>Deep dive:</strong> <a href="/Tusks-Tomes/docs/extras/audio-transcription/">docs/add-ons/audio-transcription.md</a></p>
+<hr>
+<h3 id="whispercpp-bridge-bring-your-own-build">whisper.cpp bridge (bring your own build)</h3>
+<p><strong>The route for AMD, Intel and Apple GPUs.</strong> The Audio Transcription module above only accelerates on NVIDIA, because <code>faster-whisper</code> has just two backends: CUDA and CPU. This one bridges to a <a href="https://github.com/ggml-org/whisper.cpp" rel="noopener">whisper.cpp</a> build that you compile, which can use whatever card you have.</p>
+<p><strong>Why you have to build it yourself:</strong> I went looking for a ready-made binary that would use non-NVIDIA GPUs and there isn't a good one. whisper.cpp's own releases ship CPU, BLAS (still CPU) and CUDA — its Vulkan backend exists in source but is in no release asset. sherpa-onnx ships CPU and CUDA only. Const-me/Whisper does genuinely use any DirectX 11 GPU, but hasn't had a release since July 2023. Rather than compile and sign binaries I can't test on hardware I don't own, this takes the same shape as the Claude Code and Codex modules: you own the tool, I own the integration.</p>
+<p><strong>What it does:</strong></p>
+<ul>
+<li><strong>Detects and checks your build</strong> — including reading its capability line, so it can tell you "this is a CPU-only build and won't use your graphics card" instead of leaving you to wonder why it's slow</li>
+<li><strong>Transcribes through it</strong>, producing exactly the same output as the built-in engine — the Sessions tab and speaker mapping all work unchanged</li>
+<li><strong>Falls back automatically</strong> to the built-in engine if anything stops checking out, rather than failing your run</li>
+</ul>
+<p><strong>Cost:</strong> nothing on disk from us — nothing is downloaded and nothing is written. Your whisper.cpp build and model are yours and are never touched. You supply a build (a compile) and a GGML model (~3 GB for large-v3).</p>
+<p><strong>Deep dive:</strong> <a href="/Tusks-Tomes/docs/extras/whisper-cpp/">docs/add-ons/whisper-cpp.md</a> — build instructions for Windows, Linux and macOS.</p>
+<hr>
+<h3 id="local-llms">Local LLMs</h3>
+<p><strong>The fully-offline path.</strong> Routes any phase of the pipeline (or the whole thing) through a local model running on your hardware. The chronicle never touches a cloud API.</p>
+<p><strong>Why you might want this:</strong> privacy (sensitive transcripts stay on the host), cost (zero per session), or just preference (you already run Ollama and want to use it). Per-phase routing lets you mix and match — e.g. a cheap cloud model for grounding, your local 27B for the long-form chronicle phase.</p>
+<p><strong>What it unlocks:</strong></p>
+<ul>
+<li><strong>Local runner detection</strong> in <strong>Settings → Providers &#x26; models</strong> — detect and probe Ollama / LM Studio / Unsloth on their default ports. Start a runner and its models appear in the routing rows.</li>
+<li><strong>Per-phase routing</strong> — assign each pipeline phase to a specific local model independently</li>
+<li><strong>Capability probe</strong> — a 2-test mini-probe (structured JSON adherence + grounding fidelity) flags which phases each local model is qualified for, so the routing rows show which ones it can carry</li>
+<li><strong>Hardware advisories</strong> — VRAM / RAM checks for the model you've picked, so a 32B model on 8 GB doesn't silently OOM</li>
+</ul>
+<p><strong>Cost:</strong> nothing from Tomes — it is a same-origin proxy and a detector. You install <a href="https://ollama.com" rel="noopener">Ollama</a>, <a href="https://lmstudio.ai" rel="noopener">LM Studio</a>, or Unsloth separately; those are the heavy downloads.</p>
+<div class="docs-alert docs-alert-warning">
+<div class="docs-alert-label">Notice</div>
+<p>Local models under roughly 15B parameters produce noticeably weaker prose
+than the cloud flagships. Mixing per phase — local for the mechanical
+phases, cloud for the prose — is the sweet spot rather than going fully
+local on modest hardware.</p>
+</div>
+<p><strong>Deep dive:</strong> <a href="/Tusks-Tomes/docs/extras/local-llms/">docs/add-ons/local-llm.md</a></p>
+<hr>
+<h3 id="chronicle-personas">Chronicle Personas</h3>
+<p><strong>Swap the narrator's voice.</strong> The default chronicle voice is a polished bardic tone — appropriate for most groups. Personas lets you replace it with one of six character presets, or write your own.</p>
+<p><strong>The six presets:</strong> Arnold Schwarzenegger, Homer Simpson, Peter Griffin, Gandalf, Mike Tyson, Donkey (from Shrek). All affect phases 3 (Chronicle), 5 (Polish, local-only), and 6 (Condense) — the prose-generation phases. Phases 1 (Ground), 2 (Audit), and 4 (Extras) are voice-neutral and untouched.</p>
+<p><strong>Authoring your own:</strong></p>
+<ul>
+<li>Clone a preset and tweak</li>
+<li>Start from the locked bard template</li>
+<li>Write from scratch</li>
+<li>Describe a narrator in one sentence and let your active LLM draft all the prompts for review</li>
+</ul>
+<p><strong>Cost:</strong> none. Nothing is downloaded and there are no dependencies. The six presets are seeded the first time the personas list is read, so <code>personas.json</code> never has to exist — and nothing deletes it.</p>
+<p>Found under <strong>Settings → Voice &#x26; content</strong>.</p>
+<p><strong>Deep dive:</strong> <a href="/Tusks-Tomes/docs/extras/personas/">docs/add-ons/personas.md</a></p>
+<hr>
+<h3 id="claude-code-your-subscription">Claude Code (your subscription)</h3>
+<p><strong>Bring your own Claude subscription.</strong> Instead of a per-token API key, route the pipeline through the <a href="https://docs.claude.com/en/docs/claude-code" rel="noopener">Claude Code</a> CLI you've already installed and logged into — generation is billed against <em>your</em> Pro / Max plan, with <strong>no API key required</strong>. The app never handles your login; it only invokes the <code>claude</code> binary you authenticated yourself.</p>
+<p><strong>Why you might want this:</strong> you already pay for a Claude plan and would rather spend that than top up API credit. Assign it to individual phases in per-phase routing, or to all of them.</p>
+<div class="docs-alert docs-alert-caution">
+<div class="docs-alert-label">Warning</div>
+<p><strong>Watch your usage window.</strong> Subscriptions meter headless use in rolling
+~5-hour windows, and the pipeline is token-heavy — in testing, one full
+session used up to <strong>~60% of the allowance in a single 5-hour window</strong>. Budget
+for roughly one or two sessions per window. A good pattern is to let Claude
+Code do the grounding and chronicle, then <a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforge</a> the
+extras and condensed recap on a cheaper model to spare your allowance.</p>
+</div>
+<p><strong>What it unlocks:</strong></p>
+<ul>
+<li>A <strong>Claude Code</strong> connection row in <strong>Settings → Providers &#x26; models</strong> — detects whether the CLI is installed and logged in</li>
+<li><strong>Claude Code (your subscription)</strong> as a routing target, per-phase like any other</li>
+</ul>
+<p><strong>Cost:</strong> nothing to download from us. Requires Claude Code installed and <code>claude login</code> with a Pro/Max plan. Generation counts against that subscription's usage limits, not a per-token meter.</p>
+<p><strong>Deep dive:</strong> <a href="/Tusks-Tomes/docs/extras/claude-code/">docs/add-ons/claude-code.md</a></p>
+<hr>
+<h3 id="codex-your-chatgpt-subscription">Codex (your ChatGPT subscription)</h3>
+<p><strong>Bring your own ChatGPT subscription.</strong> The same idea as Claude Code, for an OpenAI plan: route phases through the <a href="https://github.com/openai/codex" rel="noopener">Codex</a> CLI you've installed and logged into, billed against <em>your</em> Plus / Pro plan with <strong>no API key required</strong>.</p>
+<p>The two subscription modules are completely independent — use either, both, or neither. Neither one's presence changes the other's behaviour, and if you have both, per-phase routing lets you pick which CLI carries which phases.</p>
+<div class="docs-alert docs-alert-warning">
+<div class="docs-alert-label">Notice</div>
+<p><strong>Watch your usage window.</strong> As with Claude Code, ChatGPT plans meter
+headless use in rolling windows. If a run exhausts the window mid-session it
+<strong>pauses itself and saves a checkpoint</strong> — resume from the banner once the
+window resets and it continues at the exact chunk it stopped on.</p>
+</div>
+<p><strong>What it unlocks:</strong></p>
+<ul>
+<li><strong>Codex</strong> as a routing target, per-phase like any other</li>
+<li>The <strong>"everywhere" subscription rung</strong> in guided routing — every phase on a subscription CLI, no API keys at all</li>
+</ul>
+<p><strong>Cost:</strong> nothing to download from us. Requires Codex installed (<code>npm i -g @openai/codex</code>) and <code>codex login</code>.</p>
+<div class="docs-alert docs-alert-caution">
+<div class="docs-alert-label">Warning</div>
+<p>Make sure <code>OPENAI_API_KEY</code> is <strong>not</strong> set in your environment. The module
+strips it from the CLI's environment specifically so you can't be silently
+switched onto per-token billing without noticing.</p>
+</div>
+<p><strong>Deep dive:</strong> <a href="/Tusks-Tomes/docs/extras/codex/">docs/add-ons/codex.md</a></p>
+<hr>
+<h3 id="obsidian-vault-lore">Obsidian Vault lore</h3>
+<p><strong>Ground chronicles against an Obsidian vault</strong> instead of the Tusks-Lore folder. Point it at a vault and the app reads your notes' frontmatter aliases and bodies to build the grounding index — so the names, places and factions in your chronicle match the canon you already maintain.</p>
+<p><strong>Strictly read-only.</strong> The app never writes into your vault; the single exception is the explicit "Build graphify map" button, which you press yourself. The derived entity index is cached outside the vault.</p>
+<p><strong>What it unlocks:</strong></p>
+<ul>
+<li>An <strong>Obsidian Vault Lore</strong> panel under <strong>Settings</strong> — vault path, readiness checks, entity-index status</li>
+<li>Alias-aware grounding from your existing frontmatter, with no duplication of lore into a second folder</li>
+</ul>
+<p><strong>Cost:</strong> free. Requires an Obsidian vault on the same machine. Stays inert until you choose it as your lore source under <strong>Tome of Lore → Lore source</strong>.</p>
+<p><strong>Deep dive:</strong> <a href="/Tusks-Tomes/docs/extras/obsidian-vault/">docs/add-ons/obsidian-vault.md</a></p>
+<hr>
+<h2 id="future-modules">Future modules</h2>
+<p>The registry is open. Candidates already on the <a href="/Tusks-Tomes/docs/about/roadmap/">roadmap</a>:</p>
+<ul>
+<li><strong>Whisper diarisation</strong> for single-track audio — recover speaker labels when you don't have per-speaker source files (e.g. a podcast VOD, a Zoom recording).</li>
+<li><strong>SRT / VTT parsers</strong> — sister formats to <code>.sbv</code> with the same caption-repair pipeline.</li>
+<li><strong>In-PDF image OCR</strong> — handle scanned session notes and handwritten lore documents.</li>
+</ul>
+<p>Vote on the order via the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a>, or <a href="https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose" rel="noopener">open a GitHub issue</a>. A community Discord with a <code>#feature-ideas</code> channel is on the <a href="/Tusks-Tomes/docs/about/roadmap/">roadmap</a> and will replace the form once it launches.</p>
+<hr>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/README.md" rel="noopener">README</a> — what Tusk's Tomes is</li>
+<li><a href="/Tusks-Tomes/docs/getting-started/installation/">SETUP</a> — getting the core install running</li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">docs/walkthrough.md</a> — your first session, end to end</li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">architecture.md</a> — registry + loader implementation</li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">docs/comparison.md</a> — how Tomes compares to Otter / Descript / NotebookLM / hiring a transcriber</li>
+</ul>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/extras/README.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>

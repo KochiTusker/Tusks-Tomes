@@ -1,0 +1,1073 @@
+<!doctype html>
+
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tusk's Tomes — AI D&amp;D Session Recap &amp; Chronicle Generator</title>
+<meta name="description" content="Turn a D&amp;D, Pathfinder or TTRPG session recording — or a YouTube transcript — into a narrative chronicle and a Discord-ready recap. Free, open source, runs locally.">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Tusk's Tomes — AI D&amp;D Session Recap &amp; Chronicle Generator">
+<meta property="og:description" content="Turn a D&amp;D, Pathfinder or TTRPG session recording — or a YouTube transcript — into a narrative chronicle and a Discord-ready recap. Free, open source, runs locally.">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tusk's Tomes — AI D&amp;D Session Recap &amp; Chronicle Generator">
+<meta name="twitter:description" content="Turn a D&amp;D, Pathfinder or TTRPG session recording — or a YouTube transcript — into a narrative chronicle and a Discord-ready recap. Free, open source, runs locally.">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Tusk's Tomes",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/",
+  "inLanguage": "en-GB"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Tusk's Tomes",
+  "alternateName": "Tusks Tomes",
+  "applicationCategory": "MultimediaApplication",
+  "applicationSubCategory": "AI transcription and summarisation for tabletop RPGs",
+  "operatingSystem": "Windows, macOS, Linux",
+  "softwareVersion": "2.5.0",
+  "keywords": "D&D transcriber, DnD transcriber, free D&D transcriber, TTRPG transcriber, tabletop RPG transcription, D&D session transcription, transcribe D&D session, D&D session recap generator, D&D session summary AI, D&D session notes generator, campaign journal generator, TTRPG session recap, Pathfinder session summary, Call of Cthulhu session write-up, actual play transcription, Craig Discord recording transcript, Discord D&D recording to text, YouTube captions to session recap, Whisper D&D transcription, local AI session chronicler, self-hosted transcription, open source D&D tools, AI dungeon master notes",
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Game masters, tabletop RPG players, actual-play podcasters and streamers, VTT archivists"
+  },
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "Tabletop role-playing games"
+    },
+    {
+      "@type": "Thing",
+      "name": "Dungeons & Dragons"
+    },
+    {
+      "@type": "Thing",
+      "name": "Speech transcription"
+    },
+    {
+      "@type": "Thing",
+      "name": "Automatic summarization"
+    },
+    {
+      "@type": "Thing",
+      "name": "Open-source software"
+    }
+  ],
+  "url": "https://kochitusker.github.io/Tusks-Tomes/",
+  "downloadUrl": "https://github.com/KochiTusker/Tusks-Tomes/releases",
+  "codeRepository": "https://github.com/KochiTusker/Tusks-Tomes",
+  "license": "https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE",
+  "isAccessibleForFree": true,
+  "description": "Local-first, open-source AI session chronicler for D&D, Pathfinder and other tabletop RPGs. Turns session recordings and transcripts into a narrative chronicle, a Discord-ready recap, and curated quote lists.",
+  "featureList": [
+    "Six-phase AI pipeline with name and lore grounding",
+    "Per-speaker, per-character transcript attribution",
+    "Local Whisper transcription of Craig multi-track Discord recordings",
+    "Cloud LLMs (Gemini, Claude, OpenAI) or fully offline local LLMs",
+    "DOCX chronicle, condensed recap, quotes, jests and combat highlights"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "GBP"
+  },
+  "image": "https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why would I choose Tusk’s Tomes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because of where it runs, and what it is fed. There are good tools built for tabletop now — several ground names against your lore much as this does, and if one of them suits your table you should use it. What none of them do is leave the recording on your own machine. Tusk’s Tomes transcribes locally and corrects the transcript against your own glossary before any prose is written, so the write-up spells your world the way your table spells it. It takes per-speaker Craig tracks, so who said what is known rather than inferred from one mixed recording. And you choose the model, the narrator and the prompts — it is MIT-licensed, so if the answer you want is not in the settings, it is in the source."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I’m new to this. Where do I start?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Install Node and Git, clone the repository, and run the setup script — that is the whole of it, and the installation guide walks through each step. If you have never used a terminal, there is a version of the same setup written for you that assumes nothing. Start by pasting in a transcript you already have; audio can wait until you have seen what it produces."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much better is the Craig and Whisper route?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Two ways, and the second one surprises people. Attribution: Craig records each player to a separate track, so Whisper transcribes one voice at a time and every line stays attached to the right character with nothing having to guess. A YouTube caption file is one undifferentiated stream with no speaker labels at all, so the pipeline reconstructs who spoke from context and asks you a good many more questions before it can. Language: YouTube’s automatic captions censor swearing — profanity comes back as [ ] , already gone by the time you download the file, and nothing downstream can put it back. Whisper transcribes what was actually said. If your table swears, and the way people really talk is part of what you want on the record, the multitrack route is the only one that keeps it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I don’t have an NVIDIA GPU. Can I still transcribe audio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Today, in two ways: let YouTube transcribe the recording on Google’s hardware and bring the text back, or compile a whisper.cpp build , which can use an AMD, Intel or Apple GPU. Cloud transcription is also in progress and will remove the requirement entirely — it is measured at roughly $0.20 for a three-hour, five-speaker session, and will need only an OpenRouter key. See the roadmap for where that has got to."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is OpenRouter, and why does Tusk’s Tomes use it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "OpenRouter is a single API that fronts most of the commercial model landscape — around 400 models, including every Anthropic and OpenAI model, at the same prices the vendors charge directly. One key reaches all of them. Tusk’s Tomes used to carry separate integrations for each vendor, each with its own key to manage and its own model list to keep current; one OpenRouter key replaced all of that and opened several hundred models that were never reachable before. Gemini stays available as a direct connection because it is measurably cheaper that way."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I choose which model to use through OpenRouter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The picker does the narrowing for you. It offers three orderings — by measured performance, by what that particular phase would cost, and by the maintainer’s own ranking, which weighs speed and reliability that no grade captures — and they deliberately disagree. Two filters cut the catalogue down: tested only restricts it to models actually graded on real session material, and handles mature content to models measured relaying graphic violence and crude dialogue without softening them. If you would rather not choose at all, the guided routing presets are complete recipes you can apply in one click."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it actually better than a paid app, or just cheaper?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cheaper is not the argument, and against the tabletop-native services it is not reliably true either — several sell credit by the session much as this spends your own API credit. Against a meeting transcriber it is doing a different job: those produce a transcript and bullet points about what was discussed, with no mechanism for knowing your characters’ names. Against the tools built for tabletop, the differences are narrower and worth stating plainly — your audio never leaves your machine, per-speaker Craig tracks mean attribution is known rather than inferred, and you pick which model writes each phase. On chronicle quality specifically, the honest answer is that it depends on which model you route to: the strongest routings tested — a subscription CLI on the mechanical passes with Gemini Pro writing the prose — produce the best output measured so far, while the OpenRouter catalogue ranges from noticeably worse to better than Gemini on individual phases. The project deliberately does not publish a single quality score, because chronicle quality is not one number and any tool that claims otherwise is flattering itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What actually gets put on my PC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The repository itself, plus nodemodules inside it. Outside that folder it writes one configuration directory in the standard place for your operating system, holding your glossary, routing choices and encrypted keys, and a data directory for sessions if you transcribe audio. That is all, unless you install the transcription module — which adds a Python environment of about 1.5 GB, inside the repository folder. No PATH changes, no registry entries, no system-wide packages, and nothing installed as administrator. The full list, file by file ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I keep track of what it changes on my machine?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Everything it writes outside its own folder is documented in one place, and there is an uninstall script that removes it. The design rule is that installing something must never change anything outside the repository working directory, and uninstalling must remove every byte the install wrote — your system Python, Node, PATH and registry are left alone. That is written down as a contract rather than a promise: see module isolation for what a module may and may not touch, and what it installs for the complete inventory."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I support the project?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use it and tell me what broke — that is genuinely the most useful thing, and the feedback form is the fastest route. Starring the repository helps other people find it, bug reports and pull requests are welcome, and if you would like to put money towards it there is Buy Me a Coffee . None of it unlocks anything — there is no paid tier and there will not be one."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Tusk's Tomes — why getting the names right is the whole problem",
+  "description": "Why tabletop session transcription runs into a ceiling that is not about software quality: a single mixed recording makes every speaker attribution an inference. How per-speaker Discord audio via Craig, local Faster Whisper transcription, and grounding against your own lore remove the guess — and what each of the five pipeline phases does with the result.",
+  "thumbnailUrl": "https://i.ytimg.com/vi/sbEfcRyb1NU/maxresdefault.jpg",
+  "embedUrl": "https://www.youtube-nocookie.com/embed/sbEfcRyb1NU",
+  "contentUrl": "https://www.youtube.com/watch?v=sbEfcRyb1NU",
+  "uploadDate": "2026-08-24",
+  "duration": "PT7M42S",
+  "hasPart": [
+    {
+      "@type": "Clip",
+      "name": "The problem",
+      "startOffset": 0,
+      "url": "https://www.youtube.com/watch?v=sbEfcRyb1NU&t=0s"
+    },
+    {
+      "@type": "Clip",
+      "name": "What's already out there",
+      "startOffset": 24,
+      "url": "https://www.youtube.com/watch?v=sbEfcRyb1NU&t=24s"
+    },
+    {
+      "@type": "Clip",
+      "name": "Why attribution is the ceiling",
+      "startOffset": 65,
+      "url": "https://www.youtube.com/watch?v=sbEfcRyb1NU&t=65s"
+    },
+    {
+      "@type": "Clip",
+      "name": "What Tomes does differently",
+      "startOffset": 145,
+      "url": "https://www.youtube.com/watch?v=sbEfcRyb1NU&t=145s"
+    },
+    {
+      "@type": "Clip",
+      "name": "Two ways in, and why they differ",
+      "startOffset": 217,
+      "url": "https://www.youtube.com/watch?v=sbEfcRyb1NU&t=217s"
+    },
+    {
+      "@type": "Clip",
+      "name": "The pipeline, phase by phase",
+      "startOffset": 337,
+      "url": "https://www.youtube.com/watch?v=sbEfcRyb1NU&t=337s"
+    },
+    {
+      "@type": "Clip",
+      "name": "Free, open source, and how to help",
+      "startOffset": 432,
+      "url": "https://www.youtube.com/watch?v=sbEfcRyb1NU&t=432s"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sample output from one real tabletop RPG session",
+  "description": "Extracts of a narrative chronicle, a condensed recap, catch-up bullets, jests, combat highlights and memorable quotes, all generated by the Tusk’s Tomes pipeline from a single session recording.",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/#examples",
+  "isBasedOn": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "inLanguage": "en-GB",
+  "hasPart": [
+    {
+      "@type": "CreativeWork",
+      "name": "The chronicle",
+      "text": "Roused to their duties, the two clerics ascended to the top deck, their shared darkvision piercing the pitch-black harbour. To pass the hours, Grendal conjured a Leomund's Tiny Hut, projecting bright, magical cartoons across the interior of the dome. Ostyn added minor illusion hand puppets, turning the cold watch into a bizarre, domestic pillow-fort cinema. To complete the grotesque tableau, Ostyn propped up the rotting flesh golem — the stitched-together abomination left behind by the Osk Triplets — among their plush pillows. Reeking of decaying pumpkin, the headless monstrosity sagged against Grendal before being shoved aside. Realising the gourd at its core was rotting away before Wren the bird could pilot it again, Ostyn resolved to cast Gentle Repose in the morning, happily noting the spell's requirement of laying copper pennies on the eyes of the dead. The quiet prompted Grendal to examine the burdens he carried: his mother's medallion and his towering father's paladin gauntlets, recovered from the demonic triplets. Ostyn slipped his hands into the massive steel gauntlets. His fingers barely reached halfway, leaving him flexing uselessly like a child playing dress-up in a parent's armour. Yet, for a split second, Ostyn felt a profound, divine warmth radiating from the metal, the unmistakable sense of divine eyes turning upon him. Grendal then lifted his mother's medallion and placed it around his neck. The connection was instantaneous and violent. He was drawn into a sudden, overwhelming oneness with chaos itself. The butterfly effect rippled outward; looking at a moored ship, his mind whirled backward through every permutation of history that had brought it to the docks. The revelation quickly curdled into a suffocating clamour. Panting, Grendal tore the medallion off, hearing the unmistakable, knowing chuckle of his mother echoing in the back of his skull. He dropped it to the floor, refusing to touch the cursed heirloom until the watch ended. The quiet of the Ashenreach necropolis shattered. Granted a surprise round, the party's ambush on Isolde Mors's grave-robbing crew was a symphony of calculated chaos. Malachar Corvel, lounging on a crate, opened the engagement with casual devastation. Two crackling shots of force energy from his finger-guns slammed into a raider captain, the critical blasts leaving the man stunned and reeling. From the other side, Grendal Osk charged forward, a thirty-foot Aura of Desecration pulsing outwards from him like a wave of pure entropy. The necrotic energy washed over six of Isolde's crew, searing their flesh. Not content, Grendal drew a card from his Deck of Aveline; the Chains of Zephyr erupted, magically restraining all but one of the afflicted, who then withered further under the aura's baleful light. Merrec Corvel seized the opening, reaching over a ledge to grab a crossbow-wielding woman by the leg, hauling her over the side and slamming her into the ground behind him before settling into his barbarian rage. The assault was capped by Ostyn Rale, who conjured a towering Wall of Fire, angling it to incinerate the restrained gravediggers while providing cover for Grendal. A follow-up blast of Sacred Flame left the woman Merrec had downed smoldering."
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "The condensed version",
+      "text": "The party departed Emberlight aboard the Too Many Bruisers, bound for Ashenreach by way of Kelvaris's Vein. After a chaotic captaincy vote, Halvard was crowned Captain and promptly reorganised the crew into corporate “departments.” On the pier, a town crier broke the news that two Solance Elders had been missing for a month, and Grendal's medallion delivered the first vision of Veera and Bridge's lost expedition. Fennel rejoined the crew at the docks. At sea, Ostyn received a matching vision through his father's gauntlets, and Halvard set about indoctrinating the terrified Pell into the family."
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "The Gallery of Jests",
+      "text": "Kurogane's real-life Alexa suddenly goes off at full volume in his headset mid-session, which the party immediately jokes is the goddess Sethra trying and failing to connect to the internet to speak to him. Kurogane completely forgets he has the Deflect Attack feature until Ostyn points out he has just taken over 50 damage from Vorrak's triple greatsword attack. Grendal activates his Aura of Desecration, which Kurogane immediately rebrands as the “Aura of Constipation.” Grendal and Ostyn spend their watch in a Tiny Hut transformed into a pillow-fort cinema, watching cartoons on the dome's interior, a tender moment they immediately make grotesque by propping up a decaying flesh golem to watch with them. Kurogane creatively blocks a dazed Merrec's heavy hammer swing by clicking an immovable rod into place right in front of the arc, causing the weapon to bounce off with a comical, joint-shattering vibration."
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "The Gallery of Gore",
+      "text": "Kurogane catches a heavy crossbow bolt out of the air and launches it back, pinning an enemy through the eye while maintaining cold eye contact with Vorrak. Ostyn unleashes a Sacred Flame that completely obliterates the enemy captain, vaporizing him out of existence so thoroughly that not a single trace is left. The graveyard is left in disarray with shattered coffins and exhumed skeletal remains loaded onto an abandoned cart, with the personal valuables of the deceased scattered carelessly across the dirt. In a post-session cutscene, the mysterious serpent-masked figure executes an underling for insolence. A mere flick of their wrist sends an invisible blade of force across the room, opening a deep, jagged red line across the captain's throat as he collapses, choking and drowning in his own blood."
+    }
+  ]
+}
+</script>
+</head>
+<body class="landing">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="#why">Watch</a>
+    <a href="#writes">What it writes</a>
+    <a href="#compare">How it compares</a>
+    <a href="#how">How it works</a>
+    <a href="#cost">What it costs</a>
+    <a href="#trust">What leaves</a>
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Free · Open source · Runs on your own machine</p>
+      <h1>Your campaign, written up properly</h1>
+      <p class="lede">
+        Point it at a recording of your D&amp;D, Pathfinder or Call of Cthulhu game — or at a
+        transcript you already have — and get back a narrative account of what actually happened.
+        Spelled the way your table spells things, because it reads your campaign's own lore before
+        it writes a word.
+      </p>
+      <p class="cta">
+        <a class="btn primary" href="/Tusks-Tomes/docs/getting-started/installation/">Install it</a>
+        <a class="btn" href="#writes">Read what it writes</a>
+      </p>
+      <ul class="runestones">
+        <li><b>MIT</b> licensed</li>
+        <li><b>No</b> account</li>
+        <li><b>No</b> subscription</li>
+        <li><b>Zero</b> telemetry</li>
+        <li>v<b>2.5.0</b></li>
+      </ul>
+    </div>
+
+    
+    <figure class="grounding" aria-labelledby="grounding-cap">
+      <div class="grounding-row is-before">
+        <p class="grounding-label">What the microphone heard</p>
+        <p class="grounding-line">
+          &ldquo;<span class="mis">Kaz eel</span> swears on the <span class="mis">crimson cathedral</span>
+          and draws the <span class="mis">sun blaid</span>&rdquo;
+        </p>
+      </div>
+      <div class="grounding-arrow" aria-hidden="true">
+        <span>checked against your lore</span>
+      </div>
+      <div class="grounding-row is-after">
+        <p class="grounding-label">What Tomes wrote down</p>
+        <p class="grounding-line">
+          &ldquo;<span class="fix">Kaziel</span> swears on the <span class="fix">Crimson Cathedral</span>
+          and draws the <span class="fix">Sun Blade</span>&rdquo;
+        </p>
+      </div>
+      <figcaption id="grounding-cap">
+        Every name in your campaign, corrected before a single sentence of prose is written.
+      </figcaption>
+    </figure>
+  </section>
+
+
+  
+  <section class="leaf" id="why" aria-labelledby="why-h">
+    <div class="rail">
+      <span class="numeral">I</span>
+      <p class="rail-label">Why this exists</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="why-h">Everyone says they'll write it up. Almost nobody does.</h2>
+      <p class="measure">
+        I wanted a record of my campaign. Not minutes — the actual story. The bit where the plan fell
+        apart in an interesting way, the joke that had everyone crying, the line the DM delivered
+        that made the table go quiet for a second.
+      </p>
+      <p class="measure">
+        The obvious tools didn't fit. They're built for meetings, and they have no idea who your
+        characters are &mdash; they hear an invented fantasy name, guess a spelling, and then use
+        that guess with total confidence for four hours straight.
+      </p>
+      <p class="measure">
+        And a session isn't minutes. What you want back is the story: something you would actually
+        read again, the lines worth quoting, and a recap short enough that whoever missed the last
+        one can catch up before they sit down. That is as much use to a player as it is to whoever
+        runs the game.
+      </p>
+      <p class="measure">So I wrote this instead.</p>
+
+      
+<div class="video" data-video-id="sbEfcRyb1NU">
+  <button type="button" class="video-play" aria-label="Tusk's Tomes — why getting the names right is the whole problem (loads YouTube when clicked)">
+    <img src="/Tusks-Tomes/docs/assets/tusks-tomes-project-video.jpg" alt="Tusk's Tomes — why getting the names right is the whole problem" width="1200" height="675" loading="lazy" decoding="async">
+    <span class="video-btn" aria-hidden="true"></span>
+    <span class="video-note">Click to play — YouTube only loads when you do</span>
+  </button>
+  <noscript><p><a href="https://www.youtube.com/watch?v=sbEfcRyb1NU" rel="noopener">Watch this section on YouTube</a></p></noscript>
+</div>
+
+<div class="chapters">
+  <h3>Jump to a section</h3>
+  <ol class="chapter-list">
+    <li>
+      <button type="button" class="chapter" data-start="0">
+        <span class="chapter-time">0:00</span>
+        <span class="chapter-label">The problem</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="chapter" data-start="24">
+        <span class="chapter-time">0:24</span>
+        <span class="chapter-label">What's already out there</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="chapter" data-start="65">
+        <span class="chapter-time">1:05</span>
+        <span class="chapter-label">Why attribution is the ceiling</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="chapter" data-start="145">
+        <span class="chapter-time">2:25</span>
+        <span class="chapter-label">What Tomes does differently</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="chapter" data-start="217">
+        <span class="chapter-time">3:37</span>
+        <span class="chapter-label">Two ways in, and why they differ</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="chapter" data-start="337">
+        <span class="chapter-time">5:37</span>
+        <span class="chapter-label">The pipeline, phase by phase</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="chapter" data-start="432">
+        <span class="chapter-time">7:12</span>
+        <span class="chapter-label">Free, open source, and how to help</span>
+      </button>
+    </li>
+  </ol>
+</div>
+
+      <p class="marginalia">
+        It's a niche tool for a niche group of people, and I'm fine with that.
+        <span class="sign">If you're one of them, hello.</span>
+      </p>
+    </div>
+  </section>
+
+
+  
+  <section class="leaf" id="writes" aria-labelledby="writes-h">
+    <div class="rail">
+      <span class="numeral">II</span>
+      <p class="rail-label">What comes back</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="writes-h">One evening in, five things out</h2>
+      <p class="measure">
+        A single run produces everything below. You choose which of them you actually want;
+        nothing is mandatory except the chronicle itself.
+      </p>
+
+      <figure class="fan" aria-labelledby="fan-cap">
+        <p class="fan-source">One session &mdash; three or four hours of six people talking</p>
+        <div class="fan-spread" aria-hidden="true"></div>
+        <ol class="fan-out">
+          <li class="artefact is-primary">
+            <h3>The chronicle</h3>
+            <p>
+              A chapter of your campaign's book rather than a summary of it &mdash; continuous
+              narrative prose, about 16,000 words for a full session.
+            </p>
+          </li>
+          <li class="artefact">
+            <h3>A short recap</h3>
+            <p>
+              One paragraph and catch-up bullets. What you send whoever missed last week, so they
+              sit down already knowing.
+            </p>
+          </li>
+          <li class="artefact">
+            <h3>Lines worth keeping</h3>
+            <p>
+              Quotes, jests and the gorier highlights as their own lists. The stupid thing someone
+              said in hour three, still there in a year.
+            </p>
+          </li>
+          <li class="artefact">
+            <h3>Questions for the DM</h3>
+            <p>Everything it could not resolve, asked rather than guessed at.</p>
+          </li>
+          <li class="artefact">
+            <h3>The clean transcript</h3>
+            <p>
+              The raw text with every name corrected &mdash; and the end of &ldquo;I definitely
+              never agreed to that&rdquo;.
+            </p>
+          </li>
+        </ol>
+        <figcaption id="fan-cap">
+          Saved as <code>.docx</code> and Markdown, into a folder you choose.
+        </figcaption>
+      </figure>
+
+      <h3 class="lead-in">And this is how it reads</h3>
+<figure class="excerpt">
+  <blockquote>Roused to their duties, the two clerics ascended to the top deck, their shared darkvision piercing the pitch-black harbour. To pass the hours, Grendal conjured a <em>Leomund's Tiny Hut</em>, projecting bright, magical cartoons across the interior of the dome. Ostyn added minor illusion hand puppets, turning the cold watch into a bizarre, domestic pillow-fort cinema.</blockquote>
+  <figcaption>From the chronicle of a real session — two clerics, a night watch, and nothing much happening.</figcaption>
+</figure>
+      <p class="outro measure">
+        That is one paragraph of one scene.
+        <a href="/Tusks-Tomes/examples/">Read a full session, the recap and the quotes &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  
+  <section class="leaf" id="compare" aria-labelledby="compare-h">
+    <div class="rail">
+      <span class="numeral">III</span>
+      <p class="rail-label">How it compares</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="compare-h">Why not use something that already exists?</h2>
+      <p class="measure">
+        Often you should. Most people find this page having already tried a meeting transcriber &mdash;
+        good software, built for standups, where nobody is called Vellichor the Pale, nobody needs
+        the joke from hour two written down, and &ldquo;the group discussed next steps&rdquo; is a
+        useful sentence.
+      </p>
+      <p class="measure">
+        There is also a set of tools built specifically for tabletop &mdash; Tabletop Scribe, DnD
+        Scrybe, Kazkar, SessionKeeper, Saga20 and more arriving. They are made by people who play,
+        several handle speaker attribution well, and they will take a recording without asking you
+        to install anything. If one of them suits your table, use it.
+      </p>
+      <p class="measure">
+        These are the things worth checking first, including the one where this project comes off
+        worse.
+      </p>
+
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <caption>What a table actually needs from a session recorder</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="vh">Capability</span></th>
+              <th scope="col" class="is-us">Tusk&rsquo;s Tomes</th>
+              <th scope="col">Tabletop services <small>Tabletop Scribe, Kazkar, Saga20</small></th>
+              <th scope="col">Meeting transcribers <small>Otter, Read.ai</small></th>
+              <th scope="col">General AI assistants <small>NotebookLM, ChatGPT</small></th>
+              <th scope="col">Writing it up yourself <small>the benchmark, not a rival</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Spells your characters, places and items the way your table does</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Keeps every line attached to the character who said it</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Reads your own lore documents before it writes</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Writes continuous narrative prose, not bullet points</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Collects the quotes, the jokes and the grisly bits as their own lists</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Produces a catch-up recap for whoever missed the session</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">The recording never leaves your machine</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">You choose the model &mdash; or run the whole thing offline</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark na" aria-hidden="true">&mdash;</i><span class="vh">Not applicable</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Change one part later without redoing the rest</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark part" aria-hidden="true">&#9681;</i><span class="vh">Partly</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Runs unattended while you do something else</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Yours to read, change and fork</th>
+              <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark na" aria-hidden="true">&mdash;</i><span class="vh">Not applicable</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Works from a browser, with nothing to install</th>
+              <td class="m is-us"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
+              <td class="m"><i class="mark na" aria-hidden="true">&mdash;</i><span class="vh">Not applicable</span></td>
+            </tr>
+            <tr class="matrix-cost">
+              <th scope="row">What it costs you</th>
+              <td class="is-us">Cloud credit by the session, or nothing at all on a local model. No subscription, no account.</td>
+              <td>A subscription, or credit by the session, depending which.</td>
+              <td>A monthly fee, whether or not you played that week.</td>
+              <td>A free tier, then a monthly fee.</td>
+              <td>An evening. And you would probably do it better.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="measure outro">
+        Three rows carry the whole argument: where the recording goes, whether attribution is known
+        or guessed, and who decides how it gets written. Everywhere else the tabletop services are
+        genuinely competitive, and the browser row is one they simply win. That is the trade, and it
+        is worth being plain about why it exists &mdash; no software can attribute dialogue to the
+        right player unless it is handed something that already knows who was speaking. The only way
+        to know rather than guess is to record each person separately, and that means Discord, a bot
+        and an afternoon of setup you would not otherwise spend.
+      </p>
+      <p class="measure outro">
+        The last column is the benchmark, not a rival. Someone who actually sits down and writes
+        their session up produces the best version of it there is &mdash; the catch is the evening
+        it takes, and that almost nobody does it twice. The middle columns get a fairer hearing than
+        a grid can give them in <a href="/Tusks-Tomes/docs/about/comparison/">the full comparison</a>,
+        including the case for using one of them instead.
+      </p>
+      <p class="marginalia">
+        None of this is about price. It is about the recording staying yours, the names staying
+        right, and you deciding how the story comes out.
+        <span class="sign">That is the whole pitch.</span>
+      </p>
+    </div>
+  </section>
+
+
+  
+  <section class="leaf" id="how" aria-labelledby="how-h">
+    <div class="rail">
+      <span class="numeral">IV</span>
+      <p class="rail-label">How it works</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="how-h">Six passes, each doing one job</h2>
+      <p class="measure">
+        A transcript goes in one end. Each pass hands off to the next, so a failure is recoverable
+        and a long run can be paused and picked up tomorrow.
+      </p>
+
+      <ol class="pipeline" aria-label="The six-phase pipeline">
+        <li class="stage is-key">
+          <span class="stage-n" aria-hidden="true">1</span>
+          <h3>Ground the names</h3>
+          <p>
+            Your glossary and lore are applied to the raw transcript first, so everything downstream
+            is working from your canon instead of the model's guesses.
+          </p>
+          <p class="stage-note">The reason this exists</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">2</span>
+          <h3>Audit</h3>
+          <p>Compares raw against grounded and hands you a list of what it couldn't resolve, rather than guessing quietly.</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">3</span>
+          <h3>Write the chronicle</h3>
+          <p>The narrative pass. Player dialogue stays dialogue; the DM's narration reads as narration.</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">4</span>
+          <h3>Pull the extras</h3>
+          <p>Quotes, jests and the gorier highlights, extracted as separate lists.</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">5</span>
+          <h3>Polish</h3>
+          <p>A final review pass, used when you're running the pipeline on a model on your own machine.</p>
+        </li>
+        <li class="stage">
+          <span class="stage-n" aria-hidden="true">6</span>
+          <h3>Condense</h3>
+          <p>Optional. Boils the chronicle down to the short version for posting to the group.</p>
+        </li>
+      </ol>
+
+      <p class="measure outro">
+        You can send different passes to different models — the cheap ones do the mechanical work,
+        the good one writes the prose.
+        <a href="/Tusks-Tomes/docs/models/per-phase-routing/">How per-phase routing works →</a>
+      </p>
+    </div>
+  </section>
+
+
+  
+  <section class="leaf" id="demo" aria-labelledby="demo-h">
+    <div class="rail">
+      <span class="numeral">V</span>
+      <p class="rail-label">See it run</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="demo-h">What it looks like to actually use</h2>
+      <p class="measure">
+        Everything above is what comes out. This is the part in the middle: importing a session,
+        pointing it at your campaign's lore, and watching six passes go by.
+      </p>
+
+<div class="video-pending">
+  <div class="video-pending-frame">
+    <p class="video-pending-tag">Being recorded</p>
+    <p class="video-pending-title">A video walkthrough is on the way</p>
+    <p class="video-pending-sub">One real session, start to finish &mdash; a recording going in, a chronicle coming out.</p>
+  </div>
+  <p class="video-pending-alt">
+    Until it lands, <a href="/Tusks-Tomes/docs/getting-started/quickstart/">the quickstart</a>
+    walks the same path in writing.
+  </p>
+</div>
+
+<div class="chapters is-outline">
+  <h3>What it will cover</h3>
+  <ol class="chapter-list">
+    <li class="chapter-step">
+      <span class="chapter-ord" aria-hidden="true">1</span>
+      <span class="chapter-label">Install and first launch</span>
+      <span class="chapter-blurb">Node, one command, first run in the browser</span>
+    </li>
+    <li class="chapter-step">
+      <span class="chapter-ord" aria-hidden="true">2</span>
+      <span class="chapter-label">Add a provider key</span>
+      <span class="chapter-blurb">Encrypted at rest and machine-bound</span>
+    </li>
+    <li class="chapter-step">
+      <span class="chapter-ord" aria-hidden="true">3</span>
+      <span class="chapter-label">Import a Craig recording</span>
+      <span class="chapter-blurb">Multi-track Discord audio, transcribed locally</span>
+    </li>
+    <li class="chapter-step">
+      <span class="chapter-ord" aria-hidden="true">4</span>
+      <span class="chapter-label">Map speakers to characters</span>
+      <span class="chapter-blurb">Set once per campaign; persists across sessions</span>
+    </li>
+    <li class="chapter-step">
+      <span class="chapter-ord" aria-hidden="true">5</span>
+      <span class="chapter-label">Run the pipeline</span>
+      <span class="chapter-blurb">Six phases, with pause and resume</span>
+    </li>
+    <li class="chapter-step">
+      <span class="chapter-ord" aria-hidden="true">6</span>
+      <span class="chapter-label">The finished chronicle</span>
+      <span class="chapter-blurb">Chronicle, recap and quote lists</span>
+    </li>
+  </ol>
+</div>
+    </div>
+  </section>
+
+
+  
+  <section class="leaf" id="routes" aria-labelledby="routes-h">
+    <div class="rail">
+      <span class="numeral">VI</span>
+      <p class="rail-label">Getting a session in</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="routes-h">Two roads, depending on your hardware</h2>
+      <p class="measure">
+        The hard part was never the writing — it's getting four hours of six people talking over each
+        other into text at all. Both roads end at the same grounding pass.
+      </p>
+
+      <div class="choice">
+        <article class="option">
+          <p class="option-flow"><span>Session audio</span><span>Whisper, on your PC</span><span>Chronicle</span></p>
+          <h3>Record it and transcribe it yourself</h3>
+          <p>
+            A Discord multitrack, a Zoom export, or a phone on the table. Whisper runs locally, so the
+            audio never goes anywhere. Record each player to their own track and every line in the
+            finished chronicle stays attached to the right character — one track means one person, and
+            nothing has to guess. It also transcribes what was actually said, swearing included.
+          </p>
+          <p class="option-needs"><strong>Wants</strong> an NVIDIA GPU, and one module installed.</p>
+          <p class="cta"><a class="btn" href="/Tusks-Tomes/docs/importing/session-audio/">The audio route</a></p>
+        </article>
+
+        <article class="option">
+          <p class="option-flow"><span>Session video</span><span>YouTube captions</span><span>Chronicle</span></p>
+          <h3>Let YouTube do the transcribing</h3>
+          <p>
+            Upload the recording unlisted, wait for the automatic captions, bring the transcript back.
+            The transcription happens on Google's hardware instead of yours. Captions carry no speaker
+            labels and censor swearing, so the audit pass asks more questions and the language comes
+            back tamer than your table — but it needs nothing you do not already have.
+          </p>
+          <p class="option-needs"><strong>Wants</strong> nothing. No GPU, no Python, nothing to install.</p>
+          <p class="cta"><a class="btn" href="/Tusks-Tomes/docs/importing/youtube-captions/">The YouTube route</a></p>
+        </article>
+      </div>
+
+      <p class="measure outro">
+        Already have a transcript from somewhere else? Paste it in and skip both.
+        <a href="/Tusks-Tomes/docs/importing/">Compare every way in →</a>
+      </p>
+    </div>
+  </section>
+
+
+  
+  <section class="leaf" id="cost" aria-labelledby="cost-h">
+    <div class="rail">
+      <span class="numeral">VII</span>
+      <p class="rail-label">What it costs</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="cost-h">A session, not a month</h2>
+      <p class="measure">
+        Tusk's Tomes is free. The only money involved is whatever your chosen AI provider charges for
+        the tokens, and you pay it on the weeks you actually play.
+      </p>
+
+<div class="ledger">
+      <div class="ledger-row is-zero">
+        <p class="ledger-what">On a Claude or ChatGPT plan you already pay for</p>
+        <p class="ledger-cost">$0</p>
+      </div>
+      <div class="ledger-row is-zero">
+        <p class="ledger-what">On a model running on your own machine</p>
+        <p class="ledger-cost">$0</p>
+      </div>
+      <div class="ledger-row">
+        <p class="ledger-what">Through one OpenRouter key, cheapest measured routing</p>
+        <p class="ledger-cost">~$0.44</p>
+      </div>
+      <div class="ledger-row">
+        <p class="ledger-what">Every pass on the strongest Gemini model</p>
+        <p class="ledger-cost">~$5</p>
+      </div>
+      <div class="ledger-row is-them">
+        <p class="ledger-what">A meeting transcriber, per month, forever, whether you play or not</p>
+        <p class="ledger-cost">$15+</p>
+      </div>
+    </div>
+
+      <p class="measure outro">
+        Figures are for a three-hour session, priced against the live model catalogue each time this
+        site is published.
+        <a href="/Tusks-Tomes/docs/models/costs/">The full breakdown, per routing →</a>
+      </p>
+    </div>
+  </section>
+
+
+  
+  <section class="leaf" id="trust" aria-labelledby="trust-h">
+    <div class="rail">
+      <span class="numeral">VIII</span>
+      <p class="rail-label">What leaves your machine</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="trust-h">You're handing this a recording of your friends</h2>
+      <p class="measure">
+        So it's worth being exact about where everything goes. Almost all of it stays on the machine
+        you installed it on.
+      </p>
+
+      <figure class="boundary" aria-labelledby="boundary-cap">
+        <div class="boundary-box">
+          <p class="boundary-title">Your machine</p>
+          <ul class="boundary-items">
+            <li>The recording</li>
+            <li>Whisper, transcribing it</li>
+            <li>Your lore and glossary</li>
+            <li>Every chronicle it writes</li>
+            <li>Your API keys, encrypted</li>
+          </ul>
+        </div>
+        <div class="boundary-link" aria-hidden="true">
+          <span class="boundary-arrow"></span>
+          <span class="boundary-what">the transcript text, and only when you press Run</span>
+        </div>
+        <div class="boundary-box is-remote">
+          <p class="boundary-title">The model you chose</p>
+          <ul class="boundary-items">
+            <li>Reads the text</li>
+            <li>Writes the prose</li>
+            <li>Keeps nothing afterwards</li>
+          </ul>
+        </div>
+        <figcaption id="boundary-cap">
+          Choose a model that runs on your own machine and the right-hand side disappears entirely —
+          nothing leaves at all.
+        </figcaption>
+      </figure>
+
+      <ul class="nevers">
+        <li>No account, no sign-up, no licence check.</li>
+        <li>No telemetry, no analytics, nothing phoning home. Ever.</li>
+        <li>Keys encrypted at rest and tied to the machine — copying the file elsewhere gains nothing.</li>
+        <li>MIT licensed, every line readable, including the setup scripts.</li>
+      </ul>
+
+      <p class="marginalia">
+        And the honest part: this is one person's project, built and tested on one Windows PC. It is
+        not a company and there is no support desk.
+        <a href="/Tusks-Tomes/docs/security/what-it-installs/">The unvarnished version is here.</a>
+      </p>
+    </div>
+  </section>
+
+
+  
+  <section class="leaf" id="faq" aria-labelledby="faq-h">
+    <div class="rail">
+      <span class="numeral">IX</span>
+      <p class="rail-label">Questions</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="faq-h">The ones people actually ask</h2>
+<div class="faq">
+  <details class="faq-item" id="faq-why-would-i-choose-tusks-tomes">
+    <summary>Why would I choose Tusk’s Tomes?</summary>
+    <div class="faq-answer">Because of where it runs, and what it is fed. There are good tools built for tabletop now — several ground names against your lore much as this does, and if one of them suits your table you should use it. What none of them do is leave the recording on your own machine. Tusk’s Tomes transcribes locally and corrects the transcript against your own glossary <em>before</em> any prose is written, so the write-up spells your world the way your table spells it. It takes per-speaker Craig tracks, so who said what is known rather than inferred from one mixed recording. And you choose the model, the narrator and the prompts — it is MIT-licensed, so if the answer you want is not in the settings, it is in the source.</div>
+  </details>
+  <details class="faq-item" id="faq-im-new-to-this-where-do-i-start">
+    <summary>I’m new to this. Where do I start?</summary>
+    <div class="faq-answer">Install Node and Git, clone the repository, and run the setup script — that is the whole of it, and the <a href="/Tusks-Tomes/docs/getting-started/installation/">installation guide</a> walks through each step. If you have never used a terminal, there is <a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">a version of the same setup written for you</a> that assumes nothing. Start by pasting in a transcript you already have; audio can wait until you have seen what it produces.</div>
+  </details>
+  <details class="faq-item" id="faq-how-much-better-is-the-craig-and-whisper-route">
+    <summary>How much better is the Craig and Whisper route?</summary>
+    <div class="faq-answer">Two ways, and the second one surprises people. <strong>Attribution:</strong> <a href="https://craig.chat" rel="noopener">Craig</a> records each player to a separate track, so Whisper transcribes one voice at a time and every line stays attached to the right character with nothing having to guess. A YouTube caption file is one undifferentiated stream with no speaker labels at all, so the pipeline reconstructs who spoke from context and asks you a good many more questions before it can. <strong>Language:</strong> YouTube’s automatic captions censor swearing — profanity comes back as <code>[ __ ]</code>, already gone by the time you download the file, and nothing downstream can put it back. Whisper transcribes what was actually said. If your table swears, and the way people really talk is part of what you want on the record, the multitrack route is the only one that keeps it.</div>
+  </details>
+  <details class="faq-item" id="faq-i-dont-have-an-nvidia-gpu-can-i-still-transcribe-audio">
+    <summary>I don’t have an NVIDIA GPU. Can I still transcribe audio?</summary>
+    <div class="faq-answer">Today, in two ways: let YouTube transcribe the recording on Google’s hardware and bring the text back, or compile a <a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp build</a>, which can use an AMD, Intel or Apple GPU. Cloud transcription is also in progress and will remove the requirement entirely — it is measured at roughly $0.20 for a three-hour, five-speaker session, and will need only an OpenRouter key. See the <a href="/Tusks-Tomes/docs/about/roadmap/">roadmap</a> for where that has got to.</div>
+  </details>
+  <details class="faq-item" id="faq-what-is-openrouter-and-why-does-tusks-tomes-use-it">
+    <summary>What is OpenRouter, and why does Tusk’s Tomes use it?</summary>
+    <div class="faq-answer">OpenRouter is a single API that fronts most of the commercial model landscape — around 400 models, including every Anthropic and OpenAI model, at the same prices the vendors charge directly. One key reaches all of them. Tusk’s Tomes used to carry separate integrations for each vendor, each with its own key to manage and its own model list to keep current; one OpenRouter key replaced all of that and opened several hundred models that were never reachable before. Gemini stays available as a direct connection because it is measurably cheaper that way.</div>
+  </details>
+  <details class="faq-item" id="faq-how-do-i-choose-which-model-to-use-through-openrouter">
+    <summary>How do I choose which model to use through OpenRouter?</summary>
+    <div class="faq-answer">The picker does the narrowing for you. It offers three orderings — by measured performance, by what that particular phase would cost, and by the maintainer’s own ranking, which weighs speed and reliability that no grade captures — and they deliberately disagree. Two filters cut the catalogue down: <em>tested only</em> restricts it to models actually graded on real session material, and <em>handles mature content</em> to models measured relaying graphic violence and crude dialogue without softening them. If you would rather not choose at all, the guided routing presets are complete recipes you can apply in one click.</div>
+  </details>
+  <details class="faq-item" id="faq-is-it-actually-better-than-a-paid-app-or-just-cheaper">
+    <summary>Is it actually better than a paid app, or just cheaper?</summary>
+    <div class="faq-answer">Cheaper is not the argument, and against the tabletop-native services it is not reliably true either — several sell credit by the session much as this spends your own API credit. Against a meeting transcriber it is doing a different job: those produce a transcript and bullet points about what was discussed, with no mechanism for knowing your characters’ names. Against the tools built for tabletop, the differences are narrower and worth stating plainly — your audio never leaves your machine, per-speaker Craig tracks mean attribution is known rather than inferred, and you pick which model writes each phase. On chronicle quality specifically, the honest answer is that it depends on which model you route to: the strongest routings tested — a subscription CLI on the mechanical passes with Gemini Pro writing the prose — produce the best output measured so far, while the OpenRouter catalogue ranges from noticeably worse to better than Gemini on individual phases. The project deliberately does not publish a single quality score, because chronicle quality is not one number and any tool that claims otherwise is flattering itself.</div>
+  </details>
+  <details class="faq-item" id="faq-what-actually-gets-put-on-my-pc">
+    <summary>What actually gets put on my PC?</summary>
+    <div class="faq-answer">The repository itself, plus <code>node_modules</code> inside it. Outside that folder it writes one configuration directory in the standard place for your operating system, holding your glossary, routing choices and encrypted keys, and a data directory for sessions if you transcribe audio. That is all, unless you install the transcription module — which adds a Python environment of about 1.5 GB, inside the repository folder. No PATH changes, no registry entries, no system-wide packages, and nothing installed as administrator. <a href="/Tusks-Tomes/docs/security/what-it-installs/">The full list, file by file</a>.</div>
+  </details>
+  <details class="faq-item" id="faq-how-can-i-keep-track-of-what-it-changes-on-my-machine">
+    <summary>How can I keep track of what it changes on my machine?</summary>
+    <div class="faq-answer">Everything it writes outside its own folder is documented in one place, and there is an uninstall script that removes it. The design rule is that installing something must never change anything outside the repository working directory, and uninstalling must remove every byte the install wrote — your system Python, Node, PATH and registry are left alone. That is written down as a contract rather than a promise: see <a href="/Tusks-Tomes/docs/extras/isolation-contract/">module isolation</a> for what a module may and may not touch, and <a href="/Tusks-Tomes/docs/security/what-it-installs/">what it installs</a> for the complete inventory.</div>
+  </details>
+  <details class="faq-item" id="faq-how-can-i-support-the-project">
+    <summary>How can I support the project?</summary>
+    <div class="faq-answer">Use it and tell me what broke — that is genuinely the most useful thing, and the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header" rel="noopener">feedback form</a> is the fastest route. Starring the repository helps other people find it, bug reports and pull requests are welcome, and if you would like to put money towards it there is <a href="https://buymeacoffee.com/kochitusker" rel="noopener">Buy Me a Coffee</a>. None of it unlocks anything — there is no paid tier and there will not be one.</div>
+  </details>
+</div>
+    </div>
+  </section>
+
+
+  
+  <section class="leaf is-final" id="start" aria-labelledby="start-h">
+    <div class="rail">
+      <span class="numeral">X</span>
+      <p class="rail-label">Start</p>
+    </div>
+    <div class="leaf-body">
+      <h2 id="start-h">Two things, then one command</h2>
+      <p class="measure">
+        You need <strong>Node 20 or newer</strong> and <strong>Git</strong>. That is the whole
+        requirement. Python and a graphics card matter only if you later want the machine to
+        transcribe audio for you, and you can add them whenever.
+      </p>
+
+      <p class="cta">
+        <a class="btn primary" href="/Tusks-Tomes/docs/getting-started/installation/">Install it</a>
+        <a class="btn" href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">I've never used a terminal</a>
+      </p>
+
+      <div class="doc-index">
+<details class="doc-group"><summary><h3>Getting started <span class="doc-count">4</span></h3></summary><ul><li class="doc-item" data-search="installation this page gets you from a fresh git clone to a running app, in about five minutes on a clean machine…"><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a><span class="doc-item-note">This page gets you from a fresh git clone to a running app, in about five minutes on a clean machine…</span></li><li class="doc-item" data-search="requirements read this before you clone anything. it's the page i wish i'd written first — three tiers, so you can see at…"><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a><span class="doc-item-note">Read this before you clone anything. It's the page I wish I'd written first — three tiers, so you can see at…</span></li><li class="doc-item" data-search="setting up without a terminal if you've never opened a terminal, never used github, and never installed a node.js project, this is the page…"><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a><span class="doc-item-note">If you've never opened a terminal, never used GitHub, and never installed a Node.js project, this is the page…</span></li><li class="doc-item" data-search="your first chronicle a complete first-time walkthrough from &quot;i have a session to chronicle&quot; through &quot;i have a polished chronicle…"><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a><span class="doc-item-note">A complete first-time walkthrough from &quot;I have a session to chronicle&quot; through &quot;I have a polished chronicle…</span></li></ul></details>
+<details class="doc-group"><summary><h3>Bringing a session in <span class="doc-count">4</span></h3></summary><ul><li class="doc-item" data-search="bringing a session in the hard part was never writing the chronicle. it's getting four hours of six people talking over each other…"><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a><span class="doc-item-note">The hard part was never writing the chronicle. It's getting four hours of six people talking over each other…</span></li><li class="doc-item" data-search="import a transcript the simplest route in: you already have the text, and tomes turns it into a chronicle. nothing to install, no…"><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a><span class="doc-item-note">The simplest route in: you already have the text, and Tomes turns it into a chronicle. Nothing to install, no…</span></li><li class="doc-item" data-search="import session audio start with a recording of your game — a discord multitrack, a zoom export, a phone on the table — and end…"><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a><span class="doc-item-note">Start with a recording of your game — a Discord multitrack, a Zoom export, a phone on the table — and end…</span></li><li class="doc-item" data-search="import youtube captions upload the session recording to youtube as unlisted, let google's automatic captions transcribe it, and bring…"><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a><span class="doc-item-note">Upload the session recording to YouTube as unlisted, let Google's automatic captions transcribe it, and bring…</span></li></ul></details>
+<details class="doc-group"><summary><h3>Writing the chronicle <span class="doc-count">3</span></h3></summary><ul><li class="doc-item" data-search="how the phases work a transparent, phase-by-phase account of what tusk's tomes actually sends to a model, what it asks for, and…"><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a><span class="doc-item-note">A transparent, phase-by-phase account of what Tusk's Tomes actually sends to a model, what it asks for, and…</span></li><li class="doc-item" data-search="recommended settings this doc tells you which settings to keep on their defaults, which ones to tweak for cost or speed, and which…"><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a><span class="doc-item-note">This doc tells you which settings to keep on their defaults, which ones to tweak for cost or speed, and which…</span></li><li class="doc-item" data-search="reforging a chronicle reforge takes a chronicle you've already generated and re-runs the downstream pipeline phases on a provider…"><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a><span class="doc-item-note">Reforge takes a chronicle you've already generated and re-runs the downstream pipeline phases on a provider…</span></li></ul></details>
+<details class="doc-group"><summary><h3>Models &amp; cost <span class="doc-count">3</span></h3></summary><ul><li class="doc-item" data-search="choosing a provider tusk's tomes needs at least one llm to run the pipeline. there are three routes to that, and you can mix them…"><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a><span class="doc-item-note">Tusk's Tomes needs at least one LLM to run the pipeline. There are three routes to that, and you can mix them…</span></li><li class="doc-item" data-search="per-phase routing the question this page answers: can a mix of cheaper models match a single strong one, and if so, how do you…"><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a><span class="doc-item-note">The question this page answers: can a mix of cheaper models match a single strong one, and if so, how do you…</span></li><li class="doc-item" data-search="what it costs nothing goes to me. this is mit-licensed and it always will be — there's no paid tier, no upsell, and no…"><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a><span class="doc-item-note">Nothing goes to me. This is MIT-licensed and it always will be — there's no paid tier, no upsell, and no…</span></li></ul></details>
+<details class="doc-group"><summary><h3>Extras &amp; integrations <span class="doc-count">10</span></h3></summary><ul><li class="doc-item" data-search="audio transcription this is the add-on that turns recordings into text, using faster-whisper running on your own machine. it adds…"><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a><span class="doc-item-note">This is the add-on that turns recordings into text, using faster-whisper running on your own machine. It adds…</span></li><li class="doc-item" data-search="chronicle personas swap the chronicle narrator out of the default bardic voice. ships six presets and lets you author your own —…"><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a><span class="doc-item-note">Swap the Chronicle narrator out of the default bardic voice. Ships six presets and lets you author your own —…</span></li><li class="doc-item" data-search="claude code if you already pay for claude code (pro or max), this lets the chronicle pipeline use that allowance instead…"><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a><span class="doc-item-note">If you already pay for Claude Code (Pro or Max), this lets the chronicle pipeline use that allowance instead…</span></li><li class="doc-item" data-search="codex use your own locally-installed openai codex cli as the pipeline's llm — no api key, no per-token billing…"><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a><span class="doc-item-note">Use your own locally-installed OpenAI Codex CLI as the pipeline's LLM — no API key, no per-token billing…</span></li><li class="doc-item" data-search="extras &amp; integrations the core app does one thing: you give it a transcript, it gives you a chronicle. everything heavier —…"><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a><span class="doc-item-note">The core app does one thing: you give it a transcript, it gives you a chronicle. Everything heavier —…</span></li><li class="doc-item" data-search="local llms optional add-on that adds ollama, lm studio, and unsloth studio routing to tusk's tomes. out of the box the…"><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a><span class="doc-item-note">Optional add-on that adds Ollama, LM Studio, and Unsloth Studio routing to Tusk's Tomes. Out of the box the…</span></li><li class="doc-item" data-search="module isolation ← back to add-on readme · also lives at the same path in tusk's vault so both repos enforce the same contract."><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a><span class="doc-item-note">← Back to add-on README · Also lives at the same path in Tusk's Vault so both repos enforce the same contract.</span></li><li class="doc-item" data-search="obsidian vault lore plenty of gms already keep their campaign in obsidian — characters, factions, locations, the lot — and asking…"><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a><span class="doc-item-note">Plenty of GMs already keep their campaign in Obsidian — characters, factions, locations, the lot — and asking…</span></li><li class="doc-item" data-search="tusk's vault once you've got a couple of years of chronicles saved, a new problem appears: you have a genuinely good…"><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a><span class="doc-item-note">Once you've got a couple of years of chronicles saved, a new problem appears: you have a genuinely good…</span></li><li class="doc-item" data-search="whisper.cpp bridge this is the route for amd, intel and apple gpus. it's more involved than the other add-ons, and i want to be…"><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a><span class="doc-item-note">This is the route for AMD, Intel and Apple GPUs. It's more involved than the other add-ons, and I want to be…</span></li></ul></details>
+<details class="doc-group"><summary><h3>Settings &amp; files <span class="doc-count">1</span></h3></summary><ul><li class="doc-item" data-search="configuration two sources of config, in priority order: in-app settings tab. encrypted keystore, per-phase model routing…"><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a><span class="doc-item-note">Two sources of config, in priority order: In-app Settings tab. Encrypted keystore, per-phase model routing…</span></li></ul></details>
+<details class="doc-group"><summary><h3>Privacy &amp; safety <span class="doc-count">2</span></h3></summary><ul><li class="doc-item" data-search="security and privacy a plain-english primer for users, not developers. it tells you what's safe by default, what you can change…"><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a><span class="doc-item-note">A plain-English primer for users, not developers. It tells you what's safe by default, what you can change…</span></li><li class="doc-item" data-search="what it installs short version: i'm a gm who got fed up and wrote this for my own table. this page is me telling you exactly…"><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a><span class="doc-item-note">Short version: I'm a GM who got fed up and wrote this for my own table. This page is me telling you exactly…</span></li></ul></details>
+<details class="doc-group"><summary><h3>Troubleshooting <span class="doc-count">3</span></h3></summary><ul><li class="doc-item" data-search="diagnostic bundles a single structured markdown file at .diagnose/latest.md that claude code reads with one read call to get…"><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a><span class="doc-item-note">A single structured markdown file at .diagnose/latest.md that Claude Code reads with one Read call to get…</span></li><li class="doc-item" data-search="known issues tusk's tomes is open-source software in active development. this page tracks two things separately:"><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a><span class="doc-item-note">Tusk's Tomes is open-source software in active development. This page tracks two things separately:</span></li><li class="doc-item" data-search="questions i get asked most of these came up either from someone trying it or from me staring at something at midnight wondering why…"><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a><span class="doc-item-note">Most of these came up either from someone trying it or from me staring at something at midnight wondering why…</span></li></ul></details>
+<details class="doc-group"><summary><h3>About Tusk's Tomes <span class="doc-count">8</span></h3></summary><ul><li class="doc-item" data-search="changelog what changed between versions. the rest of the documentation describes how the current version works and does…"><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a><span class="doc-item-note">What changed between versions. The rest of the documentation describes how the current version works and does…</span></li><li class="doc-item" data-search="everything it does the full list. most of these exist because something annoyed me once and i fixed it — which is why the set is…"><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a><span class="doc-item-note">The full list. Most of these exist because something annoyed me once and I fixed it — which is why the set is…</span></li><li class="doc-item" data-search="how it compares i tried most of the meeting tools before writing my own, so that part is a fair account rather than a sales…"><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a><span class="doc-item-note">I tried most of the meeting tools before writing my own, so that part is a fair account rather than a sales…</span></li><li class="doc-item" data-search="how it's built a local-first d&amp;d session chronicler. the core install handles paste-a-transcript chronicling through a cloud…"><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a><span class="doc-item-note">A local-first D&amp;D session chronicler. The core install handles paste-a-transcript chronicling through a cloud…</span></li><li class="doc-item" data-search="roadmap a running list of what's shipped, what's coming next, what the community has suggested, and what's been…"><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a><span class="doc-item-note">A running list of what's shipped, what's coming next, what the community has suggested, and what's been…</span></li><li class="doc-item" data-search="security policy tusk's tomes is a local-first application — it runs on your machine, binds only to 127.0.0.1 by default, has…"><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a><span class="doc-item-note">Tusk's Tomes is a local-first application — it runs on your machine, binds only to 127.0.0.1 by default, has…</span></li><li class="doc-item" data-search="tuskers' code of conduct tusk's tomes is built for kitchen-table tabletop groups, and the community around it should feel like one…"><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a><span class="doc-item-note">Tusk's Tomes is built for kitchen-table tabletop groups, and the community around it should feel like one…</span></li><li class="doc-item" data-search="who it's for i built this because i wanted a record of my own campaign and couldn't find anything that did the job. so the…"><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a><span class="doc-item-note">I built this because I wanted a record of my own campaign and couldn't find anything that did the job. So the…</span></li></ul></details>
+<details class="doc-group"><summary><h3>Developer tooling <span class="doc-count">1</span></h3></summary><ul><li class="doc-item" data-search="graphify safishamsi/graphify is a claude code skill that reads the project's source files and builds a queryable…"><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a><span class="doc-item-note">safishamsi/graphify is a Claude Code skill that reads the project's source files and builds a queryable…</span></li></ul></details>
+<details class="doc-group"><summary><h3>About Tusk's Tomes <span class="doc-count">8</span></h3></summary><ul><li class="doc-item" data-search="changelog what changed between versions. the rest of the documentation describes how the current version works and does…"><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a><span class="doc-item-note">What changed between versions. The rest of the documentation describes how the current version works and does…</span></li><li class="doc-item" data-search="everything it does the full list. most of these exist because something annoyed me once and i fixed it — which is why the set is…"><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a><span class="doc-item-note">The full list. Most of these exist because something annoyed me once and I fixed it — which is why the set is…</span></li><li class="doc-item" data-search="how it compares i tried most of the meeting tools before writing my own, so that part is a fair account rather than a sales…"><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a><span class="doc-item-note">I tried most of the meeting tools before writing my own, so that part is a fair account rather than a sales…</span></li><li class="doc-item" data-search="how it's built a local-first d&amp;d session chronicler. the core install handles paste-a-transcript chronicling through a cloud…"><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a><span class="doc-item-note">A local-first D&amp;D session chronicler. The core install handles paste-a-transcript chronicling through a cloud…</span></li><li class="doc-item" data-search="roadmap a running list of what's shipped, what's coming next, what the community has suggested, and what's been…"><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a><span class="doc-item-note">A running list of what's shipped, what's coming next, what the community has suggested, and what's been…</span></li><li class="doc-item" data-search="security policy tusk's tomes is a local-first application — it runs on your machine, binds only to 127.0.0.1 by default, has…"><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a><span class="doc-item-note">Tusk's Tomes is a local-first application — it runs on your machine, binds only to 127.0.0.1 by default, has…</span></li><li class="doc-item" data-search="tuskers' code of conduct tusk's tomes is built for kitchen-table tabletop groups, and the community around it should feel like one…"><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a><span class="doc-item-note">Tusk's Tomes is built for kitchen-table tabletop groups, and the community around it should feel like one…</span></li><li class="doc-item" data-search="who it's for i built this because i wanted a record of my own campaign and couldn't find anything that did the job. so the…"><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a><span class="doc-item-note">I built this because I wanted a record of my own campaign and couldn't find anything that did the job. So the…</span></li></ul></details>
+<details class="doc-group"><summary><h3>Docs <span class="doc-count">2</span></h3></summary><ul><li class="doc-item" data-search="contributing to tusk's tomes welcome — and thank you for even reading this far. tusk's tomes is a small project with a small but growing…"><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a><span class="doc-item-note">Welcome — and thank you for even reading this far. Tusk's Tomes is a small project with a small but growing…</span></li><li class="doc-item" data-search="documentation everything in detail, so the readme doesn't have to carry it all. this is the contents page."><a href="/Tusks-Tomes/docs/">Documentation</a><span class="doc-item-note">Everything in detail, so the README doesn't have to carry it all. This is the contents page.</span></li></ul></details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine. No telemetry.</p>
+  <p>
+    <a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> ·
+    <a href="/Tusks-Tomes/docs/">Documentation</a> ·
+    <a href="/Tusks-Tomes/docs/getting-started/requirements/">What you'll need</a> ·
+    <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a> ·
+    <a href="https://buymeacoffee.com/kochitusker" rel="noopener">Buy me a coffee</a>
+  </p>
+</footer>
+
+<script src="/Tusks-Tomes/site.js" defer></script>
+</body>
+</html>

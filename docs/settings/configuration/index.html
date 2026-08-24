@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configuration — Tusk's Tomes</title>
+<meta name="description" content="Two sources of config, in priority order: In-app Settings tab. Encrypted keystore, per-phase model routing, pipeline tuning, narrator voice, and local runner…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/settings/configuration/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Configuration — Tusk's Tomes">
+<meta property="og:description" content="Two sources of config, in priority order: In-app Settings tab. Encrypted keystore, per-phase model routing, pipeline tuning, narrator voice, and local runner…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/settings/configuration/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Configuration — Tusk's Tomes">
+<meta name="twitter:description" content="Two sources of config, in priority order: In-app Settings tab. Encrypted keystore, per-phase model routing, pipeline tuning, narrator voice, and local runner…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Configuration",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/settings/configuration/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Configuration",
+  "description": "Two sources of config, in priority order: In-app Settings tab. Encrypted keystore, per-phase model routing, pipeline tuning, narrator voice, and local runner…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/settings/configuration/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/" aria-current="page">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Configuration</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#where-things-live-on-disk">Where things live on disk</a></li><li><a href="#useful-environment-variables">Useful environment variables</a></li><li><a href="#what-a-fresh-clone-contains">What a fresh clone contains</a></li><li><a href="#what-gets-created-at-runtime">What gets created at runtime</a></li><li><a href="#pacing-chunk-sizes">Pacing &amp; chunk sizes</a></li><li><a href="#updating">Updating</a></li></ul></aside>
+    <article class="prose">
+<h1>Configuration</h1>
+<p>Two sources of config, in priority order:</p>
+<ol>
+<li><strong>In-app Settings tab.</strong> Encrypted keystore, per-phase model routing, pipeline tuning, narrator voice, and local runner endpoints. The source of truth after first save.</li>
+<li><strong><code>.env</code> in the repo root.</strong> Seeds the keystore on first boot only. Subsequent runs read from the encrypted store. Useful for CI / containerised deploys.</li>
+</ol>
+<details class="docs-section" open>
+<summary><h2 id="where-things-live-on-disk">Where things live on disk</h2></summary>
+<div class="docs-section-body">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Path</th><th>Contents</th><th>Persistence boundary</th></tr></thead><tbody><tr><td><code>&#x3C;repo>/Sessions/&#x3C;campaign>/*.md</code></td><td>Auto-saved chronicles in Markdown</td><td>Committable to your own private fork</td></tr><tr><td><code>{dataDir}/tusks-tomes/sessions/&#x3C;id>/</code></td><td>Per-session audio + manifest + SBV (only used by the Audio Transcription add-on)</td><td>Per-user, outside the repo</td></tr><tr><td><code>{configDir}/tusks-tomes/providers.enc</code></td><td>Encrypted API keys (AES-256-GCM, machine-bound scrypt key)</td><td>Per-user, outside the repo</td></tr><tr><td><code>{configDir}/tusks-tomes/{glossary,speakers,profiles,routing}.json</code></td><td>UI-edited config — glossary terms, speaker mappings, per-provider model overrides, per-phase routing</td><td>Per-user, outside the repo</td></tr><tr><td><code>{configDir}/tusks-tomes/settings.json</code></td><td>App settings not covered by the files above</td><td>Per-user, outside the repo</td></tr><tr><td><code>{configDir}/tusks-tomes/personas.json</code></td><td>Personas you have authored or generated. Seeded with the six presets on first read, and never deleted by the app</td><td>Per-user, outside the repo</td></tr><tr><td><code>{configDir}/tusks-tomes/model-availability.json</code></td><td>Which models each configured key was measured to actually reach</td><td>Per-user, outside the repo</td></tr><tr><td><code>{configDir}/tusks-tomes/openrouter-models.json</code></td><td>Cached OpenRouter catalogue</td><td>Per-user, outside the repo</td></tr><tr><td><code>{configDir}/tusks-tomes/addons.json</code></td><td>Whether you have switched a module off — distinct from whether it is installed</td><td>Per-user, outside the repo</td></tr><tr><td><code>{cacheDir}/tusks-tomes/capability.json</code></td><td>Local-model capability probe results</td><td>Per-user, outside the repo, safe to delete</td></tr><tr><td><code>&#x3C;parent>/Tusks-Lore/tusks-lore.json</code></td><td>Marker file for the shared sibling Tusk's Lore folder (auto-detected; created by Settings → "Create Tusk's Lore")</td><td>Sibling to this repo, shared with Tusk's Vault</td></tr><tr><td><code>&#x3C;parent>/Tusks-Lore/Sessions/&#x3C;campaign>/Session-NN-YYYY-MM-DD-&#x3C;full|condensed>.docx</code></td><td>Structured <code>.docx</code> chronicle exports written by the in-app "Save to Tusk's Lore" buttons</td><td>Sibling to this repo, shared with Tusk's Vault</td></tr><tr><td><code>&#x3C;repo>/vendor/python-venv/</code></td><td>Whisper sidecar (faster-whisper + torch) — only present when Audio Transcription is installed</td><td>Local to this clone, gitignored</td></tr><tr><td><code>&#x3C;repo>/.env</code></td><td>Optional env-var keys + overrides</td><td>Local to this clone, gitignored</td></tr></tbody></table>
+<p><code>{configDir}</code> resolves to:</p>
+<ul>
+<li>Windows — <code>%APPDATA%\tusks-tomes\Config\</code> (Roaming, not Local — <code>env-paths</code> puts config under <code>%APPDATA%</code>; only data and cache sit under <code>%LOCALAPPDATA%</code>)</li>
+<li>macOS — <code>~/Library/Application Support/tusks-tomes</code></li>
+<li>Linux — <code>~/.config/tusks-tomes</code></li>
+</ul>
+<p>The keystore being machine-bound means even if <code>providers.enc</code> leaked, the keys are unrecoverable on any other machine. See <a href="/Tusks-Tomes/docs/security/overview/">privacy.md</a> for the full trust model.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="useful-environment-variables">Useful environment variables</h2></summary>
+<div class="docs-section-body">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Purpose</th></tr></thead><tbody><tr><td><code>PAID_GEMINI_API_KEY</code></td><td>Billing-enabled Gemini key (required for Gemini 3.x)</td></tr><tr><td><code>VITE_GEMINI_API_KEY</code></td><td>Free-tier Gemini fallback</td></tr><tr><td><code>OPENROUTER_API_KEY</code></td><td>OpenRouter key seed — one key reaches around 400 models</td></tr><tr><td><code>VITE_MODEL_PRO</code> / <code>VITE_MODEL_FLASH</code></td><td>Override default Gemini model IDs</td></tr><tr><td><code>PORT</code></td><td>Dev server port (default 5173)</td></tr><tr><td><code>TUSKS_HOST</code></td><td>Interface to bind (default <code>127.0.0.1</code>). Set to <code>0.0.0.0</code> to expose to LAN — see the callout below before doing this</td></tr><tr><td><code>TUSKS_LAN_WRITES</code></td><td>When set with <code>TUSKS_HOST=0.0.0.0</code>: also allow <strong>writes</strong> (uploads, settings edits, saves) from other LAN devices. Default OFF — LAN visitors can only READ. Set to <code>1</code> to enable. See the callout below</td></tr><tr><td><code>TUSKS_SESSIONS_DIR</code></td><td>Override where multi-GB session audio lives</td></tr><tr><td><code>TUSKS_VAULT_DIR</code></td><td>Override sister-Vault auto-detect path (see <a href="/Tusks-Tomes/docs/extras/tusks-vault/">vault.md</a>)</td></tr><tr><td><code>TUSKS_LORE_DIR</code></td><td>Override the sibling <code>Tusks-Lore/</code> auto-detect path. The folder holds <code>tusks-lore.json</code> (marker) + <code>Sessions/&#x3C;campaign>/*.docx</code> (chronicle archive); same folder is read by Tusk's Vault for the shared lore base</td></tr></tbody></table>
+<p>Variables prefixed with <code>VITE_</code> or <code>PAID_</code> are inlined into the browser bundle by Vite (configured via <code>envPrefix</code> in <code>vite.config.ts</code>). Plain-named server-only vars (like <code>OPENROUTER_API_KEY</code>) are <strong>never</strong> sent to the browser.</p>
+<div class="docs-alert docs-alert-caution">
+<div class="docs-alert-label">Warning</div>
+<p><strong>Before you set <code>TUSKS_HOST=0.0.0.0</code>, read this.</strong> It exposes Tusk's Tomes
+to your local network. Useful at home; <strong>dangerous on hotel, café, airport or
+coworking Wi-Fi</strong>, where the "same Wi-Fi" attacker is real and doesn't need
+to be technical — pointing a browser at your IP is enough.</p>
+</div>
+<p>The trade-offs in plain English:</p>
+<p>Other devices (a tablet, your partner's laptop, your phone) can open the app at <code>http://&#x3C;your-machine-IP>:5173</code>.</p>
+<ul>
+<li>Your API keys are <strong>still safe</strong>. The <code>/api/provider-keys</code> route is loopback-only regardless of <code>TUSKS_HOST</code>. Devices visiting from elsewhere on the LAN get a 403 on that route. Your Gemini, OpenRouter and runner credentials never leave your computer.</li>
+<li><strong>LAN writes are OFF by default.</strong> Other devices can BROWSE chronicles, transcripts, and session lists. They cannot upload audio, save chronicles, change settings, or modify anything else unless you also set <code>TUSKS_LAN_WRITES=1</code>. So if a stranger gets onto your Wi-Fi by accident, they can look but not touch.</li>
+<li><strong>Everything readable IS visible to anyone on the same Wi-Fi.</strong> Transcripts in progress, finished chronicles, your campaign + session metadata — anyone who can reach your IP can browse them.</li>
+</ul>
+<p>If you also want to <strong>upload from your phone, drag transcripts in from another machine, or edit settings from a tablet</strong>, set <code>TUSKS_LAN_WRITES=1</code> in addition to <code>TUSKS_HOST=0.0.0.0</code>. This opens the write surface to every LAN device — only do it on networks where you trust every connected device. The app prints a loud warning at boot when this is on.</p>
+<p>If you only need to read chronicles from another device, consider exporting the chronicle as a <code>.docx</code> from the Sessions tab and emailing it to yourself instead. That avoids LAN exposure entirely.</p>
+<p>For the full security picture (keystore machine-binding, what runs over the network, residual risks we cannot fix in code), see <a href="/Tusks-Tomes/docs/security/overview/">security-quickref.md</a>.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="what-a-fresh-clone-contains">What a fresh clone contains</h2></summary>
+<div class="docs-section-body">
+<p>Source code, setup scripts, the launcher, and configuration <strong>templates only</strong>. Nothing in this list contains personal data or credentials.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="what-gets-created-at-runtime">What gets created at runtime</h2></summary>
+<div class="docs-section-body">
+<p><code>node_modules/</code>, optionally the Python environment (Audio Transcription), <code>Sessions/</code>, the encrypted keystore, the settings JSONs listed above, <code>.env</code>, model caches, session manifests — all gitignored.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="pacing-chunk-sizes">Pacing &#x26; chunk sizes</h2></summary>
+<div class="docs-section-body">
+<p>Pacing between cloud chunks is <strong>automatic and per-provider</strong>. Each call reads the provider's rate-limit response headers (<code>anthropic-ratelimit-*</code>, <code>x-ratelimit-*</code>) and computes the next safe interval. Gemini uses a static tier map keyed on which key you populated (<code>PAID_GEMINI_API_KEY</code> vs <code>VITE_GEMINI_API_KEY</code>). 429 <code>Retry-After</code> is honoured precisely.</p>
+<p>Per-provider chunk sizes live in <code>src/lib/chunking.ts</code>:</p>
+<p>Sizes are keyed on <strong>(provider profile, model tier)</strong>, not on the provider
+alone. A fast-tier model runs chunks roughly half the flagship size: cheaper per
+call, and it degrades less on long inputs, so quality holds at lower token
+counts. Figures below are the flagship row, in chars, for Phase 1 / 2 / 3 / 4 / 6:</p>
+<ul>
+<li>Gemini paid: 30k / 30k / 60k / 60k / 100k</li>
+<li>Gemini free: 15k / 15k / 35k / 35k / 60k (throughput-tight)</li>
+<li>Claude profile: 20k / 20k / 40k / 40k / 60k</li>
+<li>OpenAI profile: 15k / 15k / 30k / 30k / 50k — OpenRouter maps onto this row</li>
+<li>Local (any runner): 5k / 5k / 8k / 8k / 6k (Phase 5) / 10k — conservative; consumer GPUs lose accuracy on long contexts</li>
+</ul>
+<p>Override by editing the constants — no env var. The rate-limit state itself is in <code>src/lib/rateLimit.ts</code> and is per-provider singleton.</p>
+</div>
+</details>
+<details class="docs-section" open>
+<summary><h2 id="updating">Updating</h2></summary>
+<div class="docs-section-body">
+<p>The in-app updater lives at <strong>Settings → Maintenance → Check for updates → Apply update</strong>. One click pulls the latest code from <code>main</code>, re-runs <code>npm install</code>, and prompts you to restart. Your encrypted keystore, sessions, glossary, lore, and other gitignored state survive untouched.</p>
+<p>Prefer the terminal?</p>
+<pre><code class="language-sh">git pull &#x26;&#x26; npm install
+</code></pre>
+<p>Either path requires Git installed locally. If you downloaded the ZIP and don't have Git, the cleanest update path is to re-download the ZIP from GitHub and unzip over your existing folder — your gitignored files survive that too.</p>
+<p>Updates are <strong>free, optional, and never required</strong>. If a release breaks something for you, just don't update yet — the version you have keeps working.</p>
+</div>
+</details>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/settings/configuration.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>
