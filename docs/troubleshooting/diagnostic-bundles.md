@@ -36,7 +36,7 @@ Predictable section headings so any Claude session can parse them fast:
 
 Each signature is a pure function that scans the ring + state and decides
 "is something fishy here?" — the curated subset worth investigating. New
-signatures land in `server/lib/softErrorSignatures.ts` next to the
+signatures land in `server/features/maintenance/services/softErrorSignatures.ts` next to the
 existing ones.
 
 | ID | Severity | What it catches |
@@ -52,10 +52,10 @@ existing ones.
 
 ## Adding a new signature
 
-1. Open `server/lib/softErrorSignatures.ts`.
+1. Open `server/features/maintenance/services/softErrorSignatures.ts`.
 2. Define a `Signature` object: `{ id, description, severity, match(input) }`.
 3. Append to `SIGNATURES` at the bottom of the file.
-4. Add positive + negative fixture in `server/lib/softErrorSignatures.test.ts`.
+4. Add positive + negative fixture in `server/features/maintenance/services/softErrorSignatures.test.ts`.
 5. Bump the expected count in the `SIGNATURES.length` test.
 
 That's it — the bundle assembler iterates the library directly, the API
@@ -63,8 +63,8 @@ echoes new matches, and the toast surfaces them automatically.
 
 ## Auto-trigger behaviour
 
-- Fires from `RefinementTool.handlePipelineError` on any non-`AbortError`.
-- 30-second debounce in the client wrapper (`src/lib/diagnose.ts`) so a
+- Fires from the Chronicle tab's pipeline error handler (`usePipelineErrorHandler`) on any non-`AbortError`.
+- 30-second debounce in the client wrapper (`src/features/maintenance/lib/diagnose.ts`) so a
   rapid-fire failure produces one bundle, not twelve.
 - Backup rotation: the most recent 10 timestamped bundles
   (`diagnose-<ISO>.md`) survive; older ones are pruned. `latest.md` is

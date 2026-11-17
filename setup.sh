@@ -6,7 +6,7 @@
 #
 # Safe to inspect first. This script does ONLY the following:
 #
-#   1. Checks whether Node.js >= 20 is installed. If not, prints the
+#   1. Checks whether Node.js >= 22 is installed. If not, prints the
 #      brew / apt / dnf / pacman command to install it and exits.
 #   2. If Node is present, hands control to
 #      `node scripts/setup/check-deps.mjs` — plain readable JavaScript
@@ -74,11 +74,11 @@ rm -f "$WRITE_PROBE"
 if ! command -v node >/dev/null 2>&1; then
   echo "  ${RED}[missing]${RESET} Node.js was not found on PATH."
   echo
-  echo "  Install Node.js 20 LTS or newer, then re-run this script:"
+  echo "  Install Node.js 22 LTS or newer, then re-run this script:"
   echo
   case "$(uname -s)" in
     Darwin)
-      echo "      brew install node@20"
+      echo "      brew install node@22"
       ;;
     Linux)
       echo "      sudo apt install nodejs npm        # Debian / Ubuntu"
@@ -86,7 +86,7 @@ if ! command -v node >/dev/null 2>&1; then
       echo "      sudo pacman -S nodejs npm          # Arch"
       ;;
     *)
-      echo "      (install Node.js 20+ via your OS package manager)"
+      echo "      (install Node.js 22+ via your OS package manager)"
       ;;
   esac
   echo

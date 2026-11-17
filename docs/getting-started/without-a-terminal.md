@@ -130,9 +130,10 @@ You have two options here. Option B is recommended because it gets you one-click
 
 
 1. **Double-click `Start_Tusks_Tomes.bat`**.
-2. A black window opens and says "Starting on http://localhost:5173". Wait ~5 seconds.
-3. Your browser auto-opens to the dashboard.
-4. **Leave the black window open** — closing it stops the server.
+2. A black window opens and says "Starting on http://localhost:5173". Below that, the app prints its own numbered start-up steps — `[1/5]`, `[2/5]` and so on, each with the seconds elapsed — and then a line that says **READY** with the address.
+3. Your browser opens to the dashboard by itself the moment that READY line appears. The first start after setup or an update takes 15–30 seconds, because the app prepares its files; later starts take a few seconds.
+4. If you open the address yourself before READY, you get a dark page that says "starting…" and names the step the app is on. Leave it: it turns into the app on its own when the server is ready.
+5. **Leave the black window open** — closing it stops the server.
 
 ---
 
@@ -169,7 +170,7 @@ Everything below happens in your browser. No code, no config files.
 Same idea, terminal-flavoured:
 
 ```sh
-# 1. Install Node 20+, Python 3.10-3.12 (optional), Git, ffmpeg
+# 1. Install Node 22+, Python 3.10-3.12 (optional), Git, ffmpeg
 # macOS:  brew install node python git ffmpeg
 # Debian: sudo apt install nodejs npm python3 python3-venv git ffmpeg
 # Fedora: sudo dnf install nodejs npm python3 git ffmpeg
@@ -202,7 +203,7 @@ bash start.sh                       # or: npm run dev
 - **Stop:** close the black window (Windows) or `Ctrl+C` in the terminal (macOS / Linux).
 - **Start:** double-click `Start_Tusks_Tomes.bat` (Windows) or run `bash start.sh` (POSIX).
 
-Your keys, lore, glossary, model profiles, and chronicles are all saved — Tomes picks up exactly where you left off.
+Your keys, lore, glossary, per-phase routing, and chronicles are all saved — Tomes picks up exactly where you left off.
 
 ---
 

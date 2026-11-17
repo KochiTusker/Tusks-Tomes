@@ -1,26 +1,34 @@
 import type { Express } from 'express'
-import { whisperStatus, runSetup, venvDir } from '../whisper/bootstrap.js'
+import {
+  whisperInstalled,
+  runSetup,
+  venvDir,
+  registerLiveImpl,
+  getLiveSessionState,
+  refreshLiveSbv,
+  whisperRouter,
+  uploadRouter,
+  transcribeRouter,
+} from '../features/transcription/index.js'
 import { promises as fs } from 'node:fs'
-import { registerLiveImpl } from '../sessions/liveSessionBridge.js'
-import { getLiveSessionState, refreshLiveSbv } from '../whisper/liveQueue.js'
-import { whisperRouter } from '../api/whisper.js'
-import { uploadRouter } from '../api/upload.js'
-import { transcribeRouter } from '../api/transcribe.js'
-import { localProxyRouter } from '../api/localProxy.js'
-import { localLLMRouter } from '../api/localLLM.js'
-import { probeRouter } from '../api/probe.js'
-import { claudeCodeRouter } from '../api/claudeCode.js'
-import { codexRouter } from '../api/codex.js'
-import { whisperCppRouter } from '../api/whisperCpp.js'
-import { personasRouter } from '../api/personas.js'
-import { obsidianRouter } from '../api/obsidian.js'
-import { loopbackOnly } from '../lib/loopbackGate.js'
 
 export type LogEntry = { stream: 'stdout' | 'stderr'; line: string }
 export type LogEmitter = (entry: LogEntry) => void
 
-/** Fields every module shares, installable or not. */
-type AddonBase = {
+/**
+ * An installable module: a real installation with real prerequisites (today:
+ * the audio add-on's Python venv, ~1.5 GB). It has a lifecycle: isReady()
+ * gates mounting, install()/uninstall() manage the payload, and the user can
+ * toggle it off in addons.json without uninstalling.
+ *
+ * Features that ship with the app and always mount are not modules; they
+ * register their own routes (see `featureRoutes.ts`). Only something with a
+ * prerequisite belongs here, so a feature cannot be uninstalled by accident:
+ * the old personas uninstall deleted the user's authored personas.json.
+ */
+export type AddonDefinition = {
+  /** The only kind left; kept so the add-on routes can tell a module from a feature by shape. */
+  kind: 'install'
   /** Machine-stable identifier used in API paths and UI keys. */
   name: string
   /** Human-readable name shown in the UI. */
@@ -33,45 +41,15 @@ type AddonBase = {
   docSlug?: string
   /** Mounts Express routes at startup. */
   registerRoutes: (app: Express) => void
+  /** Returns true if the add-on's prerequisites are satisfied. Called on
+   *  every server start — the sole source of truth for "installed". */
+  isReady: () => Promise<boolean>
+  /** Satisfies prerequisites (e.g. installs a Python venv). Streams log
+   *  lines via the emitter; resolves with the setup exit code. */
+  install: (emit: LogEmitter) => Promise<number>
+  /** Removes prerequisites so the add-on won't load on next restart. */
+  uninstall: () => Promise<void>
 }
-
-/**
- * Two kinds of module, split by one question: does enabling it put bytes on
- * disk that weren't there before?
- *
- * - `install` — a real installation with real prerequisites (today: the
- *   audio add-on's Python venv, ~1.5 GB). Has a lifecycle: isReady() gates
- *   mounting, install()/uninstall() manage the payload, and the user can
- *   toggle it off in addons.json without uninstalling.
- *
- * - `builtin` — ships with the app and always mounts. Six former "add-ons"
- *   live here now: their install() bodies only ever wrote a marker file and
- *   then demanded a server restart, charging install-shaped ceremony for
- *   features that were already on disk. Whether a builtin is *usable*
- *   (CLI on PATH, runner reachable, vault path set) is a detection question
- *   its own status endpoint answers — not an installation question.
- *
- * The union makes the difference structural: a builtin cannot carry an
- * uninstall() body, so the old personas uninstall — which deleted the user's
- * authored personas.json — is no longer expressible.
- *
- * Marker files older versions wrote ({configDir}/*.enabled) are simply no
- * longer consulted. They are deliberately not deleted: this change alters
- * what the user is asked to understand, not the contents of their disk.
- */
-export type AddonDefinition =
-  | (AddonBase & { kind: 'builtin' })
-  | (AddonBase & {
-      kind: 'install'
-      /** Returns true if the add-on's prerequisites are satisfied. Called on
-       *  every server start — the sole source of truth for "installed". */
-      isReady: () => Promise<boolean>
-      /** Satisfies prerequisites (e.g. installs a Python venv). Streams log
-       *  lines via the emitter; resolves with the setup exit code. */
-      install: (emit: LogEmitter) => Promise<number>
-      /** Removes prerequisites so the add-on won't load on next restart. */
-      uninstall: () => Promise<void>
-    })
 
 export const ADDON_REGISTRY: AddonDefinition[] = [
   {
@@ -85,8 +63,13 @@ export const ADDON_REGISTRY: AddonDefinition[] = [
     wip: true,
     docSlug: 'docs-extras-audio-transcription',
     async isReady() {
-      const s = await whisperStatus()
-      return s.ready
+      // Filesystem facts only. Whether the venv actually imports
+      // faster-whisper is checked again at request time (status endpoint,
+      // transcription worker), so spawning Python here would only make
+      // start-up wait on a child process that can hang — and the routes
+      // mounted on this answer already cope with a broken venv.
+      const s = await whisperInstalled()
+      return s.installed
     },
     async install(emit) {
       return await runSetup(emit)
@@ -99,101 +82,6 @@ export const ADDON_REGISTRY: AddonDefinition[] = [
       app.use('/api/sessions', transcribeRouter())
       app.use('/api/sessions', uploadRouter())
       app.use('/api/whisper', whisperRouter())
-    },
-  },
-  {
-    kind: 'builtin',
-    name: 'personas-addon',
-    displayName: 'Chronicle Personas',
-    description:
-      'Swap the Chronicle narrator out of the default bardic voice. Six presets ship; author ' +
-      'your own from a template, from scratch, or generated by your active LLM. The locked bard ' +
-      'prompt remains the default; personas only override phases 3, 5, and 6.',
-    wip: false,
-    docSlug: 'docs-extras-personas',
-    registerRoutes(app) {
-      // The router seeds the six presets on first read — personas.json never
-      // needs to exist, and nothing deletes it.
-      app.use('/api/personas', personasRouter())
-    },
-  },
-  {
-    kind: 'builtin',
-    name: 'local-llm-addon',
-    displayName: 'Local LLMs',
-    description:
-      'Route pipeline phases through Ollama, LM Studio, or Unsloth Studio instead of (or alongside) ' +
-      'a cloud provider. Install a runner, start it, and its models appear in the routing rows.',
-    wip: false,
-    docSlug: 'docs-extras-local-llms',
-    registerRoutes(app) {
-      app.use('/api/local', localProxyRouter())
-      app.use('/api/local-llm', localLLMRouter())
-      app.use('/api/local-llm', probeRouter())
-    },
-  },
-  {
-    kind: 'builtin',
-    name: 'claude-code-addon',
-    displayName: 'Claude Code (your subscription)',
-    description:
-      'Use your locally-installed Claude Code CLI (Pro/Max) as a provider — no API key. ' +
-      'Install it separately and run `claude login`; the app detects the rest and never ' +
-      'touches your login.',
-    wip: true,
-    docSlug: 'docs-extras-claude-code',
-    registerRoutes(app) {
-      app.use('/api/claude-code', claudeCodeRouter())
-    },
-  },
-  {
-    kind: 'builtin',
-    name: 'codex-addon',
-    displayName: 'Codex (your ChatGPT subscription)',
-    description:
-      'Use your locally-installed OpenAI Codex CLI (ChatGPT Plus/Pro) as a provider — no API key. ' +
-      'Install it separately (npm i -g @openai/codex) and run `codex login`; the app detects the rest.',
-    wip: true,
-    docSlug: 'docs-extras-codex',
-    registerRoutes(app) {
-      app.use('/api/codex', codexRouter())
-    },
-  },
-  {
-    kind: 'builtin',
-    name: 'whisper-cpp-addon',
-    displayName: 'whisper.cpp bridge (bring your own build)',
-    description:
-      'Transcribe with a whisper.cpp build you compile yourself — the route for AMD, Intel and ' +
-      'Apple GPUs. Nothing is downloaded or installed: point the app at your binary and model.',
-    wip: true,
-    docSlug: 'docs-extras-whisper-cpp',
-    registerRoutes(app) {
-      app.use('/api/whisper-cpp', whisperCppRouter())
-    },
-  },
-  {
-    kind: 'builtin',
-    name: 'obsidian-vault-addon',
-    displayName: 'Obsidian Vault Lore',
-    description:
-      'Ground chronicles against a read-only Obsidian vault instead of the Tusks-Lore folder. ' +
-      'Point at your vault; the app derives an entity index from your notes (cached outside the ' +
-      'vault — the vault is never written to). Stays off until you choose it as the lore source.',
-    wip: true,
-    docSlug: 'docs-extras-obsidian-vault',
-    registerRoutes(app) {
-      // loopbackOnly: every route on this router mutates host state —
-      // POST /config accepts an arbitrary absolute path and persists it as
-      // the app's lore read root, /generate-claude-md writes a file into
-      // it, /graphify-build spawns a process with cwd there, and
-      // /pick-folder opens a native dialog on the host desktop. Combined
-      // with GET /api/lore/documents (which returns the full body of every
-      // .md under that root) an ungated /config is arbitrary file read.
-      // Harmless on the default 127.0.0.1 bind, but TUSKS_HOST=0.0.0.0 is
-      // a documented option and would expose all of it unauthenticated.
-      // Mounting unconditionally makes this gate MORE important, not less.
-      app.use('/api/obsidian', loopbackOnly(), obsidianRouter())
     },
   },
 ]

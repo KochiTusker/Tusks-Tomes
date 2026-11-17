@@ -67,8 +67,9 @@ Two ways, and they land in the same place.
 straight into the **Raw transcript** box on the Chronicle tab. Quickest.
 
 **Download the `.sbv`.** In **Subtitles**, use the **⋮** menu on the caption
-track and choose **Download `.sbv`**. Drop that file into the **Caption Repair**
-tab, run **Repair captions**, then **Send to refinement**.
+track and choose **Download `.sbv`**. Open **Repair a caption file** on the
+**Chronicle** tab, choose that file, run **Repair captions**, then **Download corrected .sbv**.
+You can also load the `.sbv` straight into the **Raw transcript** box.
 
 The `.sbv` route keeps the timestamps, which helps the pipeline segment the
 session sensibly, and Caption Repair does a grounding pass over the cues before
@@ -143,7 +144,7 @@ has the current figure for each routing.
 
 See [what it costs](../models/costs.md) for the full breakdown, and
 [recommended settings](../chronicling/recommended-settings.md) for the routing that gives the
-best results per pound.
+best results per dollar.
 
 ---
 

@@ -866,32 +866,6 @@ details.docs-section > .docs-section-body {
     opacity: 0.35;
   }
 
-  /* Section divider — short SVG rune flanked by violet trace lines.
-     Used by the ArcaneRune component. */
-  .arcane-rune-divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    color: var(--arcane);
-    opacity: 0.7;
-  }
-  .arcane-rune-divider::before,
-  .arcane-rune-divider::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      oklch(0.6 0.18 295 / 0.6),
-      transparent
-    );
-  }
-  .arcane-rune-divider svg {
-    flex-shrink: 0;
-    filter: drop-shadow(0 0 6px oklch(0.7 0.22 295 / 0.5));
-  }
-
   /* ---- Per-tab themed backgrounds. Each one is a thin atmospheric
      overlay applied to the <main> wrapper based on data-tab attribute.
      All overlays are pseudo-elements anchored to the wrapper so they

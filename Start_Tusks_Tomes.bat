@@ -9,6 +9,10 @@ REM When Windows Terminal (wt.exe) is installed, this script relaunches
 REM itself inside a shared "tusks" Windows Terminal window so that Tusk's
 REM Tomes and Tusk's Vault open as adjacent tabs instead of two separate
 REM cmd windows. Set TUSKS_NO_WT=1 to opt out and use a plain cmd window.
+REM
+REM The browser is opened by scripts\launch\open-when-ready.cmd, which
+REM asks the app whether it is ready rather than guessing with a timer.
+REM Set TUSKS_NO_BROWSER=1 to have it print the address instead.
 REM ===========================================================================
 
 setlocal
@@ -67,7 +71,9 @@ if not exist "node_modules\" (
   if errorlevel 1 exit /b 1
 )
 
-set "PORT=5173"
+REM The same PORT reaches the server and the browser opener, so a PORT set
+REM in the environment moves both together.
+if not defined PORT set "PORT=5173"
 set "URL=http://localhost:%PORT%/"
 
 REM ---- If a dev server is already on this port, just open the browser ----
@@ -79,17 +85,27 @@ if not errorlevel 1 (
   exit /b 0
 )
 
-REM ---- Schedule the browser to open once the dev server is listening ----
-start "" /B cmd /c "%SystemRoot%\System32\timeout.exe /t 5 /nobreak >nul && rundll32 url.dll,FileProtocolHandler %URL%"
+REM ---- Open the browser once the app reports READY ----
+REM The helper polls the app in the background while the server runs in
+REM the foreground below. It keeps polling only while RUN_FILE exists;
+REM the file is removed when the server exits, so a start that fails does
+REM not leave a poller behind.
+set "RUN_FILE=%TEMP%\tusks-tomes-launch-%RANDOM%%RANDOM%.run"
+echo.> "%RUN_FILE%"
+start "" /B cmd /c scripts\launch\open-when-ready.cmd %PORT% "%RUN_FILE%"
 
 echo  WHAT THIS WINDOW IS
 echo.
 echo   This window IS Tusk's Tomes. The app runs on your own computer and
-echo   shows its display in your web browser - that is why a browser tab
-echo   opens on its own in a few seconds.
+echo   shows its display in your web browser. A browser tab opens by itself
+echo   as soon as the app says READY below.
 echo.
-echo   Text will keep scrolling past below. That is the app telling you what
-echo   it is doing. It is normal and it does not mean anything is wrong.
+echo   The first start after setup or an update can take 15-30 seconds
+echo   while the app prepares its files. Later starts take a few seconds.
+echo.
+echo   The first lines below are the app's own numbered start-up steps.
+echo   After that, text keeps scrolling past: that is the app telling you
+echo   what it is doing, and it does not mean anything is wrong.
 echo.
 echo   Nothing here connects to the internet except the AI provider you
 echo   choose yourself. There is no tracking and no account.
@@ -103,6 +119,7 @@ echo.
 
 call npm run dev
 
+del "%RUN_FILE%" >nul 2>nul
 echo.
 echo  Server stopped.
 pause

@@ -40,7 +40,7 @@ When a provider declines a chunk and the in-run fallback can't recover it, the c
 Every cloud call reads the provider's rate-limit response headers (`anthropic-ratelimit-*`, `x-ratelimit-*`) and paces the next chunk accordingly. Gemini uses a static tier map keyed on which key you populated (paid vs free). 429 `Retry-After` is honoured precisely. Paid users routinely see 4–5× faster runs than the prior fixed-65s-between-chunks pacing.
 
 ### Per-provider chunk sizing
-Cloud chunks are sized for each provider's throughput budget — Gemini paid runs the largest chunks, since a 1M context absorbs them easily. Fast-tier models run chunks roughly half the flagship size: cheaper per call, and they degrade less on long inputs. Local LLMs use a single conservative table because consumer GPUs lose accuracy on long contexts. Editable in `src/lib/chunking.ts` if you want to override.
+Cloud chunks are sized for each provider's throughput budget — Gemini paid runs the largest chunks, since a 1M context absorbs them easily. Fast-tier models run chunks roughly half the flagship size: cheaper per call, and they degrade less on long inputs. Local LLMs use a single conservative table because consumer GPUs lose accuracy on long contexts. Editable in `src/features/pipeline/lib/chunking.ts` if you want to override.
 
 ### In-app Help tab
 Every doc that lives in the GitHub repo also renders inside the app under a **Help** tab. The landing page is a searchable tile grid; opening a doc gives you a sidebar grouped by folder and the body split into collapsible sections. Module rows link straight to the relevant doc with one click.
@@ -94,7 +94,7 @@ Drop one or more [Craig](https://craig.chat) zips, or per-speaker WAV / FLAC fil
 For long or chunked sessions: commit Part 1, then *Add another batch* for Part 2/3/…, then *All audio uploaded — start transcription*. Each batch saves independently and is restartable.
 
 ### Offline Whisper
-`faster-whisper` auto-detects CUDA via `nvidia-smi`. 4-hour session: ~12 min on a 4070, ~90 min on CPU. Audio never touches the network.
+`faster-whisper` auto-detects CUDA via `nvidia-smi`. A three-hour session with five or six speaker tracks takes roughly half an hour on a mid-range NVIDIA card — about 10 minutes per hour of session — and several times longer on CPU. Audio never touches the network.
 
 ### Speaker-aware merged SBV
 Every Whisper segment from every track is sorted into one chronological transcript with `[Character (Player)]` labels. The pipeline preserves these labels all the way into the final chronicle.

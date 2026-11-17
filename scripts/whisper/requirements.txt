@@ -1,16 +1,34 @@
 # Whisper sidecar dependencies. Torch + faster-whisper compatibility is
 # brittle across CUDA versions — update with care.
 #
+# faster-whisper and ctranslate2 are held to the stack that has been run
+# through real sessions here, with compatible-release specifiers (~=) so a
+# rebuilt venv picks up patch releases and nothing more. A minor release of
+# either can change the voice-activity pipeline underneath a working
+# install, so those move deliberately, with a session run behind them,
+# rather than whenever pip happens to run. Both ship prebuilt wheels, so
+# pinning them costs nothing at install time.
+#
 # CUDA 12.x users (RTX 30/40/50 series): install torch from the CUDA wheel
 # index before running pip install -r requirements.txt:
 #
-#   pip install "torch>=2.2" --index-url https://download.pytorch.org/whl/cu124
+#   pip install "torch>=2.2,<3" --index-url https://download.pytorch.org/whl/cu124
 #
 # CPU-only users:
 #
-#   pip install "torch>=2.2" --index-url https://download.pytorch.org/whl/cpu
+#   pip install "torch>=2.2,<3" --index-url https://download.pytorch.org/whl/cpu
 #
-# Note on Python 3.13: torch < 2.6 has no Python 3.13 wheels. The pin
+# Note on Python 3.13: torch < 2.6 has no Python 3.13 wheels. The bound
 # below permits torch 2.6+ which is the first version with cp313 wheels.
-faster-whisper>=1.0.3
+#
+# Overriding the pins: on a Python release these versions have no wheels
+# for yet, pip will fail to resolve them. Install the same packages without
+# the pins instead of editing this file —
+#
+#   pip install faster-whisper ctranslate2 "torch>=2.2,<3"
+#
+# — and expect to be off the validated stack; if transcription then
+# behaves differently, `pip freeze` is the first thing to compare.
+faster-whisper~=1.2.1
+ctranslate2~=4.7.1
 torch>=2.2,<3

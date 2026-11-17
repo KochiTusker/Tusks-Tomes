@@ -3,19 +3,35 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'node:path'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react(), tailwindcss()],
   // Inline both VITE_* and PAID_* env vars into the browser bundle.
   // PAID_GEMINI_API_KEY is matched by the second prefix.
   envPrefix: ['VITE_', 'PAID_'],
+  // Tests never read the developer's .env. A key in it changes which provider
+  // paths the app takes, so the golden and snapshot suites would pass on a
+  // machine without one and fail on a machine with one. The dev server and
+  // builds still load it as before.
+  envDir: mode === 'test' ? false : undefined,
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@shared': path.resolve(__dirname, './shared'),
     },
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+  },
+  server: {
+    // Transform the entry module as soon as the dev server exists rather
+    // than on the first browser request, so the first page load finds the
+    // app already compiled. The server also asks for this explicitly at
+    // start-up (server/index.ts) so it can wait on it and report READY;
+    // the two are the same request, not two compiles.
+    warmup: {
+      clientFiles: ['./src/main.tsx'],
+    },
   },
   test: {
     globals: true,
@@ -55,7 +71,12 @@ export default defineConfig({
       'src/**/*.test.ts',
       'src/**/*.test.tsx',
       'server/**/*.test.ts',
+      'shared/**/*.test.ts',
       'scripts/**/*.test.mjs',
+      // Structure and parity tests for the codebase as a whole: the surface
+      // snapshot, feature ownership and import boundaries.
+      'engineering/**/*.test.ts',
+      'engineering/**/*.test.mjs',
       // The chronicle bake-off lives here. It is gated behind TUSK_BAKEOFF=1
       // and skips itself in an ordinary run — it spends real money and needs a
       // real transcript — but it has to be discoverable to be runnable at all.
@@ -69,4 +90,4 @@ export default defineConfig({
       'scripts/uninstall.test.mjs',
     ],
   },
-})
+}))

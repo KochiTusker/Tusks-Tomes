@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { AppErrorBoundary } from './components/AppErrorBoundary'
-import { AddonProvider } from './contexts/AddonContext'
+import { AppErrorBoundary } from './platform/components/AppErrorBoundary'
+import { AddonProvider } from './platform/contexts/AddonContext'
 import './index.css'
-import { LS_REFINEMENT, LS_SBV_REPAIR } from './lib/constants'
-import { ensureProvidersInitialized } from './lib/providers'
+import { LS_REFINEMENT, LS_SBV_REPAIR, ensureProvidersInitialized } from '@/features/providers'
 
 const BOOT_ID_KEY = 'server_boot_id'
 
@@ -57,7 +56,7 @@ async function ensureFreshSessionOnNewBoot(): Promise<void> {
 
 ensureFreshSessionOnNewBoot().finally(() => {
   // Kick off provider initialization eagerly so the in-browser SDKs and
-  // hasApiKey()/listAvailableModels() see the keystore-decrypted keys
+  // hasApiKey() sees the keystore-decrypted keys
   // immediately on first render. We don't await — UI components will
   // re-render when subscribers emit, and the pipeline awaits it anyway
   // before its first call.

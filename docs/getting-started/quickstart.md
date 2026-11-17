@@ -20,7 +20,7 @@ The Chronicle tab accepts free-form text. Came from NotebookLM? A previous Whisp
 
 If you already upload sessions to YouTube (public, private, or unlisted), the auto-caption `.sbv` works directly.
 
-**How:** YouTube Studio → your video → Subtitles → ⋮ → Download `.sbv`. Then in Tomes: **Caption Repair** tab → drop the `.sbv` → **Repair captions** → **Send to refinement**.
+**How:** YouTube Studio → your video → Subtitles → ⋮ → Download `.sbv`. Then in Tomes, on the **Chronicle** tab, open **Repair a caption file** → **Choose .sbv file** → **Repair captions** → **Download corrected .sbv**. You can also load an `.sbv` straight into the **Raw transcript** box.
 
 ### I have a Craig multitrack recording (best result)
 
@@ -134,5 +134,5 @@ Once you've set up Tomes the way you like it, the recurring per-week work is:
 - [Features](../about/features.md) — the full feature list, organised by tab.
 - [Workflows](../importing/README.md) — the three workflow paths in more depth.
 - [Providers](../models/choosing-a-provider.md) — picking an LLM, getting an API key, the cost story.
-- [AddOns](../extras/README.md) — the three optional add-ons.
+- [Extras](../extras/README.md) — the optional modules.
 - [Architecture](../about/how-its-built.md) — what happens under the hood, phase by phase.

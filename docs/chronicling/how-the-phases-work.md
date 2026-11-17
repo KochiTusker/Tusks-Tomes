@@ -126,7 +126,7 @@ genuinely unclear.
 | | |
 |---|---|
 | Input | **Both** the raw chunk and the grounded chunk, in the same prompt |
-| Knowledge base | **None.** This phase receives no lore at all. |
+| Knowledge base | **Compact glossary**, the same form Ground takes, so the audit weighs a candidate against canon it can actually read. |
 | Output | A JSON array of questions. Most chunks correctly return `[]`. |
 | Output/input ratio | ~0.02 |
 | Emits JSON | **Yes** — needs structured-output support |
@@ -154,12 +154,12 @@ keep.
 | | |
 |---|---|
 | Input | The full grounded transcript, in chunks, plus a 2,000-character tail of the previous chunk's prose for continuity |
-| Knowledge base | **None on cloud providers.** Phase 1 already fixed the names, so the lore has done its job. |
+| Knowledge base | **The full text**, in the cacheable prefix. Ground fixes spelling and deliberately little else, so what the table said wrongly about a character arrives here intact, and the narrator is the pass that can put it right. When the lore would not fit the model's window, retrieval narrows it to the notes the transcript names, as Phase 6 does. Local models take the compact glossary. |
 | Output | Continuous narrative prose |
 | Output/input ratio | **~0.9 — this is not a summary** |
 | Emits JSON | No |
 | Prompt scaffolding | ~8,030 characters — the largest of any phase |
-| Cacheable prefix | Yes — rules, speech-handling policy and your Phase 2 answers |
+| Cacheable prefix | Yes — rules, speech-handling policy, your Phase 2 answers and the lore |
 
 **The instruction that governs everything here** is explicit in the prompt:
 
@@ -197,7 +197,7 @@ and the gore list.
 | | |
 |---|---|
 | Input | The full grounded transcript — **independently of Phase 3** |
-| Knowledge base | **None** |
+| Knowledge base | **Compact glossary** — every quote, jest and gore beat is attributed to a character by name, so it needs the canonical spellings. |
 | Output | JSON: `{ quotes, jests, gore }` |
 | Output/input ratio | ~0.05 |
 | Emits JSON | **Yes** |
@@ -234,7 +234,7 @@ bullet points, for a recap or a session-notes entry.
 | | |
 |---|---|
 | Input | **The chronicle**, not the transcript |
-| Knowledge base | **The entire vault** — this is the only cloud phase that gets it |
+| Knowledge base | **The entire vault** — Chronicle is the other cloud phase that takes it in full |
 | Output | Short narrative + bullets, ~30% of the chronicle |
 | Output/input ratio | ~0.3 of the chronicle |
 | Emits JSON | No |
@@ -268,9 +268,9 @@ rescue a model whose window is too small. Only sending less can.
 | Phase | Reads | Gets lore? | Emits JSON | Output vs input | Cacheable prefix |
 |---|---|---|---|---|---|
 | 1 Ground | transcript | compact glossary | no | **~1.0** | yes |
-| 2 Audit | raw **+** grounded | none | **yes** | ~0.02 | no |
-| 3 Chronicle | grounded transcript | none | no | **~0.9** | yes |
-| 4 Extras | grounded transcript | none | **yes** | ~0.05 | no |
+| 2 Audit | raw **+** grounded | compact glossary | **yes** | ~0.02 | no |
+| 3 Chronicle | grounded transcript | **full text**, narrowed when it would not fit | no | **~0.9** | yes |
+| 4 Extras | grounded transcript | compact glossary | **yes** | ~0.05 | no |
 | 5 Polish | chronicle | — | — | — | local only |
 | 6 Condense | **chronicle** | **whole vault** | no | ~0.3 | yes (large) |
 

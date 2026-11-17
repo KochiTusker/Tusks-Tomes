@@ -112,7 +112,7 @@ Source code, setup scripts, the launcher, and configuration **templates only**. 
 
 Pacing between cloud chunks is **automatic and per-provider**. Each call reads the provider's rate-limit response headers (`anthropic-ratelimit-*`, `x-ratelimit-*`) and computes the next safe interval. Gemini uses a static tier map keyed on which key you populated (`PAID_GEMINI_API_KEY` vs `VITE_GEMINI_API_KEY`). 429 `Retry-After` is honoured precisely.
 
-Per-provider chunk sizes live in `src/lib/chunking.ts`:
+Per-provider chunk sizes live in `src/features/pipeline/lib/chunking.ts`:
 
 Sizes are keyed on **(provider profile, model tier)**, not on the provider
 alone. A fast-tier model runs chunks roughly half the flagship size: cheaper per
@@ -125,7 +125,7 @@ counts. Figures below are the flagship row, in chars, for Phase 1 / 2 / 3 / 4 / 
 - OpenAI profile: 15k / 15k / 30k / 30k / 50k — OpenRouter maps onto this row
 - Local (any runner): 5k / 5k / 8k / 8k / 6k (Phase 5) / 10k — conservative; consumer GPUs lose accuracy on long contexts
 
-Override by editing the constants — no env var. The rate-limit state itself is in `src/lib/rateLimit.ts` and is per-provider singleton.
+Override by editing the constants — no env var. The rate-limit state itself is in `src/features/providers/lib/rateLimit.ts` and is per-provider singleton.
 
 
 </div>

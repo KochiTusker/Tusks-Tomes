@@ -20,12 +20,34 @@ async function fetchJson(url, init = {}) {
   }
 }
 
+// The server binds its port before it has finished starting and answers
+// /api/health from that moment with `ready:false` and the current phase.
+// Everything else this script calls is held behind a 503 until then, so
+// a server that is up but not yet ready waits here rather than counting
+// as a batch of failures.
+const READY_WAIT_MS = 60_000
+
 async function probeBoot() {
-  try {
-    const res = await fetchJson(`${BASE}/api/health`)
-    return res.ok
-  } catch {
-    return false
+  const until = Date.now() + READY_WAIT_MS
+  let announced = false
+  for (;;) {
+    let res
+    try {
+      res = await fetchJson(`${BASE}/api/health`)
+    } catch {
+      return false
+    }
+    if (!res.ok) return false
+    if (res.body?.ready !== false) return true
+    if (!announced) {
+      console.log(`[smoke] server is still starting (${res.body?.phase ?? '?'}) — waiting for READY`)
+      announced = true
+    }
+    if (Date.now() > until) {
+      console.log('[smoke] server did not report READY in time; treating it as offline')
+      return false
+    }
+    await new Promise((r) => setTimeout(r, 500))
   }
 }
 
@@ -34,8 +56,6 @@ async function getKeys() {
     console.log('[smoke] server not reachable, using process.env for keys')
     return {
       gemini: process.env.PAID_GEMINI_API_KEY ?? process.env.VITE_GEMINI_API_KEY,
-      claude: process.env.ANTHROPIC_API_KEY,
-      openai: process.env.OPENAI_API_KEY,
     }
   }
   const res = await fetchJson(`${BASE}/api/provider-keys`)
@@ -54,42 +74,6 @@ async function pingGemini(key) {
   )}&pageSize=1`
   const res = await fetch(url)
   if (!res.ok) return `failed (HTTP ${res.status})`
-  return `ok in ${Math.round(performance.now() - t)}ms`
-}
-
-async function pingClaude(key) {
-  if (!key) return 'skipped (no key)'
-  const t = performance.now()
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'x-api-key': key,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 8,
-      messages: [{ role: 'user', content: 'ping' }],
-    }),
-  })
-  if (!res.ok) {
-    const body = await res.text().catch(() => '')
-    return `failed (HTTP ${res.status}: ${body.slice(0, 120)})`
-  }
-  return `ok in ${Math.round(performance.now() - t)}ms`
-}
-
-async function pingOpenAI(key) {
-  if (!key) return 'skipped (no key)'
-  const t = performance.now()
-  const res = await fetch('https://api.openai.com/v1/models', {
-    headers: { authorization: `Bearer ${key}` },
-  })
-  if (!res.ok) {
-    const body = await res.text().catch(() => '')
-    return `failed (HTTP ${res.status}: ${body.slice(0, 120)})`
-  }
   return `ok in ${Math.round(performance.now() - t)}ms`
 }
 
@@ -137,7 +121,7 @@ async function failoverReadiness(keys) {
     return lines.join('\n')
   }
   // Fingerprint distinctness — using the same hash strategy as
-  // server/api/modelProbe.ts (SHA-256, 6-char prefix).
+  // server/features/providers/routes/modelProbe.ts (SHA-256, 6-char prefix).
   const { createHash } = await import('node:crypto')
   const paidFp = createHash('sha256').update(paidKey).digest('hex').slice(0, 6)
   const freeFp = createHash('sha256').update(freeKey).digest('hex').slice(0, 6)
@@ -189,8 +173,6 @@ async function failoverReadiness(keys) {
 const keys = await getKeys()
 const results = {
   Gemini: await pingGemini(keys?.gemini),
-  Claude: await pingClaude(keys?.claude),
-  OpenAI: await pingOpenAI(keys?.openai),
   Whisper: await pingWhisper(),
   'Local LLMs': await pingLocalLLM(),
 }
@@ -206,7 +188,7 @@ console.log(await failoverReadiness(keys))
 // Final summary block — separates "what's configured + working" from
 // "what failed or isn't set up" so a user running smoke-test on a fresh
 // install instantly sees which providers they still need to address.
-// Without this, "Whisper: not installed" and "Claude: failed: 401" look
+// Without this, "Whisper: not installed" and "Gemini: failed: 401" look
 // the same severity but mean very different things.
 console.log('\n=== Summary ===')
 const summaryOk = []

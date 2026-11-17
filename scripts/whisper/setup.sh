@@ -43,13 +43,17 @@ PIP="$VENV_DIR/bin/pip"
 echo "Upgrading pip"
 "$PIP" install --upgrade pip
 
+# torch bound matches requirements.txt: 2.2 is the earliest version
+# validated against faster-whisper, and there is no upper bound below the
+# next major because torch < 2.6 has no Python 3.13 wheels. faster-whisper
+# and ctranslate2 come from requirements.txt, which pins them.
 if [[ -n "$CUDA_VERSION" ]]; then
   TAG="cu${CUDA_VERSION//./}"
   echo "Installing CUDA torch ($TAG)"
-  "$PIP" install --index-url "https://download.pytorch.org/whl/$TAG" 'torch>=2.2,<2.6'
+  "$PIP" install --index-url "https://download.pytorch.org/whl/$TAG" 'torch>=2.2,<3'
 else
   echo "Installing CPU-only torch"
-  "$PIP" install --index-url 'https://download.pytorch.org/whl/cpu' 'torch>=2.2,<2.6'
+  "$PIP" install --index-url 'https://download.pytorch.org/whl/cpu' 'torch>=2.2,<3'
 fi
 
 "$PIP" install -r "$REQUIREMENTS_FILE"

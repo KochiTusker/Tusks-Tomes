@@ -20,7 +20,7 @@
 The audience for Tusk's Tomes and Tusk's Vault is GMs and players, not sysadmins. We can't assume:
 
 - A specific Python version is on the user's PATH (or that the user is willing to install one).
-- A specific Node version is on the user's PATH (we ship one via `engines` in `package.json`, but the user's system Node might be older or newer).
+- A specific Node version is on the user's PATH (the app requires a minimum and warns at startup below it, but the user's system Node might be older or newer).
 - The user is comfortable running a system-wide `npm install` that pulls 200 MB of transitive deps.
 - The user can recover if an install corrupts their `%APPDATA%` or their system Python's `site-packages`.
 
@@ -40,7 +40,7 @@ The audio-transcription add-on (Whisper + Craig) is the canonical Python example
 | Setup script | `scripts/whisper/setup.ps1` (Windows), `scripts/whisper/setup.sh` (POSIX) | The user's system Python is *read* (for `python -m venv`) but never mutated. |
 | Venv created | `vendor/python-venv/` — inside this repo | One directory; uninstall deletes it. |
 | Python deps installed | `vendor/python-venv/Lib/site-packages/` | Isolated. The user's global `site-packages` is untouched. |
-| Bootstrap probe | `server/whisper/bootstrap.ts` spawns the venv's Python to `import faster_whisper` | If venv is missing or the import fails, `whisperStatus()` reports `ready: false` and the UI surfaces a clear error. |
+| Bootstrap probe | `server/features/transcription/services/whisper/bootstrap.ts` spawns the venv's Python to `import faster_whisper` | If venv is missing or the import fails, `whisperStatus()` reports `ready: false` and the UI surfaces a clear error. |
 | Toggle state | `{configDir}/addons.json` | Per-user config dir (`%APPDATA%\tusks-tomes\Config\` on Windows — Roaming; `~/.config/tusks-tomes/` on Linux; `~/Library/Application Support/tusks-tomes/` on macOS). Records whether you have switched the module off, which is distinct from whether it is installed. |
 | Uninstall | `fs.rm('vendor/python-venv', { recursive: true, force: true })` + removes the marker | Idempotent. |
 
@@ -156,13 +156,13 @@ These are blockers on PR review:
 1. Run `npm install <pkg>` against the host repo's root (no `--prefix`).
 2. `pip install` outside `vendor/python-venv/`.
 3. Modify the user's PATH, environment variables, or shell rc files.
-4. Write to `~/.config`, `~/.local/share`, `%APPDATA%`, `%LOCALAPPDATA%`, or any per-user data dir outside the canonical `{configDir}` (which is already managed by `env-paths` in `server/appData.ts`).
+4. Write to `~/.config`, `~/.local/share`, `%APPDATA%`, `%LOCALAPPDATA%`, or any per-user data dir outside the canonical `{configDir}` (which is already managed by `env-paths` in `server/platform/appData.ts`).
 5. Add a Windows registry entry.
 6. Edit the host's `package.json` or `requirements.txt`.
 7. Download a binary into `/usr/local/bin`, `C:\Program Files`, or anywhere on the system PATH.
 8. Symlink anything outside the repo working tree.
 9. Run any operation that requires sudo / admin elevation. (If your add-on needs admin, redesign it.)
-10. Use `child_process.spawn(cmd, args, { shell: true })` with un-quoted args — see [DEP0190 fix](../../server/api/updater.ts) for the cmd.exe-quoting helper.
+10. Use `child_process.spawn(cmd, args, { shell: true })` with un-quoted args — see [DEP0190 fix](../../server/features/maintenance/routes/updater.ts) for the cmd.exe-quoting helper.
 
 </div>
 </details>
@@ -173,7 +173,7 @@ These are blockers on PR review:
 
 Before merging an add-on PR, the reviewer runs through these:
 
-- [ ] Fresh clone on a clean Windows VM that has Node 20 + Python 3.11 + nothing else. App starts and the new module shows up as "not installed."
+- [ ] Fresh clone on a clean Windows VM that has Node 22 + Python 3.11 + nothing else. App starts and the new module shows up as "not installed."
 - [ ] Clicking *Install* in the AddonsManager succeeds. Log stream shows the install running.
 - [ ] After install, the only new bytes on disk are inside the repo working tree + at most one line added to `{configDir}/addons.json`. (Spot-check with `git status` and a recursive diff of `{configDir}`.)
 - [ ] System Python's `site-packages` is unchanged. System Node's globals (`npm ls -g`) are unchanged.

@@ -446,7 +446,7 @@ published evidence for sustained long output.
 Three things fall out of this.
 
 **Dropping Claude Code costs almost nothing.** Swapping it for Qwen on Ground
-and Audit takes the total from $0.68 to $0.73 — five pence. The subscription is
+and Audit takes the total from $0.68 to $0.73 — five cents. The subscription is
 buying convenience, not a meaningful saving, and a run that no longer depends on
 it is one fewer thing to have configured.
 

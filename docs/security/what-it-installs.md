@@ -17,7 +17,7 @@ quiet.
 
 The existing options didn't fit. Meeting transcribers are built for standups:
 you get a transcript and a bulleted summary, for $15 a month, forever, in
-somebody else's cloud. And none of them have the faintest idea who Pernille is —
+somebody else's cloud. And none of them have the faintest idea who Esen is —
 they'd hear the name, invent a spelling, and confidently use the wrong one for
 three hours straight.
 
@@ -64,7 +64,7 @@ command, and stops.
 
 | You need | When | If it's missing |
 |---|---|---|
-| **Node.js 20+** | Always. Nothing runs without it. | Setup stops and prints `winget install OpenJS.NodeJS.LTS`. |
+| **Node.js 22+** (Node 20+ for releases before 2.7.0) | Always. Nothing runs without it. | Setup stops and prints `winget install OpenJS.NodeJS.LTS`. |
 | **Git** | To download the project in the first place. | Setup prints the install command. |
 | **Python 3.10, 3.11 or 3.12** | **Only** for the audio-transcription add-on. | The core app is completely fine without it. |
 
@@ -279,7 +279,7 @@ this question:
 - `setup.bat` / `scripts/setup/check-deps.mjs` — everything the install does.
 - `scripts/uninstall.mjs` — everything the uninstall does, guards included.
 - `scripts/whisper/setup.ps1` — the Python environment build.
-- `server/lore/obsidian/` — the vault code, and the read-only test that enforces
+- `server/features/lore/services/obsidian/` — the vault code, and the read-only test that enforces
   what I claimed above.
 
 If any of it doesn't match what you see happening, that's a bug and I want to

@@ -131,10 +131,10 @@ Every setting the UI exposes (or that ships with a sensible default), with the r
 | **Max retries** | `4` | Keep. Tuned to ride out a single bad chunk + a brief network blip. |
 | **Phase 6 condense target** | **Condense Slider** (0-100%, default 20% — set per run on the Output Picker) | v1.1.0+ replaced the static `min(2000, 25%)` formula with a user-controlled wand-themed slider. The slider shows the projected word count live as you drag; Phase 6 recomputes against the actual chronicle word count at runtime and instructs the model to aim within ±10%. 20% on a typical 14,000-word session lands around 2,800 words. |
 | **Phase 6 condense floor** | `200 words` (catastrophic-only warning) | Keep. Anything below 200 indicates a truncation / quota event, not under-condensation. |
-| **Cloud chunk sizes** | Per-provider table in `src/lib/chunking.ts` | Don't touch. Tuned empirically for each provider's TPM ceiling. |
-| **Rate-limit pacing** | Self-tuning from provider headers (Claude/OpenAI), static table (Gemini) | Don't touch. The "Slow down" dialog gives you a runtime multiplier if you're hitting 429s — that's the right place to adjust. |
-| **Audio Transcription add-on** | Off by default | Install only if you record sessions with audio. Adds ~600MB of Python deps. See [add-ons/audio-transcription.md](../extras/audio-transcription.md). |
-| **Local LLMs add-on** | Off by default | Install only if you run Ollama / LM Studio / Unsloth and want to route phases through them. See [add-ons/local-llm.md](../extras/local-llms.md). |
+| **Cloud chunk sizes** | Per-provider table in `src/features/pipeline/lib/chunking.ts` | Don't touch. Tuned empirically for each provider's TPM ceiling. |
+| **Rate-limit pacing** | Self-tuning from OpenRouter response headers, static table (Gemini) | Don't touch. The "Slow down" dialog gives you a runtime multiplier if you're hitting 429s — that's the right place to adjust. |
+| **Audio Transcription add-on** | Off by default | Install only if you record sessions with audio. Adds ~600MB of Python deps. See [extras/audio-transcription.md](../extras/audio-transcription.md). |
+| **Local LLMs add-on** | Off by default | Install only if you run Ollama / LM Studio / Unsloth and want to route phases through them. See [extras/local-llms.md](../extras/local-llms.md). |
 | **Personas add-on** | Off by default | Install for narrator-voice presets (Gandalf, Arnold, etc.). Cosmetic; doesn't affect grounding. |
 | **Whisper compute type** | `int8_float16` on CUDA, `float32` on CPU | Keep. Auto-detected at install time. |
 | **Knowledge Base soft limit** | `2 MB` of extracted text | Keep as warning threshold. The pipeline still runs above it, just costs more per chunk. |
@@ -144,10 +144,10 @@ Every setting the UI exposes (or that ships with a sensible default), with the r
 
 These settings exist as constants in the codebase because they're tuned, not configurable through the UI. Touching them without a specific reason makes things worse:
 
-- **Chunk sizes** (`src/lib/chunking.ts`). Sized to keep each chunk under the provider's TPM ceiling while leaving headroom for the system prompt and response. Smaller chunks = more round-trips = more cost + more 429s. Larger chunks = the model truncates output mid-paragraph.
-- **Rate-limit logic** (`src/lib/rateLimit.ts`). Self-tunes from Claude/OpenAI response headers. Gemini uses a static tier table; the tier is derived from which env-var seeded the key (`PAID_GEMINI_API_KEY` vs `VITE_GEMINI_API_KEY`). Changing these without re-reading the providers' published rate-limit docs will cause 429 storms.
+- **Chunk sizes** (`src/features/pipeline/lib/chunking.ts`). Sized to keep each chunk under the provider's TPM ceiling while leaving headroom for the system prompt and response. Smaller chunks = more round-trips = more cost + more 429s. Larger chunks = the model truncates output mid-paragraph.
+- **Rate-limit logic** (`src/features/providers/lib/rateLimit.ts`). Self-tunes from OpenRouter response headers. Gemini uses a static tier table; the tier is derived from which env-var seeded the key (`PAID_GEMINI_API_KEY` vs `VITE_GEMINI_API_KEY`). Changing these without re-reading the providers' published rate-limit docs will cause 429 storms.
 - **`MAX_RETRIES = 4`**. More retries = longer hangs on permanent failures (bad model ID, billing not enabled). Fewer retries = transient 5xx errors abort the run.
-- **Phase 1 grounding prompt** (`src/lib/prompts.ts`). The voice contract baked into Phase 3 (DM-as-narration, exhaustive chronicle, condense formula) was iterated on real-session output — see the in-repo iteration history. Edits here can quietly degrade chronicle quality across the board.
+- **Phase 1 grounding prompt** (`src/features/pipeline/lib/prompts.ts`). The voice contract baked into Phase 3 (DM-as-narration, exhaustive chronicle, condense formula) was iterated on real-session output — see the in-repo iteration history. Edits here can quietly degrade chronicle quality across the board.
 - **`server_boot_id`** localStorage key. Auto-managed; the UI uses it to detect server restarts and refresh stale provider state.
 
 ## When to override the defaults via `.env`

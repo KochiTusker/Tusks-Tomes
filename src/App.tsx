@@ -1,22 +1,30 @@
 import { useEffect, useRef, useState } from 'react'
 import { Toaster, toast } from 'sonner'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { BuyMeACoffeeButton } from '@/components/BuyMeACoffeeButton'
-import { FeedbackButton } from '@/components/FeedbackButton'
-import { Button } from '@/components/ui/button'
-import { RecommendedSetupWizard } from '@/components/RecommendedSetupWizard'
-import { Header } from '@/components/Header'
-import { CaptionRepair } from '@/components/CaptionRepair'
-import { UploadPanel } from '@/components/UploadPanel'
-import { GlossaryEditor } from '@/components/GlossaryEditor'
-import { GuardrailsCard } from '@/components/GuardrailsCard'
-import { KnowledgeBaseManager } from '@/components/KnowledgeBaseManager'
-import { LoreSourceCard } from '@/components/LoreSourceCard'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/platform/ui/tabs'
+import { BuyMeACoffeeButton } from '@/platform/components/BuyMeACoffeeButton'
+import { FeedbackButton } from '@/platform/components/FeedbackButton'
+import { Button } from '@/platform/ui/button'
+import { RecommendedSetupWizard, getRouting, HybridRoutingEditor } from '@/features/routing'
+import { Header } from '@/platform/components/Header'
+import { CaptionRepair, isSbv, sbvToText } from '@/features/caption-repair'
+import { UploadPanel } from '@/features/transcription/components/UploadPanel'
+import { GlossaryEditor, SpeakerEditor } from '@/features/corrections'
+import { GuardrailsCard } from '@/features/guardrails'
+import { KnowledgeBaseManager } from '@/features/lore/components/KnowledgeBaseManager'
+import {
+  LoreSourceCard,
+  VaultSummaryCard,
+  LoreMigrationCard,
+  ObsidianVaultSettings,
+  VaultPairCard,
+  LoreCard,
+  useLoreDocuments,
+} from '@/features/lore'
 import {
   PageSection,
   PageSectionNav,
   type PageSectionDef,
-} from '@/components/PageSection'
+} from '@/platform/components/PageSection'
 import {
   KeyRound,
   Wand2,
@@ -28,47 +36,54 @@ import {
   Search,
   FolderTree,
 } from 'lucide-react'
-import { VaultSummaryCard } from '@/components/VaultSummaryCard'
-import { LoreMigrationCard } from '@/components/LoreMigrationCard'
-import { ProviderSettings } from '@/components/ProviderSettings'
-import { DiagnosticsCard } from '@/components/DiagnosticsCard'
-import { PipelineTuningCard } from '@/components/PipelineTuningCard'
-import { OpenRouterModelPicker } from '@/components/OpenRouterModelPicker'
-import { getProvidersSummary } from '@/lib/providerSettings'
-import { listConfiguredCloudKeyOptions, optionFromRouting } from '@/lib/cloudKeys'
-import { getRouting } from '@/lib/routing'
-import { isSbv, sbvToText } from '@/lib/sbv'
-import { DevTestModeCard } from '@/components/DevTestModeCard'
-import { LocalLLMPanel } from '@/components/LocalLLMPanel'
-import { ConnectionRow } from '@/components/ConnectionRow'
-import { CodexPanel } from '@/components/CodexPanel'
-import { probeClaudeCode, probeCodex, probeLocalRunners, probeWhisperCpp } from '@/lib/connections'
-import { ClaudeCodePanel } from '@/components/ClaudeCodePanel'
-import { WhisperCppPanel } from '@/components/WhisperCppPanel'
-import { ObsidianVaultSettings } from '@/components/ObsidianVaultSettings'
-import { SavedChroniclesPanel } from '@/components/SavedChroniclesPanel'
-import { ReforgePanel } from '@/components/ReforgePanel'
-import { WhisperSettings } from '@/components/WhisperSettings'
-import { HybridRoutingEditor } from '@/components/HybridRoutingEditor'
-import { ACTIVE_PROVIDER_CHANGED_EVENT, OPEN_SETUP_WIZARD_EVENT, SWITCH_TAB_EVENT } from '@/lib/appEvents'
-import { UpdaterCard } from '@/components/UpdaterCard'
-import { VaultPairCard } from '@/components/VaultPairCard'
-import { RefinementTool } from '@/components/RefinementTool'
-import { PersonasManager } from '@/components/PersonasManager'
-import { SessionsList } from '@/components/SessionsList'
-import { SpeakerEditor } from '@/components/SpeakerEditor'
-import { AddonsManager } from '@/components/AddonsManager'
-import { DocsViewer } from '@/components/DocsViewer'
-import { AboutPage } from '@/components/AboutPage'
-import { LoreCard } from '@/components/LoreCard'
-import { ArcaneSigil } from '@/components/ArcaneSigil'
-import { useAddons } from '@/contexts/AddonContext'
-import { useLoreDocuments } from '@/hooks/useLoreDocuments'
-import { STORAGE_QUOTA_EVENT, dumpAllAsJson, safeGet, safeSet } from '@/lib/storage'
-import { LS_REFINEMENT } from '@/lib/constants'
-import { resolveTabValue } from '@/lib/tabs'
-import { transitionOrJustDo, type TransitionCapableDocument } from '@/lib/viewTransition'
-import { initialRefinementState, type RefinementState } from '@/types'
+import {
+  ProviderSettings,
+  getProvidersSummary,
+  listConfiguredCloudKeyOptions,
+  optionFromRouting,
+  ConnectionRow,
+  CodexPanel,
+  probeClaudeCode,
+  probeCodex,
+  probeLocalRunners,
+  probeWhisperCpp,
+  LS_REFINEMENT,
+} from '@/features/providers'
+import { DiagnosticsCard, DevTestModeCard, UpdaterCard } from '@/features/maintenance'
+import {
+  PipelineTuningCard,
+  initialRefinementState,
+  type RefinementState,
+} from '@/features/pipeline'
+import { OpenRouterModelPicker } from '@/features/providers/components/OpenRouterModelPicker'
+import { LocalLLMPanel } from '@/features/providers/components/LocalLLMPanel'
+import { ClaudeCodePanel } from '@/features/providers/components/ClaudeCodePanel'
+import {
+  WhisperCppPanel,
+  WhisperSettings,
+  SessionsList,
+  AddonsManager,
+} from '@/features/transcription'
+import { SavedChroniclesPanel } from '@/features/library'
+import { ReforgePanel } from '@/features/reforge'
+import {
+  ACTIVE_PROVIDER_CHANGED_EVENT,
+  OPEN_SETUP_WIZARD_EVENT,
+  REFORGE_COMPLETE_EVENT,
+  SWITCH_TAB_EVENT,
+  shouldSwitchToChronicle,
+  type ReforgeCompleteDetail,
+  refinementStateFromReforge,
+  REFORGE_RUNNING_EVENT,
+} from '@/platform/lib/appEvents'
+import { RefinementTool } from '@/features/pipeline/components/RefinementTool'
+import { PersonasManager } from '@/features/personas'
+import { DocsViewer, AboutPage } from '@/features/help'
+import { ArcaneSigil } from '@/platform/components/ArcaneSigil'
+import { useAddons } from '@/platform/contexts/AddonContext'
+import { STORAGE_QUOTA_EVENT, dumpAllAsJson, safeGet, safeSet } from '@/platform/lib/storage'
+import { resolveTabValue } from '@/platform/lib/tabs'
+import { transitionOrJustDo, type TransitionCapableDocument } from '@/platform/lib/viewTransition'
 
 /** Tome of Lore groups. Ordered as a newcomer meets them: where lore comes
  *  FROM, then what lore you HAVE, then the corrections applied to
@@ -170,7 +185,19 @@ export default function App() {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     )
   }
+  // The window listeners below are registered once, so they would otherwise
+  // see the tab that was active at boot forever. A ref keeps the current
+  // value readable from inside those stale closures.
+  const activeTabRef = useRef(activeTab)
+  useEffect(() => {
+    activeTabRef.current = activeTab
+  }, [activeTab])
   const [setupWizardOpen, setSetupWizardOpen] = useState(false)
+  // The Saved chronicles section and whether a reforge is running inside it.
+  // Both live here because the section has to open itself when a run starts
+  // and stay honest about that run while collapsed.
+  const [chroniclesOpen, setChroniclesOpen] = useState(false)
+  const [reforgeRunning, setReforgeRunning] = useState(false)
   // Settings search: filters sections and force-opens matches. Query is
   // session-local by design — a filter is a moment, not a preference.
   const [settingsQuery, setSettingsQuery] = useState('')
@@ -291,6 +318,33 @@ export default function App() {
       }
       setActiveTab('refinement')
     }
+    // A reforge finished. RefinementTool hydrates itself when it is mounted;
+    // this half persists the same artefact so the Chronicle tab shows the new
+    // outputs even if it was not. One builder serves both listeners, so the
+    // two writes cannot disagree about what a finished reforge becomes.
+    function handleReforgeComplete(e: Event) {
+      const d = (e as CustomEvent).detail as ReforgeCompleteDetail | undefined
+      if (d) {
+        safeSet(LS_REFINEMENT, refinementStateFromReforge(d))
+      }
+      // Only move the user when they are already on Chronicle. A reforge
+      // takes minutes and people spend them elsewhere — mid-upload on
+      // Sessions, mid-edit in the glossary — and the result is persisted
+      // above whether or not they look now. Everywhere else, offer the
+      // switch rather than perform it.
+      if (shouldSwitchToChronicle(activeTabRef.current)) {
+        setActiveTab('refinement')
+      } else {
+        toast('Reforge finished', {
+          description: 'The new chronicle is ready on the Chronicle tab.',
+          duration: 12000,
+          action: {
+            label: 'Show chronicle',
+            onClick: () => setActiveTab('refinement'),
+          },
+        })
+      }
+    }
     // When another component (AddonsManager, WhisperSettings) deep-links
     // into a specific doc, switch to the Help tab. DocsViewer itself
     // listens for the same event and loads the requested slug.
@@ -315,8 +369,19 @@ export default function App() {
         document.getElementById('personas-manager')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       })
     }
+    // A reforge runs for minutes inside a section that starts collapsed and
+    // can be collapsed again with one click. Opening the section when a run
+    // starts means the run is never hidden by a state the user set before
+    // there was anything to hide.
+    function handleReforgeRunning(e: Event) {
+      const running = ((e as CustomEvent).detail as { running?: boolean } | undefined)?.running === true
+      setReforgeRunning(running)
+      if (running) setChroniclesOpen(true)
+    }
+    window.addEventListener(REFORGE_RUNNING_EVENT, handleReforgeRunning)
     window.addEventListener(STORAGE_QUOTA_EVENT, handleQuota)
     window.addEventListener(LOAD_TRANSCRIPT_EVENT, handleLoadTranscript)
+    window.addEventListener(REFORGE_COMPLETE_EVENT, handleReforgeComplete)
     window.addEventListener('sbts:open-doc', handleOpenDoc)
     window.addEventListener(SWITCH_TAB_EVENT, handleSwitchTab)
     window.addEventListener(OPEN_SETUP_WIZARD_EVENT, handleOpenWizard)
@@ -324,10 +389,12 @@ export default function App() {
     return () => {
       window.removeEventListener(STORAGE_QUOTA_EVENT, handleQuota)
       window.removeEventListener(LOAD_TRANSCRIPT_EVENT, handleLoadTranscript)
+      window.removeEventListener(REFORGE_COMPLETE_EVENT, handleReforgeComplete)
       window.removeEventListener('sbts:open-doc', handleOpenDoc)
       window.removeEventListener(SWITCH_TAB_EVENT, handleSwitchTab)
       window.removeEventListener(OPEN_SETUP_WIZARD_EVENT, handleOpenWizard)
       window.removeEventListener('sbts:open-personas', handleOpenPersonas)
+      window.removeEventListener(REFORGE_RUNNING_EVENT, handleReforgeRunning)
     }
   }, [])
 
@@ -397,7 +464,13 @@ export default function App() {
               Help
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="refinement" className="space-y-4">
+          {/* forceMount: this panel owns an in-flight pipeline run and the
+              AbortController that cancels it on unmount. Unmounting on a tab
+              switch therefore aborted the run — silently, because AbortError
+              is the one error the diagnostics path deliberately ignores. The
+              cost of staying mounted is nil: 'refinement' is the default tab,
+              so it mounts at boot regardless. */}
+          <TabsContent value="refinement" className="space-y-4" forceMount>
             <RefinementTool />
             {/* Caption repair is an action on a transcript, not a
                 destination: it lives with the transcript work. */}
@@ -412,13 +485,25 @@ export default function App() {
                 <CaptionRepair />
               </div>
             </details>
-            {/* The chronicles this tab produces live where they were made. */}
-            <details className="rounded-md border border-border bg-card/40 p-4">
+            {/* The chronicles this tab produces live where they were made.
+                Controlled rather than left to the DOM, because a reforge runs
+                for minutes in here and the section has to be able to open
+                itself for one, and to say so while it is collapsed. */}
+            <details
+              className="rounded-md border border-border bg-card/40 p-4"
+              open={chroniclesOpen}
+              onToggle={(e) => setChroniclesOpen((e.currentTarget as HTMLDetailsElement).open)}
+            >
               <summary className="cursor-pointer font-display text-sm uppercase tracking-wider">
                 Saved chronicles
                 <span className="ml-2 text-xs font-normal normal-case text-muted-foreground">
                   {'\u2014'} everything produced so far, and re-forging it.
                 </span>
+                {reforgeRunning && (
+                  <span className="ml-2 rounded bg-amber-500/15 px-1.5 py-0.5 text-xs font-normal normal-case text-amber-700 dark:text-amber-400">
+                    Reforge running
+                  </span>
+                )}
               </summary>
               <div className="reveal-on-open mt-4 space-y-4">
                 <SavedChroniclesPanel />
@@ -474,7 +559,15 @@ export default function App() {
             </div>
           </TabsContent>
           {audioLoaded && (
-            <TabsContent value="sessions" className="space-y-4">
+            /* forceMount: the upload panel holds the staged files, the XHR
+               in flight and the pointer to the session being transcribed,
+               none of which survive an unmount — and Whisper carries on
+               regardless, so leaving the tab mid-upload produced a running
+               job with no view onto it. Unlike Settings (whose panels probe
+               CLIs on mount, so it stays unmounted by design) the cost here
+               is one sessions-list fetch at boot and a 2 s status poll only
+               while a job is running. */
+            <TabsContent value="sessions" className="space-y-4" forceMount>
               {/* Creating a session and listing sessions are one object --
                   the upload is the list's primary action, not a sibling
                   tab. */}

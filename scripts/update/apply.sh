@@ -16,6 +16,8 @@
 #      package-lock.json changed between PRE_HEAD and POST_HEAD —
 #      skipped otherwise so the running dev server's node_modules file
 #      handles don't collide with npm's writes)
+#   Either way, it then warns when the Node.js on PATH is older than the
+#   code just pulled supports (scripts/update/node-advice.mjs).
 #
 # Prints a one-line summary at the end. Exit code 0 on success, non-zero
 # otherwise. Designed to be invoked by the in-app Updater UI (which calls
@@ -90,6 +92,26 @@ if ! git pull --ff-only "${REMOTE}" main; then
 fi
 POST_HEAD="$(git rev-parse HEAD)"
 
+# Is the Node.js on PATH, the one npm install and the restart will use, new
+# enough for the code just pulled? node-advice.mjs comes from the new tree, so
+# it checks against the new minimum, and prints nothing when Node is new
+# enough. Advice only: a failure here must never fail a pull that succeeded.
+NODE_ADVICE="$(node scripts/update/node-advice.mjs 2>/dev/null || true)"
+
+# Prints the advice, if any, followed by what to do next ($1).
+print_node_advice() {
+  if [ -z "$NODE_ADVICE" ]; then
+    return 0
+  fi
+  while IFS= read -r line; do
+    echo "${YELLOW}[update] ${line}${RESET}" >&2
+  done <<EOF
+$NODE_ADVICE
+EOF
+  echo "${YELLOW}[update] ${1}${RESET}" >&2
+  echo "${YELLOW}[update]${RESET}" >&2
+}
+
 # Step 6 — DO NOT run npm install in-process when dependencies changed.
 #
 # The dev server (the same process that just invoked this script via the
@@ -114,8 +136,10 @@ if git diff --name-only "${PRE_HEAD}..${POST_HEAD}" | grep -qE '^package(-lock)?
   echo "${YELLOW}[update]   2. In that same window run: npm install --no-audit --no-fund${RESET}" >&2
   echo "${YELLOW}[update]   3. Restart the dev server (bash start.sh or npm run dev).${RESET}" >&2
   echo "${YELLOW}[update]${RESET}" >&2
+  print_node_advice "Install it between steps 1 and 2, then run steps 2 and 3 in a new terminal window."
 else
   info "No dependency changes — npm install not required."
+  print_node_advice "Install it, then restart the dev server from a new terminal window."
 fi
 
 UPDATED_COUNT="$(git log --oneline "${PRE_HEAD}..${POST_HEAD}" | wc -l | tr -d ' ')"

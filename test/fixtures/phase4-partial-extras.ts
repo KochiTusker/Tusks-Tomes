@@ -9,23 +9,23 @@
 //   - torn write (truncated mid-object)
 //   - malformed JSON
 
-import type { ExtrasOutput } from '@/types'
+import type { ExtrasOutput } from '@/features/pipeline/lib/types'
 
 /** A well-formed partial accumulator after 3 chunks completed. The fix
  *  must round-trip this exactly into priorExtras. */
 export const PARTIAL_AFTER_3_CHUNKS: ExtrasOutput = {
   jests: [
-    "Piers's third pun this session",
-    'Verity mishearing "doom" as "Zoom"',
-    'Kiona insisting the goblin was actually a Funko Pop',
+    "Janus's third pun this session",
+    'Ivo mishearing "doom" as "Zoom"',
+    'Viggo insisting the goblin was actually a Funko Pop',
   ],
   gore: [
-    'Pernille cleaves the ogre lengthwise',
-    'Anouk critically fumbles, drops his own sword on his foot',
+    'Esen cleaves the ogre lengthwise',
+    'Lucian critically fumbles, drops his own sword on his foot',
   ],
   quotes: [
-    { speaker: 'Piers', line: 'It\'s half seven, let\'s start.' },
-    { speaker: 'Pernille', line: 'Yeah.', kind: 'funny' },
+    { speaker: 'Janus', line: 'It\'s half seven, let\'s start.' },
+    { speaker: 'Esen', line: 'Yeah.', kind: 'funny' },
   ],
 }
 

@@ -7,7 +7,7 @@
 **Local-first AI session chronicler. Open source. MIT-licensed. Free forever.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Node 20+](https://img.shields.io/badge/Node-20%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Node 22+](https://img.shields.io/badge/Node-22%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Whisper add-on](https://img.shields.io/badge/Audio-add--on-7c3aed.svg)](docs/extras/audio-transcription.md)
 [![GitHub last commit](https://img.shields.io/github/last-commit/KochiTusker/Tusks-Tomes?color=8B6F2C)](https://github.com/KochiTusker/Tusks-Tomes/commits/main)
@@ -103,8 +103,8 @@ start of a campaign and it persists.
 
 **4. Watch the six-phase pipeline run.** Walk away. Come back to a `.docx`
 chronicle, a recap for Discord, and the quotes worth keeping. On a real 3-hour
-session the pipeline takes about half an hour, plus 20–30 minutes before that if
-Whisper is transcribing the audio too.
+session the pipeline takes about half an hour, plus roughly half an hour before that if
+Whisper is transcribing the audio too on a mid-range NVIDIA card.
 
 > [!NOTE]
 > **Screenshots are being retaken.** The previous ones showed an older layout
@@ -209,7 +209,7 @@ If you want **a meeting transcript**, Otter is great. If you want **a narrative 
 
 ## Prerequisites
 
-- **Node.js 20+** — [download from nodejs.org](https://nodejs.org/)
+- **Node.js 22+** — [download from nodejs.org](https://nodejs.org/). Node 22 applies from version 2.7.0; earlier releases run on Node 20.
 - **Git** — [download from git-scm.com](https://git-scm.com/)
 
 That's it for the core install. Only one optional module installs anything: Audio Transcription needs Python 3.10–3.12 on your PATH. Everything else ships with the app — see [AddOns.md](docs/extras/README.md).
@@ -243,7 +243,7 @@ Tusk's Tomes itself is free and open-source — there's no payment to the projec
 - **Claude Code subscription** — no API key; uses your own Claude Pro/Max plan. See [the Claude Code guide](docs/extras/claude-code.md). No per-session cost, but it draws on your plan's rolling usage limits — **in testing, one full session used up to ~60% of a 5-hour usage window**, so plan for roughly one or two sessions per window, or hand the cheaper phases to another model via per-phase routing or Reforge.
 
 > [!WARNING]
-> **Why a paid key is required.** When Tomes first launched, Google's free tier gave access to Pro-class Gemini models, which made a fully free workflow viable. Google has since moved Pro models behind billing, and free Flash on its own is too rate-limited to carry a 3-hour session's main pipeline. The project has been engineered to keep API costs as low as possible (prompt caching, audit-skip, per-tier chunk sizing, Smart Budget routing) — see [docs/providers.md → Making it cheaper](docs/models/choosing-a-provider.md#making-it-cheaper--ongoing-cost-reduction-work) for the architectural details.
+> **Why a paid key is required.** When Tomes first launched, Google's free tier gave access to Pro-class Gemini models, which made a fully free workflow viable. Google has since moved Pro models behind billing, and free Flash on its own is too rate-limited to carry a 3-hour session's main pipeline. The project has been engineered to keep API costs as low as possible (prompt caching, audit-skip, per-tier chunk sizing, Smart Budget routing) — see [Choosing a provider → Making it cheaper](docs/models/choosing-a-provider.md#making-it-cheaper--ongoing-cost-reduction-work) for the architectural details.
 
 > [!NOTE]
 > **Got a free-tier Gemini key?** Save it for [**Tusk's Vault**](https://github.com/KochiTusker/Tusks-Vault) — the upcoming AI-chatbot companion that lets you ask questions of your campaign lore in natural language. Vault's per-query token use is much lower than Tomes' six-phase pipeline, so a free quota fits its workload comfortably. Vault is due to release soon; if you're picking up a Google Gemini key primarily for the free tier, Vault is where it earns its keep.
@@ -318,7 +318,7 @@ The full docs live under [`docs/`](docs/) so this page stays readable. Headline 
 | [Audio Transcription](docs/extras/audio-transcription.md) | [FAQ](docs/troubleshooting/faq.md) | [Security](.github/SECURITY.md) |
 | [whisper.cpp bridge](docs/extras/whisper-cpp.md) | [Chronicle Reforge](docs/chronicling/reforging.md) | [Model routing](docs/models/per-phase-routing.md) |
 | [Local LLMs](docs/extras/local-llms.md) | [Recommended settings](docs/chronicling/recommended-settings.md) | [Known bugs](docs/troubleshooting/known-issues.md) |
-| [Chronicle Personas](docs/extras/personas.md) | | |
+| [Chronicle Personas](docs/extras/personas.md) | | [Security architecture](.github/security-architecture.md) |
 | [Claude Code](docs/extras/claude-code.md) · [Codex](docs/extras/codex.md) | | |
 | [Obsidian Vault lore](docs/extras/obsidian-vault.md) | | |
 
@@ -340,7 +340,7 @@ A dedicated **Discord community** for Tusk's Tomes and [Tusk's Vault](https://gi
 
 ## Tech stack
 
-TypeScript + a small Python sidecar (for the optional Audio Transcription add-on). Node 20+ runtime. Express + Vite middleware sharing one port. React 19 + Tailwind on the frontend. `@anthropic-ai/sdk` / `openai` / `@google/genai` for cloud LLMs, with adaptive per-provider pacing read from response headers. AES-256-GCM (machine-bound scrypt key) for the keystore.
+TypeScript + a small Python sidecar (for the optional Audio Transcription add-on). Node 22+ runtime. Express + Vite middleware sharing one port. React 19 + Tailwind on the frontend. `@google/genai` for Gemini and the `openai` SDK (pointed at OpenRouter) for the rest of the cloud models, with adaptive per-provider pacing read from response headers. AES-256-GCM (machine-bound scrypt key) for the keystore.
 
  **Full architectural breakdown:** [architecture.md](docs/about/how-its-built.md)
 
@@ -363,7 +363,7 @@ Tusk's Tomes is MIT-licensed and free forever. **Nothing here is paywalled, ever
 <details>
 <summary><strong>How do I automatically generate a D&D session recap from a recording?</strong></summary>
 
-Install Audio Transcription from **Settings → Transcription** (one click — bootstraps a local Whisper sidecar). Drop your Craig multi-track zip or a single `.flac` / `.wav` / `.mp3` onto the **Sessions** tab, where uploading is the first thing on the page. Tomes transcribes per speaker, runs the 6-phase pipeline (grounding → audit → chronicle → extras → polish → optional condense), and saves a `.docx` to your Tusks-Lore folder. End-to-end on a 3-hour session: ~12 minutes on a modern NVIDIA GPU, ~90 minutes on CPU.
+Install Audio Transcription from **Settings → Transcription** (one click — bootstraps a local Whisper sidecar). Drop your Craig multi-track zip or a single `.flac` / `.wav` / `.mp3` onto the **Sessions** tab, where uploading is the first thing on the page. Tomes transcribes per speaker, runs the 6-phase pipeline (grounding → audit → chronicle → extras → polish → optional condense), and saves a `.docx` to your Tusks-Lore folder. Transcription runs at about 10 minutes per hour of session on a mid-range NVIDIA card with five or six speaker tracks, and several times slower on CPU; the pipeline adds roughly half an hour on a 3-hour session.
 
 </details>
 
@@ -391,7 +391,7 @@ Yes. The chronicler is system-agnostic — it works from a transcript and a glos
 <details>
 <summary><strong>Do I need a beefy GPU?</strong></summary>
 
-No for cloud LLM mode — anything that runs Node 20 is fine, including most laptops. The Audio Transcription add-on benefits hugely from an NVIDIA GPU (RTX 3060+ recommended for fast transcription; CPU also works but a 3-hour session takes ~90 min instead of ~12). The Local LLMs add-on benefits from a GPU with ≥8 GB VRAM; without one, route only Phases 1 / 4 (the small ones) to local models and Phases 2 / 3 to cloud.
+No for cloud LLM mode — anything that runs Node 22 is fine, including most laptops. The Audio Transcription add-on benefits hugely from an NVIDIA GPU: a 3-hour session takes roughly half an hour on a mid-range card, against several hours on the processor, which still works. Local models benefit from a GPU with ≥8 GB VRAM; without one, route only Phases 1 / 4 (the small ones) to local models and Phases 2 / 3 to cloud.
 
 </details>
 
@@ -415,13 +415,13 @@ Yes. The default install binds to `127.0.0.1` (only your machine reaches it), AP
 Two environment variables let you opt into cross-device access — independent toggles, the second only matters if the first is set:
 
 - **`TUSKS_HOST=0.0.0.0`** — listen on every network interface. Other devices on the same Wi-Fi can now open `http://<host-machine-IP>:5173` and **READ** everything: browse the session list, read chronicles, view transcripts, watch live transcription progress. They cannot upload, save, or modify anything.
-- **`TUSKS_HOST=0.0.0.0` + `TUSKS_LAN_WRITES=1`** — also allow writes from LAN devices: upload audio, save chronicles, edit glossary, run the pipeline. Your API keys, the "Test connection" button, the updater, and the local-LLM launcher stay loopback-only **always** — even with full write access, LAN devices can't spend your money or modify your host machine's state.
+- **`TUSKS_HOST=0.0.0.0` + `TUSKS_LAN_WRITES=1`** — also allow writes from LAN devices: upload audio, save chronicles, edit glossary, run the pipeline. Your API keys, the **Test** button on a provider key, the updater, and the local-LLM launcher stay loopback-only **always** — even with full write access, LAN devices can't spend your money or modify your host machine's state.
 
 **When to turn this on:** Tomes machine in another room, home server setup, recording on one machine + chronicling on another, players who want to view transcripts in real time. **When NOT to:** any network you don't fully control (hotel, café, conference, apartment shared Wi-Fi, dorm), or if you have IoT devices you wouldn't want browsing your chronicle. The default is safe; you can flip it on later.
 
 **Threat model:** you trust every device on your Wi-Fi. Smart TV, smart speakers, kid's tablet, visiting friend's laptop, every IoT thing — all of them can read everything (and modify everything if `TUSKS_LAN_WRITES=1`). Your API keys stay encrypted and loopback-gated regardless.
 
-Full walkthrough with PowerShell / bash commands and the complete can/can't table: [docs/security-quickref.md → Cross-device LAN access](docs/security/overview.md#cross-device-lan-access-tusks_host--tusks_lan_writes--i-want-to-use-tomes-from-my-tablet--phone--laptop-on-the-same-wi-fi) and [SETUP.md → Cross-device use](docs/getting-started/installation.md).
+Full walkthrough with PowerShell / bash commands and the complete can/can't table: [Security overview → Cross-device LAN access](docs/security/overview.md#cross-device-lan-access-tusks_host--tusks_lan_writes--i-want-to-use-tomes-from-my-tablet--phone--laptop-on-the-same-wi-fi) and [Installation → Cross-device use](docs/getting-started/installation.md).
 
 </details>
 

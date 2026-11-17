@@ -39,7 +39,7 @@ The active backlog — items on deck for the next handful of releases.
 Order is loose; community demand can promote things.
 
 - [ ] **Community Discord server** — a shared home for Tusk's Tomes and [Tusk's Vault](https://github.com/KochiTusker/Tusks-Vault). Setup help, feature-idea voting, chronicle showcase, dev talk. Will spin up once there's enough signalled interest via the [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header) — the form has a "would you join a community Discord?" question, and a yes there is the trigger.
-- [ ] **GPU transcription for non-NVIDIA cards** — currently impossible to ship as a one-click add-on, and worth recording why so it isn't re-investigated from scratch. `faster-whisper` (CTranslate2) implements only CUDA and CPU, so AMD, Intel Arc and Apple GPUs go unused. A survey of the alternatives in August 2026 found: **whisper.cpp** ships CPU, BLAS (still CPU) and CUDA builds — its Vulkan backend exists in source but is in *no* release asset; **sherpa-onnx** ships CPU and CUDA only, no DirectML; **Const-me/Whisper** genuinely does use any DirectX 11 GPU via DirectCompute and ships a 0.4 MB CLI, but has had no release since July 2023. So the only ready-made vendor-agnostic option is unmaintained. Re-open if any of these ships a Vulkan or DirectML release asset, or if hosting a self-built, signed Vulkan binary becomes worth the publisher burden. Note that whisper.cpp would still be attractive purely for dropping the Python 3.10–3.12 requirement and the ~2 GB PyTorch install — the sidecar already sits behind a stable JSON contract (`{segments, durationMs, language}`, see `server/whisper/invoke.ts`), so a second engine is a bootstrap + invoke path rather than a rewrite.
+- [ ] **GPU transcription for non-NVIDIA cards** — currently impossible to ship as a one-click add-on, and worth recording why so it isn't re-investigated from scratch. `faster-whisper` (CTranslate2) implements only CUDA and CPU, so AMD, Intel Arc and Apple GPUs go unused. A survey of the alternatives in August 2026 found: **whisper.cpp** ships CPU, BLAS (still CPU) and CUDA builds — its Vulkan backend exists in source but is in *no* release asset; **sherpa-onnx** ships CPU and CUDA only, no DirectML; **Const-me/Whisper** genuinely does use any DirectX 11 GPU via DirectCompute and ships a 0.4 MB CLI, but has had no release since July 2023. So the only ready-made vendor-agnostic option is unmaintained. Re-open if any of these ships a Vulkan or DirectML release asset, or if hosting a self-built, signed Vulkan binary becomes worth the publisher burden. Note that whisper.cpp would still be attractive purely for dropping the Python 3.10–3.12 requirement and the ~2 GB PyTorch install — the sidecar already sits behind a stable JSON contract (`{segments, durationMs, language}`, see `server/features/transcription/services/whisper/invoke.ts`), so a second engine is a bootstrap + invoke path rather than a rewrite.
 - [ ] **More provider options — Kimi, DeepSeek and Grok** — add these alongside the existing Gemini / Claude / OpenAI cloud keys. DeepSeek and Kimi are attractive on price-per-token for the mechanical phases; Grok is being looked at for the narrative phase. Each needs the usual work: a provider adapter, chunk-size row, rate-limit handling, and a probe target list.
 - [ ] **YouTube SRT/VTT parser** — sister formats to `.sbv`, same caption-repair pipeline
 - [ ] **Whisper diarisation for single-track audio** — recover speaker labels via pyannote when there's no per-speaker source
@@ -478,7 +478,7 @@ re-opening any of them:
 - ~~**Cross-provider routing within one run**~~ — **decision reversed, and
   shipped.** Per-phase routing now carries an explicit (provider, tier, model)
   tuple, so Claude can run Phase 1 while Gemini runs Phase 3. Kept here as a
-  record that the original call was wrong. See `src/lib/routing.ts`.
+  record that the original call was wrong. See `src/features/routing/lib/routing.ts`.
 - **Python-style `src/` tree with `providers/`, `router/`, etc.** This
   project is TypeScript. The Python sidecar is scoped to
   `faster-whisper` invocation only.
@@ -570,7 +570,7 @@ all landed. Kept for historical reference of what was removed:
 - `src/components/BotPanel.tsx`, `src/lib/bot.ts`.
 - `DISCORD_SETUP.md`.
 - The `discord` slot in the keystore schema
-  (`server/crypto/keyStore.ts`).
+  (`server/features/providers/services/crypto/keyStore.ts`).
 - The `discord.js`, `@discordjs/voice`, `@discordjs/opus`,
   `prism-media`, `@stablelib/xchacha20poly1305`, `@noble/ciphers`
   dependencies in `package.json`.
@@ -857,7 +857,7 @@ Resolves to:
 - macOS: `~/Library/Application Support/tusks-tomes/`
 - Linux: `~/.config/tusks-tomes/`
 
-All persistent files live under these roots. `server/appData.ts`
+All persistent files live under these roots. `server/platform/appData.ts`
 exposes the canonical accessor functions.
 
 The project was previously named "Silence Beyond the Sea" and used the
@@ -877,7 +877,7 @@ exactly once.
 
 
 - **Phase 1 / 2 / 3 / 4 / 5 / 6** — pipeline stages defined in
-  `src/lib/pipeline.ts`. Don't renumber.
+  `src/features/pipeline/lib/phases/`. Don't renumber.
 - **Grounding** — Phase 1; correcting transcript text against the KB
   and the glossary.
 - **Audit** — Phase 2; surfacing DM clarification questions.

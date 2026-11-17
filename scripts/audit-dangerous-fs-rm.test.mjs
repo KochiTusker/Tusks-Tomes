@@ -1,12 +1,9 @@
-// Static guard against the class of bug that deleted a user's
-// Tusks-Lore folder: an `fs.rm(path, { recursive: true, force: true })`
+// Static guard against an `fs.rm(path, { recursive: true, force: true })`
 // call where `path` is not visibly rooted in an OS temp directory.
 //
-// The original offender was server/lore/detection.test.ts: a test ran
-// createLoreFolder() (which wrote to <worktree>/../Tusks-Lore — the
-// REAL sibling lore folder), then a `finally` block did
-// `fs.rm(first.loreRoot, { recursive: true, force: true })`. Running
-// the full test suite invoked it and nuked the user's actual data.
+// A path a test builds from the repository's own location can resolve to a
+// real folder beside it, such as the user's lore folder, and a forced
+// recursive remove on it deletes that data without a prompt.
 //
 // This audit is a heuristic, not a complete proof. It scans every
 // tracked .ts file for matches of the recursive+force `fs.rm` shape
@@ -24,17 +21,17 @@ import { fileURLToPath } from 'node:url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const REPO_ROOT = path.resolve(__dirname, '..')
 
-const SCAN_DIRS = ['server', 'src', 'scripts']
+const SCAN_DIRS = ['server', 'shared', 'src', 'scripts']
 
 // Files we've audited and confirmed safe even though they don't match
 // the heuristic. Each entry needs a one-line justification.
 const ALLOWLIST = [
-  // server/appData.ts has a cross-device-rename fallback that does
+  // server/platform/appData.ts has a cross-device-rename fallback that does
   // `fs.rm(src, { recursive, force })` after a successful `fs.cp`. The
   // src is the legacy app-data path the user owns; the alternative is
   // leaking dangling files on filesystem-boundary moves. Acknowledged.
   {
-    file: 'server/appData.ts',
+    file: 'server/platform/appData.ts',
     reason: 'cross-device rename fallback after successful cp; src is the legacy app-data path',
   },
   // sessionManifest.ts cleans up *one session subtree* under sessionsRoot().
@@ -42,7 +39,7 @@ const ALLOWLIST = [
   // by assertValidSessionId() (rejects "..", absolute paths, traversal chars)
   // before the path is composed, so the rm cannot escape sessionsRoot().
   {
-    file: 'server/sessions/sessionManifest.ts',
+    file: 'server/features/transcription/services/sessions/sessionManifest.ts',
     reason: 'sessionDir(id) is rooted in sessionsRoot() with assertValidSessionId; cannot traverse',
   },
   // extractMultitrack.ts has two recursive+force rm sites:
@@ -51,7 +48,7 @@ const ALLOWLIST = [
   //   2. zip extraction workdirs created with `unzip-<randomUUID()>` inside
   //      the multer upload tree; cleaned up in a `finally`. App-owned.
   {
-    file: 'server/upload/extractMultitrack.ts',
+    file: 'server/features/transcription/services/upload/extractMultitrack.ts',
     reason: 'session rollback (validated sessionId) + app-owned unzip workdirs cleaned in finally',
   },
 ]

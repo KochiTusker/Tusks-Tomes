@@ -6,6 +6,10 @@ Tusk's Tomes is a **local-first** application — it runs on your machine, binds
 
 Everything except the chosen cloud LLM API runs on the user's machine. API keys are encrypted at rest at `{configDir}/providers.enc` using AES-256-GCM with a scrypt-derived key bound to your machine identity (hostname + username + platform). The Express server binds to loopback by default; all `/api/*` state-changing routes are same-origin gated to block drive-by-CSRF; chronicle save paths are sanitised against traversal; the local-LLM proxy refuses any target outside loopback or RFC-1918 LAN. No audio leaves the host (Whisper runs in-process when the audio add-on is installed); the LLM provider is the only outbound destination Tomes talks to, and even then only the text it needs to refine.
 
+> **Want the reasoning rather than the summary?** [Security architecture](https://github.com/KochiTusker/Tusks-Tomes/blob/main/.github/security-architecture.md)
+> documents the trust boundaries, the layered request gates, and a decision record for each
+> control — including what each one deliberately does *not* cover.
+
 ## What this is NOT
 
 Tusk's Tomes is **not** a SaaS, **not** a multi-tenant service, and **not** a hardened public-internet-facing application. The threat model below assumes a single user, on their own machine, on a network they reasonably trust. Running Tomes on a shared workstation, on a server, or on a public IP is outside the design — possible with care, but you take responsibility for the gates Tomes doesn't provide (auth, TLS, audit logging).
@@ -50,7 +54,7 @@ Additional risk: the venv has Python's normal filesystem capabilities — if the
 
 ### Local LLMs
 
-Mounts `/api/local/*` as a localhost + RFC-1918 same-origin proxy so the browser can reach Ollama / LM Studio / Unsloth (which are different ports = different origins). The proxy validates every target URL through `PRIVATE_HOST_RE` — anything outside loopback or private LAN ranges is rejected; it is **not** an open proxy.
+Mounts `/api/local/*` as a localhost + RFC-1918 same-origin proxy so the browser can reach Ollama / LM Studio / Unsloth (which are different ports = different origins). The proxy validates every target URL through `validateLocalBaseUrl()` (`server/platform/validators.ts`) — anything outside loopback or private LAN ranges is rejected, along with URLs carrying userinfo (`http://1.2.3.4@127.0.0.1/`), IPv4 written in hex / octal / decimal-integer form, and hostnames that *resolve* to a public address. It is **not** an open proxy.
 
 Additional risk: if you set `TUSKS_HOST=0.0.0.0` *and* expose Tomes on your LAN, another device on the same LAN could route requests through your local Ollama. Mitigation: keep `TUSKS_HOST=127.0.0.1` (the default) unless you genuinely need LAN access; never put Tomes on a public IP without an auth layer in front.
 
@@ -88,12 +92,12 @@ For non-sensitive coordination (i.e. not a vulnerability — design questions, h
 In scope:
 
 - The Express server (`server/`) and its API routes
-- The encrypted keystore (`server/crypto/keyStore.ts`)
+- The encrypted keystore (`server/features/providers/services/crypto/keyStore.ts`)
 - The Whisper sidecar (`scripts/whisper/`) when the audio add-on is installed
-- The in-app updater (`scripts/update/`, `server/api/updater.ts`)
+- The in-app updater (`scripts/update/`, `server/features/maintenance/routes/updater.ts`)
 - The React SPA (`src/`)
-- The local LLM proxy (`server/api/localProxy.ts`) when the local-llm add-on is installed
-- The run-checkpoint storage (`server/api/runs.ts`)
+- The local LLM proxy (`server/features/providers/routes/localProxy.ts`) when the local-llm add-on is installed
+- The run-checkpoint storage (`server/features/pipeline/routes/runs.ts`)
 
 Out of scope:
 

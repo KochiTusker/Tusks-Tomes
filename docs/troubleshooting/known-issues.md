@@ -25,7 +25,7 @@ you know where you're likely to be the first person down a path.
 |---|---|
 | **Windows** | The tested platform. Day-to-day development and all release verification happen here. |
 | **Linux / macOS** | **Not tested.** The current build is expected to work — the codebase is cross-platform and CI runs the suite on Ubuntu — but no one has run the full app end-to-end on either. Assume rough edges and please [report them](https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose). |
-| **Cloud providers (Gemini / Claude / OpenAI)** | Well exercised. This is the main path. |
+| **Cloud providers (Gemini / OpenRouter)** | Well exercised. This is the main path. |
 | **Claude Code add-on** | Exercised. |
 | **Codex add-on** | **Partially tested.** The provider, routing and usage-limit handling are covered by tests, but it has had far less real-session mileage than the cloud path. |
 | **Local LLMs add-on** | **Partially tested — nothing above 4B parameters has been run**, for want of VRAM on the test machine. Everything larger is unverified for quality, timing and memory behaviour. Note the awkward gap this leaves: the sizes that produce genuinely good prose start well above the sizes that have been tested. See the prose-quality note below. |
@@ -74,7 +74,7 @@ Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what cha
 
 **Was:** The Condense Slider asks the model to aim within ±10% of a user-picked target word count, but the runtime check only warned when output was catastrophically *short* (`warnIfCondenseShort`, ≤200 words). If the user picked 10% (target 600 words on a 6,000-word chronicle) and the model returned 1,800 words, no warning fired — the user might not realise the recap was three times its intended length.
 
-**Fixed:** new `warnIfCondenseOvershoot` symmetric warning at `RefinementTool.tsx`. Fires above 1.5× the user-picked target with a toast showing the actual word count, the target, and the percentage overshoot. Called at all 4 Phase 6 completion sites (happy path + 2 resume paths + the standalone Regenerate Phase 6 button).
+**Fixed:** new `warnIfCondenseOvershoot` symmetric warning in `src/features/pipeline/lib/condenseWarnings.ts`. Fires above 1.5× the user-picked target with a toast showing the actual word count, the target, and the percentage overshoot. Called at all 4 Phase 6 completion sites (happy path + 2 resume paths + the standalone Regenerate Phase 6 button).
 
 ## Shell scripts shipped with CRLF line endings — broke macOS / Linux first run
 
@@ -84,7 +84,7 @@ Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what cha
 
 ## `npm run whisper:setup` was Windows-only
 
-**Was:** The `whisper:setup` npm script hardcoded `powershell -ExecutionPolicy Bypass -File scripts/whisper/setup.ps1`. A macOS / Linux user typing the documented `npm run whisper:setup` command would see `powershell: command not found`. They had to know to use the (also documented) `whisper:setup:posix` variant instead. The in-app "Install Audio Transcription" button was always platform-aware via `runSetup` in `server/whisper/bootstrap.ts` — only the CLI path was broken.
+**Was:** The `whisper:setup` npm script hardcoded `powershell -ExecutionPolicy Bypass -File scripts/whisper/setup.ps1`. A macOS / Linux user typing the documented `npm run whisper:setup` command would see `powershell: command not found`. They had to know to use the (also documented) `whisper:setup:posix` variant instead. The in-app "Install Audio Transcription" button was always platform-aware via `runSetup` in `server/features/transcription/services/whisper/bootstrap.ts` — only the CLI path was broken.
 
 **Fixed:** new `scripts/whisper/run-setup.mjs` Node dispatcher selects `setup.ps1` on Windows and `setup.sh` on POSIX, streams the child's stdout/stderr inline. `npm run whisper:setup` now works on every OS. The legacy `npm run whisper:setup:posix` and a new explicit `whisper:setup:windows` remain available if users want platform-pinned scripts.
 
@@ -110,7 +110,7 @@ Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what cha
 
 **Was:** The list endpoint correctly excluded malformed checkpoint files from the Resume banner, but the detail endpoint only validated the file as parseable JSON — not that it matched the checkpoint schema. Clicking Resume on a corrupted card could result in a blank screen or a JavaScript error.
 
-**Fixed:** Both endpoints now run the same `summariseOrReject` validator; the detail endpoint returns 404 for structurally-malformed files. Phase K.7 test in `server/api/runs.test.ts` locks the contract.
+**Fixed:** Both endpoints now run the same `summariseOrReject` validator; the detail endpoint returns 404 for structurally-malformed files. Phase K.7 test in `server/features/pipeline/routes/runs.test.ts` locks the contract.
 
 ## Active-provider banner flash on first paint
 
@@ -120,7 +120,7 @@ Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what cha
 
 ## `npm run smoke-test` mis-classified `ready` and `skipped` as failures
 
-**Was:** Running `npm run smoke-test` on a healthy install reported `Whisper: ready` and `Claude: skipped (no key)` under a "**Failed**" heading and exited with code 1.
+**Was:** Running `npm run smoke-test` on a healthy install reported `Whisper: ready` and `Gemini: skipped (no key)` under a "**Failed**" heading and exited with code 1.
 
 **Fixed:** The categoriser in `scripts/smoke-test.mjs` now buckets `ready`, `skipped`, `not configured`, `not installed`, `no local backends running`, and `installed, restart required` as "Not configured" instead of falling through to "Failed". Exit code is 0 unless something actually failed.
 
@@ -146,7 +146,7 @@ Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what cha
 
 **Was:** Vault export composes `<vaultRoot>/Lore/Tomes/<sanitizedCampaign>/<sanitizedFileName>.md`. `sanitizeSegment` already strips path separators + control chars + Windows reserved names, but there was no second-layer check confirming the resolved path stayed under the safe root — a hypothetical future sanitiser regression would have landed bytes outside the Tomes tree.
 
-**Fixed:** `exportChronicleToVault` now resolves both the target path and the `<loreDir>/Tomes` root via `path.resolve` and throws if the target isn't a descendant. A 19-case malicious-input table in `server/api/vault.test.ts` locks the sanitiser contract against the standard traversal vectors.
+**Fixed:** `exportChronicleToVault` now resolves both the target path and the `<loreDir>/Tomes` root via `path.resolve` and throws if the target isn't a descendant. A 19-case malicious-input table in `server/features/lore/routes/vault.test.ts` locks the sanitiser contract against the standard traversal vectors.
 
 ## Free-tier Gemini Pro is slow — repositioned, no longer a recommended workflow
 
@@ -194,9 +194,9 @@ Bugs we know about and either haven't fixed yet, have a deliberate trade-off, or
 
 ## Add-on install requires server restart
 
-**Affects:** First-time install of the Audio Transcription, Local LLMs, or Personas add-ons via Settings → Add-ons.
+**Affects:** First-time install of the Audio Transcription add-on via Settings → Transcription.
 
-**What you'll see:** Installing an add-on shows "Installed". But the Upload/Sessions tabs (Audio) or Hybrid Routing card (Local LLMs) don't appear until you restart `npm run dev`.
+**What you'll see:** Installing an add-on shows "Installed". But the Sessions tab doesn't appear until you restart `npm run dev`.
 
 **Workaround:** Stop and restart the dev server after installing an add-on. The state persists; no re-install needed.
 
@@ -253,18 +253,6 @@ Bugs we know about and either haven't fixed yet, have a deliberate trade-off, or
 **Workaround:** Cosmetic — ignore the log noise.
 
 **Status:** Deferred to v1.2.0. Wrap the `res.write` calls in try/catch or listen to `res.on('close')` and break early.
-
----
-
-## `@anthropic-ai/sdk` shipped into the browser bundle
-
-**Affects:** Theoretical regression risk only — not active in v1.1.0.
-
-**What you'll see:** Nothing today. `ClaudeProvider` is currently only instantiated server-side; the SDK's `node:fs` imports are externalised at build time. If a future change ever instantiates `ClaudeProvider` client-side, the browser will crash with "fs is not defined."
-
-**Workaround:** Don't construct `ClaudeProvider` in a code path that runs in the browser.
-
-**Status:** Documented for future contributors. Deferred to v1.2.0 — proper fix is to lazy-load the SDK only on the server path or guard the constructor with a `typeof window` check.
 
 ---
 

@@ -61,7 +61,7 @@ mounting) live in [architecture.md](../about/how-its-built.md).
 > has CUDA and CPU backends. See the **whisper.cpp bridge** below, or the
 > [YouTube route](../importing/README.md), which needs no GPU at all.
 
-**Deep dive:** [docs/add-ons/audio-transcription.md](audio-transcription.md)
+**Deep dive:** [docs/extras/audio-transcription.md](audio-transcription.md)
 
 ---
 
@@ -78,7 +78,7 @@ mounting) live in [architecture.md](../about/how-its-built.md).
 
 **Cost:** nothing on disk from us — nothing is downloaded and nothing is written. Your whisper.cpp build and model are yours and are never touched. You supply a build (a compile) and a GGML model (~3 GB for large-v3).
 
-**Deep dive:** [docs/add-ons/whisper-cpp.md](whisper-cpp.md) — build instructions for Windows, Linux and macOS.
+**Deep dive:** [docs/extras/whisper-cpp.md](whisper-cpp.md) — build instructions for Windows, Linux and macOS.
 
 ---
 
@@ -102,7 +102,7 @@ mounting) live in [architecture.md](../about/how-its-built.md).
 > phases, cloud for the prose — is the sweet spot rather than going fully
 > local on modest hardware.
 
-**Deep dive:** [docs/add-ons/local-llm.md](local-llms.md)
+**Deep dive:** [docs/extras/local-llm.md](local-llms.md)
 
 ---
 
@@ -122,7 +122,7 @@ mounting) live in [architecture.md](../about/how-its-built.md).
 
 Found under **Settings → Voice & content**.
 
-**Deep dive:** [docs/add-ons/personas.md](personas.md)
+**Deep dive:** [docs/extras/personas.md](personas.md)
 
 ---
 
@@ -146,7 +146,7 @@ Found under **Settings → Voice & content**.
 
 **Cost:** nothing to download from us. Requires Claude Code installed and `claude login` with a Pro/Max plan. Generation counts against that subscription's usage limits, not a per-token meter.
 
-**Deep dive:** [docs/add-ons/claude-code.md](claude-code.md)
+**Deep dive:** [docs/extras/claude-code.md](claude-code.md)
 
 ---
 
@@ -173,7 +173,7 @@ The two subscription modules are completely independent — use either, both, or
 > strips it from the CLI's environment specifically so you can't be silently
 > switched onto per-token billing without noticing.
 
-**Deep dive:** [docs/add-ons/codex.md](codex.md)
+**Deep dive:** [docs/extras/codex.md](codex.md)
 
 ---
 
@@ -189,7 +189,7 @@ The two subscription modules are completely independent — use either, both, or
 
 **Cost:** free. Requires an Obsidian vault on the same machine. Stays inert until you choose it as your lore source under **Tome of Lore → Lore source**.
 
-**Deep dive:** [docs/add-ons/obsidian-vault.md](obsidian-vault.md)
+**Deep dive:** [docs/extras/obsidian-vault.md](obsidian-vault.md)
 
 ---
 

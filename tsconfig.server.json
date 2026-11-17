@@ -10,8 +10,8 @@
     "strict": true,
     "noUnusedLocals": false,
     "outDir": "dist-server",
-    "rootDir": "server",
+    "rootDir": ".",
     "types": ["node"]
   },
-  "include": ["server/**/*.ts"]
+  "include": ["server/**/*.ts", "shared/**/*.ts"]
 }

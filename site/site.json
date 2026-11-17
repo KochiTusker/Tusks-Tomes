@@ -347,7 +347,7 @@
           ],
           "tool": [
             "Tusk's Tomes",
-            "Node.js 20 or newer",
+            "Node.js 22 or newer",
             "The Audio Transcription add-on",
             "An NVIDIA GPU (recommended)"
           ],
@@ -396,7 +396,7 @@
           ],
           "tool": [
             "Tusk's Tomes",
-            "Node.js 20 or newer",
+            "Node.js 22 or newer",
             "A YouTube account"
           ],
           "steps": [

@@ -9,7 +9,7 @@
 // and skips the re-prep on resume. These fixtures provide deterministic
 // glossary states to exercise the snapshot-vs-live-glossary divergence.
 
-import type { GlossaryDocument } from '@/lib/glossary'
+import type { GlossaryDocument } from '@/features/corrections/lib/glossary'
 
 /** Glossary state at pause time. Small, controlled — the test runs Phase 1
  *  with this glossary, captures a checkpoint mid-chunk, then mutates the
@@ -17,12 +17,12 @@ import type { GlossaryDocument } from '@/lib/glossary'
 export const GLOSSARY_AT_PAUSE: GlossaryDocument = {
   version: 1,
   safeReplacements: [
-    { from: 'broady', to: 'Piers' },
-    { from: 'kazle', to: 'Pernille' },
+    { from: 'broady', to: 'Janus' },
+    { from: 'kazle', to: 'Esen' },
   ],
   contextualHints: [
     {
-      canonical: 'Piers',
+      canonical: 'Janus',
       commonMishears: ['Broady', 'Brodie'],
       notes: 'Halfling rogue.',
     },
@@ -35,22 +35,22 @@ export const GLOSSARY_AT_PAUSE: GlossaryDocument = {
 export const GLOSSARY_AT_RESUME: GlossaryDocument = {
   version: 1,
   safeReplacements: [
-    { from: 'broady', to: 'Piers' },
-    { from: 'kazle', to: 'Pernille' },
-    { from: 'broogo', to: 'Anouk' }, // NEW: another safe replacement
+    { from: 'broady', to: 'Janus' },
+    { from: 'kazle', to: 'Esen' },
+    { from: 'broogo', to: 'Lucian' }, // NEW: another safe replacement
   ],
   contextualHints: [
     {
-      canonical: 'Piers',
+      canonical: 'Janus',
       commonMishears: ['Broady', 'Brodie'],
       notes: 'Halfling rogue.',
     },
     {
-      canonical: 'Anouk',
-      commonMishears: ['Brewgo', 'Broogo', 'Anouk'],
+      canonical: 'Lucian',
+      commonMishears: ['Brewgo', 'Broogo', 'Lucian'],
       // 500-char block guarantees the preGround output diverges if applied.
       notes:
-        'Anouk is a half-orc barbarian recruited from the slums of Waterdeep. He carries a greataxe inherited from his grandfather, who fought in the wars of the southern reaches. Common mishearings include Brewgo and Broogo. Always treat any mention of a half-orc warrior with a greataxe as a probable Anouk reference even if the transcript spells it differently. Anouk speaks in short sentences and rarely uses complex vocabulary. He is fiercely loyal to Piers despite their cultural differences.',
+        'Lucian is a half-orc barbarian recruited from the slums of Waterdeep. He carries a greataxe inherited from his grandfather, who fought in the wars of the southern reaches. Common mishearings include Brewgo and Broogo. Always treat any mention of a half-orc warrior with a greataxe as a probable Lucian reference even if the transcript spells it differently. Lucian speaks in short sentences and rarely uses complex vocabulary. He is fiercely loyal to Janus despite their cultural differences.',
     },
   ],
 }
@@ -63,7 +63,7 @@ export const TRANSCRIPT_FOR_DRIFT_TEST = (() => {
   const lines: string[] = []
   // Realistic-ish dialogue that will be affected by the glossary above:
   // mishearings ("broady", "broogo") get replaced via preGround.
-  const speakers = ['Pernille', 'Piers', 'Anouk', 'Kiona', 'Verity']
+  const speakers = ['Esen', 'Janus', 'Lucian', 'Viggo', 'Ivo']
   for (let i = 0; i < 240; i++) {
     const speaker = speakers[i % speakers.length]
     // Sprinkle the mishearings the glossary will replace.

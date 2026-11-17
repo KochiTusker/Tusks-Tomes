@@ -23,7 +23,7 @@ later without reinstalling.
 
 | What | Version | Why | Check it with |
 |---|---|---|---|
-| **[Node.js](https://nodejs.org/)** | 20 or newer (LTS) | The app is a Node program. This is the one hard prerequisite. | `node -v` |
+| **[Node.js](https://nodejs.org/)** | 22 or newer (LTS) | The app is a Node program. This is the one hard prerequisite. Node 22 applies from version 2.7.0; earlier releases run on Node 20. Setup refuses an older Node; an existing install on an older Node still starts, but warns every time until you upgrade. | `node -v` |
 | **npm** | comes with Node | Installs the libraries. You don't install this separately. | `npm -v` |
 | **[Git](https://git-scm.com/downloads)** | any recent | How you download the project, and how the in-app updater fetches new versions. Without it you'd be re-downloading a ZIP by hand every release. | `git --version` |
 | **A way to reach an AI model** | — | Pick **one** of the three options below. The pipeline has nothing to run on otherwise. | — |
@@ -55,7 +55,7 @@ None of this is needed to get a chronicle. All of it improves what you get.
 | What | Why you'd want it | Without it |
 |---|---|---|
 | **[Python 3.10–3.12](https://python.org)** | Runs Whisper, which transcribes your recordings locally. On Windows, tick **"Add python.exe to PATH"** during install. | You supply a transcript another way — pasted text or [YouTube captions](../importing/README.md). |
-| **An NVIDIA GPU specifically** | Transcribing a 3-hour session drops from *several hours* to 20–30 minutes. Detected automatically via `nvidia-smi`. Read the note below before assuming your card counts. | Whisper still works, on your processor, slowly. Or use the YouTube route. |
+| **An NVIDIA GPU specifically** | Transcribing a 3-hour session with five or six speaker tracks takes roughly half an hour on a mid-range card — about 10 minutes per hour of session — rather than *several hours* on the processor. Detected automatically via `nvidia-smi`. Read the note below before assuming your card counts. | Whisper still works, on your processor, slowly. Or use the YouTube route. |
 | **[Discord](https://discord.com) + [Craig](https://craig.chat)** | Craig is a Discord bot that records **one audio track per person**, which is what makes speaker attribution reliable end to end. Craig's free tier is enough. | Single-stream audio, so the AI has to guess who said what — and it will ask you a lot of questions. |
 
 > ### On GPUs — it really is NVIDIA or nothing, and that's worth spelling out

@@ -23,9 +23,12 @@ yourself; Tusk's Tomes detects it, checks it, and uses it. Same arrangement as
 the integration.
 
 > [!TIP]
-> **It downloads and installs nothing — and now it doesn't even write a marker
-> file.** The bridge ships with the app and is always available; it simply
-> looks for the paths you set. Your whisper.cpp build and model files are
+> **It downloads and installs nothing.** The bridge ships with the app and is
+> always on — there is no install step, no marker file and no switch to flip.
+> Set the two paths, and once both check out (the binary runs, the model file
+> is real weights) every transcription goes through your whisper.cpp build.
+> If either stops checking out, transcription falls back to the built-in
+> engine rather than failing. Your whisper.cpp build and model files are
 > yours and are never touched.
 
 ---
@@ -136,8 +139,11 @@ invariably a Git-LFS pointer rather than real weights.
 
    Both must be absolute paths.
 3. The panel then reports what it found. You're looking for
-   **"Ready, with GPU acceleration via Vulkan"**. If it says *"this is a
-   CPU-only build"*, the compile didn't pick up Vulkan — revisit the SDK step.
+   **"Ready, with GPU acceleration via Vulkan"**. From that moment every
+   transcription runs through your build; there is nothing further to enable.
+   If it says *"this is a CPU-only build"*, the compile didn't pick up Vulkan
+   — revisit the SDK step. A CPU-only build is still used once it checks out,
+   it's just slow.
 
 ---
 

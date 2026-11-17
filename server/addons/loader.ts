@@ -1,7 +1,8 @@
 import type { Express } from 'express'
-import { addonsFile, readJson, writeJson } from '../appData.js'
+import { addonsFile, readJson, writeJson } from '../platform/appData.js'
 import { ADDON_REGISTRY } from './registry.js'
-import { slog } from '../lib/slog.js'
+import { FEATURE_ROUTES } from './featureRoutes.js'
+import { slog } from '../platform/slog.js'
 
 const LOADED_ADDONS = new Set<string>()
 
@@ -114,18 +115,6 @@ export async function loadAddons(app: Express): Promise<string[]> {
   }
   for (const addon of ADDON_REGISTRY) {
     try {
-      // Builtins always mount: they have no prerequisites to check and no
-      // install lifecycle, so neither isReady() nor the addons.json toggle
-      // applies. Whether the underlying capability is USABLE (CLI on PATH,
-      // runner reachable) is a per-request detection question, not a mount
-      // question. A stale configEnabled:false from the add-on era is
-      // deliberately ignored rather than migrated.
-      if (addon.kind === 'builtin') {
-        addon.registerRoutes(app)
-        LOADED_ADDONS.add(addon.name)
-        slog('server', { event: 'addon_loaded', name: addon.name, builtin: true })
-        continue
-      }
       if (!isAddonConfigEnabled(addon.name, config)) {
         console.log(`[addons] "${addon.displayName}" skipped (toggled off)`)
         slog('server', { event: 'addon_skipped', name: addon.name, reason: 'toggled_off' })
@@ -137,11 +126,29 @@ export async function loadAddons(app: Express): Promise<string[]> {
         console.log(`[addons] "${addon.displayName}" loaded`)
         slog('server', { event: 'addon_loaded', name: addon.name })
       } else {
+        // Not installed is the ordinary state for an installable module —
+        // most people never add audio transcription — so say so plainly
+        // rather than in the shape of a failure.
+        console.log(`[addons] "${addon.displayName}" not installed — skipped`)
         slog('server', { event: 'addon_not_ready', name: addon.name })
       }
     } catch (err) {
       console.error(`[addons] failed to load "${addon.name}":`, err)
       slog('server', { event: 'addon_load_error', name: addon.name, error: (err as Error).message })
+    }
+  }
+  // Features always mount, after the installable modules: they have no
+  // prerequisites to check and no install lifecycle, so neither isReady() nor
+  // the addons.json toggle applies. A stale configEnabled:false from the
+  // add-on era is deliberately ignored rather than migrated.
+  for (const feature of FEATURE_ROUTES) {
+    try {
+      feature.registerRoutes(app)
+      LOADED_ADDONS.add(feature.name)
+      slog('server', { event: 'addon_loaded', name: feature.name, builtin: true })
+    } catch (err) {
+      console.error(`[addons] failed to load "${feature.name}":`, err)
+      slog('server', { event: 'addon_load_error', name: feature.name, error: (err as Error).message })
     }
   }
   return [...LOADED_ADDONS]

@@ -1,8 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { AddonDefinition } from './registry'
+import type { FeatureDefinition } from './featureRoutes'
 import type { AddonsConfig } from './loader'
 
 const REGISTRY: AddonDefinition[] = []
+const FEATURES: FeatureDefinition[] = []
 let CONFIG: AddonsConfig = {}
 
 vi.mock('./registry.js', () => ({
@@ -11,9 +13,15 @@ vi.mock('./registry.js', () => ({
   },
 }))
 
+vi.mock('./featureRoutes.js', () => ({
+  get FEATURE_ROUTES() {
+    return FEATURES
+  },
+}))
+
 // Tests must not touch the real {configDir}/addons.json. Mock the appData
 // helpers so reads/writes operate on an in-memory object.
-vi.mock('../appData.js', () => ({
+vi.mock('../platform/appData.js', () => ({
   addonsFile: () => '/test/addons.json',
   readJson: vi.fn(async () => CONFIG),
   writeJson: vi.fn(async (_path: string, value: unknown) => {
@@ -39,13 +47,12 @@ function makeAddon(overrides: Partial<InstallAddon> & { name: string }): AddonDe
   }
 }
 
-/** Builtin fixture — no lifecycle at all. */
+/** Feature fixture — no lifecycle at all. */
 function makeBuiltin(
   name: string,
-  registerRoutes: AddonDefinition['registerRoutes'] = () => {},
-): AddonDefinition {
+  registerRoutes: FeatureDefinition['registerRoutes'] = () => {},
+): FeatureDefinition {
   return {
-    kind: 'builtin',
     name,
     displayName: name,
     description: '',
@@ -57,6 +64,7 @@ function makeBuiltin(
 describe('loadAddons', () => {
   beforeEach(() => {
     REGISTRY.length = 0
+    FEATURES.length = 0
     CONFIG = {}
     vi.spyOn(console, 'error').mockImplementation(() => {})
     vi.spyOn(console, 'log').mockImplementation(() => {})
@@ -157,7 +165,7 @@ describe('loadAddons', () => {
 
   it('mounts a builtin unconditionally — even when addons.json disables it', async () => {
     const register = vi.fn()
-    REGISTRY.push(makeBuiltin('always-on', register))
+    FEATURES.push(makeBuiltin('always-on', register))
     // A stale toggle from the add-on era must be ignored, not honoured:
     // builtins have no lifecycle, so there is nothing the toggle could mean.
     CONFIG = { 'always-on': { configEnabled: false } }
@@ -172,7 +180,7 @@ describe('loadAddons', () => {
 
   it('a builtin that throws in registerRoutes is skipped without masking others', async () => {
     const healthyRegister = vi.fn()
-    REGISTRY.push(
+    FEATURES.push(
       makeBuiltin('bad-builtin', () => {
         throw new Error('route mount exploded')
       }),

@@ -77,15 +77,18 @@ Write-Host "  Step 2 of 4: checking whether you have a graphics card we can use.
 if (Get-Command nvidia-smi -ErrorAction SilentlyContinue) {
     $cudaLine = nvidia-smi --query-gpu=driver_version --format=csv,noheader 2>$null
     if ($LASTEXITCODE -eq 0 -and $cudaLine) {
-        Write-Host "    Found an NVIDIA graphics card. Transcription will use it,"
-        Write-Host "    which makes it roughly 10x faster than using the processor."
+        Write-Host "    Found an NVIDIA graphics card. Transcription will use it."
+        Write-Host "    Expect about 10 minutes per hour of session with five or"
+        Write-Host "    six speaker tracks - roughly half an hour for a 3-hour"
+        Write-Host "    session on a mid-range card."
         $cudaTag = 'cu124'
     }
 }
 if ($cudaTag -eq 'cpu') {
     Write-Host "    No NVIDIA graphics card found - transcription will use your"
-    Write-Host "    processor instead. It still works, but expect a 3-hour"
-    Write-Host "    recording to take a few hours rather than 20-30 minutes."
+    Write-Host "    processor instead. It still works, but several times slower:"
+    Write-Host "    expect a 3-hour recording to take a few hours rather than"
+    Write-Host "    roughly half an hour."
 }
 
 # Upgrade pip via `python -m pip` — pip can't modify itself when invoked
@@ -94,10 +97,12 @@ Write-Host ""
 Write-Host "  Step 3 of 4: updating the Python installer tool."
 & $venvPython -m pip install --upgrade pip
 
-# torch lower bound: 2.2 (earliest version we've validated against
-# faster-whisper). No upper bound below the next major release; in
-# particular torch < 2.6 has no Python 3.13 wheels, so a tight upper
-# bound would break this script on newer Python installs.
+# torch bound matches requirements.txt: 2.2 is the earliest version
+# validated against faster-whisper, and there is no upper bound below the
+# next major release because torch < 2.6 has no Python 3.13 wheels, so a
+# tight upper bound would break this script on newer Python installs.
+# faster-whisper and ctranslate2 come from requirements.txt, which pins
+# them to the validated stack.
 Write-Host ""
 Write-Host "  Step 4 of 4: downloading the speech-to-text components."
 Write-Host "    This is the big one - most of the download happens here."

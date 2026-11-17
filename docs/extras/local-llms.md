@@ -1,8 +1,7 @@
 # Local LLMs
 
 Optional add-on that adds Ollama, LM Studio, and Unsloth Studio routing to
-Tusk's Tomes. Out of the box the pipeline runs cloud-only (Gemini / Claude /
-OpenAI). Install this add-on if you want some or all phases to run on a
+Tusk's Tomes. Out of the box the pipeline runs cloud-only (Gemini or OpenRouter). Connect a runner if you want some or all phases to run on a
 local model instead.
 
 > [!NOTE]

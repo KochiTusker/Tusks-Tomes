@@ -25,6 +25,10 @@ scripts/hooks/*   text eol=lf
 # but mixed-encoding venvs cause cryptic activation errors on POSIX shells.
 *.py              text eol=lf
 
+# Test snapshots are compared byte for byte, so every checkout must read them
+# with the line endings they were recorded with.
+*.snap            text eol=lf
+
 # Other text formats — let git infer LF on POSIX-canonical formats.
 # These are conventional defaults; the load-bearing line is the *.sh
 # rule above.

@@ -2,13 +2,13 @@
 //
 // Designed to:
 //   - Produce deterministic chunk counts across phases (driven by the
-//     existing chunkSizeFor() table — see src/lib/chunking.ts).
+//     existing chunkSizeFor() table — see src/features/pipeline/lib/chunking.ts).
 //   - Include enough character names + place names + lore terms that
 //     the grounding + chronicle phases have material to work with.
 //   - Hit ~24,000 characters total (close to one Phase 1 chunk on
 //     Gemini Paid; ~3 chunks on the conservative local profile).
 
-const CHARACTERS = ['Pernille', 'Piers', 'Anouk', 'Kiona', 'Verity']
+const CHARACTERS = ['Esen', 'Janus', 'Lucian', 'Viggo', 'Ivo']
 const ACTIONS = [
   'rolls a perception check',
   'casts shield of faith',

@@ -54,7 +54,7 @@ After install, the `/graphify` slash command is available:
 ```
 /graphify .                            # rebuild (same as `graphify update .`)
 /graphify path "runPhase4" "chunkedGenerate"   # call-chain navigation
-/graphify explain src/lib/pipeline.ts          # high-level summary
+/graphify explain src/features/pipeline/lib/pipeline.ts          # high-level summary
 /graphify query "what depends on RateLimitDialog?"
 /graphify affected "completePhase4"            # reverse-traversal — who calls X
 /graphify watch .                              # auto-rebuild on file changes

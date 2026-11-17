@@ -4,7 +4,7 @@ REM Tusk's Tomes — first-time setup (Windows)
 REM
 REM Safe to double-click. This script does ONLY the following:
 REM
-REM   1. Checks whether Node.js >= 20 is installed. If not, prints the
+REM   1. Checks whether Node.js >= 22 is installed. If not, prints the
 REM      single winget command to install it and exits.
 REM   2. If Node is present, hands control over to
 REM      `node scripts\setup\check-deps.mjs`, which is plain readable
@@ -75,7 +75,7 @@ where node >nul 2>nul
 if errorlevel 1 (
   echo  [missing] Node.js was not found on PATH.
   echo.
-  echo  Install Node.js 20 LTS or newer, then re-run this script:
+  echo  Install Node.js 22 LTS or newer, then re-run this script:
   echo.
   echo      winget install OpenJS.NodeJS.LTS
   echo.

@@ -73,9 +73,9 @@ When Tomes restarts with this set, the boot banner spells out exactly what's ena
 | Browse the list of sessions | Save / edit / delete chronicles |
 | Read saved chronicles in any session | Modify the glossary or speaker mappings |
 | View session transcripts (raw + cleaned) | Add or remove lore documents |
-| See live transcription progress while a session is being processed | Edit any Settings (model profiles, hybrid routing, etc.) |
+| See live transcription progress while a session is being processed | Edit any Settings (per-phase routing, etc.) |
 | Read the Help / Docs tab | See your API keys (the keys route is loopback-only regardless) |
-| Download a chronicle's `.docx` (read-only) | Run the in-app "Test connection" button against a provider |
+| Download a chronicle's `.docx` (read-only) | Press **Test** on a provider key |
 | Download a session's `.sbv` transcript file | Trigger the in-app updater |
 | See the system info (RAM/CPU/GPU detection) | Launch Ollama / LM Studio / Unsloth via the Launch button |
 | Browse the add-ons list | Install or uninstall add-ons |
@@ -96,9 +96,9 @@ With both flags on:
 | Other devices on your Wi-Fi CAN now (in addition to all the reads above)... | Other devices on your Wi-Fi STILL CANNOT... |
 |---|---|
 | Upload audio recordings (Craig zip, FLAC, WAV, MP3) | See your API keys — loopback-only **always** |
-| Drop in `.pdf` / `.docx` lore documents | Run the "Test connection" button against a cloud provider (it spends money) |
+| Drop in `.pdf` / `.docx` lore documents | Press **Test** on a cloud provider key (it spends money) |
 | Save chronicles to your Tusks-Lore folder | Trigger the in-app updater (it runs `git pull` on your host) |
-| Edit glossary entries, speaker mappings, model profiles | Manage Unsloth credentials (it stores secrets) |
+| Edit glossary entries, speaker mappings, per-phase routing | Manage Unsloth credentials (it stores secrets) |
 | Run the 6-phase pipeline against a transcript | Launch Ollama / LM Studio / Unsloth via the Launch button (it spawns processes) |
 | Pause and resume runs | Toggle dev-mode (it pulls pre-release builds) |
 | Delete sessions and chronicles | |

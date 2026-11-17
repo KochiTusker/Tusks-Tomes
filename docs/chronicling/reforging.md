@@ -2,7 +2,7 @@
 
 Reforge takes a chronicle you've **already** generated and re-runs the downstream
 pipeline phases on a provider of your choice (Gemini by default) — without
-re-running the whole thing from the transcript. It lives in the **Tome of Lore**
+re-running the whole thing from the transcript. It lives in the **Chronicle**
 tab, under **Saved Chronicles**.
 
 ## Why it exists
@@ -51,6 +51,26 @@ Reforge is a guided, three-step panel:
 3. **Review & run** — a plain-language summary of exactly what will happen, then
    a progress bar. The result is **saved as a new entry** in Saved Chronicles —
    your original is never overwritten, so you can compare or keep both.
+
+## If a Reforge stops part-way
+
+A Reforge can run for a long time, and it's paid per chunk — so when one stops
+late (a provider out of credits on the last chunk, a model that errors, or you
+pressing **Cancel**), the work it finished is kept rather than thrown away.
+
+The Reforge panel then shows what stopped it, what was kept, and what a resume
+will still run — for example *"Kept: Extras chunks 1–5 of 6. Resume runs Extras
+from chunk 6 and Condense."* **Resume Reforge** carries on from that point with
+the same settings and models, merges the new chunks with the kept ones, and
+saves the result as a new entry, as usual. **Discard** throws the kept work away.
+
+- A chronicle rewrite and extras resume from the chunk that stopped. Condense is
+  short, so it starts over.
+- Starting a different Reforge discards the kept work.
+- The kept work survives a page reload when the source came from Saved
+  Chronicles. A pasted or uploaded source is kept only until the page reloads.
+- If a provider ran out of credits, top up before resuming — a resume runs on the
+  same models.
 
 ## Companion: refusal markers + targeted repair
 

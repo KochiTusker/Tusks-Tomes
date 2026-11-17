@@ -15,12 +15,12 @@ Skip past it for the individual questions.
 
 **1. First launch.** Start the app and open `http://127.0.0.1:5173/` in your browser. You'll see the **Chronicle** tab selected, with a top banner reading *"No cloud API key configured. Add one in Settings to start running the pipeline."* That's expected on a fresh install. The Begin button is disabled until you've added a key and pasted a transcript.
 
-**2. Add a provider key (one-time).** Go to **Settings** → **API Keys**. Pick a provider (Google Gemini Paid is the easiest start; see [pricing.md](../models/costs.md) for what to expect), paste your key, click **Test connection**. A green OK badge means the key works; an error message tells you what to fix. Your key is encrypted on disk at `%APPDATA%\tusks-tomes\Config\providers.enc` and is *machine-bound* — copying that file to another computer won't decrypt. Recommended starter combo: **Google Gemini — Paid** for everything (see [recommended-settings.md](../chronicling/recommended-settings.md)).
+**2. Add a provider key (one-time).** Go to **Settings** → **Providers & models**, where the **API Keys** block sits at the top. Pick a provider (Google Gemini Paid is the easiest start; see [pricing.md](../models/costs.md) for what to expect), paste your key and **Save**, then press **Test**. A "key works" message means the key is good; an error message tells you what to fix. Your key is encrypted on disk at `%APPDATA%\tusks-tomes\Config\providers.enc` and is *machine-bound* — copying that file to another computer won't decrypt. Recommended starter combo: **Google Gemini — Paid** for everything (see [recommended-settings.md](../chronicling/recommended-settings.md)).
 
 **3. Get a transcript into the app.** Three workflows, pick whichever fits your group:
 - *Paste text.* Copy any session transcript and paste it into the **Raw transcript** box.
 - *Load a YouTube `.sbv` file.* Click **Load .txt / .sbv** and pick the auto-caption file you downloaded from YouTube Studio. Tomes parses the timestamps and detaches them.
-- *Upload audio.* (Requires the Audio Transcription add-on installed via Settings.) Go to the **Upload** tab, drag in your `.mp3`/`.wav`/Craig zip. Whisper transcribes locally on CPU or GPU, then a "Send to Chronicle" button appears on the **Sessions** tab.
+- *Upload audio.* (Requires the Audio Transcription add-on, installed under **Settings** → **Transcription**.) Open the **Sessions** tab and drag your `.mp3`/`.wav`/Craig zip onto the upload panel at the top. Whisper transcribes locally on CPU or GPU, then a **Send to Refinement** button appears on the finished session in the list below.
 
 For best results, drop your campaign's lore PDFs and the canonical glossary into the **Tome of Lore** tab first — phase-1 grounding uses both.
 
@@ -34,7 +34,7 @@ For best results, drop your campaign's lore PDFs and the canonical glossary into
 
 **8. Phase 4 — Extras (~1-3 min).** Memorable quotes (with speaker attribution), comedic moments ("jests"), and combat highlights ("gore"). All extracted as structured lists and rendered as cards. Cheap phase, fast.
 
-**9. Phase 5 — Polish (cloud: skipped).** A final pass that runs only when the active provider is a local model. Cloud providers (Gemini/Claude/OpenAI) skip this phase by design — the cloud chronicle is already at flagship quality. If you see "Phase 5 skipped" in the run log, that's intentional.
+**9. Phase 5 — Polish (cloud: skipped).** A final pass that runs only when the active provider is a local model. Cloud providers (Gemini, OpenRouter) skip this phase by design — the cloud chronicle is already at flagship quality. If you see "Phase 5 skipped" in the run log, that's intentional.
 
 **10. Phase 6 — Condense (~1-2 min).** A tight recap, length set by the **Condense Slider** on the Output Picker (0-100% in 5% steps, default 20% — about 2,800 words on a typical 14,000-word session). The slider previews the projected word count as you drag; Phase 6 then instructs the model to aim within ±10% of that target. This is the version to share in your Discord recap channel; the full chronicle is the version to keep in your campaign vault. Both are produced; the chronicle is **not** shortened to make this — it's a separate output.
 
@@ -84,7 +84,7 @@ Yes — install the [Claude Code add-on](../extras/claude-code.md). It runs the 
 <div class="docs-section-body">
 
 
-No. **[Chronicle Reforge](../chronicling/reforging.md)** (Tome of Lore → Saved Chronicles) re-runs just the later phases of a finished chronicle on a different model — keep the chronicle and redo the quotes / jests / gore and condensed recap on, say, Gemini, or regenerate the chronicle itself in a persona voice. It saves a new entry, so your original stays put. And if a provider *declined* specific chunks, those are flagged in the output and a one-click **Review & Repair Refusals** panel re-processes only those on another provider.
+No. **[Chronicle Reforge](../chronicling/reforging.md)** (Chronicle → Saved Chronicles) re-runs just the later phases of a finished chronicle on a different model — keep the chronicle and redo the quotes / jests / gore and condensed recap on, say, Gemini, or regenerate the chronicle itself in a persona voice. It saves a new entry, so your original stays put. And if a provider *declined* specific chunks, those are flagged in the output and a one-click **Review & Repair Refusals** panel re-processes only those on another provider.
 
 
 </div>
@@ -106,7 +106,7 @@ No. **[Chronicle Reforge](../chronicling/reforging.md)** (Tome of Lore → Saved
 <div class="docs-section-body">
 
 
-No, but it helps a lot — and it only matters if you're using the Audio Transcription add-on. Worth being precise, though: it has to be an **NVIDIA** card. Transcription runs on `faster-whisper`, whose backend (CTranslate2) implements only two devices, `cuda` and `cpu`. There's no ROCm, Metal or Intel Arc backend, so an **AMD, Intel or Apple GPU isn't used at all** — you get processor speed, same as a machine with no graphics card. That's the engine's limitation, not a preference. With an NVIDIA card, a 4-hour session drops from roughly 90 minutes on CPU to about 12. When installing it (Settings → Transcription), it auto-detects your GPU via `nvidia-smi` and installs the matching torch wheel; if no GPU is present, it falls back to CPU automatically.
+No, but it helps a lot — and it only matters if you're using the Audio Transcription add-on. Worth being precise, though: it has to be an **NVIDIA** card. Transcription runs on `faster-whisper`, whose backend (CTranslate2) implements only two devices, `cuda` and `cpu`. There's no ROCm, Metal or Intel Arc backend, so an **AMD, Intel or Apple GPU isn't used at all** — you get processor speed, same as a machine with no graphics card. That's the engine's limitation, not a preference. With an NVIDIA card, transcription runs at about 10 minutes per hour of session with five or six speaker tracks; on CPU it is several times slower. When installing it (Settings → Transcription), it auto-detects your GPU via `nvidia-smi` and installs the matching torch wheel; if no GPU is present, it falls back to CPU automatically.
 
 
 </div>
@@ -193,7 +193,7 @@ Almost. You need to install Node.js (GUI installer from nodejs.org), and you nee
 <div class="docs-section-body">
 
 
-Roughly 15–20 minutes end-to-end with a GPU: ~12 minutes for Whisper transcription (with the Audio Transcription add-on), ~3–5 minutes for the LLM pipeline (Gemini Flash is faster than Claude Sonnet here). On CPU, the transcription step balloons to ~90 minutes but the LLM step is unchanged. The dashboard shows live progress and ETAs.
+On a 3-hour session with a GPU, about half an hour for Whisper transcription (with the Audio Transcription add-on: roughly 10 minutes per hour of session with five or six speaker tracks) plus ~3–5 minutes for the LLM pipeline (Gemini Flash is faster than Claude Sonnet here). On CPU, the transcription step is several times slower but the LLM step is unchanged. The dashboard shows live progress and ETAs.
 
 
 </div>

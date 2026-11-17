@@ -107,7 +107,7 @@ Best price/quality for this workload — typically the cheapest of the cloud opt
 
 **Optional second key — for Smart Budget extras only.** If you also have a free-tier Gemini key (without billing), you can paste it under **Free tier (optional)**. Tomes uses it for **Phase 4 extras only**, and only when Smart Budget routing is selected. Every other phase always uses your paid key. The free-tier escalation safety net (Free → Paid retry on refused content or transient 5xx) covers Phase 4 if the free quota stalls.
 
-You can probe either key to check which models it can actually call — the button next to each slot runs a live check and consumes a small amount of quota.
+You can probe either key to check which models it can actually call — the button next to each slot runs a live check and consumes a small amount of quota. **Customise phases** shows when each key was last checked, with a button to check it again.
 
 > [!NOTE]
 > **Got a free-tier Gemini key?** Consider saving it for [Tusk's Vault](https://github.com/KochiTusker/Tusks-Vault), the AI-chatbot companion that lets you query your campaign lore in natural language. Vault's per-query token use is far lower than Tomes' six-phase pipeline, so a free-tier quota carries its workload comfortably. Pasting your free key into Tomes is fine — it'll only ever drive Phase 4 extras — but the higher-leverage use is over there.
@@ -127,7 +127,7 @@ One key reaches most of the commercial model landscape, including every Anthropi
 2. Add credit, then create a key (starts with `sk-or-...`).
 3. In Tomes: **Settings → Providers & models**, paste under **OpenRouter → API key**.
 
-The catalogue is public and needs no key to browse, so the model picker is populated before you've pasted anything. Once a key is in, the picker fetches the live catalogue.
+The catalogue is public and needs no key to browse, so the model picker is populated before you've pasted anything. Once a key is in, the picker fetches the live catalogue. Claude Code's model list is drawn from the same catalogue, so re-checking it under **Customise phases** refreshes both.
 
 **Two filters worth knowing about**, because they encode work you'd otherwise have to do yourself:
 
@@ -202,7 +202,7 @@ A capability probe runs two tests — structured JSON adherence and grounding fi
 <div class="docs-section-body">
 
 
-The browser can't reach Ollama (`localhost:11434`) or LM Studio (`localhost:1234`) directly: a different port is a different origin, so the request is blocked. Tomes mounts an Express proxy at `/api/local/list-models`, `/api/local/generate`, and `/api/local/launch` that is same-origin with the page. The proxy:
+The browser can't reach Ollama (`localhost:11434`) or LM Studio (`localhost:1234`) directly: a different port is a different origin, so the request is blocked. Tomes mounts an Express proxy at `/api/local/generate` and `/api/local/launch` that is same-origin with the page. The proxy:
 
 - Validates that target URLs are `localhost` or private LAN only.
 - Never acts as an open proxy.

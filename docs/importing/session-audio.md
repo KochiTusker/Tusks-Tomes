@@ -58,8 +58,8 @@ more than bitrate does.
 ## Stage 2 — Transcribe it, on your own machine
 
 [Audio Transcription](../extras/audio-transcription.md) installs a local Whisper
-sidecar. Drop the recording — or the whole Craig zip — into the **Upload** tab
-and it transcribes each track separately, then interleaves them into one
+sidecar. Drop the recording — or the whole Craig zip — onto the upload panel on the
+**Sessions** tab and it transcribes each track separately, then interleaves them into one
 timestamped transcript with speakers already attached.
 
 **This is the stage that wants an NVIDIA GPU**, and the word is doing real work.
@@ -68,10 +68,14 @@ devices: CUDA and CPU. There is no AMD, Intel Arc or Apple GPU backend, so those
 cards are not used at all — a machine with a Radeon in it transcribes at exactly
 the same speed as a machine with no graphics card.
 
-| Hardware | Three hours of audio takes |
+| Hardware | A three-hour session takes |
 |---|---|
-| NVIDIA GPU | 20–30 minutes |
-| Anything else | Several hours |
+| Mid-range NVIDIA GPU | Roughly half an hour — about 10 minutes per hour of session at five or six speaker tracks |
+| Anything else | Several times longer — a few hours |
+
+Time scales with the minutes of audio across every track rather than with
+the length of the session, so a six-player Craig recording takes longer to
+transcribe than a single-track capture of the same evening.
 
 Either way it runs unattended. If "several hours" is not acceptable, the
 [YouTube route](youtube-captions.md) does the transcribing on

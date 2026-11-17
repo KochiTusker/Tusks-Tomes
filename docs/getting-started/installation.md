@@ -23,7 +23,9 @@ Then, depending on your OS:
 
 The setup step installs ~370 npm packages (~250 MB). One-time only.
 
-Open <http://localhost:5173> in your browser. The first thing the app needs is at least one LLM API key — see the next section.
+Starting prints the app's numbered start-up steps and then a line that says `READY` with the address. The launchers open <http://localhost:5173> in your browser at that moment; with `npm run dev`, open it yourself. The first start after setup or an update takes 15–30 seconds while the app prepares its files; later starts take a few seconds. Opening the address early shows a dark "starting…" page that names the current step and turns into the app on its own.
+
+The first thing the app needs is at least one LLM API key — see the next section.
 
 ---
 
@@ -85,9 +87,9 @@ Add the second variable too:
 # Restart Tomes. The boot banner now reads "LAN writes: ENABLED".
 ```
 
-**Now other devices can also:** upload audio recordings (Craig zip, FLAC, WAV, MP3) · drop in `.pdf` / `.docx` lore documents · save chronicles to your Tusks-Lore folder · edit glossary, speakers, model profiles · run the 6-phase pipeline · pause and resume runs · delete sessions.
+**Now other devices can also:** upload audio recordings (Craig zip, FLAC, WAV, MP3) · drop in `.pdf` / `.docx` lore documents · save chronicles to your Tusks-Lore folder · edit glossary, speakers, per-phase routing · run the 6-phase pipeline · pause and resume runs · delete sessions.
 
-**They still cannot:** see your API keys · run the "Test connection" button against a cloud provider (it spends money) · trigger the in-app updater (it runs `git pull` on your host) · manage Unsloth credentials · launch local LLM runners · toggle dev-mode. These stay loopback-only **always**.
+**They still cannot:** see your API keys · press **Test** on a provider key (it spends money) · trigger the in-app updater (it runs `git pull` on your host) · manage Unsloth credentials · launch local LLM runners · toggle dev-mode. These stay loopback-only **always**.
 
 ### What it means in plain language
 
@@ -95,7 +97,7 @@ Setting **`TUSKS_HOST=0.0.0.0` alone** means: anyone connected to your Wi-Fi who
 
 Setting **both flags** means: anyone connected to your Wi-Fi who knows your machine's IP can also CHANGE everything. They can upload garbage audio, delete chronicles, edit your glossary, or run pipelines against attacker-supplied content to burn your LLM quota.
 
-**Your API keys are safe in both modes.** They're encrypted on disk AND the route that returns them is loopback-only AND the route that spends money via "Test connection" is loopback-only. A LAN attacker cannot drain your account even if they get full write access to everything else.
+**Your API keys are safe in both modes.** They're encrypted on disk AND the route that returns them is loopback-only AND the route that spends money via the **Test** button is loopback-only. A LAN attacker cannot drain your account even if they get full write access to everything else.
 
 **The threat model that makes LAN exposure safe:** you trust every device that's allowed on your Wi-Fi. That includes the smart TV, the smart speakers, the kid's tablet, the visiting friend's laptop, and every IoT thing you've connected. If you're not confident about all of those, leave the toggle off.
 
@@ -123,7 +125,7 @@ The toggle is binary — there's no "trust this device only" partial mode. If yo
 
 Two things, and that is the whole core requirement:
 
-- **Node.js 20+** — [download from nodejs.org](https://nodejs.org/). The LTS release is fine. Run `node -v` to confirm; it should print `v20` or higher.
+- **Node.js 22+** — [download from nodejs.org](https://nodejs.org/). The LTS release is fine. Run `node -v` to confirm; it should print `v22` or higher.
 - **Git** — [download from git-scm.com](https://git-scm.com/). If you cloned this repo, you already have it.
 
 Python and an NVIDIA GPU matter only if you later install Audio Transcription,
@@ -162,6 +164,20 @@ sudo chown -R $USER:$(id -gn) .
 # then re-run without sudo:
 bash setup.sh
 ```
+
+### "Node.js … is older than Tusk's Tomes supports"
+
+The terminal window shows this boxed warning at startup when your Node.js is
+older than the app supports, usually because an update raised the minimum. The
+app keeps running, but parts of it may fail. The box names both versions and the
+install command for your system (`winget install OpenJS.NodeJS.LTS` on Windows,
+for example; the LTS installer from [nodejs.org](https://nodejs.org/) works
+everywhere). To upgrade:
+
+1. Stop the app (Ctrl+C in its window).
+2. Install the newer Node.js.
+3. Open a **new** terminal window, so it finds the new Node, and check with `node -v`.
+4. Run `npm install --no-audit --no-fund`, then start the app again.
 
 ### Port 5173 in use
 
@@ -237,6 +253,11 @@ That's the top-level error boundary catching a React crash. Your settings are sa
 
 When dependencies change, the in-app updater pulls the code and surfaces a yellow banner with a copy-paste command — the dev server holds file locks on `node_modules`, so it can't run `npm install` for you safely while you're using the app. Stop the dev server, run the suggested command, restart.
 
+When an update needs a newer Node.js than you have, the updater's output says
+so and gives the install command; install it before you run `npm install`. The
+app also warns at every start until you upgrade; the Node.js entry under
+Troubleshooting above has the steps.
+
 ### From the terminal
 
 ```sh
@@ -248,11 +269,11 @@ npm install --no-audit --no-fund          # (Windows PowerShell: cmd /c npm inst
 
 ### Your data is safe across updates
 
-Chronicles, glossary, speaker mappings, encrypted keystore, model profiles, and routing all live in the platform config directory **outside the repo** — `git pull` can never touch them. Specifically:
+Chronicles, glossary, speaker mappings, encrypted keystore, and per-phase routing all live in the platform config directory **outside the repo** — `git pull` can never touch them. Specifically:
 
 | Path | What's in it |
 |---|---|
-| `%APPDATA%\tusks-tomes\Config\` (Windows — Roaming, not Local) / `~/Library/Application Support/tusks-tomes/` (macOS) / `~/.config/tusks-tomes/` (Linux) | API keys (encrypted), glossary, speakers, model profiles, routing, personas, module toggles, paused-run checkpoints |
+| `%APPDATA%\tusks-tomes\Config\` (Windows — Roaming, not Local) / `~/Library/Application Support/tusks-tomes/` (macOS) / `~/.config/tusks-tomes/` (Linux) | API keys (encrypted), glossary, speakers, per-phase routing, personas, module toggles, paused-run checkpoints |
 | `<repo>/Sessions/<campaign>/...` | Auto-saved chronicle Markdown (gitignored — won't be touched by `git pull`) |
 | `<repo>/vendor/python-venv/` | Whisper sidecar venv (only if Audio Transcription is installed; gitignored) |
 
@@ -294,11 +315,8 @@ The acknowledgement notice itself includes the same manual-cleanup reference, so
 
 - `node_modules/`, `dist/`, `dist-server/` build outputs
 - `vendor/python-venv/` (the Whisper Python venv — usually the heaviest single item, ~1.5–4 GB)
-- The Tusks cache directory + machine-bound state (probe cache, encryption salt, run checkpoints, model profiles, routing, settings)
-- All module state + auto-generated files:
-  - Audio Transcription → the Python venv above
-  - Local LLMs → `<configDir>/local-llm.enabled` marker
-  - Personas → `<configDir>/personas-addon.enabled` marker
+- The Tusks cache directory + machine-bound state (probe cache, encryption salt, run checkpoints, routing, settings)
+- All module state: Audio Transcription → the Python venv above. The uninstaller also removes the `local-llm.enabled` and `personas-addon.enabled` marker files that older versions wrote in the config directory; the app no longer reads them
 - Any leftover empty "silence-beyond-the-sea" legacy directories from before the project rename
 
 **What it preserves** (your content — pass `--purge-user-data` to remove these too):
@@ -334,7 +352,7 @@ If you're hacking on the code rather than just running it:
 npm run dev          # Express + Vite middleware on http://localhost:5173 (HMR)
 npm run typecheck    # tsc --noEmit for both client (tsconfig.json) and server (tsconfig.server.json)
 npm run build        # vite build + tsc -p tsconfig.server.json → dist/ + dist-server/
-npm run start        # Production mode: NODE_ENV=production node dist-server/index.js
+npm run start        # Production mode: NODE_ENV=production node dist-server/server/index.js
 npm run smoke-test   # End-to-end health check; pings every configured provider + Whisper sidecar
 npm test             # Vitest run; covers src/**/*.test.{ts,tsx} and server/**/*.test.ts
 ```
@@ -367,6 +385,7 @@ scripts/
 setup.bat / setup.sh    Platform wrappers — call `node scripts/setup/check-deps.mjs`
 Start_Tusks_Tomes.bat   Windows convenience launcher (calls npm run dev)
 start.sh                POSIX equivalent
+scripts/launch/         Opens the browser once /api/health reports ready (used by the .bat)
 
 architecture.md     Full pipeline / phase-by-phase design doc
 ROADMAP.md          Every milestone and the rationale behind it

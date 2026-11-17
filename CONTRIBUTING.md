@@ -8,7 +8,7 @@ provider integration.
 
 If you've never contributed to an open-source project before, this
 repo is a good first one. The codebase is intentionally modular, the
-test surface is small, and the maintainer () is happy to mentor
+test surface is small, and the maintainer is happy to mentor
 through your first PR.
 
 ---
@@ -94,13 +94,13 @@ rarely requires touching anything else.
 
 | If you're adding… | Put it in… | Pattern to follow |
 | --- | --- | --- |
-| A new cloud LLM provider (e.g. Mistral, Together.ai) | `src/lib/providers/<name>.ts` | Existing `claude.ts` / `openai.ts` / `gemini.ts`. Don't forget the `RateLimitState` wiring (response-header parsing in `rateLimit.ts`) and the chunk-size row in `src/lib/chunking.ts`. |
-| A new pipeline phase | `src/lib/pipeline.ts` + `src/lib/chunking.ts` | Existing `phase1Cleanup` / `phase3Chronicle`. Add a chunk-size column to each profile in `CLOUD_CHUNK_SIZES` and the local row. |
-| A new HTTP API route | `server/api/<resource>.ts` | One router per resource. Mount from `server/index.ts` for core routes; from a module's `registerRoutes()` for optional ones. |
-| A new UI tab / panel | `src/components/<Name>.tsx` | Existing `RefinementTool.tsx` / `CaptionRepair.tsx` / `DocsViewer.tsx`. Gate optional ones on `useAddons().isLoaded(name)`. |
-| A new ingest format (e.g. SRT, VTT) | `server/upload/` + `src/lib/` | Existing multitrack zip extractor / SBV parser |
-| A new module (e.g. live transcription, OCR) | `server/addons/registry.ts` (new entry) + `server/api/<routes>.ts` + `docs/add-ons/<slug>.md` | Pick `kind` first. `kind: 'builtin'` if it downloads nothing — declare only `registerRoutes` (and `docSlug`), and detection lives on its own status route. `kind: 'install'` only if it genuinely puts bytes on disk — then it also declares `isReady` / `install` / `uninstall`. `audio-addon` is the only install today; the other six are builtins. |
-| A new local-LLM backend | `server/localProbe/` + `server/api/localLLM.ts` (these are inside the `local-llm-addon`) | Existing Ollama / LM Studio / Unsloth detection |
+| A new cloud LLM provider (e.g. Mistral, Together.ai) | `src/features/providers/lib/providers/<name>.ts` | Existing `gemini.ts` / `openrouter.ts`. Don't forget the `RateLimitState` wiring (response-header parsing in `rateLimit.ts`) and the chunk-size row in `src/features/pipeline/lib/chunking.ts`. |
+| A new pipeline phase | A file in `src/features/pipeline/lib/phases/`, exported from `pipeline.ts`, + `src/features/pipeline/lib/chunking.ts` | Existing `phases/phase1Ground.ts` / `phases/phase3Chronicle.ts`. Add a chunk-size column to each profile in `CLOUD_CHUNK_SIZES` and the local row. |
+| A new HTTP API route | `server/features/<feature>/routes/<resource>.ts` | One router per resource, inside the feature that owns it. Core routes are mounted from `server/index.ts`; built-in modules from `server/addons/featureRoutes.ts`; the installable module from its own `registerRoutes()`. |
+| A new UI tab / panel | `src/features/<feature>/components/<Name>.tsx` | Existing `RefinementTool.tsx` / `CaptionRepair.tsx` / `DocsViewer.tsx`. Gate optional ones on `useAddons().isLoaded(name)`. |
+| A new ingest format (e.g. SRT, VTT) | `server/features/transcription/services/upload/` + `src/features/pipeline/lib/` | Existing multitrack zip extractor / SBV parser |
+| A new module (e.g. live transcription, OCR) | `server/addons/featureRoutes.ts` (new entry) or `server/addons/registry.ts` (installable) + `server/features/<feature>/routes/<routes>.ts` + `docs/extras/<slug>.md` | Pick `kind` first. `kind: 'builtin'` if it downloads nothing — declare only `registerRoutes` (and `docSlug`), and detection lives on its own status route. `kind: 'install'` only if it genuinely puts bytes on disk — then it also declares `isReady` / `install` / `uninstall`. `audio-addon` is the only install today; the other six are builtins. |
+| A new local-LLM backend | `server/features/providers/services/localProbe/` + `server/features/providers/routes/localLLM.ts` (these are inside the `local-llm-addon`) | Existing Ollama / LM Studio / Unsloth detection |
 
 ---
 

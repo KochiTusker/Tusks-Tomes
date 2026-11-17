@@ -1,0 +1,2613 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GET /api/claude-code/status > pins the timeout outcome (hung CLI) 1`] = `
+{
+  "case": "timeout",
+  "response": {
+    "body": {
+      "authenticated": false,
+      "installed": false,
+      "models": [
+        "sonnet",
+        "opus",
+        "haiku",
+        "claude-opus-5-5",
+        "claude-opus-5",
+        "claude-sonnet-5",
+        "claude-opus-4-8",
+        "claude-sonnet-4-6",
+        "claude-haiku-4-5",
+      ],
+      "probeFailed": "the check timed out",
+      "version": null,
+    },
+    "contentType": "application/json; charset=utf-8",
+    "status": 200,
+  },
+  "spawned": [
+    {
+      "args": [
+        "--version",
+      ],
+      "command": "claude",
+      "cwd": "<unset>",
+      "envInheritsPath": null,
+      "envKeys": null,
+      "envPassed": false,
+      "killed": true,
+      "shellIsWin32": true,
+      "stdin": "",
+      "stdinEnded": false,
+      "stdio": [
+        "ignore",
+        "pipe",
+        "pipe",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`GET /api/claude-code/status > pins version, credentials and probe-failure combinations 1`] = `
+[
+  {
+    "case": "version present, credentials absent",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": true,
+        "models": [
+          "sonnet",
+          "opus",
+          "haiku",
+          "claude-opus-5-5",
+          "claude-opus-5",
+          "claude-sonnet-5",
+          "claude-opus-4-8",
+          "claude-sonnet-4-6",
+          "claude-haiku-4-5",
+        ],
+        "version": "2.0.5 (Claude Code)",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "claude",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "version present, .credentials.json present",
+    "response": {
+      "body": {
+        "authenticated": true,
+        "installed": true,
+        "models": [
+          "sonnet",
+          "opus",
+          "haiku",
+          "claude-opus-5-5",
+          "claude-opus-5",
+          "claude-sonnet-5",
+          "claude-opus-4-8",
+          "claude-sonnet-4-6",
+          "claude-haiku-4-5",
+        ],
+        "version": "2.0.5 (Claude Code)",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "claude",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "version present, legacy .credentials present",
+    "response": {
+      "body": {
+        "authenticated": true,
+        "installed": true,
+        "models": [
+          "sonnet",
+          "opus",
+          "haiku",
+          "claude-opus-5-5",
+          "claude-opus-5",
+          "claude-sonnet-5",
+          "claude-opus-4-8",
+          "claude-sonnet-4-6",
+          "claude-haiku-4-5",
+        ],
+        "version": "2.0.5 (Claude Code)",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "claude",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "exit 0 with empty stdout",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": true,
+        "models": [
+          "sonnet",
+          "opus",
+          "haiku",
+          "claude-opus-5-5",
+          "claude-opus-5",
+          "claude-sonnet-5",
+          "claude-opus-4-8",
+          "claude-sonnet-4-6",
+          "claude-haiku-4-5",
+        ],
+        "version": "unknown",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "claude",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "absent (exit 1)",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": false,
+        "models": [
+          "sonnet",
+          "opus",
+          "haiku",
+          "claude-opus-5-5",
+          "claude-opus-5",
+          "claude-sonnet-5",
+          "claude-opus-4-8",
+          "claude-sonnet-4-6",
+          "claude-haiku-4-5",
+        ],
+        "version": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "claude",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "absent (exit 127)",
+    "response": {
+      "body": {
+        "authenticated": true,
+        "installed": false,
+        "models": [
+          "sonnet",
+          "opus",
+          "haiku",
+          "claude-opus-5-5",
+          "claude-opus-5",
+          "claude-sonnet-5",
+          "claude-opus-4-8",
+          "claude-sonnet-4-6",
+          "claude-haiku-4-5",
+        ],
+        "version": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "claude",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "NTSTATUS failure code",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": false,
+        "models": [
+          "sonnet",
+          "opus",
+          "haiku",
+          "claude-opus-5-5",
+          "claude-opus-5",
+          "claude-sonnet-5",
+          "claude-opus-4-8",
+          "claude-sonnet-4-6",
+          "claude-haiku-4-5",
+        ],
+        "probeFailed": "the check could not start (0xc0000142) — restarting Tusk's Tomes usually clears this",
+        "version": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "claude",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "spawn error",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": false,
+        "models": [
+          "sonnet",
+          "opus",
+          "haiku",
+          "claude-opus-5-5",
+          "claude-opus-5",
+          "claude-sonnet-5",
+          "claude-opus-4-8",
+          "claude-sonnet-4-6",
+          "claude-haiku-4-5",
+        ],
+        "probeFailed": "spawn claude ENOENT",
+        "version": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "claude",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`GET /api/claude-code/status > serves a second call from the 5 s cache without spawning again 1`] = `
+{
+  "first": {
+    "body": {
+      "authenticated": false,
+      "installed": true,
+      "models": [
+        "sonnet",
+        "opus",
+        "haiku",
+        "claude-opus-5-5",
+        "claude-opus-5",
+        "claude-sonnet-5",
+        "claude-opus-4-8",
+        "claude-sonnet-4-6",
+        "claude-haiku-4-5",
+      ],
+      "version": "9.9.9",
+    },
+    "contentType": "application/json; charset=utf-8",
+    "status": 200,
+  },
+  "second": {
+    "body": {
+      "authenticated": false,
+      "installed": true,
+      "models": [
+        "sonnet",
+        "opus",
+        "haiku",
+        "claude-opus-5-5",
+        "claude-opus-5",
+        "claude-sonnet-5",
+        "claude-opus-4-8",
+        "claude-sonnet-4-6",
+        "claude-haiku-4-5",
+      ],
+      "version": "9.9.9",
+    },
+    "contentType": "application/json; charset=utf-8",
+    "status": 200,
+  },
+  "spawnCount": 1,
+}
+`;
+
+exports[`GET /api/codex/status > pins the timeout outcome (hung CLI) 1`] = `
+{
+  "case": "timeout",
+  "response": {
+    "body": {
+      "authenticated": false,
+      "installed": false,
+      "models": [
+        "default",
+        "gpt-5-codex",
+        "gpt-5",
+        "gpt-5-mini",
+        "o3",
+      ],
+      "probeFailed": "the check timed out",
+      "version": null,
+    },
+    "contentType": "application/json; charset=utf-8",
+    "status": 200,
+  },
+  "spawned": [
+    {
+      "args": [
+        "--version",
+      ],
+      "command": "codex",
+      "cwd": "<unset>",
+      "envInheritsPath": null,
+      "envKeys": null,
+      "envPassed": false,
+      "killed": true,
+      "shellIsWin32": true,
+      "stdin": "",
+      "stdinEnded": false,
+      "stdio": [
+        "ignore",
+        "pipe",
+        "pipe",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`GET /api/codex/status > pins version, credentials and probe-failure combinations 1`] = `
+[
+  {
+    "case": "version present, credentials absent",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": true,
+        "models": [
+          "default",
+          "gpt-5-codex",
+          "gpt-5",
+          "gpt-5-mini",
+          "o3",
+        ],
+        "version": "codex-cli 0.9.1",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "codex",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "version present, auth.json present",
+    "response": {
+      "body": {
+        "authenticated": true,
+        "installed": true,
+        "models": [
+          "default",
+          "gpt-5-codex",
+          "gpt-5",
+          "gpt-5-mini",
+          "o3",
+        ],
+        "version": "codex-cli 0.9.1",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "codex",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "version present, credentials.json present",
+    "response": {
+      "body": {
+        "authenticated": true,
+        "installed": true,
+        "models": [
+          "default",
+          "gpt-5-codex",
+          "gpt-5",
+          "gpt-5-mini",
+          "o3",
+        ],
+        "version": "codex-cli 0.9.1",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "codex",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "exit 0 with empty stdout",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": false,
+        "models": [
+          "default",
+          "gpt-5-codex",
+          "gpt-5",
+          "gpt-5-mini",
+          "o3",
+        ],
+        "version": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "codex",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "absent (exit 1)",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": false,
+        "models": [
+          "default",
+          "gpt-5-codex",
+          "gpt-5",
+          "gpt-5-mini",
+          "o3",
+        ],
+        "version": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "codex",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "NTSTATUS failure code",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": false,
+        "models": [
+          "default",
+          "gpt-5-codex",
+          "gpt-5",
+          "gpt-5-mini",
+          "o3",
+        ],
+        "probeFailed": "the check could not start (0xc0000142) — restarting Tusk's Tomes usually clears this",
+        "version": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "codex",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "spawn error",
+    "response": {
+      "body": {
+        "authenticated": false,
+        "installed": false,
+        "models": [
+          "default",
+          "gpt-5-codex",
+          "gpt-5",
+          "gpt-5-mini",
+          "o3",
+        ],
+        "probeFailed": "spawn codex ENOENT",
+        "version": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "--version",
+        ],
+        "command": "codex",
+        "cwd": "<unset>",
+        "envInheritsPath": null,
+        "envKeys": null,
+        "envPassed": false,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "",
+        "stdinEnded": false,
+        "stdio": [
+          "ignore",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`GET /api/codex/status > serves a second call from the 5 s cache without spawning again 1`] = `
+{
+  "first": {
+    "body": {
+      "authenticated": false,
+      "installed": true,
+      "models": [
+        "default",
+        "gpt-5-codex",
+        "gpt-5",
+        "gpt-5-mini",
+        "o3",
+      ],
+      "version": "codex-cli 1.0.0",
+    },
+    "contentType": "application/json; charset=utf-8",
+    "status": 200,
+  },
+  "second": {
+    "body": {
+      "authenticated": false,
+      "installed": true,
+      "models": [
+        "default",
+        "gpt-5-codex",
+        "gpt-5",
+        "gpt-5-mini",
+        "o3",
+      ],
+      "version": "codex-cli 1.0.0",
+    },
+    "contentType": "application/json; charset=utf-8",
+    "status": 200,
+  },
+  "spawnCount": 1,
+}
+`;
+
+exports[`POST /api/claude-code/generate > pins spawn shape and responses for every outcome 1`] = `
+[
+  {
+    "case": "success (default model)",
+    "response": {
+      "body": {
+        "costUsd": 0.0123,
+        "text": "Place-Delta lay quiet.",
+        "usage": {
+          "inputTokens": 11,
+          "outputTokens": 7,
+        },
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "success (explicit model, maxOutputTokens ignored)",
+    "response": {
+      "body": {
+        "costUsd": 0.0123,
+        "text": "Place-Delta lay quiet.",
+        "usage": {
+          "inputTokens": 11,
+          "outputTokens": 7,
+        },
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "opus",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "success with whitespace-padded model",
+    "response": {
+      "body": {
+        "costUsd": 0.0123,
+        "text": "Place-Delta lay quiet.",
+        "usage": {
+          "inputTokens": 11,
+          "outputTokens": 7,
+        },
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "haiku",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "success without usage or cost",
+    "response": {
+      "body": {
+        "text": "plain",
+        "usage": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+        },
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "usage limit: non-zero exit, JSON is_error",
+    "response": {
+      "body": {
+        "code": "usage_limit",
+        "error": "Claude Code usage limit reached: {"is_error":true,"result":"You've hit your limit · resets 3:45pm"}",
+        "resetsAt": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 429,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "usage limit: exit 0, is_error with api_error_status 429",
+    "response": {
+      "body": {
+        "code": "usage_limit",
+        "error": "Claude Code usage limit reached: Too many requests",
+        "resetsAt": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 429,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "usage limit: exit 0, is_error with pattern match",
+    "response": {
+      "body": {
+        "code": "usage_limit",
+        "error": "Claude Code usage limit reached: You're out of extra usage for now",
+        "resetsAt": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 429,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "usage limit: legacy epoch on stderr",
+    "response": {
+      "body": {
+        "code": "usage_limit",
+        "error": "Claude Code usage limit reached: Claude AI usage limit reached|1754500000",
+        "resetsAt": "2025-08-06T17:06:40.000Z",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 429,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "non-zero exit with stderr",
+    "response": {
+      "body": {
+        "error": "Claude Code CLI failed: boom: something broke",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "non-zero exit with stdout only",
+    "response": {
+      "body": {
+        "error": "Claude Code CLI failed: plain failure text",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "non-zero exit with no output",
+    "response": {
+      "body": {
+        "error": "Claude Code CLI failed: exit code 3",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "non-zero exit, JSON error wrapper (auth)",
+    "response": {
+      "body": {
+        "error": "Claude Code CLI failed: OAuth token has expired. Run \`claude\` in a terminal and sign in again (/login), then resume the run.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "non-zero exit, JSON error wrapper (no message, terminal_reason)",
+    "response": {
+      "body": {
+        "error": "Claude Code CLI failed: the CLI stopped with "max_turns" and no message.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "exit 0, empty stdout",
+    "response": {
+      "body": {
+        "error": "Claude Code returned output that wasn't valid JSON. First 300 chars:
+",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "exit 0, stdout not JSON",
+    "response": {
+      "body": {
+        "error": "Claude Code returned output that wasn't valid JSON. First 300 chars:
+not json at all",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "exit 0, is_error without limit or length signal",
+    "response": {
+      "body": {
+        "error": "Something odd happened",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "prompt too long: non-zero exit, terminal_reason",
+    "response": {
+      "body": {
+        "code": "prompt_too_long",
+        "error": "The prompt was too long for sonnet: 44 characters (roughly 11 tokens), which is past the model's context window.
+
+This is almost always the Knowledge Base rather than the transcript — a
+large lore vault is sent with every chunk. In Settings → Pipeline tuning,
+turn on "Trim lore to what the session references" to send only the notes
+the session actually mentions.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 413,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "prompt too long: exit 0, is_error prose",
+    "response": {
+      "body": {
+        "code": "prompt_too_long",
+        "error": "The prompt was too long for sonnet: 44 characters (roughly 11 tokens), which is past the model's context window.
+
+This is almost always the Knowledge Base rather than the transcript — a
+large lore vault is sent with every chunk. In Settings → Pipeline tuning,
+turn on "Trim lore to what the session references" to send only the notes
+the session actually mentions.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 413,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "prompt too long on stderr",
+    "response": {
+      "body": {
+        "code": "prompt_too_long",
+        "error": "The prompt was too long for sonnet: 44 characters (roughly 11 tokens), which is past the model's context window.
+
+This is almost always the Knowledge Base rather than the transcript — a
+large lore vault is sent with every chunk. In Settings → Pipeline tuning,
+turn on "Trim lore to what the session references" to send only the notes
+the session actually mentions.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 413,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "invalid model id",
+    "response": {
+      "body": {
+        "error": "Invalid model id: bad model; rm -rf",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "invalid model id (path-like)",
+    "response": {
+      "body": {
+        "error": "Invalid model id: ../x",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "missing prompt",
+    "response": {
+      "body": {
+        "error": "Missing prompt in request body.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "empty prompt",
+    "response": {
+      "body": {
+        "error": "Missing prompt in request body.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "non-string prompt",
+    "response": {
+      "body": {
+        "error": "Missing prompt in request body.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "empty body",
+    "response": {
+      "body": {
+        "error": "Missing prompt in request body.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "spawn error ENOENT",
+    "response": {
+      "body": {
+        "error": "Claude Code CLI not found. Install it and run \`claude login\` with your Pro/Max plan.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 500,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "spawn error other",
+    "response": {
+      "body": {
+        "error": "Claude Code CLI error: EACCES nope",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 500,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "stdin closed early (EPIPE)",
+    "response": {
+      "body": {
+        "error": "Claude Code closed its input before the prompt was sent (EPIPE). The CLI usually exits this early when it is not logged in, the model id is unavailable on your plan, or a usage limit was already reached.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "client abort kills the child",
+    "response": {
+      "aborted": true,
+    },
+    "spawned": [
+      {
+        "args": [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          "sonnet",
+        ],
+        "command": "claude",
+        "cwd": "<TMP>/ostmp/tusks-tomes-claude-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "OPENAI_API_BASE",
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": true,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`POST /api/codex/generate > pins spawn shape and responses for every outcome 1`] = `
+[
+  {
+    "case": "success (default model)",
+    "response": {
+      "body": {
+        "text": "Place-Delta lay quiet.",
+        "usage": {
+          "inputTokens": 11,
+          "outputTokens": 7,
+        },
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "success (explicit model)",
+    "response": {
+      "body": {
+        "text": "Place-Delta lay quiet.",
+        "usage": {
+          "inputTokens": 11,
+          "outputTokens": 7,
+        },
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "--model",
+          "gpt-5-codex",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "success (model "default" passed explicitly)",
+    "response": {
+      "body": {
+        "text": "Place-Delta lay quiet.",
+        "usage": {
+          "inputTokens": 11,
+          "outputTokens": 7,
+        },
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 200,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "usage limit: non-zero exit, stderr",
+    "response": {
+      "body": {
+        "code": "usage_limit",
+        "error": "Codex usage limit reached: You've hit your usage limit. Try again later.",
+        "resetsAt": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 429,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "usage limit: exit 0, error event",
+    "response": {
+      "body": {
+        "code": "usage_limit",
+        "error": "Codex usage limit reached: You've hit your usage limit.",
+        "resetsAt": null,
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 429,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "non-zero exit with stderr",
+    "response": {
+      "body": {
+        "error": "Codex CLI failed: boom: something broke",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "non-zero exit with stdout only",
+    "response": {
+      "body": {
+        "error": "Codex CLI failed: plain failure text",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "non-zero exit with no output",
+    "response": {
+      "body": {
+        "error": "Codex CLI failed: exit code 3",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "exit 0, empty stdout",
+    "response": {
+      "body": {
+        "error": "Codex returned no parseable JSON events. First 300 chars:
+",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "exit 0, stdout not JSONL",
+    "response": {
+      "body": {
+        "error": "Codex returned no parseable JSON events. First 300 chars:
+not json at all",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "exit 0, error event without limit signal",
+    "response": {
+      "body": {
+        "error": "Something odd happened",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "invalid model id",
+    "response": {
+      "body": {
+        "error": "Invalid model id: bad model; rm -rf",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "missing prompt",
+    "response": {
+      "body": {
+        "error": "Missing prompt in request body.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "empty prompt",
+    "response": {
+      "body": {
+        "error": "Missing prompt in request body.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "empty body",
+    "response": {
+      "body": {
+        "error": "Missing prompt in request body.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 400,
+    },
+    "spawned": [],
+  },
+  {
+    "case": "spawn error ENOENT",
+    "response": {
+      "body": {
+        "error": "Codex CLI not found. Install it (npm i -g @openai/codex) and run \`codex login\`.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 500,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "spawn error other",
+    "response": {
+      "body": {
+        "error": "Codex CLI error: EACCES nope",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 500,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "stdin closed early (EPIPE)",
+    "response": {
+      "body": {
+        "error": "Codex closed its input before the prompt was sent (EPIPE). The CLI usually exits this early when it is not logged in, the model id is unavailable on your plan, or a usage limit was already reached.",
+      },
+      "contentType": "application/json; charset=utf-8",
+      "status": 502,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": false,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+  {
+    "case": "client abort kills the child",
+    "response": {
+      "aborted": true,
+    },
+    "spawned": [
+      {
+        "args": [
+          "exec",
+          "--json",
+          "--sandbox",
+          "read-only",
+          "--skip-git-repo-check",
+          "-",
+        ],
+        "command": "codex",
+        "cwd": "<TMP>/ostmp/tusks-tomes-codex-sandbox",
+        "envInheritsPath": true,
+        "envKeys": [
+          "ANTHROPIC_API_KEY",
+          "ANTHROPIC_AUTH_TOKEN",
+          "ANTHROPIC_BASE_URL",
+          "TT_GOLDEN_KEEP",
+        ],
+        "envPassed": true,
+        "killed": true,
+        "shellIsWin32": true,
+        "stdin": "SYSTEM: be brief
+
+USER: describe Place-Delta",
+        "stdinEnded": true,
+        "stdio": [
+          "pipe",
+          "pipe",
+          "pipe",
+        ],
+      },
+    ],
+  },
+]
+`;

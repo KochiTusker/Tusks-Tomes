@@ -2,12 +2,18 @@ import express from 'express'
 import multer from 'multer'
 import path from 'node:path'
 import { promises as fs } from 'node:fs'
-import { fileURLToPath, pathToFileURL } from 'node:url'
+import { pathToFileURL } from 'node:url'
+import { repoRoot } from './platform/repoRoot.js'
 import { createServer as createHttpServer } from 'node:http'
-import { parsePdf } from './pdfParse.js'
-import { docxBufferToMarkdown } from './lore/docxToMarkdown.js'
-import { autoApplyFrontmatter } from './lore/entityExtraction.js'
-import { configDir, migrateLegacyAppData } from './appData.js'
+import {
+  docxBufferToMarkdown,
+  autoApplyFrontmatter,
+  loreRouter,
+  detectLore,
+  initAliasIndexManager,
+  vaultRouter,
+} from './features/lore/index.js'
+import { configDir, migrateLegacyAppData } from './platform/appData.js'
 import ffmpegStatic from 'ffmpeg-static'
 
 // The multitrack upload pipeline probes audio durations via ffmpeg before
@@ -18,37 +24,43 @@ if (!process.env.FFMPEG_PATH && ffmpegStatic) {
   process.env.FFMPEG_PATH = ffmpegStatic as unknown as string
 }
 
-import { glossaryRouter } from './api/glossary.js'
-import { speakersRouter } from './api/speakers.js'
-import { providersRouter } from './api/providers.js'
-import { openrouterModelsRouter } from './api/openrouterModels.js'
-import { providerKeysRouter } from './api/providerKeys.js'
-import { diagnosticsRouter } from './api/diagnostics.js'
-import { diagnoseRouter } from './api/diagnose.js'
-import { slog } from './lib/slog.js'
-import { profilesRouter } from './api/profiles.js'
-import { routingRouter } from './api/routing.js'
-import { runsRouter } from './api/runs.js'
-import { sessionsRouter } from './api/sessions.js'
-import { chronicleRouter } from './api/chronicle.js'
-import { chronicleLibraryRouter } from './api/chronicleLibrary.js'
-import { addonsRouter } from './api/addons.js'
+import { glossaryRouter, speakersRouter } from './features/corrections/index.js'
+import { providersRouter } from './features/providers/routes/providers.js'
+import {
+  openrouterModelsRouter,
+  providerKeysRouter,
+  profilesRouter,
+} from './features/providers/index.js'
+import {
+  diagnosticsRouter,
+  diagnoseRouter,
+  settingsRouter,
+  systemRouter,
+  updaterRouter,
+} from './features/maintenance/index.js'
+import { slog } from './platform/slog.js'
+import { routingRouter } from './features/routing/index.js'
+import { runsRouter } from './features/pipeline/index.js'
+import { sessionsRouter, uploadGate as parseUploadGate } from './features/transcription/index.js'
+import { chronicleRouter, chronicleLibraryRouter } from './features/library/index.js'
+import { addonsRouter } from './platform/routes/addons.js'
 import { loadAddons } from './addons/loader.js'
-import { docsRouter } from './api/docs.js'
-import { loreRouter } from './api/lore.js'
-import { detectLore } from './lore/detection.js'
-import { initAliasIndexManager } from './lore/aliasIndexManager.js'
-import { settingsRouter } from './api/settings.js'
-import { systemRouter } from './api/system.js'
-import { updaterRouter } from './api/updater.js'
-import { vaultRouter } from './api/vault.js'
-import { loopbackOnly } from './lib/loopbackGate.js'
-import { hostAllowlist } from './lib/hostAllowlist.js'
-import { lanWriteGate, parseLanWritesEnv } from './lib/lanWriteGate.js'
-import { uploadGate as parseUploadGate } from './api/upload.js'
+import { docsRouter } from './features/help/index.js'
+import { loopbackOnly } from './platform/loopbackGate.js'
+import { hostAllowlist } from './platform/hostAllowlist.js'
+import { lanWriteGate, parseLanWritesEnv } from './platform/lanWriteGate.js'
+import { warnIfNodeUnsupported } from './platform/nodeRuntime.js'
+import {
+  bootReadiness,
+  elapsedSeconds,
+  readinessGate,
+  setBootPhase,
+  step,
+  uptimeMs,
+  type ReadinessSource,
+} from './platform/readiness.js'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const ROOT = path.resolve(__dirname, '..')
+const ROOT = repoRoot()
 
 /** Emit a loud warning at boot when node_modules looks out of date with
  *  package-lock.json. The in-app updater intentionally does not run npm
@@ -91,7 +103,7 @@ const HOST = process.env.TUSKS_HOST ?? '127.0.0.1'
 // Reads from other devices (browse chronicles, view transcripts) are
 // always allowed; writes (uploads, settings edits, saves) require the
 // user to explicitly trust every device on the network by setting
-// TUSKS_LAN_WRITES=1. See server/lib/lanWriteGate.ts.
+// TUSKS_LAN_WRITES=1. See server/platform/lanWriteGate.ts.
 const LAN_WRITES_ENABLED = parseLanWritesEnv(process.env.TUSKS_LAN_WRITES)
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -116,6 +128,11 @@ const BOOT_ID = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
  * For the integration tests we can call this with any combination of
  * those parameters and exercise the same middleware path the production
  * server uses.
+ *
+ * `readiness` is what start() passes so the app can answer "starting"
+ * until every start-up step has run. Without it the gate is not
+ * registered and every route is open from the first request, which is
+ * what a test building the app on its own wants.
  */
 export function createApiApp(opts: {
   host: string
@@ -123,14 +140,15 @@ export function createApiApp(opts: {
   lanWritesEnabled: boolean
   isProd?: boolean
   bootId?: string
+  readiness?: ReadinessSource
 }): express.Express {
-  const { host, port, lanWritesEnabled } = opts
+  const { host, port, lanWritesEnabled, readiness } = opts
   const isProductionMode = opts.isProd ?? false
   const bootId = opts.bootId ?? `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
 
   const app = express()
 
-  // DNS-rebinding defence. See server/lib/hostAllowlist.ts header.
+  // DNS-rebinding defence. See server/platform/hostAllowlist.ts header.
   app.use(hostAllowlist({ host, port }))
 
   // Reject cross-origin state-changing requests against /api/*. Browsers
@@ -171,8 +189,14 @@ export function createApiApp(opts: {
       .json({ error: `Cross-origin request from "${origin}" rejected.` })
   })
 
-  // LAN-write gate. See server/lib/lanWriteGate.ts header.
+  // LAN-write gate. See server/platform/lanWriteGate.ts header.
   app.use('/api', lanWriteGate({ enabled: lanWritesEnabled }))
+
+  // Readiness gate. After the security gates — a request the host or
+  // origin checks would refuse is refused whether or not the server is
+  // ready — and before every router, so nothing is served half-built.
+  // See server/platform/readiness.ts for what it answers.
+  if (readiness) app.use(readinessGate(readiness))
 
   // Body parser AFTER the gates so a 403'd request doesn't pay 20 MB
   // of JSON parsing first.
@@ -183,8 +207,17 @@ export function createApiApp(opts: {
     limits: { fileSize: 20 * 1024 * 1024 },
   })
 
+  // Answers from the moment the port is bound. `ready` and `phase` are
+  // what the launchers and the starting page poll; a caller that only
+  // wants to know the server exists can keep reading `ok`.
   app.get('/api/health', (_req, res) => {
-    res.json({ ok: true, mode: isProductionMode ? 'production' : 'development' })
+    res.json({
+      ok: true,
+      mode: isProductionMode ? 'production' : 'development',
+      ready: readiness ? readiness.isReady() : true,
+      phase: readiness ? readiness.phase() : 'ready',
+      uptimeMs: uptimeMs(),
+    })
   })
 
   app.get('/api/boot', (_req, res) => {
@@ -195,7 +228,7 @@ export function createApiApp(opts: {
   app.use('/api/speakers', speakersRouter())
 
   // CREDENTIAL-CARRYING + HOST-MUTATING ROUTES — loopback-only.
-  // See server/lib/loopbackGate.ts header. Audit Rule 6 enforces.
+  // See server/platform/loopbackGate.ts header. Audit Rule 6 enforces.
   app.use('/api/provider-keys', loopbackOnly(), providerKeysRouter())
   // Diagnostics endpoints share the keys' threat model: log payloads can
   // include key fingerprints, model ids, prompt lengths. LAN sources get
@@ -224,19 +257,8 @@ export function createApiApp(opts: {
 
   // Parse routes share the system-wide in-flight upload cap with
   // /api/sessions/{upload,append}-multitrack. Without this, a LAN
-  // attacker with TUSKS_LAN_WRITES=1 could spam 20 MB PDFs through
-  // pdfjs (CPU + memory bound) without any aggregate throttling.
-  app.post('/api/parse/pdf', parseUploadGate(), upload.single('file'), async (req, res) => {
-    try {
-      if (!req.file) return res.status(400).json({ error: 'No file uploaded' })
-      const text = await parsePdf(req.file.buffer)
-      res.json({ name: req.file.originalname, sizeBytes: req.file.size, text })
-    } catch (err) {
-      console.error('[parse/pdf] failed:', err)
-      res.status(500).json({ error: (err as Error).message })
-    }
-  })
-
+  // attacker with TUSKS_LAN_WRITES=1 could spam 20 MB documents through
+  // the parser (CPU + memory bound) without any aggregate throttling.
   app.post('/api/parse/docx', parseUploadGate(), upload.single('file'), async (req, res) => {
     try {
       if (!req.file) return res.status(400).json({ error: 'No file uploaded' })
@@ -270,21 +292,53 @@ const app = createApiApp({
   lanWritesEnabled: LAN_WRITES_ENABLED,
   isProd,
   bootId: BOOT_ID,
+  readiness: bootReadiness,
 })
 const httpServer = createHttpServer(app)
 
-// Local LLM routes (/api/local/* + /api/local-llm/*) used to be inlined
-// here but are now owned by the optional `local-llm-addon`. When the
-// add-on is loaded, server/addons/registry.ts mounts the routers via
-// registerRoutes(). Cloud-only pipelines never see this surface.
+// Local LLM routes (/api/local/* + /api/local-llm/*) are owned by the
+// providers feature and mounted with the other feature routes from
+// server/addons/featureRoutes.ts.
+
+/** The version from package.json, for the first line of output. Read
+ *  from disk rather than imported: package.json sits outside the server
+ *  compilation root. A missing or unreadable file must not stop the app,
+ *  so it degrades to a banner without a number. */
+async function readAppVersion(): Promise<string | null> {
+  try {
+    const raw = await fs.readFile(path.join(ROOT, 'package.json'), 'utf8')
+    const version = (JSON.parse(raw) as { version?: unknown }).version
+    return typeof version === 'string' ? version : null
+  } catch {
+    return null
+  }
+}
+
+/** Longest the READY line waits on Vite's warm-up. The warm-up compiles
+ *  the entry module and, after an update, rebuilds the dependency cache;
+ *  measured at a few seconds warm and about twenty cold. A machine that is
+ *  still going at this point has a real problem, and holding the READY
+ *  line back forever would hide it behind a page that never changes —
+ *  better to open the app and let the first page load show what is wrong. */
+const WARMUP_CAP_MS = 90_000
 
 async function start() {
-  // Pre-flight 1 — Config dir must exist AND be writable. The keystore,
-  // addons toggle file, routing.json, etc. all need write access. If we
-  // skip this and configDir is read-only (corporate machine, copied user
+  // The first line goes out before any work, so the window a launcher
+  // opened is never blank while the config probe and the port bind run.
+  const version = await readAppVersion()
+  // eslint-disable-next-line no-console
+  console.log(`\n  Tusk's Tomes${version ? ` v${version}` : ''} — starting`)
+  // Before any start-up work, so it shows even when a later step fails.
+  await warnIfNodeUnsupported()
+  const totalSteps = isProd ? 3 : 5
+
+  // Step 1 — Config dir must exist AND be writable. The keystore, addons
+  // toggle file, routing.json, etc. all need write access. If we skip
+  // this and configDir is read-only (corporate machine, copied user
   // profile, etc.), every settings save downstream fails with a cryptic
   // EACCES that the user never connects back to permissions. Fail loudly
   // up front with a fix-it message instead.
+  step(1, totalSteps, 'checking the config folder')
   try {
     const dir = configDir()
     await fs.mkdir(dir, { recursive: true })
@@ -305,11 +359,14 @@ async function start() {
     process.exit(1)
   }
 
-  // Pre-flight 2 — Bind the port BEFORE loading add-ons, so a port-in-use
-  // error stops us before we spend time on Whisper sidecar checks etc.
-  // Wire the error handler on httpServer first; otherwise EADDRINUSE shows
-  // up as an unhandled "error" event with no actionable message and the
-  // banner has often already printed by then.
+  // Legacy app-data migration stays ahead of the port bind: once the port
+  // is open a request can reach a router that reads the config dir, and
+  // it must find the files where the current layout puts them.
+  await migrateLegacyAppData()
+
+  // Wire the error handler on httpServer before binding; otherwise
+  // EADDRINUSE shows up as an unhandled "error" event with no actionable
+  // message.
   httpServer.on('error', (err) => {
     const errno = (err as NodeJS.ErrnoException).code
     if (errno === 'EADDRINUSE') {
@@ -340,10 +397,58 @@ async function start() {
     }
   })
 
-  // Load add-ons whose prerequisites are already satisfied. Must run before
-  // Vite / static middleware so add-on routes are registered before the
-  // catch-all SPA handler.
+  // Bind now, before add-ons, lore or Vite. Everything after this point
+  // is answered by the readiness gate until it finishes, so a launcher or
+  // an early browser tab sees "starting" rather than a refused connection,
+  // and a port-in-use error stops the process before any of that work.
+  await new Promise<void>((resolve) => httpServer.listen(PORT, HOST, resolve))
+  const shown = HOST === '0.0.0.0' || HOST === '::' ? 'localhost' : HOST
+  const url = `http://${shown}:${PORT}`
+  // eslint-disable-next-line no-console
+  console.log(`  Tusk's Tomes — ${url} (starting…)`)
+  // Mark the diagnostic stream with a boot event so the user can see in
+  // the ring when this process started — useful when correlating a bug
+  // to a specific dev-server lifetime.
+  slog('server', { event: 'server_started', port: PORT, host: HOST, prod: isProd })
+  if (HOST !== '127.0.0.1' && HOST !== 'localhost') {
+    const writeState = LAN_WRITES_ENABLED ? 'ENABLED' : 'DISABLED (default)'
+    // eslint-disable-next-line no-console
+    console.log(
+      `  ! LAN exposure enabled (bound to ${HOST}).\n` +
+      `    Other devices on this network can READ the app (chronicles, transcripts, lists).\n` +
+      `    LAN writes (uploads, settings edits, saves): ${writeState}.\n` +
+      `    API keys + updater + dev-mode toggles: loopback-only (always, regardless of TUSKS_LAN_WRITES).\n` +
+      (LAN_WRITES_ENABLED
+        ? `    \n    ⚠  TUSKS_LAN_WRITES=1 is set. Anyone on this Wi-Fi can modify content. Trust your network.\n`
+        : `    \n    To allow cross-device writes (e.g. upload from a phone), also set TUSKS_LAN_WRITES=1.\n`
+      ) +
+      `    To go back to host-only access, set TUSKS_HOST=127.0.0.1.\n`,
+    )
+  }
+
+  // Step 2 — add-ons whose prerequisites are already satisfied. Must run
+  // before Vite / static middleware so add-on routes are registered before
+  // the catch-all SPA handler.
+  setBootPhase('addons')
+  step(2, totalSteps, 'loading add-ons')
   await loadAddons(app)
+
+  // Step 3 — lore. Loads the persisted alias index if present, builds a
+  // fresh one otherwise, and subscribes to doc-cache invalidations so
+  // writes to the lore folder trigger a debounced rebuild. Tolerates a
+  // missing lore folder — the manager treats `null` as "no index" and the
+  // pipeline falls back to compactKb. The node_modules check sits here
+  // too: if it has something to say, it should say it before Vite tries
+  // to import whatever is missing.
+  setBootPhase('lore')
+  step(3, totalSteps, 'reading the lore folder')
+  await warnIfNodeModulesStale()
+  try {
+    const loreStatus = await detectLore()
+    await initAliasIndexManager(loreStatus.found ? loreStatus.loreRoot ?? null : null)
+  } catch (err) {
+    console.warn('[server] alias-index manager init failed:', err)
+  }
 
   if (isProd) {
     const distDir = path.join(ROOT, 'dist')
@@ -352,6 +457,13 @@ async function start() {
       res.sendFile(path.join(distDir, 'index.html'))
     })
   } else {
+    // Step 4 — Vite. Its dependency optimiser runs inside createServer and
+    // prints its own line ("Re-optimizing dependencies…") when the
+    // lockfile has changed since the last start, which is the one case
+    // this step takes longer than a moment. The step line goes out first
+    // so that message reads as part of a step, not a stall.
+    setBootPhase('vite')
+    step(4, totalSteps, 'preparing the interface (takes longer after an update)')
     const { createServer: createViteServer } = await import('vite')
     const vite = await createViteServer({
       root: ROOT,
@@ -362,48 +474,41 @@ async function start() {
       appType: 'spa',
     })
     app.use(vite.middlewares)
-  }
 
-  await migrateLegacyAppData()
-  await warnIfNodeModulesStale()
-
-  // Initialise the lore alias-index manager. Loads the persisted index if
-  // present, builds a fresh one otherwise, and subscribes to doc-cache
-  // invalidations so writes to the lore folder trigger a debounced rebuild.
-  // Tolerates a missing lore folder — the manager treats `null` as "no
-  // index" and the pipeline falls back to compactKb.
-  try {
-    const loreStatus = await detectLore()
-    await initAliasIndexManager(loreStatus.found ? loreStatus.loreRoot ?? null : null)
-  } catch (err) {
-    console.warn('[server] alias-index manager init failed:', err)
-  }
-
-  httpServer.listen(PORT, HOST, () => {
-    // eslint-disable-next-line no-console
-    const shown = HOST === '0.0.0.0' || HOST === '::' ? 'localhost' : HOST
-    // eslint-disable-next-line no-console
-    console.log(`\n  Tusk's Tomes — running at http://${shown}:${PORT}\n`)
-    // Mark the diagnostic stream with a boot event so the user can see in
-    // the ring when this process started — useful when correlating a bug
-    // to a specific dev-server lifetime.
-    slog('server', { event: 'server_started', port: PORT, host: HOST, prod: isProd })
-    if (HOST !== '127.0.0.1' && HOST !== 'localhost') {
-      const writeState = LAN_WRITES_ENABLED ? 'ENABLED' : 'DISABLED (default)'
-      // eslint-disable-next-line no-console
-      console.log(
-        `  ! LAN exposure enabled (bound to ${HOST}).\n` +
-        `    Other devices on this network can READ the app (chronicles, transcripts, lists).\n` +
-        `    LAN writes (uploads, settings edits, saves): ${writeState}.\n` +
-        `    API keys + updater + dev-mode toggles: loopback-only (always, regardless of TUSKS_LAN_WRITES).\n` +
-        (LAN_WRITES_ENABLED
-          ? `    \n    ⚠  TUSKS_LAN_WRITES=1 is set. Anyone on this Wi-Fi can modify content. Trust your network.\n`
-          : `    \n    To allow cross-device writes (e.g. upload from a phone), also set TUSKS_LAN_WRITES=1.\n`
-        ) +
-        `    To go back to host-only access, set TUSKS_HOST=127.0.0.1.\n`,
+    // Step 5 — compile the entry module now rather than on the first
+    // request, and hold READY until it is done: a browser that opens on
+    // READY then gets the app, not a blank page waiting on a transform.
+    // Capped so a compile that never returns cannot hold the app hostage.
+    step(5, totalSteps, 'compiling the interface for its first request')
+    let capTimer: NodeJS.Timeout | undefined
+    const cap = new Promise<'cap'>((resolve) => {
+      capTimer = setTimeout(() => resolve('cap'), WARMUP_CAP_MS)
+    })
+    const warm = vite
+      .warmupRequest('/src/main.tsx')
+      .then(() => 'done' as const)
+      .catch((err: unknown) => {
+        console.warn(
+          '[startup] warm-up did not complete; the first page load will compile instead:',
+          (err as Error)?.message ?? err,
+        )
+        return 'done' as const
+      })
+    const outcome = await Promise.race([warm, cap])
+    clearTimeout(capTimer)
+    if (outcome === 'cap') {
+      console.warn(
+        `[startup] the interface was still compiling after ${WARMUP_CAP_MS / 1000}s; opening anyway. ` +
+          'If the page stays blank, stop the app, run npm install --no-audit --no-fund, and start again.',
       )
     }
-  })
+  }
+
+  setBootPhase('ready')
+  const seconds = elapsedSeconds()
+  // eslint-disable-next-line no-console
+  console.log(`\n  READY in ${seconds}s — ${url}\n`)
+  slog('server', { event: 'server_ready', port: PORT, host: HOST, prod: isProd, seconds: Number(seconds) })
 }
 
 // Only run start() when this module is the process entrypoint (npm run

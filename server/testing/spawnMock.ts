@@ -1,7 +1,7 @@
 // Shared child_process.spawn mocking harness for vitest tests.
 //
 // Why this exists: the codebase has multiple spawn call sites
-// (server/api/updater.ts → git, server/api/localProxy.ts → ollama/lms/
+// (server/features/maintenance/routes/updater.ts → git, server/features/providers/routes/localProxy.ts → ollama/lms/
 // unsloth, scripts/* → various) and none of them were testable before
 // this helper landed. Without a primitive, each test would re-invent
 // the wheel and the result is what we got: spawn-shell-false flipped to

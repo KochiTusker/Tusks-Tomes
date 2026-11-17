@@ -2,7 +2,7 @@
 
 This is the add-on that turns recordings into text, using
 [`faster-whisper`](https://github.com/SYSTRAN/faster-whisper) running on your
-own machine. It adds the **Upload** and **Sessions** tabs and the full Craig
+own machine. It adds the **Sessions** tab, with uploading as its primary action, and the full Craig
 workflow. Your audio never leaves the computer, which was the whole point —
 I wasn't willing to upload my friends' voices to somebody's cloud, and I
 assumed I wasn't alone in that.
@@ -24,7 +24,7 @@ This is the one module that genuinely installs something. Everything else in Tom
 | **Disk footprint** | ~1.5 GB for the venv + torch wheels, plus the large-v3 model weights fetched on your first transcription |
 | **Runtime cost** | Idle when not transcribing |
 | **Hard prereq** | Python 3.10–3.12 on PATH |
-| **Optional prereq** | An **NVIDIA** GPU + recent drivers (~7× faster than CPU). AMD / Intel / Apple GPUs are not used at all — see the note below. |
+| **Optional prereq** | An **NVIDIA** GPU + recent drivers (several times faster than CPU). AMD / Intel / Apple GPUs are not used at all — see the note below. |
 
 ---
 
@@ -33,13 +33,13 @@ This is the one module that genuinely installs something. Everything else in Tom
 <div class="docs-section-body">
 
 
-Without this add-on, your only path into the pipeline is **paste text** or **drop a pre-made `.sbv`**. With the add-on enabled, the **Upload** tab accepts:
+Without this add-on, your only path into the pipeline is **paste text** or **drop a pre-made `.sbv`**. With the add-on installed, the upload panel at the top of the **Sessions** tab accepts:
 
 - **[Craig](https://craig.chat) multitrack `.zip` files** — one or many, with staged batch upload for sessions split across hour-long Craig chunks. Per-speaker tracks survive into the chronicle, so every line is attributed to the right player and character.
 - **Loose per-speaker WAV / FLAC files** — drop one file per speaker, label them in the speaker-mapping table.
 - **Single-track audio (any common format)** — transcribed without speaker attribution, but you still get the cleaned narrative chronicle.
 
-The **Sessions** tab is the history view of everything you've uploaded — re-open old transcripts, re-run pipelines with different model profiles, export to Tusk's Vault, or send to the Chronicle tab for refinement.
+The **Sessions** tab is the history view of everything you've uploaded — re-open old transcripts, re-run pipelines with different per-phase routing (**Settings** → **Providers & models**), export to Tusk's Vault, or send to the Chronicle tab for refinement.
 
 ---
 
@@ -105,7 +105,7 @@ The toggle on the row flips the feature off without removing the Python environm
 
 - **Disk:** ~1.5 GB on install, with torch the bulk of it. The venv lives at `vendor/python-venv/` inside the repo. The large-v3 model weights are a separate download that `faster-whisper` fetches the first time you actually transcribe something, so the install figure is not the final on-disk total.
 - **First-transcription wait:** Whisper downloads the model the first time it runs (~3 GB for `large-v3`). After that, transcription is local-only.
-- **Time per session:** ~12 min for a 4-hour session on an NVIDIA 4070, ~90 min on CPU. The dashboard shows live progress.
+- **Time per session:** about 10 minutes per hour of session at five or six speaker tracks on a mid-range NVIDIA card, so roughly half an hour for a three-hour session. CPU-only is several times slower. The dashboard shows live progress.
 - **Network:** Zero outbound calls after the initial install + model download. Audio stays on your machine forever.
 
 ---
@@ -121,7 +121,7 @@ The toggle on the row flips the feature off without removing the Python environm
 
 Have a session uploaded to YouTube (public / private / unlisted)? Two options:
 
-1. **Caption Repair** (no add-on needed) — download the auto-caption `.sbv` from YouTube Studio, drop it in.
+1. **Caption Repair** (no add-on needed; it sits inside the **Chronicle** tab) — download the auto-caption `.sbv` from YouTube Studio, drop it in.
 2. **Audio Transcription** — extract the audio yourself with `yt-dlp` or your tool of choice, then drop it onto the **Sessions** tab. Whisper produces better, more consistent quality than YouTube's auto-captions.
 
 ---
@@ -186,7 +186,7 @@ The Craig workflow **only works because [Craig](https://craig.chat) exists.** Ru
 <div class="docs-section-body">
 
 
-A CUDA-capable NVIDIA GPU cuts a 4-hour session's transcription from ~90 minutes to ~12 minutes. The install script auto-detects your GPU via `nvidia-smi` and installs the matching torch wheel.
+A CUDA-capable NVIDIA GPU transcribes at about 10 minutes per hour of session with five or six speaker tracks — roughly half an hour for a three-hour session on a mid-range card, where the CPU path takes several times longer. The install script auto-detects your GPU via `nvidia-smi` and installs the matching torch wheel.
 
 If `nvidia-smi` exists but reports an older CUDA version, pass `--cuda 11.8` (or whatever your driver supports) to the install script — or delete `vendor/python-venv/` and re-run `npm run whisper:setup`, which re-probes.
 
@@ -228,9 +228,9 @@ For anything else, drop a note in the [feedback form](https://docs.google.com/fo
 |---|---|
 | `vendor/python-venv/` | Python virtual environment (faster-whisper + torch) |
 | `scripts/whisper/setup.ps1` / `setup.sh` | Install scripts |
-| `server/whisper/` | Whisper sidecar invocation + per-session transcription queue |
-| `server/upload/` | Multitrack zip / loose-audio extractor |
-| `server/api/whisper.ts`, `transcribe.ts`, `upload.ts` | HTTP routes (mounted only when add-on is enabled) |
+| `server/features/transcription/services/whisper/` | Whisper sidecar invocation + per-session transcription queue |
+| `server/features/transcription/services/upload/` | Multitrack zip / loose-audio extractor |
+| `server/features/transcription/routes/whisper.ts`, `transcribe.ts`, `upload.ts` | HTTP routes (mounted only when add-on is enabled) |
 
 When the add-on is disabled, none of these routes are mounted — Express returns 404, no Python import is attempted. See [`architecture.md`](../about/how-its-built.md) for the registry/loader implementation.
 

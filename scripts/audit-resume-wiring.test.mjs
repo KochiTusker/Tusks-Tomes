@@ -1,5 +1,5 @@
 // Static guard that resume-from-checkpoint is wired up to actually
-// continue execution. Before this guard, src/lib/resumeFlow.ts:planResumeAction
+// continue execution. Before this guard, src/features/pipeline/lib/resumeFlow.ts:planResumeAction
 // existed and was fully unit-tested but was never imported in production
 // code — RefinementTool's resumeFromCheckpoint hydrated state and then
 // did nothing, so the user clicked Resume and saw the partial output
@@ -21,15 +21,15 @@ const REPO_ROOT = path.resolve(__dirname, '..')
 describe('audit: resume-from-checkpoint dispatcher is wired', () => {
   it('RefinementTool.tsx imports planResumeAction', async () => {
     const body = await fs.readFile(
-      path.join(REPO_ROOT, 'src', 'components', 'RefinementTool.tsx'),
+      path.join(REPO_ROOT, 'src', 'features', 'pipeline', 'components', 'RefinementTool.tsx'),
       'utf8',
     )
-    expect(body).toMatch(/import\s*\{[^}]*\bplanResumeAction\b[^}]*\}\s*from\s*['"]@\/lib\/resumeFlow['"]/)
+    expect(body).toMatch(/import\s*\{[^}]*\bplanResumeAction\b[^}]*\}\s*from\s*['"]@\/features\/pipeline\/lib\/resumeFlow['"]/)
   })
 
   it('RefinementTool.tsx calls planResumeAction inside resumeFromCheckpoint', async () => {
     const body = await fs.readFile(
-      path.join(REPO_ROOT, 'src', 'components', 'RefinementTool.tsx'),
+      path.join(REPO_ROOT, 'src', 'features', 'pipeline', 'components', 'RefinementTool.tsx'),
       'utf8',
     )
     // Locate the resumeFromCheckpoint callback by its declaration, then
@@ -45,7 +45,7 @@ describe('audit: resume-from-checkpoint dispatcher is wired', () => {
 
   it('RefinementTool.tsx has a dispatcher (runFromResumeAction) that runs the action', async () => {
     const body = await fs.readFile(
-      path.join(REPO_ROOT, 'src', 'components', 'RefinementTool.tsx'),
+      path.join(REPO_ROOT, 'src', 'features', 'pipeline', 'components', 'RefinementTool.tsx'),
       'utf8',
     )
     // The dispatcher must exist as a callback and must invoke at least

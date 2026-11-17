@@ -1,0 +1,754 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Caption Repair (inside Chronicle) > Reset clears the loaded file > repair section after reset 1`] = `
+"  [summary "Repair a caption file— fix names in a YouTube .sbv and export it corrected." open] Repair a caption file— fix names in a YouTube .sbv and export it corrected.
+  Caption Repair
+  Upload a YouTube .sbv auto-caption file. Each cue is corrected against your Knowledge Base — names fixed, censored expletives restored, mature content preserved verbatim. Timestamps stay byte-for-byte identical so you can re-upload to YouTube directly. Knowledge Base: 2 docs.
+  For mistranscriptions you've noticed yourself, edit src/data/corrections.ts — they'll be applied deterministically before any AI call.
+  [button "Choose .sbv file"] [file-input accept=".sbv"]"
+`;
+
+exports[`Caption Repair (inside Chronicle) > a file with no timestamp lines is refused > repair section after refusal 1`] = `
+"  [summary "Repair a caption file— fix names in a YouTube .sbv and export it corrected." open] Repair a caption file— fix names in a YouTube .sbv and export it corrected.
+  Caption Repair
+  Upload a YouTube .sbv auto-caption file. Each cue is corrected against your Knowledge Base — names fixed, censored expletives restored, mature content preserved verbatim. Timestamps stay byte-for-byte identical so you can re-upload to YouTube directly. Knowledge Base: 2 docs.
+  For mistranscriptions you've noticed yourself, edit src/data/corrections.ts — they'll be applied deterministically before any AI call.
+  [button "Choose .sbv file"] [file-input accept=".sbv"]"
+`;
+
+exports[`Caption Repair (inside Chronicle) > a file with no timestamp lines is refused > toasts 1`] = `"error: That file does not look like an SBV (no timestamp lines found)."`;
+
+exports[`Caption Repair (inside Chronicle) > a loaded .sbv shows its parsed cue summary and the repair controls, with no AI call > persisted repair state 1`] = `
+"{
+  "fileName": "session-fixture.sbv",
+  "originalCues": [
+    {
+      "startMs": 1000,
+      "endMs": 3500,
+      "startStr": "0:00:01.000",
+      "endStr": "0:00:03.500",
+      "text": "[PC-Alpha] We reach Place-Delta at dawn."
+    },
+    {
+      "startMs": 4000,
+      "endMs": 6200,
+      "startStr": "0:00:04.000",
+      "endStr": "0:00:06.200",
+      "text": "[DM] The gates of Place-Delta stand open."
+    },
+    {
+      "startMs": 7000,
+      "endMs": 9000,
+      "startStr": "0:00:07.000",
+      "endStr": "0:00:09.000",
+      "text": "[PC-Bravo] I pay the toll to Faction-Echo."
+    }
+  ],
+  "cues": [
+    {
+      "startMs": 1000,
+      "endMs": 3500,
+      "startStr": "0:00:01.000",
+      "endStr": "0:00:03.500",
+      "text": "[PC-Alpha] We reach Place-Delta at dawn."
+    },
+    {
+      "startMs": 4000,
+      "endMs": 6200,
+      "startStr": "0:00:04.000",
+      "endStr": "0:00:06.200",
+      "text": "[DM] The gates of Place-Delta stand open."
+    },
+    {
+      "startMs": 7000,
+      "endMs": 9000,
+      "startStr": "0:00:07.000",
+      "endStr": "0:00:09.000",
+      "text": "[PC-Bravo] I pay the toll to Faction-Echo."
+    }
+  ],
+  "status": "idle",
+  "currentChunkIndex": 0,
+  "totalChunks": 1,
+  "countdownMs": 0,
+  "totalChanged": 0,
+  "updatedAt": "<iso>"
+}"
+`;
+
+exports[`Caption Repair (inside Chronicle) > a loaded .sbv shows its parsed cue summary and the repair controls, with no AI call > repair section, file loaded 1`] = `
+"  [summary "Repair a caption file— fix names in a YouTube .sbv and export it corrected." open] Repair a caption file— fix names in a YouTube .sbv and export it corrected.
+  Caption Repair
+  Upload a YouTube .sbv auto-caption file. Each cue is corrected against your Knowledge Base — names fixed, censored expletives restored, mature content preserved verbatim. Timestamps stay byte-for-byte identical so you can re-upload to YouTube directly. Knowledge Base: 2 docs.
+  For mistranscriptions you've noticed yourself, edit src/data/corrections.ts — they'll be applied deterministically before any AI call.
+  [button "Replace file"] [file-input accept=".sbv"] session-fixture.sbv · 3 cues · 9s · 1 chunk
+  [button "Repair captions"] [button "Reset"]"
+`;
+
+exports[`Caption Repair (inside Chronicle) > a loaded .sbv shows its parsed cue summary and the repair controls, with no AI call > requests after loading the file 1`] = `""`;
+
+exports[`Caption Repair (inside Chronicle) > a loaded .sbv shows its parsed cue summary and the repair controls, with no AI call > toasts 1`] = `"success: Loaded 3 cues from "session-fixture.sbv"."`;
+
+exports[`Caption Repair (inside Chronicle) > before any file: the section as the user first opens it > repair section, no file 1`] = `
+"  [summary "Repair a caption file— fix names in a YouTube .sbv and export it corrected." open] Repair a caption file— fix names in a YouTube .sbv and export it corrected.
+  Caption Repair
+  Upload a YouTube .sbv auto-caption file. Each cue is corrected against your Knowledge Base — names fixed, censored expletives restored, mature content preserved verbatim. Timestamps stay byte-for-byte identical so you can re-upload to YouTube directly. Knowledge Base: 2 docs.
+  For mistranscriptions you've noticed yourself, edit src/data/corrections.ts — they'll be applied deterministically before any AI call.
+  [button "Choose .sbv file"] [file-input accept=".sbv"]"
+`;
+
+exports[`Caption Repair (inside Chronicle) > with an empty knowledge base the section warns about it > repair section, empty knowledge base 1`] = `
+"  [summary "Repair a caption file— fix names in a YouTube .sbv and export it corrected." open] Repair a caption file— fix names in a YouTube .sbv and export it corrected.
+  Caption Repair
+  Upload a YouTube .sbv auto-caption file. Each cue is corrected against your Knowledge Base — names fixed, censored expletives restored, mature content preserved verbatim. Timestamps stay byte-for-byte identical so you can re-upload to YouTube directly. Knowledge Base: 0 docs.
+  For mistranscriptions you've noticed yourself, edit src/data/corrections.ts — they'll be applied deterministically before any AI call.
+  [button "Replace file"] [file-input accept=".sbv"] session-fixture.sbv · 3 cues · 9s · 1 chunk
+  Knowledge Base is empty. The model can still restore profanity and fix obvious phonetic errors, but it can't ground D&D names without lore docs. Add some in the Tome of Lore tab for best accuracy.
+  [button "Repair captions"] [button "Reset"]"
+`;
+
+exports[`Chronicle transcript input > a non-text file is refused with a message and leaves the box empty > toasts 1`] = `"error: Couldn't read cover.txt — it contains binary data, not text. -- Pick a .txt or .sbv transcript, or paste the text in directly."`;
+
+exports[`Chronicle transcript input > loading a .sbv through the Chronicle file input fills the box without timestamps > Chronicle panel 1`] = `
+"1 paused run on disk
+Campaign-One — Session 4
+Paused 32d ago · Phase 3 — Chronicle · chunk 3/6
+[button "Resume"] [button "Discard this checkpoint"]
+Chronicle a session
+Grounding against 2 lore documents (64 chars).
+Running with Google Gemini — Paid(2 keys configured) [button "Change in Settings →"]
+01 Your transcript
+Raw transcript
+[button "Load .txt / .sbv"] [file-input accept=".txt,.sbv,.md"]
+[textbox "Raw transcript" value="[PC-Alpha] We reach Place-Delta at dawn.\\n\\n[DM] The gates of Place-Delta stand open.\\n\\n[PC-Bravo] I pay the toll to Faction-Echo." placeholder="Paste your raw transcript here, or load a .sbv / .txt file…"]
+127 characters
+02 How it should read
+Narrator
+[combobox "Narrator" value="★ Persona-Two" options=["Bard (default)","──────────","★ Persona-One","★ Persona-Two","Persona-Custom"]] A wry narrator preset. [button "Manage"]
+03 Run
+Phase 1
+Ground
+gemini-2.5-flash
+Gemini
+Phase 2
+Audit
+gemini-2.5-flash
+Gemini
+Phase 3
+Chronicle
+model-large
+OpenRouter
+Phase 5
+Polish
+local runs only
+skipped
+Phase 4
+Extras
+model-small
+OpenRouter
+Phase 6
+Condense
+gemini-2.5-pro
+Gemini
+That looks too short for a session. A real transcript runs to tens of thousands of characters; this one is 127. The run will still cost about $0.0077, because your lore is sent regardless of how little transcript there is.
+Estimated for this transcript and routing — actual cost varies ~10–20%.
+[button "Begin the Chronicle~$0.0077"]
+  [summary "Compare plan costs— what this transcript would cost on each Gemini plan." closed] Compare plan costs— what this transcript would cost on each Gemini plan.
+  Cost estimator — pick a Gemini routing preset
+  Estimates for this transcript (0 KB) + lore (0 KB). Heuristic — actual cost may differ by ~10-20% depending on prompt-cache hit rate.
+  Cheapest
+  Smart Budget — Free Flash grounding, Paid Pro chronicle, Flash-Lite extras + condense.
+  Lowest cost. May censor profanity (Flash safety-tuning), short condensed output, noisy/abundant quotes.
+  $0.0037
+  ≈ 5k in / 0k out
+  BalancedRecommended
+  Quality Budget — Paid Pro for grounding/audit/chronicle/condense, Paid Flash for extras.
+  About 3× Cheapest. Close to All-Pro in cost (Phase 3 chronicle dominates either way) but saves on the extras-extraction call. Sharper grounding, fewer noisy audit questions, longer condense. Recommended for most sessions.
+  $0.0082
+  ≈ 5k in / 0k out
+  Best Quality
+  All-Pro — every phase on Paid Pro. Matches the pre-cost-cutting baseline.
+  Maximum quality, maximum cost. Pick when the session is unusually important.
+  $0.0093
+  ≈ 5k in / 0k out
+  These are estimates for comparison. [button "Change the plan in Settings →"]
+  [summary "Repair a caption file— fix names in a YouTube .sbv and export it corrected." closed] Repair a caption file— fix names in a YouTube .sbv and export it corrected.
+  Caption Repair
+  Upload a YouTube .sbv auto-caption file. Each cue is corrected against your Knowledge Base — names fixed, censored expletives restored, mature content preserved verbatim. Timestamps stay byte-for-byte identical so you can re-upload to YouTube directly. Knowledge Base: 2 docs.
+  For mistranscriptions you've noticed yourself, edit src/data/corrections.ts — they'll be applied deterministically before any AI call.
+  [button "Choose .sbv file"] [file-input accept=".sbv"]
+  [summary "Saved chronicles— everything produced so far, and re-forging it." closed] Saved chronicles— everything produced so far, and re-forging it.
+  Saved Chronicles
+  Every finished run is auto-saved here and kept until you delete it — safe across reloads and restarts. Download what you need, then bin the rest.
+  [button "Refresh"]
+  [button "Campaign-One — Session 3<datetime> · 1,840 words · gemini · extrasgrounded transcript saved with this runchronicle saved with this run"] [button "Reforge"] [button "Delete chronicle"]
+  [button "Campaign-One — Session 2<datetime> · 920 words · openrouter · condensedno grounded transcript saved with this runchronicle saved with this run"] [button "Reforge"] [button "Delete chronicle"]
+  Reforge a Chronicle
+  Redo extras / condense — or rewrite the chronicle — on a model of your choice. Keeps your original."
+`;
+
+exports[`Chronicle transcript input > loading a .sbv through the Chronicle file input fills the box without timestamps > toasts 1`] = `"success: Loaded SBV (127 chars after timestamp strip)"`;
+
+exports[`Chronicle transcript input > loading a .sbv through the Chronicle file input fills the box without timestamps > transcript box value 1`] = `
+"[PC-Alpha] We reach Place-Delta at dawn.
+
+[DM] The gates of Place-Delta stand open.
+
+[PC-Bravo] I pay the toll to Faction-Echo."
+`;
+
+exports[`Chronicle transcript input > pasting text enables the run button and shows the estimated cost > Chronicle panel 1`] = `
+"1 paused run on disk
+Campaign-One — Session 4
+Paused 32d ago · Phase 3 — Chronicle · chunk 3/6
+[button "Resume"] [button "Discard this checkpoint"]
+Chronicle a session
+Grounding against 2 lore documents (64 chars).
+Running with Google Gemini — Paid(2 keys configured) [button "Change in Settings →"]
+01 Your transcript
+Raw transcript
+[button "Load .txt / .sbv"] [file-input accept=".txt,.sbv,.md"]
+[textbox "Raw transcript" value="PC-Alpha: We reach Place-Delta.\\nDM: The gates stand open." placeholder="Paste your raw transcript here, or load a .sbv / .txt file…"]
+57 characters
+02 How it should read
+Narrator
+[combobox "Narrator" value="★ Persona-Two" options=["Bard (default)","──────────","★ Persona-One","★ Persona-Two","Persona-Custom"]] A wry narrator preset. [button "Manage"]
+03 Run
+Phase 1
+Ground
+gemini-2.5-flash
+Gemini
+Phase 2
+Audit
+gemini-2.5-flash
+Gemini
+Phase 3
+Chronicle
+model-large
+OpenRouter
+Phase 5
+Polish
+local runs only
+skipped
+Phase 4
+Extras
+model-small
+OpenRouter
+Phase 6
+Condense
+gemini-2.5-pro
+Gemini
+That looks too short for a session. A real transcript runs to tens of thousands of characters; this one is 57. The run will still cost about $0.0063, because your lore is sent regardless of how little transcript there is.
+Estimated for this transcript and routing — actual cost varies ~10–20%.
+[button "Begin the Chronicle~$0.0063"]
+  [summary "Compare plan costs— what this transcript would cost on each Gemini plan." closed] Compare plan costs— what this transcript would cost on each Gemini plan.
+  Cost estimator — pick a Gemini routing preset
+  Estimates for this transcript (0 KB) + lore (0 KB). Heuristic — actual cost may differ by ~10-20% depending on prompt-cache hit rate.
+  Cheapest
+  Smart Budget — Free Flash grounding, Paid Pro chronicle, Flash-Lite extras + condense.
+  Lowest cost. May censor profanity (Flash safety-tuning), short condensed output, noisy/abundant quotes.
+  $0.0028
+  ≈ 5k in / 0k out
+  BalancedRecommended
+  Quality Budget — Paid Pro for grounding/audit/chronicle/condense, Paid Flash for extras.
+  About 3× Cheapest. Close to All-Pro in cost (Phase 3 chronicle dominates either way) but saves on the extras-extraction call. Sharper grounding, fewer noisy audit questions, longer condense. Recommended for most sessions.
+  $0.0068
+  ≈ 5k in / 0k out
+  Best Quality
+  All-Pro — every phase on Paid Pro. Matches the pre-cost-cutting baseline.
+  Maximum quality, maximum cost. Pick when the session is unusually important.
+  $0.0078
+  ≈ 5k in / 0k out
+  These are estimates for comparison. [button "Change the plan in Settings →"]
+  [summary "Repair a caption file— fix names in a YouTube .sbv and export it corrected." closed] Repair a caption file— fix names in a YouTube .sbv and export it corrected.
+  Caption Repair
+  Upload a YouTube .sbv auto-caption file. Each cue is corrected against your Knowledge Base — names fixed, censored expletives restored, mature content preserved verbatim. Timestamps stay byte-for-byte identical so you can re-upload to YouTube directly. Knowledge Base: 2 docs.
+  For mistranscriptions you've noticed yourself, edit src/data/corrections.ts — they'll be applied deterministically before any AI call.
+  [button "Choose .sbv file"] [file-input accept=".sbv"]
+  [summary "Saved chronicles— everything produced so far, and re-forging it." closed] Saved chronicles— everything produced so far, and re-forging it.
+  Saved Chronicles
+  Every finished run is auto-saved here and kept until you delete it — safe across reloads and restarts. Download what you need, then bin the rest.
+  [button "Refresh"]
+  [button "Campaign-One — Session 3<datetime> · 1,840 words · gemini · extrasgrounded transcript saved with this runchronicle saved with this run"] [button "Reforge"] [button "Delete chronicle"]
+  [button "Campaign-One — Session 2<datetime> · 920 words · openrouter · condensedno grounded transcript saved with this runchronicle saved with this run"] [button "Reforge"] [button "Delete chronicle"]
+  Reforge a Chronicle
+  Redo extras / condense — or rewrite the chronicle — on a model of your choice. Keeps your original."
+`;
+
+exports[`render health > records console output emitted by the hand-off flows > console errors and warnings 1`] = `[]`;
+
+exports[`sbts:load-transcript > .sbv text is stripped of timestamps on the way in > stored chronicle state 1`] = `
+"{
+  "campaign": "",
+  "sessionNumber": 1,
+  "rawTranscript": "[PC-Alpha] We reach Place-Delta at dawn.\\n\\n[DM] The gates of Place-Delta stand open.\\n\\n[PC-Bravo] I pay the toll to Faction-Echo.",
+  "groundedTranscript": "",
+  "dmQuestions": [],
+  "dmAnswers": {},
+  "chronicle": "",
+  "extras": null,
+  "condensed": null,
+  "status": "idle",
+  "currentPhase": null,
+  "currentChunkIndex": 0,
+  "totalChunks": 0,
+  "partialOutput": "",
+  "countdownMs": 0,
+  "updatedAt": "<iso>",
+  "outputSelection": {
+    "chronicle": true,
+    "extras": true,
+    "condensed": false,
+    "condensePercentage": 20
+  },
+  "refusals": []
+}"
+`;
+
+exports[`sbts:load-transcript > .sbv text is stripped of timestamps on the way in > tab strip 1`] = `"[tab "Sessions" selected=false] [tab "Chronicle" selected=true] [tab "Tome of Lore" selected=false] [tab "Settings" selected=false] [tab "Help" selected=false]"`;
+
+exports[`sbts:load-transcript > .sbv text is stripped of timestamps on the way in > transcript box value 1`] = `
+"[PC-Alpha] We reach Place-Delta at dawn.
+
+[DM] The gates of Place-Delta stand open.
+
+[PC-Bravo] I pay the toll to Faction-Echo."
+`;
+
+exports[`sbts:load-transcript > an event with no text only switches to Chronicle > stored chronicle state 1`] = `"(nothing stored)"`;
+
+exports[`sbts:load-transcript > an event with no text only switches to Chronicle > tab strip 1`] = `"[tab "Sessions" selected=false] [tab "Chronicle" selected=true] [tab "Tome of Lore" selected=false] [tab "Settings" selected=false] [tab "Help" selected=false]"`;
+
+exports[`sbts:load-transcript > plain text sent from the Tome of Lore tab opens Chronicle with it loaded > Chronicle panel 1`] = `
+"1 paused run on disk
+Campaign-One — Session 4
+Paused 32d ago · Phase 3 — Chronicle · chunk 3/6
+[button "Resume"] [button "Discard this checkpoint"]
+Chronicle a session
+Grounding against 2 lore documents (64 chars).
+Running with Google Gemini — Paid(2 keys configured) [button "Change in Settings →"]
+01 Your transcript
+Raw transcript
+[button "Load .txt / .sbv"] [file-input accept=".txt,.sbv,.md"]
+[textbox "Raw transcript" value="PC-Alpha: We reach Place-Delta.\\nDM: The gates stand open." placeholder="Paste your raw transcript here, or load a .sbv / .txt file…"]
+57 characters
+02 How it should read
+Narrator
+[combobox "Narrator" value="★ Persona-Two" options=["Bard (default)","──────────","★ Persona-One","★ Persona-Two","Persona-Custom"]] A wry narrator preset. [button "Manage"]
+03 Run
+Phase 1
+Ground
+gemini-2.5-flash
+Gemini
+Phase 2
+Audit
+gemini-2.5-flash
+Gemini
+Phase 3
+Chronicle
+model-large
+OpenRouter
+Phase 5
+Polish
+local runs only
+skipped
+Phase 4
+Extras
+model-small
+OpenRouter
+Phase 6
+Condense
+gemini-2.5-pro
+Gemini
+That looks too short for a session. A real transcript runs to tens of thousands of characters; this one is 57. The run will still cost about $0.0063, because your lore is sent regardless of how little transcript there is.
+Estimated for this transcript and routing — actual cost varies ~10–20%.
+[button "Begin the Chronicle~$0.0063"]
+  [summary "Compare plan costs— what this transcript would cost on each Gemini plan." closed] Compare plan costs— what this transcript would cost on each Gemini plan.
+  Cost estimator — pick a Gemini routing preset
+  Estimates for this transcript (0 KB) + lore (0 KB). Heuristic — actual cost may differ by ~10-20% depending on prompt-cache hit rate.
+  Cheapest
+  Smart Budget — Free Flash grounding, Paid Pro chronicle, Flash-Lite extras + condense.
+  Lowest cost. May censor profanity (Flash safety-tuning), short condensed output, noisy/abundant quotes.
+  $0.0028
+  ≈ 5k in / 0k out
+  BalancedRecommended
+  Quality Budget — Paid Pro for grounding/audit/chronicle/condense, Paid Flash for extras.
+  About 3× Cheapest. Close to All-Pro in cost (Phase 3 chronicle dominates either way) but saves on the extras-extraction call. Sharper grounding, fewer noisy audit questions, longer condense. Recommended for most sessions.
+  $0.0068
+  ≈ 5k in / 0k out
+  Best Quality
+  All-Pro — every phase on Paid Pro. Matches the pre-cost-cutting baseline.
+  Maximum quality, maximum cost. Pick when the session is unusually important.
+  $0.0078
+  ≈ 5k in / 0k out
+  These are estimates for comparison. [button "Change the plan in Settings →"]
+  [summary "Repair a caption file— fix names in a YouTube .sbv and export it corrected." closed] Repair a caption file— fix names in a YouTube .sbv and export it corrected.
+  Caption Repair
+  Upload a YouTube .sbv auto-caption file. Each cue is corrected against your Knowledge Base — names fixed, censored expletives restored, mature content preserved verbatim. Timestamps stay byte-for-byte identical so you can re-upload to YouTube directly. Knowledge Base: 2 docs.
+  For mistranscriptions you've noticed yourself, edit src/data/corrections.ts — they'll be applied deterministically before any AI call.
+  [button "Choose .sbv file"] [file-input accept=".sbv"]
+  [summary "Saved chronicles— everything produced so far, and re-forging it." closed] Saved chronicles— everything produced so far, and re-forging it.
+  Saved Chronicles
+  Every finished run is auto-saved here and kept until you delete it — safe across reloads and restarts. Download what you need, then bin the rest.
+  [button "Refresh"]
+  [button "Campaign-One — Session 3<datetime> · 1,840 words · gemini · extrasgrounded transcript saved with this runchronicle saved with this run"] [button "Reforge"] [button "Delete chronicle"]
+  [button "Campaign-One — Session 2<datetime> · 920 words · openrouter · condensedno grounded transcript saved with this runchronicle saved with this run"] [button "Reforge"] [button "Delete chronicle"]
+  Reforge a Chronicle
+  Redo extras / condense — or rewrite the chronicle — on a model of your choice. Keeps your original."
+`;
+
+exports[`sbts:load-transcript > plain text sent from the Tome of Lore tab opens Chronicle with it loaded > stored chronicle state 1`] = `
+"{
+  "campaign": "",
+  "sessionNumber": 1,
+  "rawTranscript": "PC-Alpha: We reach Place-Delta.\\nDM: The gates stand open.",
+  "groundedTranscript": "",
+  "dmQuestions": [],
+  "dmAnswers": {},
+  "chronicle": "",
+  "extras": null,
+  "condensed": null,
+  "status": "idle",
+  "currentPhase": null,
+  "currentChunkIndex": 0,
+  "totalChunks": 0,
+  "partialOutput": "",
+  "countdownMs": 0,
+  "updatedAt": "<iso>",
+  "outputSelection": {
+    "chronicle": true,
+    "extras": true,
+    "condensed": false,
+    "condensePercentage": 20
+  },
+  "refusals": []
+}"
+`;
+
+exports[`sbts:load-transcript > plain text sent from the Tome of Lore tab opens Chronicle with it loaded > tab strip 1`] = `"[tab "Sessions" selected=false] [tab "Chronicle" selected=true] [tab "Tome of Lore" selected=false] [tab "Settings" selected=false] [tab "Help" selected=false]"`;
+
+exports[`sbts:load-transcript > plain text sent from the Tome of Lore tab opens Chronicle with it loaded > toasts 1`] = `"message: SBV loaded from session — ready to run."`;
+
+exports[`sbts:load-transcript > plain text sent from the Tome of Lore tab opens Chronicle with it loaded > transcript box value 1`] = `
+"PC-Alpha: We reach Place-Delta.
+DM: The gates stand open."
+`;
+
+exports[`sbts:load-transcript > the Sessions "Send to Refinement" button hands the session transcript to Chronicle > Chronicle panel 1`] = `
+"1 paused run on disk
+Campaign-One — Session 4
+Paused 32d ago · Phase 3 — Chronicle · chunk 3/6
+[button "Resume"] [button "Discard this checkpoint"]
+Chronicle a session
+Grounding against 2 lore documents (64 chars).
+Running with Google Gemini — Paid(2 keys configured) [button "Change in Settings →"]
+01 Your transcript
+Raw transcript
+[button "Load .txt / .sbv"] [file-input accept=".txt,.sbv,.md"]
+[textbox "Raw transcript" value="[PC-Alpha] We reach Place-Delta at dawn.\\n\\n[DM] The gates of Place-Delta stand open.\\n\\n[PC-Bravo] I pay the toll to Faction-Echo." placeholder="Paste your raw transcript here, or load a .sbv / .txt file…"]
+127 characters
+02 How it should read
+Narrator
+[combobox "Narrator" value="★ Persona-Two" options=["Bard (default)","──────────","★ Persona-One","★ Persona-Two","Persona-Custom"]] A wry narrator preset. [button "Manage"]
+03 Run
+Phase 1
+Ground
+gemini-2.5-flash
+Gemini
+Phase 2
+Audit
+gemini-2.5-flash
+Gemini
+Phase 3
+Chronicle
+model-large
+OpenRouter
+Phase 5
+Polish
+local runs only
+skipped
+Phase 4
+Extras
+model-small
+OpenRouter
+Phase 6
+Condense
+gemini-2.5-pro
+Gemini
+That looks too short for a session. A real transcript runs to tens of thousands of characters; this one is 127. The run will still cost about $0.0077, because your lore is sent regardless of how little transcript there is.
+Estimated for this transcript and routing — actual cost varies ~10–20%.
+[button "Begin the Chronicle~$0.0077"]
+  [summary "Compare plan costs— what this transcript would cost on each Gemini plan." closed] Compare plan costs— what this transcript would cost on each Gemini plan.
+  Cost estimator — pick a Gemini routing preset
+  Estimates for this transcript (0 KB) + lore (0 KB). Heuristic — actual cost may differ by ~10-20% depending on prompt-cache hit rate.
+  Cheapest
+  Smart Budget — Free Flash grounding, Paid Pro chronicle, Flash-Lite extras + condense.
+  Lowest cost. May censor profanity (Flash safety-tuning), short condensed output, noisy/abundant quotes.
+  $0.0037
+  ≈ 5k in / 0k out
+  BalancedRecommended
+  Quality Budget — Paid Pro for grounding/audit/chronicle/condense, Paid Flash for extras.
+  About 3× Cheapest. Close to All-Pro in cost (Phase 3 chronicle dominates either way) but saves on the extras-extraction call. Sharper grounding, fewer noisy audit questions, longer condense. Recommended for most sessions.
+  $0.0082
+  ≈ 5k in / 0k out
+  Best Quality
+  All-Pro — every phase on Paid Pro. Matches the pre-cost-cutting baseline.
+  Maximum quality, maximum cost. Pick when the session is unusually important.
+  $0.0093
+  ≈ 5k in / 0k out
+  These are estimates for comparison. [button "Change the plan in Settings →"]
+  [summary "Repair a caption file— fix names in a YouTube .sbv and export it corrected." closed] Repair a caption file— fix names in a YouTube .sbv and export it corrected.
+  Caption Repair
+  Upload a YouTube .sbv auto-caption file. Each cue is corrected against your Knowledge Base — names fixed, censored expletives restored, mature content preserved verbatim. Timestamps stay byte-for-byte identical so you can re-upload to YouTube directly. Knowledge Base: 2 docs.
+  For mistranscriptions you've noticed yourself, edit src/data/corrections.ts — they'll be applied deterministically before any AI call.
+  [button "Choose .sbv file"] [file-input accept=".sbv"]
+  [summary "Saved chronicles— everything produced so far, and re-forging it." closed] Saved chronicles— everything produced so far, and re-forging it.
+  Saved Chronicles
+  Every finished run is auto-saved here and kept until you delete it — safe across reloads and restarts. Download what you need, then bin the rest.
+  [button "Refresh"]
+  [button "Campaign-One — Session 3<datetime> · 1,840 words · gemini · extrasgrounded transcript saved with this runchronicle saved with this run"] [button "Reforge"] [button "Delete chronicle"]
+  [button "Campaign-One — Session 2<datetime> · 920 words · openrouter · condensedno grounded transcript saved with this runchronicle saved with this run"] [button "Reforge"] [button "Delete chronicle"]
+  Reforge a Chronicle
+  Redo extras / condense — or rewrite the chronicle — on a model of your choice. Keeps your original."
+`;
+
+exports[`sbts:load-transcript > the Sessions "Send to Refinement" button hands the session transcript to Chronicle > requests made by the button 1`] = `"GET /api/sessions/aaaaaaaa-0000-4000-8000-000000000001/sbv"`;
+
+exports[`sbts:load-transcript > the Sessions "Send to Refinement" button hands the session transcript to Chronicle > requests on opening Sessions 1`] = `[]`;
+
+exports[`sbts:load-transcript > the Sessions "Send to Refinement" button hands the session transcript to Chronicle > stored chronicle state 1`] = `
+"{
+  "campaign": "",
+  "sessionNumber": 1,
+  "rawTranscript": "[PC-Alpha] We reach Place-Delta at dawn.\\n\\n[DM] The gates of Place-Delta stand open.\\n\\n[PC-Bravo] I pay the toll to Faction-Echo.",
+  "groundedTranscript": "",
+  "dmQuestions": [],
+  "dmAnswers": {},
+  "chronicle": "",
+  "extras": null,
+  "condensed": null,
+  "status": "idle",
+  "currentPhase": null,
+  "currentChunkIndex": 0,
+  "totalChunks": 0,
+  "partialOutput": "",
+  "countdownMs": 0,
+  "updatedAt": "<iso>",
+  "outputSelection": {
+    "chronicle": true,
+    "extras": true,
+    "condensed": false,
+    "condensePercentage": 20
+  },
+  "refusals": []
+}"
+`;
+
+exports[`sbts:load-transcript > the Sessions "Send to Refinement" button hands the session transcript to Chronicle > tab strip 1`] = `"[tab "Sessions" selected=false] [tab "Chronicle" selected=true] [tab "Tome of Lore" selected=false] [tab "Settings" selected=false] [tab "Help" selected=false]"`;
+
+exports[`sbts:load-transcript > the Sessions "Send to Refinement" button hands the session transcript to Chronicle > toasts 1`] = `
+"message: SBV loaded from session — ready to run.
+success: SBV loaded into Refinement."
+`;
+
+exports[`sbts:load-transcript > the Sessions "Send to Refinement" button hands the session transcript to Chronicle > transcript box value 1`] = `
+"[PC-Alpha] We reach Place-Delta at dawn.
+
+[DM] The gates of Place-Delta stand open.
+
+[PC-Bravo] I pay the toll to Faction-Echo."
+`;
+
+exports[`sbts:open-doc > choosing a document from the list shows it, then "All docs" returns to the list > back at the list 1`] = `
+"Help & Documentation
+Browse the same docs that live in the GitHub repo, without leaving the app. Each section is collapsible — click to open. Add-on pages link straight here from their settings rows.
+[searchbox "Search documentation" value="" placeholder="Search docs by title, path, or topic…" type=search]
+Getting started
+[button "Quick start docs/getting-started/quick-start.md Documentation."]
+Troubleshooting
+[button "Diagnostic bundles docs/troubleshooting/diagnostic-bundles.md Diagnostic bundles for a failing run."]
+More
+[button "Audio transcription docs/modules/audio-transcription.md Documentation."] [button "Tusk’s Tomes README.md Documentation."]
+  [summary "About Tusk's Tomes" closed] About Tusk's Tomes
+  [img "Tusk's Tomes coat of arms"]
+  About Tusk's Tomes
+  A chronicler of voyages, deeds, and the things that whisper below — built by a Dungeon Master, for Dungeon Masters and players.
+  Why this exists
+  ·Local-first, not SaaS. Your transcripts, your keys, your hardware. Audio never leaves the machine; only the text you choose reaches the LLM provider. No account, no telemetry, no rug-pull risk.
+  ·AI as scribe, not storyteller. Tusk’s Tomes grounds speakers and lore, writes the chronicle, and surfaces clarifying questions for the DM. It does not invent your session. The story stays yours.
+  ·Tools for tables, MIT-licensed. Built for kitchen-table games and small Discord servers. Fork it, modify it, redistribute it — it’s yours, forever free.
+  The creator
+  Tusk's Tomes is built by [link "@KochiTusker" href="https://github.com/KochiTusker"] — a Dungeon Master who got tired of losing an hour after every session rewriting the recap.
+  Contributions, bug reports, and feedback welcome at [link "github.com/KochiTusker/Tusks-Tomes" href="https://github.com/KochiTusker/Tusks-Tomes"] .
+  [link "Source GitHub repository" href="https://github.com/KochiTusker/Tusks-Tomes"] [link "License MIT — fully open source" href="https://opensource.org/license/mit/"]
+  Version
+  0.1.0 — early access
+  If Tusk's Tomes saves your session night, you can buy me a coffee.
+  [link "Buy me a coffee" href="https://buymeacoffee.com/kochitusker"]
+  Tusk's Tomes is MIT-licensed and free to use forever. Donations are entirely optional."
+`;
+
+exports[`sbts:open-doc > choosing a document from the list shows it, then "All docs" returns to the list > document open 1`] = `
+"Help & Documentation
+Browse the same docs that live in the GitHub repo, without leaving the app. Each section is collapsible — click to open. Add-on pages link straight here from their settings rows.
+[button "All docs"] docs/getting-started/quick-start.md
+Getting started
+[button "Quick start"]
+Troubleshooting
+[button "Diagnostic bundles"]
+More
+[button "Audio transcription"]
+[button "Tusk’s Tomes"]
+Quick start
+Intro paragraph for the quick start.
+  [summary "Add a key" open]
+  Add a key
+  Open Settings and paste a key.
+  [summary "Run a chronicle" open]
+  Run a chronicle
+  Paste a transcript and press the button.
+Source: docs/getting-started/quick-start.md
+  [summary "About Tusk's Tomes" closed] About Tusk's Tomes
+  [img "Tusk's Tomes coat of arms"]
+  About Tusk's Tomes
+  A chronicler of voyages, deeds, and the things that whisper below — built by a Dungeon Master, for Dungeon Masters and players.
+  Why this exists
+  ·Local-first, not SaaS. Your transcripts, your keys, your hardware. Audio never leaves the machine; only the text you choose reaches the LLM provider. No account, no telemetry, no rug-pull risk.
+  ·AI as scribe, not storyteller. Tusk’s Tomes grounds speakers and lore, writes the chronicle, and surfaces clarifying questions for the DM. It does not invent your session. The story stays yours.
+  ·Tools for tables, MIT-licensed. Built for kitchen-table games and small Discord servers. Fork it, modify it, redistribute it — it’s yours, forever free.
+  The creator
+  Tusk's Tomes is built by [link "@KochiTusker" href="https://github.com/KochiTusker"] — a Dungeon Master who got tired of losing an hour after every session rewriting the recap.
+  Contributions, bug reports, and feedback welcome at [link "github.com/KochiTusker/Tusks-Tomes" href="https://github.com/KochiTusker/Tusks-Tomes"] .
+  [link "Source GitHub repository" href="https://github.com/KochiTusker/Tusks-Tomes"] [link "License MIT — fully open source" href="https://opensource.org/license/mit/"]
+  Version
+  0.1.0 — early access
+  If Tusk's Tomes saves your session night, you can buy me a coffee.
+  [link "Buy me a coffee" href="https://buymeacoffee.com/kochitusker"]
+  Tusk's Tomes is MIT-licensed and free to use forever. Donations are entirely optional."
+`;
+
+exports[`sbts:open-doc > choosing a document from the list shows it, then "All docs" returns to the list > requests 1`] = `"GET /api/docs/docs-getting-started-quick-start"`;
+
+exports[`sbts:open-doc > dispatched from Chronicle opens the Help tab > Help panel 1`] = `
+"Help & Documentation
+Browse the same docs that live in the GitHub repo, without leaving the app. Each section is collapsible — click to open. Add-on pages link straight here from their settings rows.
+[searchbox "Search documentation" value="" placeholder="Search docs by title, path, or topic…" type=search]
+Getting started
+[button "Quick start docs/getting-started/quick-start.md Documentation."]
+Troubleshooting
+[button "Diagnostic bundles docs/troubleshooting/diagnostic-bundles.md Diagnostic bundles for a failing run."]
+More
+[button "Audio transcription docs/modules/audio-transcription.md Documentation."] [button "Tusk’s Tomes README.md Documentation."]
+  [summary "About Tusk's Tomes" closed] About Tusk's Tomes
+  [img "Tusk's Tomes coat of arms"]
+  About Tusk's Tomes
+  A chronicler of voyages, deeds, and the things that whisper below — built by a Dungeon Master, for Dungeon Masters and players.
+  Why this exists
+  ·Local-first, not SaaS. Your transcripts, your keys, your hardware. Audio never leaves the machine; only the text you choose reaches the LLM provider. No account, no telemetry, no rug-pull risk.
+  ·AI as scribe, not storyteller. Tusk’s Tomes grounds speakers and lore, writes the chronicle, and surfaces clarifying questions for the DM. It does not invent your session. The story stays yours.
+  ·Tools for tables, MIT-licensed. Built for kitchen-table games and small Discord servers. Fork it, modify it, redistribute it — it’s yours, forever free.
+  The creator
+  Tusk's Tomes is built by [link "@KochiTusker" href="https://github.com/KochiTusker"] — a Dungeon Master who got tired of losing an hour after every session rewriting the recap.
+  Contributions, bug reports, and feedback welcome at [link "github.com/KochiTusker/Tusks-Tomes" href="https://github.com/KochiTusker/Tusks-Tomes"] .
+  [link "Source GitHub repository" href="https://github.com/KochiTusker/Tusks-Tomes"] [link "License MIT — fully open source" href="https://opensource.org/license/mit/"]
+  Version
+  0.1.0 — early access
+  If Tusk's Tomes saves your session night, you can buy me a coffee.
+  [link "Buy me a coffee" href="https://buymeacoffee.com/kochitusker"]
+  Tusk's Tomes is MIT-licensed and free to use forever. Donations are entirely optional."
+`;
+
+exports[`sbts:open-doc > dispatched from Chronicle opens the Help tab > requests 1`] = `"GET /api/docs"`;
+
+exports[`sbts:open-doc > dispatched from Chronicle opens the Help tab > tab strip 1`] = `"[tab "Sessions" selected=false] [tab "Chronicle" selected=false] [tab "Tome of Lore" selected=false] [tab "Settings" selected=false] [tab "Help" selected=true]"`;
+
+exports[`sbts:open-doc > dispatched while Help is already showing loads that document > Help panel 1`] = `
+"Help & Documentation
+Browse the same docs that live in the GitHub repo, without leaving the app. Each section is collapsible — click to open. Add-on pages link straight here from their settings rows.
+[button "All docs"] docs/modules/audio-transcription.md
+Getting started
+[button "Quick start"]
+Troubleshooting
+[button "Diagnostic bundles"]
+More
+[button "Audio transcription"]
+[button "Tusk’s Tomes"]
+Audio transcription
+How to install the audio module.
+  [summary "Requirements" open]
+  Requirements
+  A GPU helps.
+Source: docs/modules/audio-transcription.md
+  [summary "About Tusk's Tomes" closed] About Tusk's Tomes
+  [img "Tusk's Tomes coat of arms"]
+  About Tusk's Tomes
+  A chronicler of voyages, deeds, and the things that whisper below — built by a Dungeon Master, for Dungeon Masters and players.
+  Why this exists
+  ·Local-first, not SaaS. Your transcripts, your keys, your hardware. Audio never leaves the machine; only the text you choose reaches the LLM provider. No account, no telemetry, no rug-pull risk.
+  ·AI as scribe, not storyteller. Tusk’s Tomes grounds speakers and lore, writes the chronicle, and surfaces clarifying questions for the DM. It does not invent your session. The story stays yours.
+  ·Tools for tables, MIT-licensed. Built for kitchen-table games and small Discord servers. Fork it, modify it, redistribute it — it’s yours, forever free.
+  The creator
+  Tusk's Tomes is built by [link "@KochiTusker" href="https://github.com/KochiTusker"] — a Dungeon Master who got tired of losing an hour after every session rewriting the recap.
+  Contributions, bug reports, and feedback welcome at [link "github.com/KochiTusker/Tusks-Tomes" href="https://github.com/KochiTusker/Tusks-Tomes"] .
+  [link "Source GitHub repository" href="https://github.com/KochiTusker/Tusks-Tomes"] [link "License MIT — fully open source" href="https://opensource.org/license/mit/"]
+  Version
+  0.1.0 — early access
+  If Tusk's Tomes saves your session night, you can buy me a coffee.
+  [link "Buy me a coffee" href="https://buymeacoffee.com/kochitusker"]
+  Tusk's Tomes is MIT-licensed and free to use forever. Donations are entirely optional."
+`;
+
+exports[`sbts:open-doc > dispatched while Help is already showing loads that document > requests 1`] = `"GET /api/docs/docs-modules-audio-transcription"`;
+
+exports[`sbts:open-doc > dispatched while Help is already showing loads that document > tab strip 1`] = `"[tab "Sessions" selected=false] [tab "Chronicle" selected=false] [tab "Tome of Lore" selected=false] [tab "Settings" selected=false] [tab "Help" selected=true]"`;
+
+exports[`sbts:open-doc > the "Read docs" button on the audio add-on row opens its page > Help panel 1`] = `
+"Help & Documentation
+Browse the same docs that live in the GitHub repo, without leaving the app. Each section is collapsible — click to open. Add-on pages link straight here from their settings rows.
+[searchbox "Search documentation" value="" placeholder="Search docs by title, path, or topic…" type=search]
+Getting started
+[button "Quick start docs/getting-started/quick-start.md Documentation."]
+Troubleshooting
+[button "Diagnostic bundles docs/troubleshooting/diagnostic-bundles.md Diagnostic bundles for a failing run."]
+More
+[button "Audio transcription docs/modules/audio-transcription.md Documentation."] [button "Tusk’s Tomes README.md Documentation."]
+  [summary "About Tusk's Tomes" closed] About Tusk's Tomes
+  [img "Tusk's Tomes coat of arms"]
+  About Tusk's Tomes
+  A chronicler of voyages, deeds, and the things that whisper below — built by a Dungeon Master, for Dungeon Masters and players.
+  Why this exists
+  ·Local-first, not SaaS. Your transcripts, your keys, your hardware. Audio never leaves the machine; only the text you choose reaches the LLM provider. No account, no telemetry, no rug-pull risk.
+  ·AI as scribe, not storyteller. Tusk’s Tomes grounds speakers and lore, writes the chronicle, and surfaces clarifying questions for the DM. It does not invent your session. The story stays yours.
+  ·Tools for tables, MIT-licensed. Built for kitchen-table games and small Discord servers. Fork it, modify it, redistribute it — it’s yours, forever free.
+  The creator
+  Tusk's Tomes is built by [link "@KochiTusker" href="https://github.com/KochiTusker"] — a Dungeon Master who got tired of losing an hour after every session rewriting the recap.
+  Contributions, bug reports, and feedback welcome at [link "github.com/KochiTusker/Tusks-Tomes" href="https://github.com/KochiTusker/Tusks-Tomes"] .
+  [link "Source GitHub repository" href="https://github.com/KochiTusker/Tusks-Tomes"] [link "License MIT — fully open source" href="https://opensource.org/license/mit/"]
+  Version
+  0.1.0 — early access
+  If Tusk's Tomes saves your session night, you can buy me a coffee.
+  [link "Buy me a coffee" href="https://buymeacoffee.com/kochitusker"]
+  Tusk's Tomes is MIT-licensed and free to use forever. Donations are entirely optional."
+`;
+
+exports[`sbts:open-doc > the "Read docs" button on the audio add-on row opens its page > requests 1`] = `"GET /api/docs"`;
+
+exports[`sbts:open-doc > the "Read docs" button on the audio add-on row opens its page > tab strip 1`] = `"[tab "Chronicle" selected=false] [tab "Tome of Lore" selected=false] [tab "Settings" selected=false] [tab "Help" selected=true]"`;
+
+exports[`sbts:switch-tab > "upload" lands on Chronicle when the audio add-on is absent > selected tab 1`] = `
+[
+  "Chronicle",
+]
+`;
+
+exports[`sbts:switch-tab > "upload" lands on Chronicle when the audio add-on is absent > tab strip 1`] = `"[tab "Chronicle" selected=true] [tab "Tome of Lore" selected=false] [tab "Settings" selected=false] [tab "Help" selected=false]"`;
+
+exports[`sbts:switch-tab > named tabs and retired tab names resolve to where their content lives now > where each value lands 1`] = `
+"settings -> Settings
+kb -> Tome of Lore
+upload -> Sessions
+about -> Help
+captions -> Chronicle
+help -> Help
+no-such-tab -> Chronicle"
+`;

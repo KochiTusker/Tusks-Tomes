@@ -9,7 +9,7 @@
 // the child's stdout/stderr inline.
 //
 // The in-app "Install Audio Transcription" button has always been
-// platform-aware (server/whisper/bootstrap.ts:runSetup). This dispatcher
+// platform-aware (server/features/transcription/services/whisper/bootstrap.ts:runSetup). This dispatcher
 // closes the gap for users who run the CLI form.
 
 import { spawn } from 'node:child_process'

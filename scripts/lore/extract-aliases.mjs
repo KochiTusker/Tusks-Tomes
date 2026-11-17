@@ -302,7 +302,7 @@ async function main() {
   if (loreRootArg) {
     loreRoot = path.resolve(loreRootArg)
   } else {
-    // Default: D:\Tusks-Lore (matches the user's setup) or sibling of repo.
+    // Default: the Tusks-Lore folder beside the repository.
     const sibling = path.resolve(__dirname, '..', '..', '..', 'Tusks-Lore')
     try {
       await fs.access(sibling)

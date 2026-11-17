@@ -7,7 +7,7 @@
  * everything else the app needs and, where possible, fixes things
  * automatically:
  *
- *   1. Node.js   >= 20
+ *   1. Node.js   >= MIN_NODE_MAJOR (scripts/setup/node-version.mjs)
  *   2. Git       (only checked, never installed)
  *   3. npm install   — runs if node_modules is missing or stale
  *   4. .env file     — copies .env.example if .env doesn't exist
@@ -29,6 +29,7 @@ import { existsSync, copyFileSync, statSync, readFileSync, writeFileSync, unlink
 import { join, resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { platform } from 'node:os'
+import { MIN_NODE_MAJOR, NODE_PACKAGES, installCommands, isSupportedNode } from './node-version.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const REPO_ROOT = resolve(__dirname, '..', '..')
@@ -78,39 +79,23 @@ function runInherit(cmd, args = []) {
 
 // ---------- Suggestions per OS ----------
 
+// Continuation lines line up under the first command in an info() line.
 function installCmd(pkg) {
-  switch (PLATFORM) {
-    case 'win32':
-      return `winget install ${pkg.winget}`
-    case 'darwin':
-      return `brew install ${pkg.brew}`
-    case 'linux':
-      // Best-effort: prefer apt, then dnf, then pacman. Just print all
-      // three — the user knows what they have.
-      return [
-        `sudo apt install ${pkg.apt}    # Debian / Ubuntu`,
-        `sudo dnf install ${pkg.dnf}    # Fedora / RHEL`,
-        `sudo pacman -S ${pkg.pacman}    # Arch`,
-      ].join('\n      ')
-    default:
-      return `(install ${pkg.brew ?? pkg.apt ?? 'the package'} via your OS package manager)`
-  }
+  return installCommands(pkg, PLATFORM).join('\n      ')
 }
 
-const PKG_NODE = { winget: 'OpenJS.NodeJS.LTS', brew: 'node@20', apt: 'nodejs npm', dnf: 'nodejs npm', pacman: 'nodejs npm' }
 const PKG_GIT = { winget: 'Git.Git', brew: 'git', apt: 'git', dnf: 'git', pacman: 'git' }
 
 // ---------- Individual checks ----------
 
 function checkNode() {
   const v = process.versions.node
-  const major = parseInt(v.split('.')[0], 10)
-  if (major >= 20) {
-    ok(`Node.js ${v} (>= 20 required)`)
+  if (isSupportedNode(v)) {
+    ok(`Node.js ${v} (>= ${MIN_NODE_MAJOR} required)`)
     return true
   }
-  fail(`Node.js ${v} is too old — need 20 or newer.`)
-  info(`Install: ${installCmd(PKG_NODE)}`)
+  fail(`Node.js ${v} is too old — need ${MIN_NODE_MAJOR} or newer.`)
+  info(`Install: ${installCmd(NODE_PACKAGES)}`)
   return false
 }
 

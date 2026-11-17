@@ -145,7 +145,7 @@ function envPathsFor(name) {
   }
 }
 
-// server/appData.ts honours env-var overrides for parallel-run isolation.
+// server/platform/appData.ts honours env-var overrides for parallel-run isolation.
 // Mirror that here so an uninstaller run inside a custom env still hits
 // the right tree.
 function resolveOverride(envVar, fallback) {

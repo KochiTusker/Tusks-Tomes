@@ -14,6 +14,8 @@
 #      package-lock.json changed between preHead and postHead -- skipped
 #      otherwise so the running dev server's node_modules file handles
 #      don't collide with npm's writes)
+#   Either way, it then warns when the Node.js on PATH is older than the
+#   code just pulled supports (scripts/update/node-advice.mjs).
 #
 # Designed to be invoked by the in-app Updater UI (which calls
 # /api/updater/apply) or run by hand from PowerShell.
@@ -85,6 +87,27 @@ if ($LASTEXITCODE -ne 0) {
 }
 $postHead = (& git rev-parse HEAD).Trim()
 
+# Is the Node.js on PATH, the one npm install and the restart will use, new
+# enough for the code just pulled? node-advice.mjs comes from the new tree, so
+# it checks against the new minimum, and prints nothing when Node is new
+# enough. Advice only: a failure here must never fail a pull that succeeded,
+# so a missing node (which throws under ErrorActionPreference Stop) is caught.
+$nodeAdvice = @()
+try {
+    $nodeAdvice = @(& node scripts/update/node-advice.mjs)
+} catch {
+    $nodeAdvice = @()
+}
+
+# Prints the advice, if any, followed by what to do next.
+function Write-NodeAdvice {
+    param([string]$next)
+    if ($nodeAdvice.Count -eq 0) { return }
+    foreach ($line in $nodeAdvice) { Write-Warn $line }
+    Write-Warn $next
+    Write-Warn ""
+}
+
 # Step 6 -- DO NOT run npm install in-process when dependencies changed.
 #
 # The dev server (the same process that just invoked this script via the
@@ -102,6 +125,7 @@ $depFiles = & git diff --name-only "$preHead..$postHead" 2>$null | Where-Object 
 }
 if (-not $depFiles) {
     Write-Step "No dependency changes -- npm install not required."
+    Write-NodeAdvice "Install it, then restart the dev server from a new terminal window."
 } else {
     Write-Warn "DEPENDENCY_CHANGES_DETECTED"
     Write-Warn "package.json or package-lock.json changed in this update."
@@ -113,6 +137,7 @@ if (-not $depFiles) {
     Write-Warn "  2. In that same window run: cmd /c npm install --no-audit --no-fund"
     Write-Warn "  3. Restart the dev server (Start_Tusks_Tomes.bat or npm run dev)."
     Write-Warn ""
+    Write-NodeAdvice "Install it between steps 1 and 2, then run steps 2 and 3 in a new terminal window."
 }
 
 $updatedCount = (& git log --oneline "$preHead..$postHead" | Measure-Object -Line).Lines

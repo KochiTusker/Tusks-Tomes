@@ -14,8 +14,8 @@ convention.
 
 A six-phase pipeline produces a clean grounded transcript, a narrative chronicle,
 a condensed retelling with catch-up bullets, and a curated extras list (jests,
-gore, quotes). Pacing between cloud calls is adaptive per provider — Claude /
-OpenAI rate-limit response headers drive the inter-chunk delay, Gemini uses a
+gore, quotes). Pacing between cloud calls is adaptive per provider — OpenRouter's
+rate-limit response headers drive the inter-chunk delay, Gemini uses a
 static tier map. Paid users routinely see 4–5× faster runs than the legacy
 fixed-pacing.
 
@@ -58,8 +58,7 @@ Tusk's Vault read from.
                 │  ├─ Pipeline orchestrator                          │
                 │  │   └─ LLMProvider.generate(...) ────────────────────► Cloud
                 │  │       └─ RateLimitState paces per provider      │   (Gemini /
-                │  │                                                 │    Claude /
-                │  │                                                 │    OpenAI)
+                │  │                                                 │    OpenRouter)
                 │  │  Local LLM (only if add-on loaded)              │
                 │  │  ←──── /api/local/* proxy ────┘                 │
                 │  │                                                 │
@@ -96,7 +95,7 @@ There are three entry points to the refinement pipeline:
 3. **Raw transcript paste.** The Chronicle tab accepts free-form text.
 
 All three converge on the same chunked, multi-phase generation in
-`src/lib/pipeline.ts`.
+`src/features/pipeline/lib/pipeline.ts`.
 
 ---
 
@@ -116,7 +115,7 @@ All three converge on the same chunked, multi-phase generation in
 - **`motion`** + **`tw-animate-css`** for tasteful CSS-driven micro-animation.
 
 ### Backend (local server)
-- **Node 20+** via **`tsx`** for native TypeScript execution.
+- **Node 22+** via **`tsx`** for native TypeScript execution.
 - **Express 4** with Vite middleware in dev; serves `dist/` static in prod.
 - **`multer`** with disk storage for large multi-track uploads (per-file
   cap 4 GB, up to 32 files per request).
@@ -130,9 +129,8 @@ All three converge on the same chunked, multi-phase generation in
 ### LLM providers
 - **`@google/genai`** (Gemini 2.5+ / 3.x) with Paid / Free tier handling.
 - **OpenRouter** over its OpenAI-compatible HTTP API — one key, around 400
-  models. This is how Anthropic and OpenAI models are reached now; the
-  direct-key integrations for both were retired, though the
-  `@anthropic-ai/sdk` and `openai` SDKs remain in the tree.
+  models. This is how Anthropic and OpenAI models are reached; the `openai`
+  SDK is the client for it.
 - **Subscription CLIs** — the signed-in `claude` and `codex` binaries, invoked
   headlessly. No API key is involved and the app never handles the login.
 - **OpenAI-compatible HTTP** for Ollama / LM Studio / llama.cpp /
@@ -161,53 +159,38 @@ All three converge on the same chunked, multi-phase generation in
 ```
 server/
   index.ts                # Express boot, Vite middleware, same-origin /api/* gate
-  appData.ts              # env-paths + atomic JSON IO (includes addonsFile())
-  pdfParse.ts             # PDF text extractor for KB uploads
   addons/
-    registry.ts           # ADDON_REGISTRY: audio-addon, local-llm-addon
+    registry.ts           # ADDON_REGISTRY: the one installable module (audio-addon)
+    featureRoutes.ts      # FEATURE_ROUTES: the built-in modules, mounted in order
     loader.ts             # loadAddons(): mounts when isReady() && configEnabled
-  api/
-    glossary.ts           # GET/PUT /api/glossary
-    speakers.ts           # GET/PUT /api/speakers
-    providers.ts          # encrypted keystore CRUD + test endpoint
-    providerKeys.ts       # internal: returns decrypted keys to the SPA
-    profiles.ts           # per-provider model profiles
-    routing.ts            # last selected provider + per-phase hybrid routing
-    addons.ts             # GET /api/addons, POST /:name/install (SSE),
+  platform/               # Shared server foundations used by every feature
+    appData.ts            # env-paths + atomic JSON IO
+    documentStore.ts      # One reader/writer for each {configDir} document
+    asyncRoute.ts         # Route wrapper that turns a throw into a clean error
+    cliSubscription.ts    # Shared spawn/probe logic for the Claude Code + Codex CLIs
+    repoRoot.ts           # The repo root, resolved once
+    validators.ts         # ID / path / URL validation
+    loopbackGate.ts       # loopbackOnly()
+    lanWriteGate.ts       # LAN write gate
+    hostAllowlist.ts      # DNS-rebinding defence
+    readiness.ts          # Bind-first start-up and the readiness gate
+    routes/addons.ts      # GET /api/addons, POST /:name/install (SSE),
                           #   PATCH /:name (toggle), DELETE /:name
-    docs.ts               # GET /api/docs, GET /api/docs/:slug (allowlist)
-    lore.ts               # GET /api/lore/status, POST /create,
-                          #   POST /save-chronicle (renders .docx)
-    sessions.ts           # list / read / delete sessions, stream SBV, live state
-    chronicle.ts          # POST /api/chronicle/save → Sessions/<campaign>/*.md
-    system.ts             # CPU / RAM / GPU info for the routing recommender
-    vault.ts              # GET /api/vault/pair, POST /export-chronicle
-    [opt-in audio-addon]
-    whisper.ts            # /api/whisper/status, POST /api/whisper/setup (SSE)
-    transcribe.ts         # POST /api/sessions/:id/transcribe (legacy/replay)
-    upload.ts             # multi-track upload + transcribe-multitrack
-    [opt-in local-llm-addon]
-    localProxy.ts         # /api/local/list-models|generate|launch (CORS proxy)
-    localLLM.ts           # local-provider detection + persisted probe results
-    probe.ts              # POST /api/local-llm/probe (mini-probe runner)
-  lore/
-    detection.ts          # Sibling Tusks-Lore folder detection + create
-    docxRenderer.ts       # Chronicle → .docx Buffer (full + condensed modes)
-  sessions/
-    liveSessionBridge.ts  # Decouples sessions.ts from the audio addon
-    sessionManifest.ts    # Session-folder manifest reader / writer
-  upload/
-    extractMultitrack.ts  # Craig zip / loose-audio → per-speaker session layout
-  whisper/
-    bootstrap.ts          # venv probing + runSetup() SSE
-    invoke.ts             # spawn transcribe.py, parse JSON, build initial prompt
-    liveQueue.ts          # in-process per-utterance Whisper worker queue
-    sessionPipeline.ts    # legacy "process session" wrapper around liveQueue
-  crypto/
-    keyStore.ts           # AES-256-GCM keystore (scrypt + machine identity)
-  localProbe/
-    fixtures.ts           # 5 JSON + 1 grounding fixture
-    runner.ts             # scores structuredJsonScore + groundingScore
+  features/<id>/
+    routes/               # The feature's Express routers (<resource>.ts)
+    services/             # Server logic the routers call
+  testing/                # HTTP and spawn fixtures, golden harness
+
+  Server features: corrections (glossary, speakers), help (docs), library
+  (chronicle save, saved chronicles, .docx rendering), lore (Tusks-Lore, vault),
+  maintenance (updater, diagnostics), personas, pipeline (run checkpoints),
+  providers (keys, profiles, local runners, Claude Code, Codex, OpenRouter),
+  routing, transcription (sessions, upload, Whisper sidecar), and
+  retired-direct-api-providers (the old-key migration).
+
+shared/                   # Types and pure helpers both sides import
+  contracts/              # Request/response shapes for each document and route
+  models/  personas/  speakers/  lib/
 
 scripts/
   smoke-test.mjs          # end-to-end provider + whisper + local-LLM ping
@@ -218,86 +201,44 @@ scripts/
     setup.sh              # POSIX venv bootstrap
 
 src/
+  main.tsx                # Entry point
   App.tsx                 # Tabs: Sessions (audio module only), Chronicle,
                           #       Tome of Lore, Settings, Help. Caption
                           #       repair sits inside Chronicle; uploading
                           #       sits inside Sessions.
-  contexts/
-    AddonContext.tsx      # React context: addon list + isLoaded() / isEnabled()
-  lib/
-    pipeline.ts           # Phase 1–6 chunked orchestration
-    sbvGround.ts          # SBV-cue-preserving variant of Phase 1
+  platform/               # The App shell and what every feature shares
+    apiClient.ts          # fetch wrapper for /api/*
+    docClient.ts          # Client for a {configDir} document
+    contexts/AddonContext.tsx  # addon list + isLoaded() / isEnabled()
+    components/  hooks/  lib/  ui/   # Header, storage helpers, shadcn-style primitives
+  features/<id>/
+    components/           # The feature's React components
+    hooks/                # Hooks owned by the feature (where it has any)
+    lib/                  # Client logic and tests
+
+  Client features: caption-repair, corrections, guardrails, help, library, lore,
+  maintenance, personas, pipeline, providers, reforge, routing, transcription.
+
+  The Chronicle pipeline lives in features/pipeline/lib:
+    pipeline.ts           # Entry point for the six phases
+    phases/               # One file per phase (phase1Ground.ts … phase6Condense.ts)
+    chunkedGenerate.ts    # The per-chunk driver every phase runs through
     prompts.ts            # All prompt builders (cloud + local + split forms)
     chunker.ts            # \n\n-aware splitter with hard-cut fallback
     chunking.ts           # Per-provider/per-phase chunk size table
-    rateLimit.ts          # RateLimitState — header parsing + delay math
-    preGround.ts          # deterministic safeReplacements + hints formatter
-    transcriptCleanup.ts  # [Music]/[Laughter] markers, fillers, whitespace
-    kbCompact.ts          # heuristic glossary extraction for tight local contexts
-    multitrackUpload.ts   # XHR-based multipart upload client + progress events
-    sessions.ts           # RunSession resolver (autoResolve + buildSession)
-    sessionsClient.ts     # /api/sessions client + session list helpers
-    liveSession.ts        # live SBV polling + speaker mapping refresh
-    routing.ts            # /api/routing client
-    profiles.ts           # /api/profiles client
-    cloudKeys.ts          # per-key option resolver for the ProviderSelectModal
-    glossary.ts           # /api/glossary client + in-memory cache
-    speakers.ts           # /api/speakers client + cache
-    providerSettings.ts   # /api/providers client (UI summary)
-    localLLM.ts           # /api/local-llm client (only used when addon loaded)
-    lore.ts               # /api/lore client (status / create / save-chronicle)
-    vault.ts              # /api/vault client (pair / export-chronicle)
-    pipelineToasts.ts     # Shared cleanup/preGround toast helpers (with tests)
-    system.ts             # /api/system/info client
-    recommendations.ts    # routing recommender (RAM / VRAM / model heuristics)
-    reasoning.ts          # OpenAI reasoning-effort + Gemini thinking budget
-    gemini.ts             # Back-compat shim (hasApiKey, listAvailableModels)
-    constants.ts          # MAX_OUTPUT_TOKENS + retry constants (chunk sizes
-                          #   moved to chunking.ts; pacing moved to rateLimit.ts)
-    sbv.ts                # SBV parser + formatter (with tests)
-    storage.ts            # localStorage helpers + quota-exceeded event bridge
+    runCheckpoint.ts      # Run checkpoint schema
+  Providers live in features/providers/lib:
+    rateLimit.ts          # RateLimitState: header parsing + delay math
     providers/
       llm.ts              # LLMProvider interface (incl. getNextDelayMs)
       gemini.ts           # GeminiProvider (paid/free + static tier RateLimitState)
-      openrouter.ts       # OpenRouterProvider — one key, ~400 models
-      claude.ts           # ClaudeProvider — retired as a user-facing
-                          #   connection; kept for its cache_control and
-                          #   rate-limit header handling
-      openai.ts           # OpenAIProvider — likewise retired as a
-                          #   connection; Responses API + header harvest
-      local.ts            # Legacy free-function local proxy
+      openrouter.ts       # OpenRouterProvider: one key, ~400 models
+      claudeCode.ts       # Claude Code subscription CLI
+      codex.ts            # Codex subscription CLI
       localAdapter.ts     # LLMProvider wrapper for the user-selected local provider
       localInstance.ts    # Per-instance LocalInstanceProvider (hybrid routing)
       settings.ts         # localStorage-backed provider/tier selection
-      hardware.ts         # VRAM advisories for local models
-      types.ts            # ProviderId + ProviderSettings
       index.ts            # Registry: ensureProvidersInitialized, getActiveProvider
-  components/
-    RefinementTool.tsx    # Chronicle tab orchestrator
-    PhaseProgress.tsx     # In-flight phase progress card
-    DMQuestionsModal.tsx  # Phase 2 clarification surface
-    ChronicleView.tsx     # Finished chronicle, extras, condensed, auto-save,
-                          #   Send-to-Vault + Save-to-Lore (.docx) buttons
-    UploadPanel.tsx       # Multi-track upload UI (audio-addon)
-    LiveTranscript.tsx    # During/after-transcription view (audio-addon)
-    CaptionRepair.tsx     # SBV-mode entry point
-    SessionsList.tsx      # Sessions tab (audio-addon): list, replay, delete
-    KnowledgeBaseManager.tsx
-    GlossaryEditor.tsx
-    SpeakerEditor.tsx
-    ProviderSettings.tsx
-    ModelProfileEditor.tsx
-    ProviderSelectModal.tsx
-    AddonsManager.tsx     # Settings card: install/uninstall/toggle each add-on
-    DocsViewer.tsx        # Help tab content; renders /api/docs with react-markdown
-    LoreCard.tsx          # Settings card: detect/create sibling Tusks-Lore folder
-    LocalLLMPanel.tsx     # Only rendered when local-llm-addon loaded
-    HybridRoutingEditor.tsx # Only rendered when local-llm-addon loaded
-    WhisperSettings.tsx   # Only rendered when audio-addon loaded
-    VaultPairCard.tsx     # Settings: Tusk's Vault pairing status
-    ModelDiagnostics.tsx  # "Check available models" + per-provider picker
-    RunnerInstructions.tsx# How to start Ollama / LM Studio / Unsloth
-    ui/                   # shadcn-style primitives (button, card, tabs, …)
 ```
 
 ---
@@ -353,16 +294,21 @@ Env-var overrides for the disk roots:
 
 ### Writes are atomic
 
-`server/appData.ts → writeJson` always writes to a randomly-named temp
+`server/platform/appData.ts → writeJson` always writes to a randomly-named temp
 file in the same directory, then renames over the target. A crash
 mid-write either leaves the previous file intact or the new file fully
 present — never a truncated half-write. The chronicle save endpoint
 follows the same pattern for its `.md` output.
 
+On Windows, a rename can be refused for a moment while another save of
+the same file, an antivirus scan or the search indexer has it open.
+`writeJson` retries that rename a few times over about 150 ms, so two
+tabs saving the same chronicle at once both succeed.
+
 ### Seed migration
 
 Files seed themselves on first read after upgrade. The glossary seeds
-from `src/data/corrections.ts` if the on-disk doc is absent; the
+from `shared/contracts/glossary.ts` if the on-disk doc is absent; the
 encrypted keystore seeds from `process.env.PAID_GEMINI_API_KEY` /
 `VITE_GEMINI_API_KEY` / `OPENROUTER_API_KEY` if any are present, then logs a
 notice that the GUI is the recommended path.
@@ -383,7 +329,7 @@ The app was previously named "Silence Beyond the Sea"; the
 
 The pipeline never speaks to a vendor SDK directly. Every phase calls
 `provider.generate({...})` against `LLMProvider` (defined in
-`src/lib/providers/llm.ts`).
+`src/features/providers/lib/providers/llm.ts`).
 
 ```ts
 interface LLMProvider {
@@ -428,7 +374,7 @@ shape.
 
 ### Registry + initialization
 
-`src/lib/providers/index.ts` exports `ensureProvidersInitialized()`,
+`src/features/providers/lib/providers/index.ts` exports `ensureProvidersInitialized()`,
 which fetches the decrypted bundle from `/api/provider-keys` and
 constructs all four singletons (Gemini × 3 tiers — `auto` / `paid` /
 `free` — plus OpenRouter, the subscription CLIs, and Local). The pipeline awaits this at the
@@ -584,7 +530,7 @@ independently of the rest of the run.
 
 Above the per-phase rows sits a ladder of complete recipes, from maximum
 quality down to free. Each rung is a one-click apply of a full per-phase
-recipe built by a pure helper in `src/lib/budgetMode.ts`, unit-tested
+recipe built by a pure helper in `src/features/routing/lib/budgetMode.ts`, unit-tested
 independently of React.
 
 Presentation rules, learned from looking at the previous version rendered
@@ -638,7 +584,7 @@ above what a 4-hour, 8-speaker FLAC capture produces.
 
 ### Stage 1 — extraction (`POST /api/sessions/upload-multitrack`)
 
-`server/upload/extractMultitrack.ts` streams the upload to disk via
+`server/features/transcription/services/upload/extractMultitrack.ts` streams the upload to disk via
 multer disk storage, then:
 
 1. Partitions inputs into ordered chunks (one zip = one chunk; loose
@@ -686,9 +632,8 @@ participants.
 
 ### Session manifest schema
 
-`server/bot/sessionManifest.ts` (so named for historical reasons; it's
-now the manifest module for the upload pipeline) owns the on-disk
-shape:
+`server/features/transcription/services/sessions/sessionManifest.ts` owns
+the on-disk shape:
 
 ```ts
 type SessionManifest = {
@@ -753,7 +698,7 @@ Errors go to stderr; non-zero exit code on failure.
 
 ### Initial prompt (~200-token glossary bias)
 
-`server/whisper/invoke.ts → buildInitialPrompt(canonicalNames)` builds
+`server/features/transcription/services/whisper/invoke.ts → buildInitialPrompt(canonicalNames)` builds
 the biasing string from the glossary's `contextualHints[].canonical`
 and capitalised `safeReplacements[].to` entries. The string is capped
 at ~800 chars (Whisper's hard limit). Distinct names come first,
@@ -772,7 +717,7 @@ stdout/stderr as Server-Sent Events so the UI can show live progress.
 
 ### The live queue
 
-`server/whisper/liveQueue.ts` is a single in-process worker that drains
+`server/features/transcription/services/whisper/liveQueue.ts` is a single in-process worker that drains
 a serial queue of utterances against the sidecar. Both the upload path
 and the legacy "process session" endpoint enqueue into the same queue,
 so there is only one downstream code path. On a single-GPU machine the
@@ -783,11 +728,14 @@ Per utterance:
 
 1. Resolve `speakerDisplay` via the speakers map
    (`Character (Player)` / `Character` / `Player` / filename fallback).
-2. Invoke the sidecar on CUDA. On a `STATUS_STACK_BUFFER_OVERRUN`
-   (0xC0000409) — a known Windows CUDA/cuDNN re-init flake when one
-   sidecar process exits and the next loads the model — the queue
-   retries the same utterance on CPU with `int8` once before giving up.
-   CPU is 6–10× slower but reliable.
+2. Invoke the sidecar on CUDA through a worker process that stays up for
+   the whole session, so the model loads once. If a request fails with a
+   CUDA-class error the worker is restarted once and the utterance
+   retried; if that fails too, the utterance runs on a CPU worker at
+   `int8`, and every later utterance goes straight to CPU rather than
+   paying for the same discovery again. The engine and device in use are
+   reported to the transcription view. CPU is several times slower but
+   reliable.
 3. Persist the sidecar JSON to
    `transcripts/{speakerId}/{utteranceId}.json`.
 4. Split each Whisper segment at any internal word-gap longer than
@@ -827,7 +775,8 @@ forgotten on server restart).
 <div class="docs-section-body">
 
 
-Lives in `src/lib/pipeline.ts`. Five model-driven phases, plus
+Lives in `src/features/pipeline/lib/phases/`, one file per phase, all exported
+through `pipeline.ts`. Five model-driven phases, plus
 deterministic pre-processing in Phase 1 and an optional sixth pass
 (Condense) that the user triggers from the finished chronicle view.
 
@@ -916,10 +865,10 @@ them, and triggers Phase 3.
 ### Chunking + pacing
 
 - Chunks split on `\n\n` when possible, falling back to a hard
-  substring cut. See `src/lib/chunker.ts`.
+  substring cut. See `src/features/pipeline/lib/chunker.ts`.
 - Chunk **sizes** are per-(provider, model-tier)-per-phase, owned by
-  `src/lib/chunking.ts`. The model tier is resolved by
-  `classifyModelTier(model, provider)` in `src/lib/modelTier.ts` —
+  `src/features/pipeline/lib/chunking.ts`. The model tier is resolved by
+  `classifyModelTier(model, provider)` in `src/features/providers/lib/modelTier.ts` —
   Pro / Sonnet / GPT-5 land on `flagship`; Flash / Haiku / GPT-5-mini
   / GPT-5-nano land on `fast`; Opus lands on `frontier`. Numbers
   (chars per chunk, Phase 1 / 2 / 3 / 4 / 6):
@@ -937,8 +886,8 @@ them, and triggers Phase 3.
   default tier is `flagship`, so callers that omit the model fall back
   to the same numbers as before A3 — byte-for-byte back-compat.
 - Chunk **pacing** is per-provider, derived from response headers (see
-  `src/lib/rateLimit.ts`). Header-bearing providers populate `RateLimitState`
-  from `anthropic-ratelimit-*` and `x-ratelimit-*` headers each call;
+  `src/features/providers/lib/rateLimit.ts`). OpenRouter populates `RateLimitState`
+  from its `x-ratelimit-*` headers each call;
   Gemini seeds static `RPM` / `TPM` values from `GEMINI_STATIC_LIMITS`
   based on which key is in play (`PAID_GEMINI_API_KEY` vs
   `VITE_GEMINI_API_KEY`). The pipeline calls
@@ -1041,7 +990,7 @@ private LAN addresses (validated by `PRIVATE_HOST_RE` in
 
 ### Mini-probe (2 tests)
 
-`server/localProbe/runner.ts`:
+`server/features/providers/services/localProbe/runner.ts`:
 
 1. **Structured JSON adherence** — 5 short prompts requiring
    strict-JSON replies matching a hand-crafted schema. Score =
@@ -1060,7 +1009,7 @@ offering local models per phase.
 
 ### Hardware-aware recommender
 
-`src/lib/recommendations.ts` combines `/api/system/info` (RAM, CPU,
+`src/features/routing/lib/recommendations.ts` combines `/api/system/info` (RAM, CPU,
 NVIDIA VRAM via `nvidia-smi`) with the user's chosen local model to
 flag obvious mismatches before the user commits — e.g. a 32B model
 on 8 GB VRAM gets a "won't fit" badge in the routing editor.
@@ -1156,7 +1105,7 @@ explicitly pick "slow down" see the dilated pacing.
   leaves the host.
 - The local-LLM proxy at `/api/local/*` (mounted by the local-llm-addon
   only) accepts requests to loopback / RFC1918 private LAN addresses
-  only, validated via `PRIVATE_HOST_RE` in `server/api/localProxy.ts`.
+  only, validated via `PRIVATE_HOST_RE` in `server/features/providers/routes/localProxy.ts`.
   It is not an open proxy. Default installs return 404 on these routes
   because the add-on isn't loaded.
 - Add-on install endpoints (`POST /api/addons/:name/install`, `POST
@@ -1235,69 +1184,68 @@ the bundle and simply mounts.
 
 ### Registry + loader
 
-`server/addons/registry.ts` exports `ADDON_REGISTRY: AddonDefinition[]`.
-Each `AddonDefinition` declares:
+Two lists, because there are two different things.
 
-Every definition declares:
+`server/addons/registry.ts` exports `ADDON_REGISTRY: AddonDefinition[]`, the
+**installable** modules. Today that is one entry. Each definition declares:
 
-- `kind` — `'install'` or `'builtin'`. The discriminant; see below.
-- `name` — machine-stable identifier (`audio-addon`, `local-llm-addon`).
+- `kind` — always `'install'`.
+- `name` — machine-stable identifier (`audio-addon`).
 - `displayName` / `description` / `wip` — UI metadata.
 - `docSlug` — optional `/api/docs` slug for the "Read docs" link.
 - `registerRoutes(app: Express): void` — mount the module's endpoints.
-
-A `kind: 'install'` definition adds the install lifecycle:
-
 - `isReady(): Promise<boolean>` — prerequisites present? Called on every
   server start, and the sole source of truth for "installed".
 - `install(emit): Promise<number>` — returns the underlying script's
   exit code; non-zero means failure.
 - `uninstall(): Promise<void>` — remove prerequisites.
 
-`server/addons/loader.ts → loadAddons(app)` runs at server start. For each
-registered module it:
+`server/addons/featureRoutes.ts` exports `FEATURE_ROUTES: FeatureDefinition[]`,
+the features that ship with the app and always mount. A `FeatureDefinition`
+carries the same metadata and `registerRoutes(app)`, and nothing else: no
+`isReady()`, no install lifecycle. Each feature owns the function that mounts its
+routes, beside its routers, and the list is in the order they mount.
 
-1. Mounts a `builtin` unconditionally — neither `isReady()` nor the
-   `addons.json` toggle applies, because there is no install state for
-   either to describe.
-2. For an `install` module: reads `{configDir}/addons.json` and skips if
-   `configEnabled === false`, then calls `await addon.isReady()` and skips
-   if false.
-3. Mounts routes via `addon.registerRoutes(app)`.
-4. Records the name in an in-memory `Set` exposed as `isAddonLoaded(name)`.
+`server/addons/loader.ts → loadAddons(app)` runs at server start. It:
+
+1. For each installable module: reads `{configDir}/addons.json` and skips if
+   `configEnabled === false`, then calls `await addon.isReady()` and skips if
+   false; otherwise mounts routes via `addon.registerRoutes(app)` and records the
+   name in an in-memory `Set` exposed as `isAddonLoaded(name)`.
+2. Then walks `FEATURE_ROUTES` and mounts every one unconditionally — neither
+   `isReady()` nor the `addons.json` toggle applies, because there is no install
+   state for either to describe. Their names go in the same `Set`.
 
 Failure of any step (a thrown `isReady`, a thrown `registerRoutes`) is
-caught and logged; the loader continues to the next module so one bad
+caught and logged; the loader continues to the next entry so one bad
 one can't brick startup. Tests in `server/addons/loader.test.ts`
 pin this behaviour.
 
-### Two kinds of module
+### Modules and features
 
-`AddonDefinition` is a discriminated union on `kind`, and the discriminant
-answers one question: **does turning this on put bytes on disk that weren't
-there before?**
+The split answers one question: **does turning this on put bytes on disk that
+weren't there before?**
 
-| `kind` | Lifecycle | Today |
+| List | Lifecycle | Today |
 |---|---|---|
-| `install` | Carries `isReady()`, `install()`, `uninstall()`. `isReady()` gates mounting and is the sole source of truth for "installed". | Exactly one: `audio-addon`, whose payload is a Python environment. |
-| `builtin` | None. Ships with the app and always mounts. | The other six. |
+| `ADDON_REGISTRY` | Carries `isReady()`, `install()`, `uninstall()`. `isReady()` gates mounting and is the sole source of truth for "installed". | Exactly one: `audio-addon`, whose payload is a Python environment. |
+| `FEATURE_ROUTES` | None. Ships with the app and always mounts. | The other six. |
 
-The union is what makes the distinction structural rather than conventional:
-a `builtin` **cannot** carry an `uninstall()` body, because the type has no
-such field. The old Personas uninstall — which deleted the user's authored
-`personas.json` — is therefore no longer expressible, rather than merely
-discouraged by a comment.
+The types make the distinction structural rather than conventional: a
+`FeatureDefinition` **cannot** carry an `uninstall()` body, because the type has
+no such field. An uninstall that deleted the user's authored `personas.json` is
+therefore not expressible, rather than merely discouraged by a comment.
 
-Six modules moved from `install` to `builtin` because their `install()` bodies
-only ever wrote a marker file and then demanded a server restart: install-shaped
-ceremony for features that already shipped in the bundle. Whether a builtin is
-*usable* — CLI on `PATH`, runner reachable, vault path set — is a detection
-question its own status endpoint answers, not an installation question.
+Whether a feature is *usable* — CLI on `PATH`, runner reachable, vault path
+set — is a detection question its own status endpoint answers, not an
+installation question.
 
-Marker files older versions wrote (`{configDir}/*.enabled`) are simply no longer
-consulted. They are deliberately not deleted: the change alters what the user is
-asked to understand, not the contents of their disk. For the same reason a stale
-`configEnabled: false` left over from the add-on era is ignored for builtins.
+Marker files older versions wrote (`{configDir}/*.enabled`) are no longer
+consulted by the app. They are deliberately not deleted by it (only a full
+uninstall via `scripts/uninstall.mjs` removes them): the change alters what the
+user is asked to understand, not the contents of their disk. For the same reason
+a stale `configEnabled: false` left over from the add-on era is ignored for
+features.
 
 ### Three-state model (installable modules only)
 
@@ -1320,11 +1268,11 @@ A failing `isReady()` is caught per module and returned inline as
 `readyError` rather than failing the whole list with a 500 — one module's
 broken prerequisite check must not hide the others.
 
-### Endpoints (`server/api/addons.ts`)
+### Endpoints (`server/platform/routes/addons.ts`)
 
 | Method | Path                       | Behaviour |
 |--------|----------------------------|-----------|
-| GET    | `/api/addons`              | List **installable** modules with all three flags + `docSlug`. Builtins are deliberately absent: they configure themselves through their own surfaces (connection rows, the lore-source switch), so an install/uninstall row for them would be ceremony around nothing. |
+| GET    | `/api/addons`              | List **installable** modules with all three flags + `docSlug`. Features are deliberately absent: they configure themselves through their own surfaces (connection rows, the lore-source switch), so an install/uninstall row for them would be ceremony around nothing. |
 | POST   | `/api/addons/:name/install`| SSE stream of install logs; final `done` event carries the real `exitCode` |
 | PATCH  | `/api/addons/:name`        | `{ configEnabled: boolean }` toggle; persists to `addons.json` |
 | DELETE | `/api/addons/:name`        | Calls `addon.uninstall()` |
@@ -1333,28 +1281,29 @@ Install endpoints are POST (not GET) so an `<img src=…>` can't trigger
 them. The SSE response shape works fine over POST because the React
 side consumes it via `fetch().body.getReader()`, not `EventSource`.
 
-### Currently registered modules
+### Currently registered
 
-`server/addons/registry.ts` is the source of truth.
+`server/addons/registry.ts` and `server/addons/featureRoutes.ts` are the
+source of truth.
 
-- **`audio-addon`** *(install)* — Whisper sidecar + the Sessions tab.
-  `isReady()` checks for `vendor/python-venv/` via `whisperStatus()`.
+- **`audio-addon`** *(installable)* — Whisper sidecar + the Sessions tab.
+  `isReady()` checks for `vendor/python-venv/` on disk.
   `install()` runs `scripts/whisper/setup.{ps1,sh}` and forwards the
   child process's exit code. Routes: `/api/sessions/*` (transcribe +
   upload extensions), `/api/whisper/*`.
-- **`personas-addon`** *(builtin)* — Chronicle Personas. The router seeds the
+- **`personas-addon`** *(feature)* — Chronicle Personas. The router seeds the
   six presets on first read, so `personas.json` never needs to exist and
   nothing deletes it. Routes: `/api/personas/*`.
-- **`local-llm-addon`** *(builtin)* — Ollama / LM Studio / Unsloth routing.
+- **`local-llm-addon`** *(feature)* — Ollama / LM Studio / Unsloth routing.
   Routes: `/api/local/*` (proxy + launch) and `/api/local-llm/*` (detection,
   capability probes, Unsloth auth config).
-- **`claude-code-addon`** *(builtin)* — routes phases through a signed-in
+- **`claude-code-addon`** *(feature)* — routes phases through a signed-in
   Claude Code CLI. Routes: `/api/claude-code/*`.
-- **`codex-addon`** *(builtin)* — the same against the OpenAI Codex CLI, and
-  deliberately independent of the Claude Code module. Routes: `/api/codex/*`.
-- **`whisper-cpp-addon`** *(builtin)* — bridges to a whisper.cpp build the user
+- **`codex-addon`** *(feature)* — the same against the OpenAI Codex CLI, and
+  deliberately independent of the Claude Code feature. Routes: `/api/codex/*`.
+- **`whisper-cpp-addon`** *(feature)* — bridges to a whisper.cpp build the user
   compiles, covering AMD, Intel and Apple GPUs. Routes: `/api/whisper-cpp/*`.
-- **`obsidian-vault-addon`** *(builtin)* — read-only Obsidian vault as a lore
+- **`obsidian-vault-addon`** *(feature)* — read-only Obsidian vault as a lore
   source. Routes: `/api/obsidian/*`, behind a `loopbackOnly()` gate.
 
 > [!CAUTION]
@@ -1366,7 +1315,7 @@ side consumes it via `fetch().body.getReader()`, not `EventSource`.
 > `GET /api/lore/documents` — which returns the full body of every `.md` under
 > that root — an ungated `/config` is arbitrary file read. Harmless on the
 > default `127.0.0.1` bind, but `TUSKS_HOST=0.0.0.0` is a documented option and
-> would expose all of it unauthenticated. Mounting unconditionally as a builtin
+> would expose all of it unauthenticated. Mounting unconditionally
 > makes this gate **more** important, not less.
 
 ### Future add-ons
@@ -1405,7 +1354,7 @@ Holds a `.docx` archive of finished chronicles and (in future) a
 shared lore corpus. Not an add-on — it's a sibling-detected
 filesystem feature analogous to Vault pairing.
 
-### Detection (`server/lore/detection.ts`)
+### Detection (`server/features/lore/services/detection.ts`)
 
 First match wins:
 
@@ -1420,7 +1369,7 @@ random folders named "Tusks-Lore" from triggering false positives.
 subdirectory at the default sibling path. Idempotent: re-running
 preserves an existing marker's `createdAt`.
 
-### DOCX rendering (`server/lore/docxRenderer.ts`)
+### DOCX rendering (`server/features/library/services/docxRenderer.ts`)
 
 `renderChronicleDocx({ campaign, sessionNumber, chronicle, extras,
 condensed, mode })` returns a `Buffer` via the `docx` npm package.
@@ -1438,7 +1387,7 @@ Document structure:
 The extras blocks render in **both** modes — only the chronicle body
 differs.
 
-### Endpoints (`server/api/lore.ts`)
+### Endpoints (`server/features/lore/routes/lore.ts`)
 
 | Method | Path                        | Behaviour |
 |--------|-----------------------------|-----------|
@@ -1448,10 +1397,10 @@ differs.
 
 ### Client surface
 
-- `src/components/LoreCard.tsx` — Settings card showing detection
+- `src/features/lore/components/LoreCard.tsx` — Settings card showing detection
   status, sessions count, writability, and the **Create Tusk's Lore**
   button when not detected.
-- `src/components/ChronicleView.tsx` — adds **Save full .docx** and
+- `src/features/library/components/ChronicleView.tsx` — adds **Save full .docx** and
   **Save condensed .docx** buttons (the condensed one only when a
   Phase 6 output exists) when the Lore folder is detected.
 
@@ -1470,17 +1419,17 @@ The Help tab renders the same `.md` files that live in the GitHub
 repo, inside the app. Stays consistent with the GitHub render because
 both consume the same files.
 
-### Endpoint (`server/api/docs.ts`)
+### Endpoint (`server/features/help/routes/docs.ts`)
 
 At startup the docs router walks `docs/**/*.md` + repo-root `README.md`,
 `CONTRIBUTING.md`, `ROADMAP.md` (contributor guides are excluded) and
 builds a slug→absPath Map. Slugs derive from the
-relative path: `docs/add-ons/audio-transcription.md` →
-`add-ons-audio-transcription`. Slugs must match `/^[a-z0-9-]+$/` AND
+relative path: `docs/extras/audio-transcription.md` →
+`docs-extras-audio-transcription`. Slugs must match `/^[a-z0-9-]+$/` AND
 exist in the precomputed Map — there is no string-concatenation of user
 input with disk paths, so path traversal is impossible by construction.
 
-### Client (`src/components/DocsViewer.tsx`)
+### Client (`src/features/help/components/DocsViewer.tsx`)
 
 Uses `react-markdown` + `remark-gfm` (the only new runtime deps).
 Sidebar groups docs by their parent folder; defaults to the README on
@@ -1505,7 +1454,7 @@ user save a full snapshot of an in-flight run to disk, close the app,
 come back tomorrow when the quota refills, and resume from the exact
 chunk they paused on.
 
-### On-disk schema (`src/lib/runCheckpoint.ts`)
+### On-disk schema (`src/features/pipeline/lib/runCheckpoint.ts`)
 
 ```ts
 type RunCheckpoint = {
@@ -1525,7 +1474,7 @@ type RunCheckpoint = {
 refuses to load mismatched versions and surfaces an "export the partial
 output, then delete this checkpoint" path instead.
 
-### Storage (`server/api/runs.ts`)
+### Storage (`server/features/pipeline/routes/runs.ts`)
 
 | Method | Path | Behaviour |
 |--------|------|-----------|
@@ -1541,12 +1490,12 @@ traversal attempts can't reach disk.
 
 - **Pause** option in the rate-limit dialog (§19) writes the checkpoint
   via `saveRun()` then aborts the chunk loop.
-- **ResumeRunBanner** (`src/components/ResumeRunBanner.tsx`) renders
+- **ResumeRunBanner** (`src/features/pipeline/components/ResumeRunBanner.tsx`) renders
   above the Chronicle tab when checkpoints exist. Lists each with
   campaign / paused-phase / chunk-progress; Resume + Delete buttons.
 - **Resume click** hydrates `RefinementState` from the checkpoint,
   restores the safetyMultiplier, and (per the planner in
-  `src/lib/resumeFlow.ts`) decides whether to continue at
+  `src/features/pipeline/lib/resumeFlow.ts`) decides whether to continue at
   `startChunkIndex` or restart the paused phase from chunk 0. Mid-chunk
   auto-continuation for Phase 3+ is wired for the next release; for now
   the user re-triggers the remaining phases from the restored state.
@@ -1565,7 +1514,7 @@ traversal attempts can't reach disk.
 
 
 When Gemini emits a 429 mid-pipeline, the provider classifies it
-(`classifyExhaustion` in `src/lib/providers/gemini.ts`) as one of
+(`classifyExhaustion` in `src/features/providers/lib/providers/gemini.ts`) as one of
 `rate_limit` / `daily_quota` / `transient`. The classification looks
 at quotaId/quotaMetric shape (`PerDay` vs `PerMinute`) and falls back
 to a heuristic — three exhaustions within five minutes on the same key
@@ -1580,7 +1529,7 @@ The provider emits a `quota_exhausted` `ProviderEvent`; the pipeline's
 
 | Choice | Action |
 |---|---|
-| **Stop and export** | Aborts the run + downloads the partial chronicle as Markdown (via `buildPartialMarkdown` in `src/lib/exportMarkdown.ts`) |
+| **Stop and export** | Aborts the run + downloads the partial chronicle as Markdown (via `buildPartialMarkdown` in `src/features/library/lib/exportMarkdown.ts`) |
 | **Slow down (3×)** | Sets `safetyMultiplierRef.current = 3`; the next chunk's pacing call reads this. Disabled when `quotaKind === 'daily_quota'` |
 | **Pause and save for later** | Writes a checkpoint (§18) then aborts |
 | **Switch to paid key for the rest** | Aborts + advisory toast pointing the user at Settings → Providers & models. Disabled when no paid Gemini key is configured. Live mid-run flip is a follow-up. |
@@ -1606,9 +1555,9 @@ toasts so the previously-silent swap is now visible.
   does not re-encode — so on-disk size mirrors what came out of Craig.
   The Sessions tab shows running disk usage and offers an *audio-only*
   delete once the transcript looks good.
-- Whisper large-v3 on an RTX 3070 Ti at `int8_float16` runs 5–10×
-  realtime per utterance; total transcription on a 4-hour session
-  typically finishes in well under an hour.
+- Whisper large-v3 on an RTX 3070 Ti at `int8_float16` runs at roughly 30–50×
+  realtime per speaker track, about 10 minutes per hour of session at five or
+  six tracks; a 4-hour six-speaker session takes around 40 minutes.
 - The cloud refinement on a typical session (~30k words grounded)
   takes 10–20 minutes wall-clock with Tier-1 pacing on Gemini, faster
   on pay-as-you-go OpenRouter tiers.
