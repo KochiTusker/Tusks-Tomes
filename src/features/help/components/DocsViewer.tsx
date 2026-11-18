@@ -1,6 +1,6 @@
 import { apiJson } from '@/platform/apiClient'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import Markdown from 'react-markdown'
+import Markdown, { defaultUrlTransform } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
@@ -16,6 +16,7 @@ import {
 import { HelpLanding } from './HelpLanding'
 import { wrapH2SectionsInDetails } from '@/features/help/lib/collapsibleMarkdown'
 import { renderDocsAlerts } from '@/features/help/lib/docsAlerts'
+import { resolveDocAsset } from '@/features/help/lib/docAssets'
 
 // Restrictive HTML sanitiser configuration. rehype-raw enables raw HTML
 // in markdown — required so the collapsible <details>/<summary>/<div>
@@ -239,7 +240,7 @@ export function DocsViewer() {
                     [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5
                     [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5
                     [&_li]:my-0.5
-                    [&_img]:inline-block [&_img]:my-1
+                    [&_img]:inline-block [&_img]:my-1 [&_img]:h-auto [&_img]:max-w-full
                     [&_code]:rounded [&_code]:bg-muted/60 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-xs
                     [&_pre]:my-3 [&_pre]:overflow-x-auto [&_pre]:rounded-md [&_pre]:bg-muted/60 [&_pre]:p-3
                     [&_pre_code]:bg-transparent [&_pre_code]:p-0
@@ -259,6 +260,15 @@ export function DocsViewer() {
                       // sanitize wouldn't see it as an HTML element
                       // yet.
                       rehypePlugins={[rehypeRaw, [rehypeSanitize, SAFE_HTML_SCHEMA]]}
+                      // Images are written relative to the markdown file so
+                      // they also work on GitHub and the docs site; here they
+                      // are resolved against the file, not the app's URL.
+                      urlTransform={(url, key, node) => {
+                        const safe = defaultUrlTransform(url)
+                        return key === 'src' && node.tagName === 'img'
+                          ? resolveDocAsset(activeDoc.path, safe)
+                          : safe
+                      }}
                     >
                       {activeDoc.content}
                     </Markdown>

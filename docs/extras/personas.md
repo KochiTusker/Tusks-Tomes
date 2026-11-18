@@ -29,15 +29,11 @@ Built in — nothing to install. You will find it under **Settings → Voice & c
 <summary><h2>How it works</h2></summary>
 <div class="docs-section-body">
 
-The personas add-on only overrides three pipeline phases:
+Personas only override three pipeline phases.
 
-- **Phase 3 — Chronicle** (the main narrative pass)
-- **Phase 5 — Polish** (the local-LLM-only final edit pass)
-- **Phase 6 — Condense** (the optional shorter retelling + recap bullets)
+![A Narrator picker offers Bard, the default, or a persona. A persona gives its voice to Phase 3, Chronicle, and Phase 5, Condense. Phases 1, 2 and 4, Ground, Audit and Extras, stay voice-neutral, and Phase 3.5, Polish, is not used today. With no persona the locked Bard prompt runs unchanged. Two example lines show the same moment in two voices. The Bard default says: The party forded the river at dusk and made camp. An innkeeper persona says: Wet to the knees, they waded the river and called it camp.](../assets/diagrams/chronicle-personas.svg)
 
-Phases 1, 2, and 4 are not affected — they handle grounding, DM
-clarification questions, and extras extraction, which should stay
-voice-neutral.
+Phases 1, 2 and 4 handle grounding, DM clarification questions and extras extraction, which should stay voice-neutral.
 
 Each persona owns five prompts (one per phase × cloud/local combination).
 The structural rules — no fabrication, third-person past tense, preserve
@@ -45,8 +41,8 @@ canonical names, etc. — are baked into the bard-shaped templates the
 presets and "Create from template" start from. The voice is a colouring
 layer on top.
 
-When no persona is selected, or when the add-on is disabled, the pipeline
-runs the locked bard prompt byte-for-byte — exactly the same as a fresh
+When no persona is selected, the pipeline runs the locked bard prompt
+byte-for-byte — exactly the same as a fresh
 install.
 
 </div>
@@ -56,8 +52,8 @@ install.
 <summary><h2>Switching personas</h2></summary>
 <div class="docs-section-body">
 
-After installing the add-on and restarting `npm run dev`, the **Chronicle**
-tab grows a small **Narrator** picker at the top. Pick from:
+The **Chronicle** tab has a small **Narrator** picker in its **How it should
+read** step. Pick from:
 
 - **Bard (default)** — the locked, original prompt. Best for accuracy.
 - **Six presets** — Arnold Schwarzenegger, Homer Simpson, Peter Griffin,
@@ -74,7 +70,7 @@ call). It does not retroactively change an already-generated chronicle.
 <summary><h2>Authoring custom personas</h2></summary>
 <div class="docs-section-body">
 
-In **Settings → Chronicle Personas** there are four ways to create one:
+In **Settings → Voice & content → Chronicle Personas** there are four ways to create one:
 
 - **From preset** — clones an existing preset into an editable copy. Best
   starting point if you want to tweak an existing voice slightly.
@@ -103,9 +99,9 @@ its chunk text in:
 |---|---|---|
 | Phase 3 — Chronicle (cloud) | `{groundedChunk}` | `{qaBlock}`, `{priorTail}`, `{chunkIndex}`, `{chunkTotal}` |
 | Phase 3 — Chronicle (local) | `{groundedChunk}` | `{kbConcat}`, `{qaBlock}`, `{priorTail}`, `{chunkIndex}`, `{chunkTotal}` |
-| Phase 5 — Polish (local) | `{chronicleChunk}` | `{kbConcat}`, `{priorTail}`, `{chunkIndex}`, `{chunkTotal}` |
-| Phase 6 — Condense (cloud) | `{chronicle}` | `{kbConcat}`, `{answersBlock}`, `{campaign}`, `{sessionNumber}` |
-| Phase 6 — Condense (local) | `{chronicle}` | `{kbConcat}`, `{answersBlock}`, `{campaign}`, `{sessionNumber}` |
+| Phase 3.5 — Polish (local) | `{chronicleChunk}` | `{kbConcat}`, `{priorTail}`, `{chunkIndex}`, `{chunkTotal}` |
+| Phase 5 — Condense (cloud) | `{chronicle}` | `{kbConcat}`, `{answersBlock}`, `{campaign}`, `{sessionNumber}` |
+| Phase 5 — Condense (local) | `{chronicle}` | `{kbConcat}`, `{answersBlock}`, `{campaign}`, `{sessionNumber}` |
 
 Saving a persona without the required placeholder is rejected with an
 inline error.
@@ -126,9 +122,7 @@ restart.
 > cannot delete anything you have written. The six presets are seeded the
 > first time the list is read, so `personas.json` never has to exist.
 
-The six presets are seeded the first time the personas list is read, so
-`personas.json` never has to exist for the feature to work. The Bard default
-prompt ships with the core install and is unaffected either way.
+The Bard default prompt ships with the core install and is unaffected either way.
 
 </div>
 </details>

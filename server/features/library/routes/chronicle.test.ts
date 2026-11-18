@@ -6,7 +6,21 @@ import { describe, expect, it } from 'vitest'
 import express from 'express'
 import { createServer, type Server } from 'node:http'
 import type { AddressInfo } from 'node:net'
-import { chronicleRouter } from './chronicle.js'
+import { chronicleRouter, sessionFileName } from './chronicle.js'
+
+describe('sessionFileName', () => {
+  it('names the file after the campaign and session only', () => {
+    expect(sessionFileName('Campaign-Alpha', 12)).toBe('Campaign-Alpha - Session 12.md')
+  })
+
+  it('gives a variant its own file so it never overwrites the session export', () => {
+    expect(sessionFileName('Campaign-Alpha', 12, 'reforge-2')).toBe('Campaign-Alpha - Session 12 - reforge-2.md')
+  })
+
+  it('drops a fractional session number to the whole session', () => {
+    expect(sessionFileName('Campaign-Beta', 3.7)).toBe('Campaign-Beta - Session 3.md')
+  })
+})
 
 async function withServer<T>(fn: (baseUrl: string) => Promise<T>): Promise<T> {
   const app = express()

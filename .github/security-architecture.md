@@ -48,7 +48,7 @@ flowchart LR
     visitor -.->|"B2 · loopback + LAN-write gates"| express
     express -->|"B3 · path containment"| disk
     express -->|"B4 · SSRF allowlist"| runner
-    express -->|"B5 · text only, never audio"| cloud
+    spa -->|"B5 · HTTPS, text only, never audio"| cloud
     express --> venv
 ```
 
@@ -58,11 +58,11 @@ flowchart LR
 | **B2** | LAN → Express | Reads always; writes only on opt-in; credentials never | [`loopbackOnly()`](../server/platform/loopbackGate.ts), [`lanWriteGate()`](../server/platform/lanWriteGate.ts) |
 | **B3** | Express → disk | Campaign names, run IDs, session IDs, doc slugs | [server/platform/validators.ts](../server/platform/validators.ts) |
 | **B4** | Express → local runner | A user-supplied base URL | [`validateLocalBaseUrl()`](../server/platform/validators.ts) |
-| **B5** | Express → cloud LLM | Transcript text and prompts — **never audio** | Provider layer; audio is transcribed in-process |
+| **B5** | Browser → cloud LLM | Transcript text, prompts and lore — **never audio** | Provider layer in the browser, over HTTPS, with keys from the loopback-only `/api/provider-keys`; audio is transcribed by a local Python process |
 
 The one boundary that is *not* a security control is B5. Sending your transcript to a
-provider is the thing you configured the provider to do. Tomes protects your key from
-other software on your machine; it cannot protect your text from the recipient you chose.
+provider is the thing you configured the provider to do. Tomes keeps your key from other
+devices on your network; it cannot protect your text from the recipient you chose.
 
 ---
 

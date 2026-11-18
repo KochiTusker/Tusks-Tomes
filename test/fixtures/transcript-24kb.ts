@@ -8,7 +8,7 @@
 //   - Hit ~24,000 characters total (close to one Phase 1 chunk on
 //     Gemini Paid; ~3 chunks on the conservative local profile).
 
-const CHARACTERS = ['Esen', 'Janus', 'Lucian', 'Viggo', 'Ivo']
+const CHARACTERS = ['Eamon', 'Ingrid', 'Maeve', 'Verity', 'Ilias']
 const ACTIONS = [
   'rolls a perception check',
   'casts shield of faith',

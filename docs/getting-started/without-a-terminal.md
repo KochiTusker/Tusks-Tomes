@@ -4,13 +4,15 @@ If you've **never opened a terminal, never used GitHub, and never installed a
 Node.js project**, this is the page for you. It assumes none of that and
 explains each step as it comes.
 
+![The road from nothing to a first chronicle, as eight numbered steps in three stretches. Once, on your computer: 1, install Node.js and Git from nodejs.org and git-scm.com; 2, download Tusk's Tomes by cloning it or taking the ZIP; 3, double-click setup.bat, which takes one to three minutes. Each time you start it: 4, double-click Start_Tusks_Tomes.bat, wait for READY and keep the window open; 5, your browser opens the app. In the app: 6, add a way to reach a model, a Gemini or OpenRouter key or Claude Code or Codex; 7, add your lore and players; then 8, chronicle a session, drawn in gold as what comes out. A dashed box between 7 and 8 marks an optional step with no number: audio transcription, with Python first and then Install.](../assets/diagrams/getting-it-running.svg)
+
 I'll be honest about the time, because I'd rather you knew going in: **budget
 about 20 minutes** the first time. Roughly ten of that is installing Node.js
 and downloading the project — one-off, and you'll never do it again. The
 remainder is the app itself, which is quick.
 
 If you also want audio transcription for Craig recordings, add Python
-(~5 minutes) and the transcription install (which downloads about 1.5 GB, so it depends
+(~5 minutes) and the transcription install (which downloads about 1.5–2.5 GB, so it depends
 entirely on your connection). That part is optional and you can leave it until
 later, or skip it entirely — there's a route that uses YouTube to do the
 transcribing for you.
@@ -21,8 +23,8 @@ and I'd rather tell you that now than halfway down the page.
 
 > **What you get straight away:** the Chronicle tab (paste a transcript, get a
 > proper write-up), Caption Repair (drop in a YouTube `.sbv`), Tome of Lore
-> (your campaign notes and glossary), and Settings. The audio Upload and
-> Sessions tabs arrive with the add-on if you decide you want it.
+> (your campaign notes and glossary), and Settings. The Sessions tab,
+> with audio upload at the top of it, arrives with the add-on if you decide you want it.
 
 > **If you get stuck, that's a bug in this guide, not a failing on your part.**
 > Tell me via the [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header)
@@ -75,13 +77,13 @@ That's it. You don't need to "do anything" with Node — just installing it make
 
 You have two options here. Option B is recommended because it gets you one-click updates from inside the app.
 
-### Option A — Download the ZIP (no Git needed)
+### Option A — Download the ZIP
 
 1. Go to <https://github.com/KochiTusker/Tusks-Tomes>.
 2. Click the green **`<> Code`** button at the top, then **Download ZIP** at the bottom of the dropdown.
 3. Find the file in your Downloads folder. **Right-click → Extract All…** Pick a folder you'll remember, like `Documents\Tusks-Tomes`.
 
-> **Trade-off:** the in-app updater needs Git, so if you go the ZIP route you'll have to re-download a fresh ZIP whenever a new version drops. Most updates take 30 seconds; this isn't a big deal.
+> **Trade-off:** the in-app updater needs Git, so if you go the ZIP route you'll have to re-download a fresh ZIP whenever a new version drops. Most updates take 30 seconds; this isn't a big deal. **Setup also checks for Git and stops if it can't find it**, so install Git (the first step of Option B) even if you take the ZIP.
 
 ### Option B — Clone with Git (one-click updates later)
 
@@ -113,10 +115,10 @@ You have two options here. Option B is recommended because it gets you one-click
    - Confirm Node and Git are present (prints exact `winget` install commands for anything missing).
    - Detect your GPU (reports only — no install).
    - Copy `.env.example` to `.env`.
-   - Install the Node packages (~1 minute).
+   - Install the Node packages (1–3 minutes, depending on your connection).
 3. When it says "Setup complete", close the window.
 
-`setup.bat` is plain readable text — open it in Notepad first if you want to see exactly what it does. About 60 lines, no admin elevation, no system-wide installs.
+`setup.bat` is plain readable text — open it in Notepad first if you want to see exactly what it does. About 100 lines, no admin elevation, no system-wide installs.
 
 ---
 
@@ -150,11 +152,11 @@ Everything below happens in your browser. No code, no config files.
 
 1. **Add an LLM API key.** Settings → Providers & models → paste a Gemini or OpenRouter key → **Save**.
    - **Don't have one yet?** See [providers.md](../models/choosing-a-provider.md) for paid-key sign-up walkthroughs. (Gemini Pro moved behind billing in 2026 — a paid key is required for the main pipeline; the project has been engineered to keep that bill small.)
-   - **Want to run fully offline?** Install [Ollama](https://ollama.com), start it, then use **Detect** in Settings → Providers & models. There is nothing to install on the Tomes side.
-2. *(Optional)* **Install Audio Transcription.** If you want to upload Craig recordings or transcribe audio files directly: **Settings → Transcription → Install**. This downloads the Whisper sidecar (roughly 1.5 GB) and requires Python from Step 2. Restart `Start_Tusks_Tomes.bat` when prompted. This is the only module that installs anything.
-4. **Drop in your campaign lore.** Tome of Lore tab → upload PDFs / Word docs / notes. Add Glossary entries for proper nouns the model would otherwise mangle.
-5. **List your players.** Same tab → Speakers card → add a row per player with their player name + character name.
-6. **Chronicle a session.** Either paste a transcript into the Chronicle tab, or follow one of the [two workflows](../importing/README.md).
+   - **Want the mechanical phases on your own machine?** Install [Ollama](https://ollama.com), start it, then open Settings → Providers & models; the panel detects it, and **Detect again** repeats the check. The chronicle still needs a cloud model or a subscription. There is nothing to install on the Tomes side.
+2. *(Optional)* **Install Audio Transcription.** If you want to upload Craig recordings or transcribe audio files directly: **Settings → Transcription → Install**. This downloads the Whisper sidecar (about 1.5–2.5 GB) and requires Python from Step 2. Restart `Start_Tusks_Tomes.bat` when prompted. This is the only module that installs anything.
+3. **Drop in your campaign lore.** Tome of Lore tab → upload PDFs / Word docs / notes. Add Glossary entries for proper nouns the model would otherwise mangle.
+4. **List your players.** Same tab → Speakers card → add a row per player with their player name + character name.
+5. **Chronicle a session.** Either paste a transcript into the Chronicle tab, or follow one of the [three routes](../importing/README.md).
 
 ---
 
@@ -170,11 +172,11 @@ Everything below happens in your browser. No code, no config files.
 Same idea, terminal-flavoured:
 
 ```sh
-# 1. Install Node 22+, Python 3.10-3.12 (optional), Git, ffmpeg
-# macOS:  brew install node python git ffmpeg
-# Debian: sudo apt install nodejs npm python3 python3-venv git ffmpeg
-# Fedora: sudo dnf install nodejs npm python3 git ffmpeg
-# Arch:   sudo pacman -S nodejs npm python git ffmpeg
+# 1. Install Node 22+, Python 3.10-3.12 (optional), Git
+# macOS:  brew install node python git
+# Debian: sudo apt install nodejs npm python3 python3-venv git
+# Fedora: sudo dnf install nodejs npm python3 git
+# Arch:   sudo pacman -S nodejs npm python git
 
 # 2. Clone
 git clone https://github.com/KochiTusker/Tusks-Tomes.git

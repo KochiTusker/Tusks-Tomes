@@ -11,9 +11,9 @@ const PHASE_LABEL: Record<PhaseId, string> = {
   phase1_ground: 'Phase 1 — Grounding transcript against Knowledge Base',
   phase2_audit: 'Phase 2 — Auditing for clarification questions',
   phase3_chronicle: 'Phase 3 — Generating chronicle',
-  phase5_polish: 'Phase 5 — Polishing chronicle (final review)',
+  phase5_polish: 'Phase 3.5 — Polishing chronicle (final review)',
   phase4_extras: 'Phase 4 — Extracting jests, gore, and quotes',
-  phase6_condense: 'Phase 6 — Condensing chronicle and building recap',
+  phase6_condense: 'Phase 5 — Condensing chronicle and building recap',
 }
 
 // Display order — Phase 5 polish runs between 3 and 4 in the pipeline so

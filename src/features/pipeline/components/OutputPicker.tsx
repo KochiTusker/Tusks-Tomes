@@ -66,11 +66,11 @@ export function OutputPicker({ initial, onConfirm, onBack, estimatedChunks, chro
   // is shown as "(local-LLM only; cloud providers skip)" rather than
   // hidden — it's part of the architecture so users on a local backend
   // know to expect it. Cloud users see the same label so they can match
-  // it against the "Phase 5 skipped" line they'll later see in logs.
+  // it against the "Phase 3.5 skipped" line they'll later see in logs.
   const phasesThatWillRun: string[] = []
-  if (chronicle) phasesThatWillRun.push('Phase 3 (Chronicle)', 'Phase 5 (Polish — local-LLM only; cloud providers skip)')
+  if (chronicle) phasesThatWillRun.push('Phase 3 (Chronicle)', 'Phase 3.5 (Polish — local-LLM only; cloud providers skip)')
   if (extras) phasesThatWillRun.push('Phase 4 (Extras)')
-  if (condensed) phasesThatWillRun.push('Phase 6 (Condense)')
+  if (condensed) phasesThatWillRun.push('Phase 5 (Condense)')
 
   return (
     <Card>
@@ -99,7 +99,7 @@ export function OutputPicker({ initial, onConfirm, onBack, estimatedChunks, chro
               <BookOpen className="h-4 w-4" /> Chronicle
             </span>
             <span className="text-xs text-muted-foreground">
-              Narrative prose of the session. Runs Phase 3 (and Phase 5 Polish if your active provider is a local LLM; cloud providers skip Phase 5 by design).
+              Narrative prose of the session. Runs Phase 3 (and Phase 3.5 Polish if your active provider is a local LLM; cloud providers skip Phase 3.5 by design).
               Most expensive output — skip if you only want quotes/jests/gore.
             </span>
           </span>

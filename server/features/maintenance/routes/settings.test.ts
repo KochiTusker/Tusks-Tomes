@@ -66,7 +66,7 @@ async function withSettingsServer<T>(
 describe('readSettings', () => {
   it('returns the default updaterRemote="origin" when no file exists', async () => {
     const { readSettings } = await import('./settings.js')
-    expect(await readSettings()).toEqual({ updaterRemote: 'origin', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
+    expect(await readSettings()).toEqual({ updaterRemote: 'origin', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, autoUpdateModelList: true, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
   })
 
   it('reads a persisted "dev" setting back', async () => {
@@ -76,7 +76,7 @@ describe('readSettings', () => {
       'utf8',
     )
     const { readSettings } = await import('./settings.js')
-    expect(await readSettings()).toEqual({ updaterRemote: 'dev', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
+    expect(await readSettings()).toEqual({ updaterRemote: 'dev', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, autoUpdateModelList: true, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
   })
 
   // Security guard: the persisted value flows into `git fetch <remote>`,
@@ -90,7 +90,7 @@ describe('readSettings', () => {
       'utf8',
     )
     const { readSettings } = await import('./settings.js')
-    expect(await readSettings()).toEqual({ updaterRemote: 'origin', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
+    expect(await readSettings()).toEqual({ updaterRemote: 'origin', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, autoUpdateModelList: true, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
   })
 
   it('survives a malformed settings.json (treats as missing)', async () => {
@@ -102,22 +102,32 @@ describe('readSettings', () => {
     // updater. readSettings catches the parse failure and falls back
     // to defaults; the user can fix the file via POST /api/settings
     // (or by deleting it) whenever they like.
-    await expect(readSettings()).resolves.toEqual({ updaterRemote: 'origin', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
+    await expect(readSettings()).resolves.toEqual({ updaterRemote: 'origin', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, autoUpdateModelList: true, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
   })
 
   it('treats null or non-object roots as empty', async () => {
     await fs.writeFile(path.join(WORK, 'settings.json'), 'null', 'utf8')
     const { readSettings } = await import('./settings.js')
-    expect(await readSettings()).toEqual({ updaterRemote: 'origin', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
+    expect(await readSettings()).toEqual({ updaterRemote: 'origin', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, autoUpdateModelList: true, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
   })
 })
 
 describe('writeSettings', () => {
+  it('keeps automatic model-list updates on unless explicitly turned off', async () => {
+    const { writeSettings, readSettings } = await import('./settings.js')
+    // Junk and missing values fall back to the default (on).
+    await fs.writeFile(path.join(WORK, 'settings.json'), '{"autoUpdateModelList":"no"}', 'utf8')
+    expect((await readSettings()).autoUpdateModelList).toBe(true)
+    expect((await writeSettings({ autoUpdateModelList: false })).autoUpdateModelList).toBe(false)
+    expect((await readSettings()).autoUpdateModelList).toBe(false)
+    expect((await writeSettings({ autoUpdateModelList: true })).autoUpdateModelList).toBe(true)
+  })
+
   it('persists updaterRemote="dev" to disk', async () => {
     const { writeSettings, readSettings } = await import('./settings.js')
     const result = await writeSettings({ updaterRemote: 'dev' })
-    expect(result).toEqual({ updaterRemote: 'dev', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
-    expect(await readSettings()).toEqual({ updaterRemote: 'dev', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
+    expect(result).toEqual({ updaterRemote: 'dev', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, autoUpdateModelList: true, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
+    expect(await readSettings()).toEqual({ updaterRemote: 'dev', disableThinkingOnGrounding: false, phase1AliasHints: false, reassembleQuotes: false, retrieveVaultKb: false, autoUpdateModelList: true, claudeCodePlan: 'unknown', codexPlan: 'unknown', perPhaseThinking: {}, devTestMode: { enabled: false, maxChars: 24000 } })
   })
 
   it('drops an invalid value silently and writes the safe default', async () => {

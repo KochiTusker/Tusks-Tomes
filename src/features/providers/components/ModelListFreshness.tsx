@@ -6,7 +6,7 @@
 // serves both. Codex ships a fixed list with the app, so it has nothing to
 // check.
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { Loader2, RefreshCw } from 'lucide-react'
 import { Button } from '@/platform/ui/button'
@@ -56,10 +56,53 @@ export function ModelListFreshness({
   onCatalogueRefreshed,
 }: ModelListFreshnessProps) {
   const [busy, setBusy] = useState<RowKey | null>(null)
+  const [autoUpdate, setAutoUpdate] = useState<boolean | null>(null)
+  const [failed, setFailed] = useState(false)
   const has = (id: CloudKeyOption['id']) => cloudKeyOptions.some((o) => o.id === id)
   const hasOpenRouter = has('openrouter')
   const hasClaudeCode = has('claude-code')
   const hasCatalogue = hasOpenRouter || hasClaudeCode
+
+  useEffect(() => {
+    if (!hasCatalogue) return
+    let live = true
+    void (async () => {
+      try {
+        const res = await fetch('/api/settings')
+        if (res.ok) {
+          const body = (await res.json()) as { autoUpdateModelList?: boolean }
+          if (live) setAutoUpdate(body.autoUpdateModelList !== false)
+        }
+      } catch {
+        // Settings unreadable: the strip simply leaves the switch out.
+      }
+      try {
+        const cat = await getOpenRouterCatalogue()
+        if (live) setFailed(cat?.status?.stale === true && !!cat.status.lastError)
+      } catch {
+        // The strip still works without the stale flag.
+      }
+    })()
+    return () => {
+      live = false
+    }
+  }, [hasCatalogue])
+
+  async function changeAutoUpdate(next: boolean) {
+    const prev = autoUpdate
+    setAutoUpdate(next)
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ autoUpdateModelList: next }),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    } catch (err) {
+      setAutoUpdate(prev)
+      toast.error(`Couldn’t save that setting: ${(err as Error).message}`)
+    }
+  }
 
   if (!has('gemini-paid') && !has('gemini-free') && !hasCatalogue && !has('codex')) return null
 
@@ -108,6 +151,7 @@ export function ModelListFreshness({
         )
         return
       }
+      setFailed(false)
       onCatalogueRefreshed?.(result)
       toast.success(`Model list updated: ${result.models.length} models from OpenRouter.`)
     } catch (err) {
@@ -189,6 +233,34 @@ export function ModelListFreshness({
             'Checking…',
             hasClaudeCode ? 'Claude Code’s list comes from the OpenRouter catalogue.' : undefined,
           )}
+        {hasCatalogue && (
+          <li className="space-y-1">
+            <div>
+              From openrouter.ai
+              {autoUpdate === null
+                ? ''
+                : !autoUpdate
+                  ? ' · automatic updates off'
+                  : failed
+                    ? ' · last update failed, showing the saved list'
+                    : ' · updates automatically, at most once a day'}
+            </div>
+            {autoUpdate !== null && (
+              <label className="flex cursor-pointer items-center gap-2 text-foreground/80">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 shrink-0"
+                  checked={autoUpdate}
+                  onChange={(e) => void changeAutoUpdate(e.target.checked)}
+                />
+                Keep the model list up to date automatically
+              </label>
+            )}
+            {autoUpdate === false && (
+              <div>The saved list is used as it is; only Re-check contacts openrouter.ai.</div>
+            )}
+          </li>
+        )}
         {has('codex') && (
           <li>
             <span className="font-medium text-foreground">Codex</span>

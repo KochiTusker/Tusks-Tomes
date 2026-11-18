@@ -102,9 +102,9 @@ exports[`golden: Claude Code refusal repair > 5a. failsafe ON, default repair ta
     {
       "index": 0,
       "partial": {
-        "chars": 648,
-        "head": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "eb0223fd7f7c",
+        "chars": 657,
+        "head": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "f1b93744b964",
       },
       "phase": "phase3_chronicle",
       "totalChunks": 2,
@@ -121,9 +121,9 @@ exports[`golden: Claude Code refusal repair > 5a. failsafe ON, default repair ta
       "refusedText": "I can't help with that — it violates my content policy.",
       "repaired": true,
       "replacementText": {
-        "chars": 606,
-        "head": "Passage 5f398dc70ee0 (2). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "415b35b4e3eb",
+        "chars": 657,
+        "head": "Passage 7952298898cf (2). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "3c3dc3d3a633",
       },
       "totalChunks": 2,
       "transcriptExcerpt": {
@@ -137,9 +137,9 @@ exports[`golden: Claude Code refusal repair > 5a. failsafe ON, default repair ta
     {
       "index": 1,
       "partial": {
-        "chars": 1256,
-        "head": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "5455e9b112fc",
+        "chars": 1316,
+        "head": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "b45a07e6b194",
       },
       "phase": "phase3_chronicle",
       "totalChunks": 2,
@@ -185,8 +185,8 @@ exports[`golden: Claude Code refusal repair > 5a. failsafe ON, default repair ta
       "partial": {
         "chars": 443,
         "head": "{
-  "narrative": "Condensed 6e629ae8520a: the party crossed Place-Delta under NP",
-        "sha1": "33f566190097",
+  "narrative": "Condensed 40d54cdc417e: the party crossed Place-Delta under NP",
+        "sha1": "03fbd94fa1f6",
       },
       "phase": "phase6_condense",
       "totalChunks": 1,
@@ -213,16 +213,16 @@ exports[`golden: Claude Code refusal repair > 5a. failsafe ON, default repair ta
     "raw": 31526,
   },
   "outputs": {
-    "chronicle": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+    "chronicle": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
-Passage 5f398dc70ee0 (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The gate stood open behind them and the road ahead was very quiet. The gate stood open behind them and the road ahead was very quiet.",
+Passage 7952298898cf (2). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Steel rang on stone and the corridor filled with the smell of old rain and iron. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.",
     "condensed": {
       "bulletPoints": [
-        "6e629ae8520a: The party entered Place-Delta.",
-        "6e629ae8520a: NPC-Gamma warned them about Item-Epsilon.",
-        "6e629ae8520a: A sentry fell from the wall.",
+        "40d54cdc417e: The party entered Place-Delta.",
+        "40d54cdc417e: NPC-Gamma warned them about Item-Epsilon.",
+        "40d54cdc417e: A sentry fell from the wall.",
       ],
-      "narrative": "Condensed 6e629ae8520a: the party crossed Place-Delta under NPC-Gamma's watch, carrying Item-Epsilon through the gate. Steel was drawn, a sentry fell, and they pressed on into the dark with a plan nobody liked and everybody followed.",
+      "narrative": "Condensed 40d54cdc417e: the party crossed Place-Delta under NPC-Gamma's watch, carrying Item-Epsilon through the gate. Steel was drawn, a sentry fell, and they pressed on into the dark with a plan nobody liked and everybody followed.",
     },
     "dmAnswers": {},
     "extras": {
@@ -533,9 +533,9 @@ Passage 5f398dc70ee0 (2). PC-Kappa gathered the humming Item-Epsilon close and s
 [PC-Alpha (Player)] So here is what I think we do. We go back up through Place-Delta, we lock the gate behind us, and we let NPC-Gamma come to us instead of walking into the dark carrying Item-Epsilon like a lantern. If the plan works we get the high ground, and if it does not, well, at least we die near the exit. If the plan works we get the high ground, and if it does not, well, at least we die near the exit.
 [PC-Kappa (Player)] Can I check the walls of Place-Delta for a [__] hidden door?
 [DM (DM)] Nothing moves in Place-Delta for a long moment then the floor gives way.",
-    "polished": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+    "polished": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
-Passage 5f398dc70ee0 (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The gate stood open behind them and the road ahead was very quiet. The gate stood open behind them and the road ahead was very quiet.",
+Passage 7952298898cf (2). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Steel rang on stone and the corridor filled with the smell of old rain and iron. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.",
     "questions": [],
   },
   "requestCount": 9,
@@ -659,7 +659,7 @@ The** (1×)
 5. Do NOT add commentary, headers, "[Corrected]" tags, markdown fences, or any meta text.
 6. If the chunk references something not in the Knowledge Base AND not covered by a contextual correction above, leave it untouched rather than guessing.
 7. Each line is prefixed with «N» where N is a positive integer (e.g. «1», «42»). Preserve EVERY marker exactly at the start of its line. Do not invent new markers, renumber existing ones, or drop any. If you must split a line, keep the marker on the first fragment and leave subsequent fragments unmarkered — they will be re-attached automatically.
-8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Janus is not "Janus Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
+8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Ingrid is not "Ingrid Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
 
 # CONTEXTUAL CORRECTIONS — known traps for this campaign
 The following are known mistranscriptions where the WRONG form is also a real English word.
@@ -988,7 +988,7 @@ The** (1×)
 5. Do NOT add commentary, headers, "[Corrected]" tags, markdown fences, or any meta text.
 6. If the chunk references something not in the Knowledge Base AND not covered by a contextual correction above, leave it untouched rather than guessing.
 7. Each line is prefixed with «N» where N is a positive integer (e.g. «1», «42»). Preserve EVERY marker exactly at the start of its line. Do not invent new markers, renumber existing ones, or drop any. If you must split a line, keep the marker on the first fragment and leave subsequent fragments unmarkered — they will be re-attached automatically.
-8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Janus is not "Janus Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
+8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Ingrid is not "Ingrid Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
 
 # CONTEXTUAL CORRECTIONS — known traps for this campaign
 The following are known mistranscriptions where the WRONG form is also a real English word.
@@ -2057,9 +2057,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -2075,14 +2075,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -2207,9 +2207,9 @@ Return only narrative prose. No headers, no markdown fences, no commentary.
         "hasSignal": false,
       },
       "responseText": {
-        "chars": 648,
-        "head": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "eb0223fd7f7c",
+        "chars": 657,
+        "head": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "f1b93744b964",
       },
       "segment": "main",
       "seq": 4,
@@ -2517,9 +2517,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -2535,14 +2535,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -2563,7 +2563,7 @@ signal, it is an action declaration — narrate it, do not quote it.
 Return only narrative prose. No headers, no markdown fences, no commentary.
 
 # PRIOR CHRONICLE TAIL (last passage written — continue seamlessly)
-Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
 # TRANSCRIPT CHUNK 2/2 (already grounded against the Knowledge Base)
 [PC-Beta (Player)] I draw Item-Epsilon and charge, um, straight at NPC-Gamma.
@@ -3058,9 +3058,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -3076,14 +3076,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -3104,7 +3104,7 @@ signal, it is an action declaration — narrate it, do not quote it.
 Return only narrative prose. No headers, no markdown fences, no commentary.
 
 # PRIOR CHRONICLE TAIL (last passage written — continue seamlessly)
-Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
 # TRANSCRIPT CHUNK 2/2 (already grounded against the Knowledge Base)
 [PC-Beta (Player)] I draw Item-Epsilon and charge, um, straight at NPC-Gamma.
@@ -3290,9 +3290,9 @@ Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s
         "model": "gemini-2.5-flash",
       },
       "responseText": {
-        "chars": 606,
-        "head": "Passage 5f398dc70ee0 (2). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "415b35b4e3eb",
+        "chars": 657,
+        "head": "Passage 7952298898cf (2). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "3c3dc3d3a633",
       },
       "segment": "main",
       "seq": 6,
@@ -4116,7 +4116,7 @@ A settlement of the marches, a day from Place-Delta, known for its hold tolls.
 Produce a JSON object with two fields: "narrative" and "bulletPoints".
 
 ## "narrative" — tighter prose retelling
-- **Target length: approximately 65 words for the FULL condensed chronicle. Aim within ±10% — the user picked this length explicitly via the Condense Slider, so honour it. The chronicle may be condensed one portion at a time; when a per-portion target is given with the chronicle text below, aim for THAT portion's word count so the assembled whole lands on 65 words.** The full chronicle is the canonical record; the condensed narrative is a tight recap. Do a word-count check before returning — if you're materially off-target, trim until you hit it.
+- **Target length: approximately 69 words for the FULL condensed chronicle. Aim within ±10% — the user picked this length explicitly via the Condense Slider, so honour it. The chronicle may be condensed one portion at a time; when a per-portion target is given with the chronicle text below, aim for THAT portion's word count so the assembled whole lands on 69 words.** The full chronicle is the canonical record; the condensed narrative is a tight recap. Do a word-count check before returning — if you're materially off-target, trim until you hit it.
 - Substantive — not a summary. Read like a fantasy novel chapter: third-person, past tense, evocative but not purple.
 - Keep: story events, NPC interactions that affected the plot, party decisions, combat outcomes, world-building reveals, dramatic dialogue, and the comic beats that gave the session its character.
 - **Comedy is content, not an appendix.** A session is remembered for its funny moments as much as its plot. Where a scene landed as comedy — a plan collapsing, a terrible idea acted on, an exchange that derailed the table — keep it, in scene, with the line that made it work. The Jests/Gore/Quotes lists are indexes into the session, not the only place such moments are allowed to exist.
@@ -4146,20 +4146,20 @@ Return ONLY a valid JSON object (no markdown fences, no preamble, no commentary 
 Golden Campaign — Session 7
 
 # TARGET FOR THIS PORTION
-Approximately 65 words of condensed narrative (this is this portion's share of the full target — aim within ±10%).
+Approximately 69 words of condensed narrative (this is this portion's share of the full target — aim within ±10%).
 
 # CHRONICLE TO CONDENSE
-Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
-Passage 5f398dc70ee0 (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The gate stood open behind them and the road ahead was very quiet. The gate stood open behind them and the road ahead was very quiet.",
+Passage 7952298898cf (2). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Steel rang on stone and the corridor filled with the smell of old rain and iron. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.",
       },
       "requestOptions": {
         "hasSignal": false,
       },
       "responseText": {
         "chars": 416,
-        "head": "{"narrative":"Condensed 6e629ae8520a: the party crossed Place-Delta under NPC-Ga",
-        "sha1": "530c00c69270",
+        "head": "{"narrative":"Condensed 40d54cdc417e: the party crossed Place-Delta under NPC-Ga",
+        "sha1": "2e980d0d3258",
       },
       "segment": "main",
       "seq": 8,
@@ -4362,9 +4362,9 @@ exports[`golden: Claude Code refusal repair > 5b. failsafe ON, repair target con
     {
       "index": 0,
       "partial": {
-        "chars": 648,
-        "head": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "eb0223fd7f7c",
+        "chars": 657,
+        "head": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "f1b93744b964",
       },
       "phase": "phase3_chronicle",
       "totalChunks": 2,
@@ -4381,9 +4381,9 @@ exports[`golden: Claude Code refusal repair > 5b. failsafe ON, repair target con
       "refusedText": "I can't help with that — it violates my content policy.",
       "repaired": true,
       "replacementText": {
-        "chars": 637,
-        "head": "Passage f2b5ad3e3b67 (2). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "49b82d4e5f3e",
+        "chars": 652,
+        "head": "Passage 25a844e479f0 (2). Under the Place-Delta sky, PC-Alpha pressed the matter",
+        "sha1": "11933c821054",
       },
       "totalChunks": 2,
       "transcriptExcerpt": {
@@ -4397,9 +4397,9 @@ exports[`golden: Claude Code refusal repair > 5b. failsafe ON, repair target con
     {
       "index": 1,
       "partial": {
-        "chars": 1287,
-        "head": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "372a095df3b3",
+        "chars": 1311,
+        "head": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "373de400c05c",
       },
       "phase": "phase3_chronicle",
       "totalChunks": 2,
@@ -4445,8 +4445,8 @@ exports[`golden: Claude Code refusal repair > 5b. failsafe ON, repair target con
       "partial": {
         "chars": 443,
         "head": "{
-  "narrative": "Condensed e454a944f797: the party crossed Place-Delta under NP",
-        "sha1": "a78f00159503",
+  "narrative": "Condensed e013a6ffc8b3: the party crossed Place-Delta under NP",
+        "sha1": "1a73755c5a30",
       },
       "phase": "phase6_condense",
       "totalChunks": 1,
@@ -4473,16 +4473,16 @@ exports[`golden: Claude Code refusal repair > 5b. failsafe ON, repair target con
     "raw": 31526,
   },
   "outputs": {
-    "chronicle": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+    "chronicle": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
-Passage f2b5ad3e3b67 (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. By the third bell they had settled on a plan and nobody liked it. By the third bell they had settled on a plan and nobody liked it.",
+Passage 25a844e479f0 (2). Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Steel rang on stone and the corridor filled with the smell of old rain and iron. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.",
     "condensed": {
       "bulletPoints": [
-        "e454a944f797: The party entered Place-Delta.",
-        "e454a944f797: NPC-Gamma warned them about Item-Epsilon.",
-        "e454a944f797: A sentry fell from the wall.",
+        "e013a6ffc8b3: The party entered Place-Delta.",
+        "e013a6ffc8b3: NPC-Gamma warned them about Item-Epsilon.",
+        "e013a6ffc8b3: A sentry fell from the wall.",
       ],
-      "narrative": "Condensed e454a944f797: the party crossed Place-Delta under NPC-Gamma's watch, carrying Item-Epsilon through the gate. Steel was drawn, a sentry fell, and they pressed on into the dark with a plan nobody liked and everybody followed.",
+      "narrative": "Condensed e013a6ffc8b3: the party crossed Place-Delta under NPC-Gamma's watch, carrying Item-Epsilon through the gate. Steel was drawn, a sentry fell, and they pressed on into the dark with a plan nobody liked and everybody followed.",
     },
     "dmAnswers": {},
     "extras": {
@@ -4793,9 +4793,9 @@ Passage f2b5ad3e3b67 (2). PC-Kappa gathered the humming Item-Epsilon close and s
 [PC-Alpha (Player)] So here is what I think we do. We go back up through Place-Delta, we lock the gate behind us, and we let NPC-Gamma come to us instead of walking into the dark carrying Item-Epsilon like a lantern. If the plan works we get the high ground, and if it does not, well, at least we die near the exit. If the plan works we get the high ground, and if it does not, well, at least we die near the exit.
 [PC-Kappa (Player)] Can I check the walls of Place-Delta for a [__] hidden door?
 [DM (DM)] Nothing moves in Place-Delta for a long moment then the floor gives way.",
-    "polished": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+    "polished": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
-Passage f2b5ad3e3b67 (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. By the third bell they had settled on a plan and nobody liked it. By the third bell they had settled on a plan and nobody liked it.",
+Passage 25a844e479f0 (2). Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Steel rang on stone and the corridor filled with the smell of old rain and iron. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.",
     "questions": [],
   },
   "requestCount": 9,
@@ -4919,7 +4919,7 @@ The** (1×)
 5. Do NOT add commentary, headers, "[Corrected]" tags, markdown fences, or any meta text.
 6. If the chunk references something not in the Knowledge Base AND not covered by a contextual correction above, leave it untouched rather than guessing.
 7. Each line is prefixed with «N» where N is a positive integer (e.g. «1», «42»). Preserve EVERY marker exactly at the start of its line. Do not invent new markers, renumber existing ones, or drop any. If you must split a line, keep the marker on the first fragment and leave subsequent fragments unmarkered — they will be re-attached automatically.
-8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Janus is not "Janus Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
+8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Ingrid is not "Ingrid Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
 
 # CONTEXTUAL CORRECTIONS — known traps for this campaign
 The following are known mistranscriptions where the WRONG form is also a real English word.
@@ -5248,7 +5248,7 @@ The** (1×)
 5. Do NOT add commentary, headers, "[Corrected]" tags, markdown fences, or any meta text.
 6. If the chunk references something not in the Knowledge Base AND not covered by a contextual correction above, leave it untouched rather than guessing.
 7. Each line is prefixed with «N» where N is a positive integer (e.g. «1», «42»). Preserve EVERY marker exactly at the start of its line. Do not invent new markers, renumber existing ones, or drop any. If you must split a line, keep the marker on the first fragment and leave subsequent fragments unmarkered — they will be re-attached automatically.
-8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Janus is not "Janus Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
+8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Ingrid is not "Ingrid Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
 
 # CONTEXTUAL CORRECTIONS — known traps for this campaign
 The following are known mistranscriptions where the WRONG form is also a real English word.
@@ -6317,9 +6317,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -6335,14 +6335,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -6467,9 +6467,9 @@ Return only narrative prose. No headers, no markdown fences, no commentary.
         "hasSignal": false,
       },
       "responseText": {
-        "chars": 648,
-        "head": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "eb0223fd7f7c",
+        "chars": 657,
+        "head": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "f1b93744b964",
       },
       "segment": "main",
       "seq": 4,
@@ -6777,9 +6777,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -6795,14 +6795,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -6823,7 +6823,7 @@ signal, it is an action declaration — narrate it, do not quote it.
 Return only narrative prose. No headers, no markdown fences, no commentary.
 
 # PRIOR CHRONICLE TAIL (last passage written — continue seamlessly)
-Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
 # TRANSCRIPT CHUNK 2/2 (already grounded against the Knowledge Base)
 [PC-Beta (Player)] I draw Item-Epsilon and charge, um, straight at NPC-Gamma.
@@ -7311,9 +7311,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -7329,14 +7329,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -7362,7 +7362,7 @@ Return only narrative prose. No headers, no markdown fences, no commentary.",
           },
           {
             "content": "# PRIOR CHRONICLE TAIL (last passage written — continue seamlessly)
-Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
 # TRANSCRIPT CHUNK 2/2 (already grounded against the Knowledge Base)
 [PC-Beta (Player)] I draw Item-Epsilon and charge, um, straight at NPC-Gamma.
@@ -7559,9 +7559,9 @@ Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s
         "hasSignal": false,
       },
       "responseText": {
-        "chars": 637,
-        "head": "Passage f2b5ad3e3b67 (2). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "49b82d4e5f3e",
+        "chars": 652,
+        "head": "Passage 25a844e479f0 (2). Under the Place-Delta sky, PC-Alpha pressed the matter",
+        "sha1": "11933c821054",
       },
       "segment": "main",
       "seq": 6,
@@ -8385,7 +8385,7 @@ A settlement of the marches, a day from Place-Delta, known for its hold tolls.
 Produce a JSON object with two fields: "narrative" and "bulletPoints".
 
 ## "narrative" — tighter prose retelling
-- **Target length: approximately 67 words for the FULL condensed chronicle. Aim within ±10% — the user picked this length explicitly via the Condense Slider, so honour it. The chronicle may be condensed one portion at a time; when a per-portion target is given with the chronicle text below, aim for THAT portion's word count so the assembled whole lands on 67 words.** The full chronicle is the canonical record; the condensed narrative is a tight recap. Do a word-count check before returning — if you're materially off-target, trim until you hit it.
+- **Target length: approximately 68 words for the FULL condensed chronicle. Aim within ±10% — the user picked this length explicitly via the Condense Slider, so honour it. The chronicle may be condensed one portion at a time; when a per-portion target is given with the chronicle text below, aim for THAT portion's word count so the assembled whole lands on 68 words.** The full chronicle is the canonical record; the condensed narrative is a tight recap. Do a word-count check before returning — if you're materially off-target, trim until you hit it.
 - Substantive — not a summary. Read like a fantasy novel chapter: third-person, past tense, evocative but not purple.
 - Keep: story events, NPC interactions that affected the plot, party decisions, combat outcomes, world-building reveals, dramatic dialogue, and the comic beats that gave the session its character.
 - **Comedy is content, not an appendix.** A session is remembered for its funny moments as much as its plot. Where a scene landed as comedy — a plan collapsing, a terrible idea acted on, an exchange that derailed the table — keep it, in scene, with the line that made it work. The Jests/Gore/Quotes lists are indexes into the session, not the only place such moments are allowed to exist.
@@ -8415,20 +8415,20 @@ Return ONLY a valid JSON object (no markdown fences, no preamble, no commentary 
 Golden Campaign — Session 7
 
 # TARGET FOR THIS PORTION
-Approximately 67 words of condensed narrative (this is this portion's share of the full target — aim within ±10%).
+Approximately 68 words of condensed narrative (this is this portion's share of the full target — aim within ±10%).
 
 # CHRONICLE TO CONDENSE
-Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
-Passage f2b5ad3e3b67 (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. By the third bell they had settled on a plan and nobody liked it. By the third bell they had settled on a plan and nobody liked it.",
+Passage 25a844e479f0 (2). Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Steel rang on stone and the corridor filled with the smell of old rain and iron. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.",
       },
       "requestOptions": {
         "hasSignal": false,
       },
       "responseText": {
         "chars": 416,
-        "head": "{"narrative":"Condensed e454a944f797: the party crossed Place-Delta under NPC-Ga",
-        "sha1": "d8c65a8cd37f",
+        "head": "{"narrative":"Condensed e013a6ffc8b3: the party crossed Place-Delta under NPC-Ga",
+        "sha1": "774ca74068de",
       },
       "segment": "main",
       "seq": 8,
@@ -8631,9 +8631,9 @@ exports[`golden: Claude Code refusal repair > 5c. failsafe OFF: the refusal stay
     {
       "index": 0,
       "partial": {
-        "chars": 648,
-        "head": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "eb0223fd7f7c",
+        "chars": 657,
+        "head": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "f1b93744b964",
       },
       "phase": "phase3_chronicle",
       "totalChunks": 2,
@@ -8667,9 +8667,9 @@ exports[`golden: Claude Code refusal repair > 5c. failsafe OFF: the refusal stay
     {
       "index": 1,
       "partial": {
-        "chars": 869,
-        "head": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "c5d232a93008",
+        "chars": 878,
+        "head": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "9f61d32e318e",
       },
       "phase": "phase3_chronicle",
       "totalChunks": 2,
@@ -8715,8 +8715,8 @@ exports[`golden: Claude Code refusal repair > 5c. failsafe OFF: the refusal stay
       "partial": {
         "chars": 443,
         "head": "{
-  "narrative": "Condensed 2d48930ab8d2: the party crossed Place-Delta under NP",
-        "sha1": "bfe03ba66549",
+  "narrative": "Condensed 5e6fa5f8d08d: the party crossed Place-Delta under NP",
+        "sha1": "b236eaf8a096",
       },
       "phase": "phase6_condense",
       "totalChunks": 1,
@@ -8743,17 +8743,17 @@ exports[`golden: Claude Code refusal repair > 5c. failsafe OFF: the refusal stay
     "raw": 31526,
   },
   "outputs": {
-    "chronicle": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+    "chronicle": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
 > ⚠️ **Refusal — Chronicle, chunk 2/2.** Claude Code declined to process this passage. Use **Review & Repair Refusals** to restore it from the source transcript.
 <!--TUSKS-REFUSAL:00000000-0000-4000-8000-000000000001-->",
     "condensed": {
       "bulletPoints": [
-        "2d48930ab8d2: The party entered Place-Delta.",
-        "2d48930ab8d2: NPC-Gamma warned them about Item-Epsilon.",
-        "2d48930ab8d2: A sentry fell from the wall.",
+        "5e6fa5f8d08d: The party entered Place-Delta.",
+        "5e6fa5f8d08d: NPC-Gamma warned them about Item-Epsilon.",
+        "5e6fa5f8d08d: A sentry fell from the wall.",
       ],
-      "narrative": "Condensed 2d48930ab8d2: the party crossed Place-Delta under NPC-Gamma's watch, carrying Item-Epsilon through the gate. Steel was drawn, a sentry fell, and they pressed on into the dark with a plan nobody liked and everybody followed.",
+      "narrative": "Condensed 5e6fa5f8d08d: the party crossed Place-Delta under NPC-Gamma's watch, carrying Item-Epsilon through the gate. Steel was drawn, a sentry fell, and they pressed on into the dark with a plan nobody liked and everybody followed.",
     },
     "dmAnswers": {},
     "extras": {
@@ -9064,7 +9064,7 @@ exports[`golden: Claude Code refusal repair > 5c. failsafe OFF: the refusal stay
 [PC-Alpha (Player)] So here is what I think we do. We go back up through Place-Delta, we lock the gate behind us, and we let NPC-Gamma come to us instead of walking into the dark carrying Item-Epsilon like a lantern. If the plan works we get the high ground, and if it does not, well, at least we die near the exit. If the plan works we get the high ground, and if it does not, well, at least we die near the exit.
 [PC-Kappa (Player)] Can I check the walls of Place-Delta for a [__] hidden door?
 [DM (DM)] Nothing moves in Place-Delta for a long moment then the floor gives way.",
-    "polished": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+    "polished": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
 > ⚠️ **Refusal — Chronicle, chunk 2/2.** Claude Code declined to process this passage. Use **Review & Repair Refusals** to restore it from the source transcript.
 <!--TUSKS-REFUSAL:00000000-0000-4000-8000-000000000001-->",
@@ -9191,7 +9191,7 @@ The** (1×)
 5. Do NOT add commentary, headers, "[Corrected]" tags, markdown fences, or any meta text.
 6. If the chunk references something not in the Knowledge Base AND not covered by a contextual correction above, leave it untouched rather than guessing.
 7. Each line is prefixed with «N» where N is a positive integer (e.g. «1», «42»). Preserve EVERY marker exactly at the start of its line. Do not invent new markers, renumber existing ones, or drop any. If you must split a line, keep the marker on the first fragment and leave subsequent fragments unmarkered — they will be re-attached automatically.
-8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Janus is not "Janus Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
+8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Ingrid is not "Ingrid Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
 
 # CONTEXTUAL CORRECTIONS — known traps for this campaign
 The following are known mistranscriptions where the WRONG form is also a real English word.
@@ -9520,7 +9520,7 @@ The** (1×)
 5. Do NOT add commentary, headers, "[Corrected]" tags, markdown fences, or any meta text.
 6. If the chunk references something not in the Knowledge Base AND not covered by a contextual correction above, leave it untouched rather than guessing.
 7. Each line is prefixed with «N» where N is a positive integer (e.g. «1», «42»). Preserve EVERY marker exactly at the start of its line. Do not invent new markers, renumber existing ones, or drop any. If you must split a line, keep the marker on the first fragment and leave subsequent fragments unmarkered — they will be re-attached automatically.
-8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Janus is not "Janus Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
+8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Ingrid is not "Ingrid Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.
 
 # CONTEXTUAL CORRECTIONS — known traps for this campaign
 The following are known mistranscriptions where the WRONG form is also a real English word.
@@ -10589,9 +10589,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -10607,14 +10607,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -10739,9 +10739,9 @@ Return only narrative prose. No headers, no markdown fences, no commentary.
         "hasSignal": false,
       },
       "responseText": {
-        "chars": 648,
-        "head": "Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "eb0223fd7f7c",
+        "chars": 657,
+        "head": "Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weigh",
+        "sha1": "f1b93744b964",
       },
       "segment": "main",
       "seq": 4,
@@ -11049,9 +11049,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -11067,14 +11067,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -11095,7 +11095,7 @@ signal, it is an action declaration — narrate it, do not quote it.
 Return only narrative prose. No headers, no markdown fences, no commentary.
 
 # PRIOR CHRONICLE TAIL (last passage written — continue seamlessly)
-Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
 # TRANSCRIPT CHUNK 2/2 (already grounded against the Knowledge Base)
 [PC-Beta (Player)] I draw Item-Epsilon and charge, um, straight at NPC-Gamma.
@@ -12138,7 +12138,7 @@ Golden Campaign — Session 7
 Approximately 42 words of condensed narrative (this is this portion's share of the full target — aim within ±10%).
 
 # CHRONICLE TO CONDENSE
-Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. They went on, slower now, each of them listening for the next sound in the dark.
+Passage dad96109ed75 (1). The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Nobody laughed this time; the table had gone quiet around the dice. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.
 
 > ⚠️ **Refusal — Chronicle, chunk 2/2.** Claude Code declined to process this passage. Use **Review & Repair Refusals** to restore it from the source transcript.
 <!--TUSKS-REFUSAL:00000000-0000-4000-8000-000000000001-->",
@@ -12148,8 +12148,8 @@ Passage d22f21c3e519 (1). PC-Kappa gathered the humming Item-Epsilon close and s
       },
       "responseText": {
         "chars": 416,
-        "head": "{"narrative":"Condensed 2d48930ab8d2: the party crossed Place-Delta under NPC-Ga",
-        "sha1": "21154ad5d260",
+        "head": "{"narrative":"Condensed 5e6fa5f8d08d: the party crossed Place-Delta under NPC-Ga",
+        "sha1": "eab3d137022e",
       },
       "segment": "main",
       "seq": 7,
@@ -14456,7 +14456,7 @@ The** (1×)
 5. Do NOT add commentary, headers, "[Corrected]" tags, markdown fences, or any meta text.
 6. If the chunk references something not in the Knowledge Base AND not covered by a contextual correction above, leave it untouched rather than guessing.
 7. Each line is prefixed with «N» where N is a positive integer (e.g. «1», «42»). Preserve EVERY marker exactly at the start of its line. Do not invent new markers, renumber existing ones, or drop any. If you must split a line, keep the marker on the first fragment and leave subsequent fragments unmarkered — they will be re-attached automatically.
-8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Janus is not "Janus Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.",
+8. Inline annotations of the form \`[≈Canonical Name? NN%]\` are algorithmic phonetic-similarity hints from your lore alias index. Treat them as suggestions, NOT instructions: accept the canonical when surrounding context fits ("more than vain" near a mention of a hunted target is almost certainly "Morvan Vayne"), ignore when context contradicts (a player named Ingrid is not "Ingrid Crane" from the lore unless they're actually in scene). Always REMOVE the \`[≈…]\` marker from your output — only emit the corrected text.",
   },
   "writes": [
     {
@@ -14611,14 +14611,14 @@ exports[`golden: resume from a checkpoint > 6b. Phase 3 paused mid-chronicle, re
   "outputs": {
     "chronicle": "Passage fc8c4b404f76 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Steel rang on stone and the corridor filled with the smell of old rain and iron. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. The gate stood open behind them and the road ahead was very quiet.
 
-Passage 73cf5293800a (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. By the third bell they had settled on a plan and nobody liked it. By the third bell they had settled on a plan and nobody liked it.",
+Passage af5acab06ba3 (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Steel rang on stone and the corridor filled with the smell of old rain and iron. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.",
     "condensed": {
       "bulletPoints": [
-        "b8aece9c52a4: The party entered Place-Delta.",
-        "b8aece9c52a4: NPC-Gamma warned them about Item-Epsilon.",
-        "b8aece9c52a4: A sentry fell from the wall.",
+        "d8ce10a5ed0b: The party entered Place-Delta.",
+        "d8ce10a5ed0b: NPC-Gamma warned them about Item-Epsilon.",
+        "d8ce10a5ed0b: A sentry fell from the wall.",
       ],
-      "narrative": "Condensed b8aece9c52a4: the party crossed Place-Delta under NPC-Gamma's watch, carrying Item-Epsilon through the gate. Steel was drawn, a sentry fell, and they pressed on into the dark with a plan nobody liked and everybody followed.",
+      "narrative": "Condensed d8ce10a5ed0b: the party crossed Place-Delta under NPC-Gamma's watch, carrying Item-Epsilon through the gate. Steel was drawn, a sentry fell, and they pressed on into the dark with a plan nobody liked and everybody followed.",
     },
     "extras": {
       "gore": [
@@ -14653,7 +14653,7 @@ Passage 73cf5293800a (2). PC-Kappa gathered the humming Item-Epsilon close and s
     },
     "polished": "Passage fc8c4b404f76 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Steel rang on stone and the corridor filled with the smell of old rain and iron. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. The gate stood open behind them and the road ahead was very quiet.
 
-Passage 73cf5293800a (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. By the third bell they had settled on a plan and nobody liked it. By the third bell they had settled on a plan and nobody liked it.",
+Passage af5acab06ba3 (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Steel rang on stone and the corridor filled with the smell of old rain and iron. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.",
   },
   "plannedAction": {
     "afterPhases": [
@@ -14975,9 +14975,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -14993,14 +14993,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -15435,9 +15435,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -15453,14 +15453,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -15491,9 +15491,9 @@ Passage fc8c4b404f76 (1). PC-Kappa gathered the humming Item-Epsilon close and s
         "model": "gemini-2.5-flash",
       },
       "responseText": {
-        "chars": 636,
-        "head": "Passage 73cf5293800a (2). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "09f061bd45e9",
+        "chars": 644,
+        "head": "Passage af5acab06ba3 (2). PC-Kappa gathered the humming Item-Epsilon close and s",
+        "sha1": "7c35a4de21ea",
       },
       "segment": "resume",
       "seq": 3,
@@ -16352,13 +16352,13 @@ Approximately 79 words of condensed narrative (this is this portion's share of t
 # CHRONICLE TO CONDENSE
 Passage fc8c4b404f76 (1). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. Steel rang on stone and the corridor filled with the smell of old rain and iron. PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The gate stood open behind them and the road ahead was very quiet. The gate stood open behind them and the road ahead was very quiet.
 
-Passage 73cf5293800a (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Steel rang on stone and the corridor filled with the smell of old rain and iron. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-Beta watched the road. A sentry fell from the wall and the courtyard answered with a long, ragged shout. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. By the third bell they had settled on a plan and nobody liked it. By the third bell they had settled on a plan and nobody liked it.",
+Passage af5acab06ba3 (2). PC-Kappa gathered the humming Item-Epsilon close and spoke a low word of warding. Steel rang on stone and the corridor filled with the smell of old rain and iron. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. Nobody laughed this time; the table had gone quiet around the dice. The torches of Place-Delta guttered as NPC-Gamma weighed the party in silence. A sentry fell from the wall and the courtyard answered with a long, ragged shout. They went on, slower now, each of them listening for the next sound in the dark. The gate stood open behind them and the road ahead was very quiet.",
         "model": "gemini-2.5-flash",
       },
       "responseText": {
         "chars": 416,
-        "head": "{"narrative":"Condensed b8aece9c52a4: the party crossed Place-Delta under NPC-Ga",
-        "sha1": "e1b1a51125ad",
+        "head": "{"narrative":"Condensed d8ce10a5ed0b: the party crossed Place-Delta under NPC-Ga",
+        "sha1": "391035c7b51e",
       },
       "segment": "resume",
       "seq": 5,
@@ -16376,9 +16376,9 @@ Passage 73cf5293800a (2). PC-Kappa gathered the humming Item-Epsilon close and s
     {
       "index": 1,
       "partial": {
-        "chars": 1293,
+        "chars": 1301,
         "head": "Passage fc8c4b404f76 (1). PC-Kappa gathered the humming Item-Epsilon close and s",
-        "sha1": "9f7ef8969a61",
+        "sha1": "f4a0fe0c148f",
       },
       "phase": "phase3_chronicle",
       "totalChunks": 2,
@@ -16434,8 +16434,8 @@ Passage 73cf5293800a (2). PC-Kappa gathered the humming Item-Epsilon close and s
       "partial": {
         "chars": 443,
         "head": "{
-  "narrative": "Condensed b8aece9c52a4: the party crossed Place-Delta under NP",
-        "sha1": "74911cf0efed",
+  "narrative": "Condensed d8ce10a5ed0b: the party crossed Place-Delta under NP",
+        "sha1": "35429039ba50",
       },
       "phase": "phase6_condense",
       "totalChunks": 1,
@@ -17029,9 +17029,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -17047,14 +17047,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such
@@ -17482,9 +17482,9 @@ gets a different treatment:
    sneered, 'Hand over your gold.'"). The signal is in-world content: greeting a
    character, threatening, bargaining, in-character dialogue beats.
 3. **Direct table interaction** — the DM addressing a player by their real or
-   character name ("Janus, roll a perception check", "Sam, what do you do?",
+   character name ("Ingrid, roll a perception check", "Sam, what do you do?",
    "OK before you continue, what's your AC?"). Re-narrate as scene description by
-   default ("Janus's attention sharpened on..."). Quote ONLY when the table
+   default ("Ingrid's attention sharpened on..."). Quote ONLY when the table
    exchange is itself a load-bearing story beat — and even then, attribute to
    "the DM" only sparingly. Do NOT make this a default voice.
 
@@ -17500,14 +17500,14 @@ treated differently:
    ("I swing my axe at the goblin", "I try to pick the lock", "I roll to persuade
    the guard", "I step back and ready my bow"). This is the player narrating intent,
    NOT the character speaking aloud. Convert it to third-person past narrative
-   ("Esen swung his axe at the goblin"). NEVER render it as dialogue — do NOT
-   write: Esen said, "I swing my axe."
+   ("Eamon swung his axe at the goblin"). NEVER render it as dialogue — do NOT
+   write: Eamon said, "I swing my axe."
 2. **In-character dialogue — QUOTE verbatim.** The character is actually speaking
    aloud in the fiction ("'Die, foul thing!'", "'Hand over the gold and no one gets
    hurt.'"). Quote these, attributed to the character.
 
 Many lines contain both: "I kick the door down and shout 'Anyone home?!'" → narrate
-the kick as action ("Esen kicked the door down") and quote the shout ("'Anyone
+the kick as action ("Eamon kicked the door down") and quote the shout ("'Anyone
 home?!'"). Signals that a line is dialogue, not action: an explicit "I say / I tell
 him / I shout", quotation marks, a greeting/threat/question aimed at another
 character, or a distinct in-character voice. When a first-person line has no such

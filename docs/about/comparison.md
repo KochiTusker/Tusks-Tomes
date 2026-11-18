@@ -11,7 +11,7 @@ are built to do, not a ranking of how well they do it.
 
 | Tool | Built for TTRPG? | Audio stays local? | Recap quality | Cost |
 | --- | --- | --- | --- | --- |
-| **Tusk's Tomes** | Yes — speaker-aware, glossary-grounded, written as prose | Yes, once Audio Transcription is installed | Narrative, six-phase pipeline | Free (MIT) + your own API usage |
+| **Tusk's Tomes** | Yes — speaker-aware, glossary-grounded, written as prose | Yes, once Audio Transcription is installed | Narrative, five-phase pipeline | Free (MIT) + your own API usage |
 | Writing it up yourself | n/a | Yes | However good you are at 11pm | Free, plus your Sunday evening |
 | [Otter.ai](https://otter.ai) | No — meeting transcription | No | Fine for meetings, poor on invented names | Subscription |
 | [Descript](https://www.descript.com) | No — podcast editing | No | It's an editor, not a chronicler | Subscription |
@@ -82,8 +82,8 @@ Narrowly, three things. Note that "it knows your characters' names" is no
 longer one of them — the tabletop-native services ground against your lore too,
 and claiming that as a differentiator would be dishonest.
 
-1. **It runs on your machine.** The audio never leaves it, and with a local
-   model nothing leaves it at all. This is the only row in the table where
+1. **It runs on your machine.** The app never uploads your audio, and a local
+   model can take Ground, Audit and Extras, so the text for those phases stays here too. This is the only row in the table where
    nothing else comes close, and it's the reason to pick this over a service
    that is easier to start using.
 2. **Attribution is known, not inferred.** Per-speaker Craig tracks are

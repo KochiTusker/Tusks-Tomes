@@ -21,7 +21,9 @@ Then, depending on your OS:
 | **macOS / Linux** | `bash setup.sh` | `bash start.sh` |
 | **Power users** | `npm run setup` | `npm run dev` |
 
-The setup step installs ~370 npm packages (~250 MB). One-time only.
+The setup step installs the app's npm packages (a few hundred MB). One-time only.
+
+Windows is the tested platform. `setup.sh` and `start.sh` are written for macOS and Linux, but nobody has run the app end to end there yet; see [Known issues](../troubleshooting/known-issues.md).
 
 Starting prints the app's numbered start-up steps and then a line that says `READY` with the address. The launchers open <http://localhost:5173> in your browser at that moment; with `npm run dev`, open it yourself. The first start after setup or an update takes 15–30 seconds while the app prepares its files; later starts take a few seconds. Opening the address early shows a dark "starting…" page that names the current step and turns into the app on its own.
 
@@ -36,14 +38,16 @@ Open **Settings → Providers & models** and paste at least one:
 - **Google Gemini** — paid key required for the main pipeline; typically the cheapest cloud option per session. [How to get a Gemini key](../models/choosing-a-provider.md#google-gemini--paid-key-required)
 - **OpenRouter** — one key reaches around 400 models, including every Anthropic and OpenAI model, at pass-through rates. [How to get an OpenRouter key](../models/choosing-a-provider.md#openrouter--one-key-around-400-models)
 
-Keys are encrypted at rest in `{configDir}/providers.enc` using a machine-bound key — they don't appear in `.env`, don't leave the host, and the GUI is the only place to manage them.
+Keys are encrypted at rest in `{configDir}/providers.enc` using a machine-bound key — they don't appear in `.env`, are sent only to the provider they belong to, and the GUI is the only place to manage them.
 
 > [!TIP]
-> Want to keep everything offline (no API key, no cost, no cloud)? Local
+> Want the mechanical phases on your own machine for nothing? Local
 > routing ships with the app — no install and no restart. Start
 > [Ollama](https://ollama.com), [LM Studio](https://lmstudio.ai), or Unsloth,
-> then hit **Detect** in **Settings → Providers & models**. See
-> [AddOns.md](../extras/README.md).
+> then open **Settings → Providers & models**; the panel detects it, and
+> **Detect again** repeats the check. Local models take Ground, Audit and
+> Extras; the chronicle still needs a cloud model or a subscription. See
+> [Extras & integrations](../extras/README.md).
 
 ---
 
@@ -72,9 +76,9 @@ Sets the server to listen on every network interface, but keeps writes blocked f
 
 macOS / Linux: `export TUSKS_HOST=0.0.0.0` then restart, or add the line to `~/.bashrc` / `~/.zshrc`.
 
-**Other devices on your Wi-Fi can now:** open the UI · browse the session list · read saved chronicles · view session transcripts (raw + cleaned) · download chronicle `.docx` files · download `.sbv` transcripts · watch live transcription progress · read the Help / Docs tab.
+![A drawing in two parts. At the top, a dashed box for this computer, the host, says that by default only this computer opens Tomes. It lists what always stays on the host whatever you set: API keys and the Test button, the in-app updater, saving app settings, and starting a local runner. Below it, a dashed box for devices on your Wi-Fi holds two boxes side by side, and a dashed arrow runs from each up to the host, labelled that devices get a 403 for that list. The first box, with a laptop and an eye, is TUSKS_HOST=0.0.0.0: a device can read chronicles, transcripts, live progress and .sbv downloads. The second, in orange, with a laptop and a pencil, is TUSKS_LAN_WRITES=1 as well: a device can also write, meaning upload audio, save, edit, delete, install Audio Transcription and download .docx files.](../assets/diagrams/who-on-your-network.svg)
 
-**They cannot:** upload audio · save / edit / delete chronicles · modify glossary or speakers · add or remove lore documents · change Settings · see your API keys · test cloud provider connections · trigger the in-app updater · launch Ollama / LM Studio / Unsloth · install or uninstall Audio Transcription.
+A device can also browse the session list, the system info, the add-ons list and the Help / Docs tab. Anything that writes, including the `.docx` download, answers 403 in this mode.
 
 This is the "view from the couch" mode and is the right setting for the vast majority of cross-device use cases.
 
@@ -84,20 +88,18 @@ Add the second variable too:
 
 ```powershell
 [Environment]::SetEnvironmentVariable("TUSKS_LAN_WRITES", "1", "User")
-# Restart Tomes. The boot banner now reads "LAN writes: ENABLED".
+# Restart Tomes. The boot banner reads "LAN writes (uploads, settings edits, saves): ENABLED".
 ```
 
-**Now other devices can also:** upload audio recordings (Craig zip, FLAC, WAV, MP3) · drop in `.pdf` / `.docx` lore documents · save chronicles to your Tusks-Lore folder · edit glossary, speakers, per-phase routing · run the 6-phase pipeline · pause and resume runs · delete sessions.
-
-**They still cannot:** see your API keys · press **Test** on a provider key (it spends money) · trigger the in-app updater (it runs `git pull` on your host) · manage Unsloth credentials · launch local LLM runners · toggle dev-mode. These stay loopback-only **always**.
+The second lane in the drawing adds the writes. Two details it does not carry: running the pipeline from another device works with a local runner only (phases routed to a cloud model need the stored keys, which only the host can fetch, and the Claude Code and Codex routes answer the host only), and installing or removing Audio Transcription runs the install on your host. Unsloth credentials and the dev-mode toggle also stay on the host.
 
 ### What it means in plain language
 
 Setting **`TUSKS_HOST=0.0.0.0` alone** means: anyone connected to your Wi-Fi who knows your machine's IP can BROWSE everything Tomes shows you. They can read your campaign chronicles, see the players' real names if you've captured them, and watch live transcription. They cannot break anything or take anything.
 
-Setting **both flags** means: anyone connected to your Wi-Fi who knows your machine's IP can also CHANGE everything. They can upload garbage audio, delete chronicles, edit your glossary, or run pipelines against attacker-supplied content to burn your LLM quota.
+Setting **both flags** means: anyone connected to your Wi-Fi who knows your machine's IP can also CHANGE everything. They can upload garbage audio, delete chronicles, edit your glossary, or push their own prompts through your local runner.
 
-**Your API keys are safe in both modes.** They're encrypted on disk AND the route that returns them is loopback-only AND the route that spends money via the **Test** button is loopback-only. A LAN attacker cannot drain your account even if they get full write access to everything else.
+**Your API keys are safe in both modes.** They're encrypted on disk AND the route that returns them is loopback-only AND the route behind the **Test** button, which sends your stored key to the provider, is loopback-only. A device on your network cannot read your stored keys, even with write access to everything else.
 
 **The threat model that makes LAN exposure safe:** you trust every device that's allowed on your Wi-Fi. That includes the smart TV, the smart speakers, the kid's tablet, the visiting friend's laptop, and every IoT thing you've connected. If you're not confident about all of those, leave the toggle off.
 
@@ -181,19 +183,11 @@ everywhere). To upgrade:
 
 ### Port 5173 in use
 
-Set `PORT=5174` (or any free port) in `.env`. Restart `npm run dev` or `Start_Tusks_Tomes.bat`.
+Set the `PORT` environment variable to `5174` (or any free port) in your shell or system environment; the app does not read `.env` for it. Restart `npm run dev` or `Start_Tusks_Tomes.bat`.
 
 ### `npm install` errors mentioning `node-gyp` (Windows)
 
-This shouldn't happen any more, and if it does the fix isn't what older guides
-say. **You do not need Visual Studio Build Tools.** Nothing in the dependency
-tree compiles native code — `pdf-parse` was the only thing that did, and it was
-replaced with a pure-JavaScript PDF reader. The only packages with install
-steps are `esbuild` and `ffmpeg-static`, and both just download a prebuilt
-binary.
-
-If you're seeing a node-gyp error, it's almost certainly a stale
-`node_modules`. Delete that folder and run setup again.
+**You do not need Visual Studio Build Tools.** Nothing in the dependency tree compiles native code, and `esbuild` and `ffmpeg-static` run install steps that just download a prebuilt binary. A node-gyp error is almost certainly a stale `node_modules`: delete that folder and run setup again.
 
 ### Cloned into Program Files / OneDrive / a network drive
 
@@ -201,7 +195,7 @@ If you're seeing a node-gyp error, it's almost certainly a stale
 
 ### Python 3.13 detected, Whisper setup fails
 
-`faster-whisper` (the engine behind Audio Transcription) needs **Python 3.10, 3.11, or 3.12** — torch wheels for Python 3.13 have CUDA-availability gaps that silently break the install. `npm run setup` now warns about this. Fix:
+`faster-whisper` (the engine behind Audio Transcription) is verified on **Python 3.10, 3.11 and 3.12**. Python 3.13 is untested. `npm run setup` warns about it, and the in-app Install check stops before the download starts; `npm run whisper:setup` run by hand does not check the version. Fix:
 
 ```sh
 # Windows:
@@ -212,21 +206,21 @@ pyenv install 3.12 && pyenv local 3.12
 sudo apt install python3.12 python3.12-venv
 ```
 
-Then re-run `npm run whisper:setup` — the script picks the lowest compatible interpreter on `PATH`.
+Then make sure `python` (`python3` on macOS and Linux) on your `PATH` runs that version, delete `vendor/python-venv/` if it exists (the setup script reuses an existing one), and re-run `npm run whisper:setup`.
 
 ### NVIDIA driver too old for CUDA 12 (Whisper still on CPU)
 
-Default Whisper install uses CUDA 12 wheels (driver ≥ 525). On older drivers (game-rig boxes that haven't updated in a year), the wheels download but PyTorch fails to initialise at runtime → falls back to CPU silently. Two fixes:
+The Windows install uses the CUDA 12.4 torch build (`cu124`) whenever `nvidia-smi` answers; the macOS and Linux install uses the CPU build unless you pass `--cuda`. On older drivers (game-rig boxes that haven't updated in a year), the wheels download but the GPU cannot be used at run time, and Whisper falls back to the CPU; the live transcript view says so. Two fixes:
 
 - **A** — update the driver: GeForce Experience / NVIDIA App → check for updates.
-- **B** — keep the old driver, re-run with CUDA 11 wheels: `bash scripts/whisper/setup.sh --cuda 11.8` (POSIX) or set `CUDA_WHEEL=cu118` and re-run setup (Windows). CUDA 11 is supported by GTX 10-series and newer.
+- **B** (macOS and Linux only) — keep the old driver, re-run with CUDA 11 wheels: `bash scripts/whisper/setup.sh --cuda 11.8`. CUDA 11 is supported by GTX 10-series and newer. The Windows script takes no options and installs the CUDA 12.4 build, so on Windows use option A.
 
 ### Config directory not writable
 
-The app refuses to start with a clear message like *"Config directory is not writable: `<path>`"*. This usually means:
+The app refuses to start with a message that says *"Config directory is not writable"* and names the folder it tried. This usually means:
 
 - The repo lives in `Program Files`, OneDrive sync folder, or a read-only network drive → move the repo to `Documents`, `Desktop`, or your home folder.
-- Antivirus / corporate-policy tooling has locked `%APPDATA%\Tusks-Tomes` → right-click the folder → **Properties → Security → Edit** → grant your user "Modify" permission.
+- Antivirus / corporate-policy tooling has locked `%APPDATA%\tusks-tomes` → right-click the folder → **Properties → Security → Edit** → grant your user "Modify" permission.
 
 Restart the dev server after fixing.
 
@@ -234,7 +228,7 @@ Restart the dev server after fixing.
 
 API keys are encrypted with a key derived from `hostname + username + platform`. If any of those change (renamed PC, copied AppData to a new machine, restored from a backup made on a different host), the encrypted blob becomes unreadable. **This is intentional** — it means a leaked AppData folder is useless on another machine.
 
-Fix: delete `%APPDATA%\Tusks-Tomes\Config\providers.enc` (Windows) or `~/Library/Application Support/Tusks-Tomes/Config/providers.enc` (macOS) and re-enter your keys in Settings → Providers & models. The `.salt` file stays — it's machine-bound but not secret.
+Fix: delete `%APPDATA%\tusks-tomes\Config\providers.enc` (Windows), `~/Library/Preferences/tusks-tomes/providers.enc` (macOS) or `~/.config/tusks-tomes/providers.enc` (Linux) and re-enter your keys in Settings → Providers & models. The `.salt` file stays — it's machine-bound but not secret.
 
 ### Render error shows "The Chronicle stalled" page
 
@@ -269,13 +263,24 @@ npm install --no-audit --no-fund          # (Windows PowerShell: cmd /c npm inst
 
 ### Your data is safe across updates
 
-Chronicles, glossary, speaker mappings, encrypted keystore, and per-phase routing all live in the platform config directory **outside the repo** — `git pull` can never touch them. Specifically:
+![Three places Tusk's Tomes keeps files. The program folder holds the program code and is replaced by an update, but your Sessions folder and .env file inside it are left alone. Your profile, outside the program folder, holds settings, keys, recordings and saved chronicles, and survives an update. Next to the program folder, Tusks-Lore holds lore notes and .docx exports, and also survives an update.](../assets/diagrams/where-files-live.svg)
 
-| Path | What's in it |
+An update replaces only the program's tracked code. Inside the program folder, git ignores these, so an update leaves them alone:
+
+| Inside the program folder | What it is |
 |---|---|
-| `%APPDATA%\tusks-tomes\Config\` (Windows — Roaming, not Local) / `~/Library/Application Support/tusks-tomes/` (macOS) / `~/.config/tusks-tomes/` (Linux) | API keys (encrypted), glossary, speakers, per-phase routing, personas, module toggles, paused-run checkpoints |
-| `<repo>/Sessions/<campaign>/...` | Auto-saved chronicle Markdown (gitignored — won't be touched by `git pull`) |
-| `<repo>/vendor/python-venv/` | Whisper sidecar venv (only if Audio Transcription is installed; gitignored) |
+| `node_modules/`, `dist/`, `dist-server/` | JavaScript libraries and built output |
+| `vendor/` | The optional audio environment, `vendor/python-venv/` |
+| `.env` | Per-machine settings |
+| `Sessions/` | Your finished chronicles as Markdown |
+
+Your glossary, keys, personas, module on/off switches, session audio and saved chronicles live outside the program folder, so `git pull` touches none of them. The per-user folders are:
+
+| Folder | Path |
+|---|---|
+| Config | `%APPDATA%\tusks-tomes\Config\` (Windows — Roaming, not Local) / `~/Library/Preferences/tusks-tomes/` (macOS) / `~/.config/tusks-tomes/` (Linux) |
+| Data | `%LOCALAPPDATA%\tusks-tomes\Data\` (Windows) / `~/Library/Application Support/tusks-tomes/` (macOS) / `~/.local/share/tusks-tomes/` (Linux) |
+| Whisper model cache | `~/.cache/huggingface/hub` (`%USERPROFILE%\.cache\huggingface\hub` on Windows; `HF_HOME` moves it), filled the first time you transcribe audio. The uninstaller leaves this folder alone |
 
 </details>
 
@@ -287,8 +292,8 @@ Chronicles, glossary, speaker mappings, encrypted keystore, and per-phase routin
 **Important contract before you run this.** The uninstaller is only safe if you invoke it exactly as documented below. Specifically:
 
 1. **Run it as your normal user — never with `sudo` or "Run as administrator".** The script does not need elevation; running it elevated only widens what it *could* touch if a bug existed.
-2. **Run it from inside the repo's root directory** (the same place you'd run `npm install`). The script refuses to start unless `package.json` says `name: "tusks-tomes"`.
-3. **Don't override `TUSKS_CONFIG_DIR` / `TUSKS_DATA_DIR` / `TUSKS_CACHE_DIR` / `TUSKS_SESSIONS_DIR`** unless you set them up deliberately and know exactly where they point. The script's safety check will reject any deletion whose resolved path doesn't contain a `tusks-tomes` or `silence-beyond-the-sea` exact path segment, but the simplest defence is just not to override them.
+2. **Run it from inside the repo's root directory** (the same place you'd run `npm install`). The script works out which folder to clean from its own location, not from where you run it, and refuses to start unless the `package.json` there says `name: "tusks-tomes"`.
+3. **Don't set `TUSKS_CONFIG_DIR` / `TUSKS_DATA_DIR` / `TUSKS_CACHE_DIR` in the shell you run it from.** Only the uninstaller reads those three (the app itself always uses the platform folders); if they are set it aims at those paths and prints a warning. `TUSKS_SESSIONS_DIR` is read by both, and the uninstaller never touches that folder. The script's safety check rejects any deletion whose resolved path is neither inside the repo nor under a folder named `tusks-tomes` or `silence-beyond-the-sea`, but the simplest defence is not to set them.
 4. **The final-step "remove the repo" command the script prints must be pasted exactly as printed** — paths inside quotes, no edits. The script can only guard its own deletions; a hand-edited `Remove-Item` / `rm -rf` you run yourself is on you.
 
 Before any deletion, the script will require you to type `I UNDERSTAND` to acknowledge the above. Press Enter (or Ctrl-C) without typing the phrase to exit cleanly without touching anything.
@@ -311,33 +316,37 @@ npm run uninstall -- --purge-user-data   # also remove glossary, speakers, perso
 
 The acknowledgement notice itself includes the same manual-cleanup reference, so if you decide partway through that you'd rather do it by hand, you've got the path list in front of you. Press Enter without typing the phrase to exit cleanly.
 
-**What it removes** (by default — recreatable from a fresh setup):
+**Removed every time**
 
-- `node_modules/`, `dist/`, `dist-server/` build outputs
-- `vendor/python-venv/` (the Whisper Python venv — usually the heaviest single item, ~1.5–4 GB)
-- The Tusks cache directory + machine-bound state (probe cache, encryption salt, run checkpoints, routing, settings)
-- All module state: Audio Transcription → the Python venv above. The uninstaller also removes the `local-llm.enabled` and `personas-addon.enabled` marker files that older versions wrote in the config directory; the app no longer reads them
-- Any leftover empty "silence-beyond-the-sea" legacy directories from before the project rename
+- `node_modules/`, `dist/` and `dist-server/`.
+- `vendor/`, including the audio environment if there is one.
+- The cache folder.
+- Settings, routing, paused runs and the other machine-bound state.
 
-**What it preserves** (your content — pass `--purge-user-data` to remove these too):
+**Kept, unless you pass `--purge-user-data`**
 
-- Glossary, speakers, and personas JSON files
-- Encrypted API keystore (so a reinstall doesn't lose your keys)
-- Session recordings + transcripts under the data dir's `sessions/` tree
-- Auto-saved chronicle Markdown under `<repo>/Sessions/`
-- Unsloth Studio credentials (they're inside the encrypted keystore)
+- Glossary, speakers and personas.
+- `providers.enc` (your keys), kept together with the `.salt` file that opens it, so kept keys still open after a reinstall.
+- Your sessions and chronicles, in `sessions/` and in the repo's `Sessions/` folder.
 
-**Things the uninstaller will never touch:**
+**Never touched**
 
-- A `Tusks-Lore` folder anywhere on disk — your lore documents are yours
-- `TUSKS_SESSIONS_DIR` if you set it to a custom location
-- The repo source itself — the script prints the exact `rm -rf` / `Remove-Item` command for your platform at the end
-- Anything outside the repo, the Tusks app-data dir, and the legacy app-data dir
-- External tools you installed separately for the modules — **Python, Node.js, Ollama, LM Studio, Unsloth Studio, Tusk's Vault**. These may be used by other apps on your machine; the script lists them at the end so you can decide per-tool.
+- `chronicle-library/`: delete it by hand if you want it gone.
+- The Hugging Face cache of Whisper weights.
+- `Tusks-Lore/` and any `TUSKS_SESSIONS_DIR` folder.
+- Programs you installed, such as Node, Python and Ollama. They are listed at the end for you to decide.
+
+Also:
+
+- `vendor/` holds everything an add-on put there; for Audio Transcription that is the Whisper Python venv, usually the heaviest single item at about 1.5–2.5 GB.
+- The uninstaller also removes the model profiles (`profiles.json`) and the add-on toggle state (`addons.json`), along with any `local-llm.enabled` and `personas-addon.enabled` marker files in the config directory (the app does not read them) and any leftover empty "silence-beyond-the-sea" legacy directories.
+- Kept keys open again after a reinstall. After `--purge-user-data` the keys are gone, so enter them again in Settings → Providers & models. Unsloth Studio credentials are kept inside the same encrypted keystore.
+- The repo source itself is never touched: the script prints the exact `rm -rf` / `Remove-Item` command for your platform at the end. Nothing outside the repo, the Tusks app-data dir and the legacy app-data dir is touched.
+- External tools you installed separately for the modules — **Python, Node.js, Ollama, LM Studio, Unsloth Studio, Tusk's Vault** — are not removed. They may be used by other apps on your machine; the script lists them at the end so you can decide per tool.
 
 The script is pure Node.js stdlib (no npm dependencies of its own) so it still runs after `node_modules` is removed: `node scripts/uninstall.mjs --help`.
 
-**For a complete revert** (Tusk's Tomes ever ran here): run `npm run uninstall -- --purge-user-data`, follow the printed final-step commands to remove the repo, then uninstall the external tools you no longer need.
+**For a complete revert** (Tusk's Tomes ever ran here): run `npm run uninstall -- --purge-user-data`, delete the `chronicle-library/` folder in the data folder and the Whisper model cache if you used them, follow the printed final-step commands to remove the repo, then uninstall the external tools you do not need.
 
 </details>
 
@@ -354,7 +363,7 @@ npm run typecheck    # tsc --noEmit for both client (tsconfig.json) and server (
 npm run build        # vite build + tsc -p tsconfig.server.json → dist/ + dist-server/
 npm run start        # Production mode: NODE_ENV=production node dist-server/server/index.js
 npm run smoke-test   # End-to-end health check; pings every configured provider + Whisper sidecar
-npm test             # Vitest run; covers src/**/*.test.{ts,tsx} and server/**/*.test.ts
+npm test             # Vitest run; covers src, server, shared, scripts and engineering
 ```
 
 Run `npm run typecheck && npm test` before every commit.
@@ -363,34 +372,34 @@ Run `npm run typecheck && npm test` before every commit.
 
 ```
 src/                React 19 + Vite SPA (the chronicler/refiner UI)
-  components/       Tabs, panels, dialogs
-  lib/              Pipeline, glossary cache, SBV parser, provider abstraction
-  hooks/            useLocalStorage, useEta, useRefinementState
+  platform/         App shell and what every feature shares (API client, UI primitives, storage helpers)
+  features/<id>/    One folder per feature: components/, hooks/, lib/
+                    (pipeline, providers, routing, lore, corrections, transcription, ...)
 
 server/             Express server (tsx in dev, compiled in prod)
   index.ts          Server entrypoint
-  api/              HTTP route handlers (one router per resource)
-  sessions/         Session manifest reader/writer
-  upload/           Multitrack zip / loose-audio extractor (audio module)
-  whisper/          Whisper sidecar invocation (audio module)
-  crypto/           Encrypted keystore for API keys
-  addons/           Add-on registry + loader
-  appData.ts        Cross-platform config / data / cache directory helpers
+  addons/           Module registry + loader, and the built-in feature routes
+  platform/         Shared foundations (app-data paths, request gates, validators)
+  features/<id>/    routes/ (Express routers) and services/ (server logic)
+                    providers: encrypted keystore, profiles, local runners, CLI bridges
+                    transcription: sessions, multitrack upload, Whisper sidecar
+                    pipeline: run checkpoints
+
+shared/             Contracts and pure helpers both sides import
 
 scripts/
   setup/            First-time setup orchestrator (check-deps.mjs)
-  whisper/          Python venv bootstrap (setup.ps1, setup.sh, requirements.txt)
+  whisper/          Python venv bootstrap (setup.ps1, setup.sh, requirements.txt, transcribe.py)
+  launch/           Opens the browser once /api/health reports ready (used by the .bat)
+  update/           Applies in-app updates
   smoke-test.mjs    Health-check script
+  uninstall.mjs     Removes what Tomes installed
 
 setup.bat / setup.sh    Platform wrappers — call `node scripts/setup/check-deps.mjs`
 Start_Tusks_Tomes.bat   Windows convenience launcher (calls npm run dev)
 start.sh                POSIX equivalent
-scripts/launch/         Opens the browser once /api/health reports ready (used by the .bat)
 
-architecture.md     Full pipeline / phase-by-phase design doc
-ROADMAP.md          Every milestone and the rationale behind it
-README.md           End-user-facing walkthrough
-AddOns.md           The optional modules
+docs/               User documentation (also rendered in the Help tab)
 ```
 
 ### Pre-flight checks before opening a PR
@@ -410,7 +419,7 @@ The core install does paste-a-transcript chronicling against any cloud LLM. Seve
 
 - **Audio Transcription** — Whisper + Craig multitrack + direct audio ingest
 - **whisper.cpp bridge** — transcription on AMD, Intel and Apple GPUs, using a build you compile
-- **Local LLMs** — route any phase to Ollama / LM Studio / Unsloth
+- **Local LLMs** — route Ground, Audit or Extras to Ollama / LM Studio / Unsloth
 - **Chronicle Personas** — swap the narrator voice for one of six presets or your own
 - **Claude Code** / **Codex** — spend a subscription you already pay for instead of API credit
 - **Obsidian Vault lore** — ground chronicles against a read-only Obsidian vault
@@ -418,9 +427,9 @@ The core install does paste-a-transcript chronicling against any cloud LLM. Seve
 > [!TIP]
 > **Only Audio Transcription installs anything**, from **Settings →
 > Transcription**. The other six ship with the app — no Install button, no
-> restart. What used to be an install step for them is now simple detection.
+> restart. Each one detects whether what it needs (a CLI, a runner, a vault folder) is there.
 
-Full details in [AddOns.md](../extras/README.md).
+Full details in [Extras & integrations](../extras/README.md).
 
 ---
 

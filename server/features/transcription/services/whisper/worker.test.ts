@@ -224,9 +224,9 @@ describe('WhisperWorker against a stand-in sidecar', () => {
 
   it('resolves with the sidecar result, unknown envelopes notwithstanding', async () => {
     const w = standalone('cuda')
-    const r = await w.transcribe({ audio: 'one.wav', speakerId: 'u_1', speakerDisplay: 'Lucian', language: 'en' })
+    const r = await w.transcribe({ audio: 'one.wav', speakerId: 'u_1', speakerDisplay: 'Maeve', language: 'en' })
     expect(r.device).toBe('cpu')
-    expect(r.speakerDisplay).toBe('Lucian')
+    expect(r.speakerDisplay).toBe('Maeve')
     expect(r.segments[0].text).toBe('heard one.wav')
   })
 

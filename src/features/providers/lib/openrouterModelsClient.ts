@@ -5,7 +5,7 @@
 // blanking the settings page.
 
 import { emitCatalogueRefreshed } from '@/platform/lib/appEvents'
-import type { ProviderPolicy } from '@shared/contracts/openrouterModels'
+import type { CatalogueStatus, ProviderPolicy } from '@shared/contracts/openrouterModels'
 import { GEMINI_FLASH, GEMINI_PRO, OPENROUTER_DEEPSEEK_V4_PRO, OPENROUTER_GPT_OSS_120B } from '@shared/models/catalogue'
 
 export interface OpenRouterModelInfo {
@@ -35,12 +35,15 @@ export interface OpenRouterModelInfo {
   leaksReasoning?: boolean
 }
 
-export type { ProviderPolicy }
+export type { CatalogueStatus, ProviderPolicy }
 
 export interface CatalogueResult {
   fetchedAt: string | null
   models: OpenRouterModelInfo[]
   providerPolicies: ProviderPolicy[]
+  /** Where the list came from and whether it is current. Absent when the
+   *  server could not produce a list. */
+  status?: CatalogueStatus
   error?: string
 }
 
@@ -72,6 +75,7 @@ export async function getOpenRouterCatalogue(opts?: {
       fetchedAt: body.fetchedAt ?? null,
       models: Array.isArray(body.models) ? body.models : [],
       providerPolicies: Array.isArray(body.providerPolicies) ? body.providerPolicies : [],
+      ...(body.status ? { status: body.status } : {}),
       ...(body.ok === false && body.error ? { error: body.error } : {}),
     }
     remember(result, opts?.force)

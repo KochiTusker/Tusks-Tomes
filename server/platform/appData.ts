@@ -188,6 +188,11 @@ export function openrouterCatalogueFile(): string {
   return path.join(configDir(), 'openrouter-models.json')
 }
 
+/** OpenRouter's provider data policies, saved beside the model list. */
+export function openrouterPoliciesFile(): string {
+  return path.join(configDir(), 'openrouter-providers.json')
+}
+
 export function sessionsRoot(): string {
   // Per-user override so sessions can live in the repo (or any other
   // path) instead of %LOCALAPPDATA%. Useful when the multi-GB per-speaker

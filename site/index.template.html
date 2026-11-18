@@ -87,7 +87,7 @@
         </p>
       </div>
       <figcaption id="grounding-cap">
-        Every name in your campaign, corrected before a single sentence of prose is written.
+        Your campaign's names, corrected against your lore before a single sentence of prose is written.
       </figcaption>
     </figure>
   </section>
@@ -171,13 +171,13 @@
             <h3>The chronicle</h3>
             <p>
               A chapter of your campaign's book rather than a summary of it &mdash; continuous
-              narrative prose, about 16,000 words for a full session.
+              narrative prose, long enough to read as a chapter.
             </p>
           </li>
           <li class="artefact">
             <h3>A short recap</h3>
             <p>
-              One paragraph and catch-up bullets. What you send whoever missed last week, so they
+              A condensed retelling at a length you set, and a dozen or so catch-up bullets. What you send whoever missed last week, so they
               sit down already knowing.
             </p>
           </li>
@@ -195,13 +195,13 @@
           <li class="artefact">
             <h3>The clean transcript</h3>
             <p>
-              The raw text with every name corrected &mdash; and the end of &ldquo;I definitely
+              The raw text with your names corrected &mdash; and the end of &ldquo;I definitely
               never agreed to that&rdquo;.
             </p>
           </li>
         </ol>
         <figcaption id="fan-cap">
-          Saved as <code>.docx</code> and Markdown, into a folder you choose.
+          The chronicle, recap and lists are saved as Markdown in a Sessions folder inside the app's own folder, and download as <code>.docx</code> or Markdown.
         </figcaption>
       </figure>
 
@@ -348,7 +348,7 @@
               <td class="m"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
             </tr>
             <tr>
-              <th scope="row">You choose the model &mdash; or run the whole thing offline</th>
+              <th scope="row">You choose the model &mdash; local models can take the mechanical phases</th>
               <td class="m is-us"><i class="mark yes" aria-hidden="true">&#10003;</i><span class="vh">Yes</span></td>
               <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
               <td class="m"><i class="mark no" aria-hidden="true">&#10007;</i><span class="vh">No</span></td>
@@ -389,7 +389,7 @@
             </tr>
             <tr class="matrix-cost">
               <th scope="row">What it costs you</th>
-              <td class="is-us">Cloud credit by the session, or nothing at all on a local model. No subscription, no account.</td>
+              <td class="is-us">Cloud credit by the session, or nothing extra on a Claude or ChatGPT plan you already have, and nothing for the phases a local model takes. No subscription to us, no account.</td>
               <td>A subscription, or credit by the session, depending which.</td>
               <td>A monthly fee, whether or not you played that week.</td>
               <td>A free tier, then a monthly fee.</td>
@@ -434,13 +434,36 @@
       <p class="rail-label">How it works</p>
     </div>
     <div class="leaf-body">
-      <h2 id="how-h">Six passes, each doing one job</h2>
+      <h2 id="how-h">Five passes, each doing one job</h2>
       <p class="measure">
         A transcript goes in one end. Each pass hands off to the next, so a failure is recoverable
         and a long run can be paused and picked up tomorrow.
       </p>
 
-      <ol class="pipeline" aria-label="The six-phase pipeline">
+      <!-- The whole run on one page: what goes in, the five passes in order,
+           and which of section II's five artefacts each one hands back.
+           Hand-drawn in Excalidraw. The editable sources are
+           site/diagrams/*.excalidraw: open one at excalidraw.com, then
+           export SVG over assets/diagrams/ with Background and Embed scene
+           off (the fonts embed themselves). Two
+           drawings, not one scaled: the six-across version is unreadable at
+           phone width, so narrow screens get the passes stacked instead.
+           Loaded as <img>, never inlined: the page CSP forbids inline
+           styles, and the exported SVG carries its font in a <style>. -->
+      <figure class="diagram" aria-labelledby="pipeline-cap">
+        <picture>
+          <source media="(min-width: 68rem)" srcset="{{BASE}}/assets/diagrams/pipeline-wide.svg" width="1266" height="578">
+          <img src="{{BASE}}/assets/diagrams/pipeline-narrow.svg" width="585" height="1240"
+               alt="The passes in order, each with what it hands back. The session transcript and your lore and glossary go into pass 1, Ground the names, which gives the clean transcript. Pass 2, Audit, gives questions for the DM, and your answers go into pass 3, Write the chronicle, which gives the chronicle. Polish, pass 3.5, sits beside the line between pass 3 and pass 4, as a grey box marked not used today. Pass 4, Pull the extras, gives the lines worth keeping. Pass 5, Condense, is optional and gives a short recap. Two notes at the bottom: every pass that runs can use its own model, and the run is saved as it goes, so you can pause tonight and resume tomorrow."
+               loading="lazy" decoding="async">
+        </picture>
+        <figcaption id="pipeline-cap">
+          One job per pass, and each hands back something you keep. Any pass can run on its own
+          model, and the run saves as it goes, so a long session can stop tonight and finish tomorrow.
+        </figcaption>
+      </figure>
+
+      <ol class="pipeline" aria-label="The five-phase pipeline">
         <li class="stage is-key">
           <span class="stage-n" aria-hidden="true">1</span>
           <h3>Ground the names</h3>
@@ -461,21 +484,34 @@
           <p>The narrative pass. Player dialogue stays dialogue; the DM's narration reads as narration.</p>
         </li>
         <li class="stage">
+          <span class="stage-n" aria-hidden="true">3.5</span>
+          <h3>Polish</h3>
+          <p>A clean-up pass for a chronicle written by a local model. It runs only when the whole run uses a local provider, which the app does not offer, so it does not run today.</p>
+        </li>
+        <li class="stage">
           <span class="stage-n" aria-hidden="true">4</span>
           <h3>Pull the extras</h3>
           <p>Quotes, jests and the gorier highlights, extracted as separate lists.</p>
         </li>
         <li class="stage">
           <span class="stage-n" aria-hidden="true">5</span>
-          <h3>Polish</h3>
-          <p>A final review pass, used when you're running the pipeline on a model on your own machine.</p>
-        </li>
-        <li class="stage">
-          <span class="stage-n" aria-hidden="true">6</span>
           <h3>Condense</h3>
           <p>Optional. Boils the chronicle down to the short version for posting to the group.</p>
         </li>
       </ol>
+
+      <!-- Pass 1 on two misheard lines, so "the reason this exists" is seen
+           rather than claimed. Source: site/diagrams/how-names-get-corrected.excalidraw. -->
+      <figure class="diagram is-portrait">
+        <img src="{{BASE}}/assets/diagrams/how-names-get-corrected.svg" width="506" height="870"
+             alt="Two transcript lines as captured: Music, we reach hollow mirror; Laughter, then Hollow Mear gate. Before any model runs, with no AI and no cost, the Music and Laughter markers are stripped and names are swapped from your glossary. Then the model pass, pass 1, reads your lore from the Tome of Lore or a vault and corrects the names, so both misheard spellings become Hollowmere in the grounded transcript. Pass 2, the audit, turns whatever it cannot settle into questions for you."
+             loading="lazy" decoding="async">
+        <figcaption>
+          Two misheard lines through pass 1. Your glossary fixes what it can before any model runs;
+          the model fixes the rest against your lore, and the audit asks you about whatever it still
+          cannot settle.
+        </figcaption>
+      </figure>
 
       <p class="measure outro">
         You can send different passes to different models — the cheap ones do the mechanical work,
@@ -513,7 +549,7 @@
       <h2 id="demo-h">What it looks like to actually use</h2>
       <p class="measure">
         Everything above is what comes out. This is the part in the middle: importing a session,
-        pointing it at your campaign's lore, and watching six passes go by.
+        pointing it at your campaign's lore, and watching five passes go by.
       </p>
 
 {{VIDEO}}
@@ -539,9 +575,21 @@
         other into text at all. Both roads end at the same grounding pass.
       </p>
 
+      <!-- The three ways in, drawn converging on pass 1, so "both roads end
+           at the same grounding pass" is seen rather than read. The cards
+           below keep what a drawing cannot carry: what each road needs and
+           what it costs you. Sources: site/diagrams/roads-*.excalidraw. -->
+      <figure class="diagram">
+        <picture>
+          <source media="(min-width: 68rem)" srcset="{{BASE}}/assets/diagrams/roads-wide.svg" width="1068" height="436">
+          <img src="{{BASE}}/assets/diagrams/roads-narrow.svg" width="528" height="885"
+               alt="Three ways in. Session audio is transcribed by Whisper on your own PC. Session video is transcribed by YouTube's automatic captions, on Google's servers. Or you paste in a transcript you already have. All three become the same transcript, which goes to pass 1, grounding the names, and then on through the other four passes."
+               loading="lazy" decoding="async">
+        </picture>
+      </figure>
+
       <div class="choice">
         <article class="option">
-          <p class="option-flow"><span>Session audio</span><span>Whisper, on your PC</span><span>Chronicle</span></p>
           <h3>Record it and transcribe it yourself</h3>
           <p>
             A Discord multitrack, a Zoom export, or a phone on the table. Whisper runs locally, so the
@@ -549,23 +597,34 @@
             finished chronicle stays attached to the right character — one track means one person, and
             nothing has to guess. It also transcribes what was actually said, swearing included.
           </p>
-          <p class="option-needs"><strong>Wants</strong> an NVIDIA GPU, and one module installed.</p>
+          <p class="option-needs"><strong>Wants</strong> an NVIDIA GPU to be quick (a processor works, slowly), and one module installed.</p>
           <p class="cta"><a class="btn" href="{{BASE}}/docs/importing/session-audio/">The audio route</a></p>
         </article>
 
         <article class="option">
-          <p class="option-flow"><span>Session video</span><span>YouTube captions</span><span>Chronicle</span></p>
           <h3>Let YouTube do the transcribing</h3>
           <p>
             Upload the recording unlisted, wait for the automatic captions, bring the transcript back.
             The transcription happens on Google's hardware instead of yours. Captions carry no speaker
             labels and censor swearing, so the audit pass asks more questions and the language comes
-            back tamer than your table — but it needs nothing you do not already have.
+            back tamer than your table, since a bleeped word has to be guessed from context — but it needs nothing you do not already have.
           </p>
-          <p class="option-needs"><strong>Wants</strong> nothing. No GPU, no Python, nothing to install.</p>
+          <p class="option-needs"><strong>Wants</strong> nothing extra. No GPU, no Python, no module to install.</p>
           <p class="cta"><a class="btn" href="{{BASE}}/docs/importing/youtube-captions/">The YouTube route</a></p>
         </article>
       </div>
+
+      <!-- Why the audio card asks for a track per player. Source:
+           site/diagrams/one-mic-or-one-track.excalidraw. -->
+      <figure class="diagram is-portrait">
+        <img src="{{BASE}}/assets/diagrams/one-mic-or-one-track.svg" width="491" height="743"
+             alt="Two panels. In the first, three players talk into one microphone, which makes one mixed file, and every line of its transcript is tagged with a question mark, because who said it has to be guessed. In the second, each player wears a headset and records their own track, the Rogue, the Cleric and the DM, so every line is tagged with whoever recorded it, because who said it is known."
+             loading="lazy" decoding="async">
+        <figcaption>
+          One microphone for the table leaves every speaker to be guessed. A track per player, which a
+          Discord multitrack recording gives you, makes it known.
+        </figcaption>
+      </figure>
 
       <p class="measure outro">
         Already have a transcript from somewhere else? Paste it in and skip both.
@@ -588,8 +647,26 @@
       <h2 id="cost-h">A session, not a month</h2>
       <p class="measure">
         Tusk's Tomes is free. The only money involved is whatever your chosen AI provider charges for
-        the tokens, and you pay it on the weeks you actually play.
+        the tokens — or nothing extra, if you route through a subscription you already have — and you
+        pay it on the weeks you actually play. A model on your own machine can take the mechanical passes
+        for nothing.
       </p>
+
+      <!-- Four common situations and the route each points to. Two drawings,
+           as in IV: the wide one keeps its icons, the narrow one drops them so
+           its labels stay readable on a phone. Sources:
+           site/diagrams/which-route-suits-you.excalidraw and which-route-narrow.excalidraw. -->
+      <figure class="diagram">
+        <picture>
+          <source media="(min-width: 68rem)" srcset="{{BASE}}/assets/diagrams/which-route-suits-you.svg" width="787" height="550">
+          <img src="{{BASE}}/assets/diagrams/which-route-narrow.svg" width="534" height="616"
+               alt="Four situations, each pointing to a way of reaching a model. You already pay for Claude or ChatGPT: use Claude Code or Codex. You want the cheapest strong cloud: Gemini with a paid key. You want the widest choice from one key: OpenRouter, with about 400 models. You want Ground, Audit and Extras for free: a local runner for passes 1, 2 and 4, plus one of the other routes for the chronicle."
+               loading="lazy" decoding="async">
+        </picture>
+        <figcaption>
+          Start from what you already have. Routes mix, too: each pass can take its own.
+        </figcaption>
+      </figure>
 
 {{LEDGER}}
 
@@ -618,33 +695,19 @@
         you installed it on.
       </p>
 
-      <figure class="boundary" aria-labelledby="boundary-cap">
-        <div class="boundary-box">
-          <p class="boundary-title">Your machine</p>
-          <ul class="boundary-items">
-            <li>The recording</li>
-            <li>Whisper, transcribing it</li>
-            <li>Your lore and glossary</li>
-            <li>Every chronicle it writes</li>
-            <li>Your API keys, encrypted</li>
-          </ul>
-        </div>
-        <div class="boundary-link" aria-hidden="true">
-          <span class="boundary-arrow"></span>
-          <span class="boundary-what">the transcript text, and only when you press Run</span>
-        </div>
-        <div class="boundary-box is-remote">
-          <p class="boundary-title">The model you chose</p>
-          <ul class="boundary-items">
-            <li>Reads the text</li>
-            <li>Writes the prose</li>
-            <li>Keeps nothing afterwards</li>
-          </ul>
-        </div>
-        <figcaption id="boundary-cap">
-          Choose a model that runs on your own machine and the right-hand side disappears entirely —
-          nothing leaves at all.
-        </figcaption>
+      <!-- Where everything lives, and the one exchange that crosses the line.
+           Two claims here are easy to overstate, so they are drawn exactly:
+           what leaves is the transcript AND the lore the passes need (the
+           chronicle and condense passes read lore text), and what the far
+           side keeps is the provider's business, not ours to promise.
+           Sources: site/diagrams/boundary-*.excalidraw. -->
+      <figure class="diagram">
+        <picture>
+          <source media="(min-width: 68rem)" srcset="{{BASE}}/assets/diagrams/boundary-wide.svg" width="1088" height="559">
+          <img src="{{BASE}}/assets/diagrams/boundary-narrow.svg" width="488" height="1033"
+               alt="Your machine holds the recording, Whisper transcribing it, your lore and glossary, every chronicle it writes, and your API keys, encrypted. Only when you press Run, the transcript and the lore it needs go to the models you chose, each working under its own privacy terms, and the prose comes back. Local models can take the Ground, Audit and Extras phases, and the text for those stays on your machine; the chronicle and condensed recap always go to a cloud model or a subscription CLI. On the YouTube road, the recording is the one thing you upload yourself."
+               loading="lazy" decoding="async">
+        </picture>
       </figure>
 
       <ul class="nevers">
@@ -693,9 +756,22 @@
       <h2 id="start-h">Two things, then one command</h2>
       <p class="measure">
         You need <strong>Node 22 or newer</strong> and <strong>Git</strong>. That is the whole
-        requirement. Node 22 applies from version 2.7.0; earlier releases run on Node 20. Python and a graphics card matter only if you later want the machine to
+        requirement to install it. Writing a chronicle also needs a way to reach a model: an API key, a subscription you already have, or a model on your own machine. Node 22 applies from version 2.7.0; earlier releases run on Node 20. Python and a graphics card matter only if you later want the machine to
         transcribe audio for you, and you can add them whenever.
       </p>
+
+      <!-- The whole road from nothing to a first chronicle, with the Windows
+           and the macOS/Linux scripts named together. The docs' no-terminal
+           page has the Windows-only version. Source: site/diagrams/start-road.excalidraw. -->
+      <figure class="diagram is-portrait">
+        <img src="{{BASE}}/assets/diagrams/start-road.svg" width="550" height="1168"
+             alt="The road from nothing to a first chronicle, as eight numbered steps in three stretches. Once, on your computer: 1, install Node.js and Git from nodejs.org and git-scm.com; 2, download Tusk's Tomes by cloning it or taking the ZIP; 3, run setup once, setup.bat on Windows or ./setup.sh on macOS and Linux. Each time you start it: 4, start it and keep it open, with Start_Tusks_Tomes.bat or ./start.sh, then wait for READY; 5, your browser opens the app. In the app: 6, add a way to reach a model, a Gemini or OpenRouter key or Claude Code or Codex; 7, add your lore and players; then 8, chronicle a session. A dashed box before step 8 marks an optional step with no number: audio transcription, with Python first and then Install."
+             loading="lazy" decoding="async">
+        <figcaption>
+          The first three steps happen once. After that, starting Tomes is one double-click, or one
+          command.
+        </figcaption>
+      </figure>
 
       <p class="cta">
         <a class="btn primary" href="{{BASE}}/docs/getting-started/installation/">Install it</a>

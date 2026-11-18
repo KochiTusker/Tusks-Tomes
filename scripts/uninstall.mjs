@@ -6,10 +6,10 @@
  *
  *   1. Build artifacts + the Whisper Python venv — ALWAYS removed (auto-
  *      generated, recreatable by re-running setup).
- *   2. Caches + machine-bound state (probe cache, encryption salt, run
+ *   2. Caches + machine-bound state (probe cache, run
  *      checkpoints, addon markers, profiles, routing) — ALWAYS removed.
  *   3. User-authored content (glossary, speakers, personas, encrypted API
- *      keys, session recordings, auto-saved chronicles) — PRESERVED by
+ *      keys and the salt that unlocks them, session recordings, auto-saved chronicles) — PRESERVED by
  *      default. Pass `--purge-user-data` to remove these too.
  *
  * Things the script NEVER touches, regardless of flags:
@@ -405,12 +405,14 @@ function printManualCleanupReference() {
   console.log(dim('      ├── glossary.json              (your lore-term corrections)'))
   console.log(dim('      ├── speakers.json              (Discord-ID → player/character map)'))
   console.log(dim('      ├── personas.json              (user-authored chronicle narrators)'))
-  console.log(dim('      ├── providers.enc              (encrypted API keystore, machine-bound)'))
+  console.log(dim('      ├── providers.enc              (encrypted API keystore, machine-bound; kept unless --purge-user-data)'))
   console.log(dim('      ├── profiles.json              (per-provider model choices)'))
+  console.log(dim('      ├── openrouter-models.json     (saved OpenRouter model list)'))
+  console.log(dim('      ├── openrouter-providers.json  (saved OpenRouter provider data policies)'))
   console.log(dim('      ├── routing.json               (per-phase provider routing)'))
   console.log(dim('      ├── addons.json                (add-on enable/disable toggle state)'))
   console.log(dim('      ├── settings.json              (updater + misc preferences)'))
-  console.log(dim('      ├── .salt                      (scrypt salt for the keystore)'))
+  console.log(dim('      ├── .salt                      (scrypt salt for the keystore; kept and removed together with it)'))
   console.log(dim('      ├── local-llm.enabled          (marker for Local LLMs add-on)'))
   console.log(dim('      ├── personas-addon.enabled     (marker for Personas add-on)'))
   console.log(dim('      └── runs/                      (paused-pipeline checkpoints)'))
@@ -928,9 +930,10 @@ async function main() {
   await removeIfPresent('Capability probe cache', join(PATHS.config, 'capability.json'))
   await removeIfPresent('Routing prefs', join(PATHS.config, 'routing.json'))
   await removeIfPresent('Model profiles', join(PATHS.config, 'profiles.json'))
+  await removeIfPresent('OpenRouter model list (cached)', join(PATHS.config, 'openrouter-models.json'))
+  await removeIfPresent('OpenRouter provider policies (cached)', join(PATHS.config, 'openrouter-providers.json'))
   await removeIfPresent('Add-on toggle state', join(PATHS.config, 'addons.json'))
   await removeIfPresent('Settings', join(PATHS.config, 'settings.json'))
-  await removeIfPresent('Crypto salt', join(PATHS.config, '.salt'))
   await removeIfPresent('Local-LLM add-on marker', join(PATHS.config, 'local-llm.enabled'))
   await removeIfPresent('Personas add-on marker', join(PATHS.config, 'personas-addon.enabled'))
 
@@ -943,6 +946,11 @@ async function main() {
   await removeIfPresent('Speakers (user-curated mapping)', join(PATHS.config, 'speakers.json'), { userContent: true })
   await removeIfPresent('Personas (user-authored)', join(PATHS.config, 'personas.json'), { userContent: true })
   await removeIfPresent('Encrypted API keystore', join(PATHS.config, 'providers.enc'), { userContent: true })
+  // The keystore key is derived from this salt, so the two travel together: a
+  // kept keystore without its salt can never be decrypted again. The salt is
+  // only removed on its own when there is no keystore left for it to unlock.
+  const keystorePresent = await exists(join(PATHS.config, 'providers.enc'))
+  await removeIfPresent('Keystore salt (unlocks the keystore)', join(PATHS.config, '.salt'), { userContent: keystorePresent })
   await removeIfPresent('Session recordings + transcripts', join(PATHS.data, 'sessions'), { userContent: true })
   await removeIfPresent('Auto-saved chronicles', join(REPO_ROOT, 'Sessions'), { userContent: true })
 

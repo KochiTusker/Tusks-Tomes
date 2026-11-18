@@ -22,21 +22,24 @@ all in the repo already.
 The question is: **does turning this on put bytes on your disk that weren't
 there before?**
 
-| | What it means | How you turn it on |
+| Module | What it needs from you | Installs anything? |
 |---|---|---|
-| **Installs** | A real installation with real prerequisites. Today there is exactly one: Audio Transcription, which downloads a Python environment. | **Settings → Transcription**, then Install. The log streams live; you restart the server once when it finishes. |
-| **Built in** | Ships with the app and is always mounted. Nothing to download, nothing to restart. | Nothing to turn on. Whether it's *usable* — a CLI on your PATH, a runner that's actually running, a vault path you've set — is something each module detects and tells you. |
+| Audio Transcription | **Settings → Transcription → Install**, then one server restart | Yes: a Python environment of 1.5–2.5 GB, with a live log |
+| whisper.cpp bridge | A whisper.cpp build you point it at | No |
+| Local LLMs | Ollama, LM Studio or Unsloth running | No |
+| Chronicle Personas | Nothing: six presets ship in the app | No |
+| Claude Code | The `claude` command, installed | No |
+| Codex | The `codex` command, installed | No |
+| Obsidian vault lore | A vault folder you choose | No |
 
-So for six of the seven modules below, there is no install step and no restart.
-You point them at something (a CLI, a local runner, a vault folder), and the
-app checks whether it's there.
+**Installs** means a real installation with real prerequisites. Today that is Audio Transcription alone: **Settings → Transcription**, then Install, and you restart the server once when it finishes. **Built in** means the module ships with the app and is always mounted, so there is nothing to turn on and nothing to restart.
 
 > [!NOTE]
 > A built-in module has no uninstall path, so turning one off cannot remove
 > anything you have authored. Personas you write yourself are safe by
 > construction rather than by care.
 
-The architectural details (registry, the `builtin` / `install` union, route
+The architectural details (the registry, the feature list, route
 mounting) live in [architecture.md](../about/how-its-built.md).
 
 ---
@@ -51,10 +54,10 @@ mounting) live in [architecture.md](../about/how-its-built.md).
 
 **What it unlocks:**
 - **Sessions** tab — appears once the module is installed. Uploading is the first thing on it: Craig multitrack zip ingest, loose-file audio drop, staged-batch uploads. Your transcribed sessions list below, with replay / export / delete.
-- **Whisper sidecar** — offline transcription via `faster-whisper` large-v3 (CUDA auto-detected; CPU fallback works)
+- **Whisper sidecar** — offline transcription via `faster-whisper` large-v3 (runs on an NVIDIA GPU when it can, and falls back to the CPU)
 - **Speaker mapping editor** — pre-populated from filenames, editable before transcription kicks off
 
-**Cost:** a Python virtual environment of roughly 1.5 GB, plus model weights. Python 3.10–3.12 required on your PATH. An **NVIDIA** GPU cuts a 3-hour session from hours on CPU to minutes.
+**Cost:** a Python virtual environment of about 1.5–2.5 GB, plus model weights. Python 3.10–3.12 required on your PATH. An **NVIDIA** GPU cuts a 3-hour session from hours on CPU to minutes.
 
 > [!WARNING]
 > **On AMD or Intel?** This engine won't use your card — `faster-whisper` only
@@ -84,13 +87,13 @@ mounting) live in [architecture.md](../about/how-its-built.md).
 
 ### Local LLMs
 
-**The fully-offline path.** Routes any phase of the pipeline (or the whole thing) through a local model running on your hardware. The chronicle never touches a cloud API.
+**The mechanical-phases path.** Routes Ground, Audit and Extras (Phases 1, 2 and 4) through a local model running on your hardware, where its capability probe passes. The chronicle and Condense always go to a cloud model or a subscription CLI.
 
-**Why you might want this:** privacy (sensitive transcripts stay on the host), cost (zero per session), or just preference (you already run Ollama and want to use it). Per-phase routing lets you mix and match — e.g. a cheap cloud model for grounding, your local 27B for the long-form chronicle phase.
+**Why you might want this:** privacy (sensitive transcripts stay on the host), cost (zero for the phases a local model takes), or just preference (you already run Ollama and want to use it). Per-phase routing lets you mix and match — e.g. your local model for grounding, a cloud model or subscription for the long-form chronicle phase.
 
 **What it unlocks:**
 - **Local runner detection** in **Settings → Providers & models** — detect and probe Ollama / LM Studio / Unsloth on their default ports. Start a runner and its models appear in the routing rows.
-- **Per-phase routing** — assign each pipeline phase to a specific local model independently
+- **Per-phase routing** — assign Ground, Audit or Extras to a specific local model independently
 - **Capability probe** — a 2-test mini-probe (structured JSON adherence + grounding fidelity) flags which phases each local model is qualified for, so the routing rows show which ones it can carry
 - **Hardware advisories** — VRAM / RAM checks for the model you've picked, so a 32B model on 8 GB doesn't silently OOM
 
@@ -110,7 +113,7 @@ mounting) live in [architecture.md](../about/how-its-built.md).
 
 **Swap the narrator's voice.** The default chronicle voice is a polished bardic tone — appropriate for most groups. Personas lets you replace it with one of six character presets, or write your own.
 
-**The six presets:** Arnold Schwarzenegger, Homer Simpson, Peter Griffin, Gandalf, Mike Tyson, Donkey (from Shrek). All affect phases 3 (Chronicle), 5 (Polish, local-only), and 6 (Condense) — the prose-generation phases. Phases 1 (Ground), 2 (Audit), and 4 (Extras) are voice-neutral and untouched.
+**The six presets:** Arnold Schwarzenegger, Homer Simpson, Peter Griffin, Gandalf, Mike Tyson, Donkey (from Shrek). All affect phases 3 (Chronicle), 3.5 (Polish, local-only), and 5 (Condense) — the prose-generation phases. Phases 1 (Ground), 2 (Audit), and 4 (Extras) are voice-neutral and untouched.
 
 **Authoring your own:**
 - Clone a preset and tweak
@@ -168,10 +171,10 @@ The two subscription modules are completely independent — use either, both, or
 
 **Cost:** nothing to download from us. Requires Codex installed (`npm i -g @openai/codex`) and `codex login`.
 
-> [!CAUTION]
-> Make sure `OPENAI_API_KEY` is **not** set in your environment. The module
-> strips it from the CLI's environment specifically so you can't be silently
-> switched onto per-token billing without noticing.
+> [!NOTE]
+> There is nothing to unset. Tomes removes any OpenAI key or base URL left in
+> your shell from the call it makes, so runs always bill your subscription and
+> never per token.
 
 **Deep dive:** [docs/extras/codex.md](codex.md)
 
@@ -181,10 +184,10 @@ The two subscription modules are completely independent — use either, both, or
 
 **Ground chronicles against an Obsidian vault** instead of the Tusks-Lore folder. Point it at a vault and the app reads your notes' frontmatter aliases and bodies to build the grounding index — so the names, places and factions in your chronicle match the canon you already maintain.
 
-**Strictly read-only.** The app never writes into your vault; the single exception is the explicit "Build graphify map" button, which you press yourself. The derived entity index is cached outside the vault.
+**Read-only while it grounds.** Chronicling never writes into your vault. The only writes are three actions you start yourself: **Build graphify map**, **Generate CLAUDE.md for your vault** (on the vault summary in the Tome of Lore tab) and the Recommended Setup step that makes `.md` copies of Word and PDF notes beside the originals. The derived entity index is cached outside the vault.
 
 **What it unlocks:**
-- An **Obsidian Vault Lore** panel under **Settings** — vault path, readiness checks, entity-index status
+- An **Obsidian Vault Lore** panel under **Tome of Lore → Lore source** — vault path, readiness checks, entity-index status
 - Alias-aware grounding from your existing frontmatter, with no duplication of lore into a second folder
 
 **Cost:** free. Requires an Obsidian vault on the same machine. Stays inert until you choose it as your lore source under **Tome of Lore → Lore source**.

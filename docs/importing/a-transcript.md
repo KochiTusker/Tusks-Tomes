@@ -13,7 +13,7 @@ a transcript someone else produced.
 2. Paste your transcript into the **Raw transcript** box.
 3. Set a campaign name and session number, then **Begin the Chronicle**.
 
-That's the whole route. Everything after it is the same six-phase pipeline the
+That's the whole route. Everything after it is the same five-phase pipeline the
 other two routes feed.
 
 ## What good input looks like

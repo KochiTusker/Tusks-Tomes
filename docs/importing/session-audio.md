@@ -19,28 +19,17 @@ is the mechanical version of this page.
 |---|---|
 | **You start with** | An audio recording of one session |
 | **You end with** | A narrative chronicle, a condensed version, catch-up bullets, quotes, jests and combat highlights |
-| **Time** | About an hour for a three-hour session, unattended |
-| **Cost** | [Roughly $1–$5 of your own API credit](../models/costs.md), or $0 fully local |
-| **Uploaded anywhere?** | The audio never leaves your machine. Only text reaches a model, and only if you choose a cloud one |
+| **Time** | Transcription first (roughly half an hour for three hours of audio on a mid-range NVIDIA GPU), then the pipeline, all unattended |
+| **Cost** | [Your own API credit, by routing](../models/costs.md), or $0 extra on a subscription CLI |
+| **Uploaded anywhere?** | The audio never leaves your machine. Only text reaches a model: the transcript and the lore each phase uses, going to the cloud model or subscription CLI you routed to. Local models can take the mechanical phases |
 
 ---
 
 ## Stage 1 — Record the session
 
-Any recording works. The one that works *best* records each player to their own
-track, because that removes the hardest problem in the whole pipeline before it
-starts.
+![Two panels with the same layout. In the first, three players talk into one microphone and the result is a single mixed file; every line in its transcript is tagged with a question mark, because who said it is guessed. In the second, each player has a headset and their own track, so every line is tagged with whoever recorded it, the Rogue or the DM, because who said it is known.](../assets/diagrams/one-mic-or-one-track.svg)
 
-**Multitrack, via Discord.** [Craig](https://craig.chat) is a Discord bot that
-records every participant to a separate file. Its free tier is enough for this.
-When each track contains exactly one person, every line in the finished
-chronicle is attributable to the right character without anything having to
-guess.
-
-**Single track.** A Zoom recording, an OBS capture, a phone on the table — all
-fine, and all land in the same pipeline. You lose per-speaker separation, which
-means attribution becomes inference rather than fact. The chronicle will still
-read well; it will occasionally put a line in the wrong character's mouth.
+Any recording works, and the one that works *best* records each player to their own track, because that removes the hardest problem in the whole pipeline before it starts. [Craig](https://craig.chat) is a Discord bot that records every participant to a separate file, and its free tier is enough. A Zoom recording, an OBS capture or a phone on the table all land in the same pipeline, but with one mixed file attribution is inference rather than fact, and the chronicle will occasionally put a line in the wrong character's mouth.
 
 There is no minimum quality bar worth stating. Sessions recorded on a laptop
 microphone across a kitchen table produce usable chronicles. Crosstalk hurts far
@@ -66,7 +55,7 @@ timestamped transcript with speakers already attached.
 The engine underneath is `faster-whisper`, whose backend implements exactly two
 devices: CUDA and CPU. There is no AMD, Intel Arc or Apple GPU backend, so those
 cards are not used at all — a machine with a Radeon in it transcribes at exactly
-the same speed as a machine with no graphics card.
+the same speed as a machine with no graphics card. The one way round it is the [whisper.cpp bridge](../extras/whisper-cpp.md), which uses a Vulkan or Metal build that you compile yourself.
 
 | Hardware | A three-hour session takes |
 |---|---|
@@ -99,13 +88,9 @@ the model picks a plausible spelling, commits to it, and stays consistently
 wrong for forty pages. Consistency reads as confidence, which makes it worse,
 not better.
 
-So Phase 1 corrects the transcript *before* any narrative is written:
+So Phase 1 corrects the transcript *before* any narrative is written. Markers such as `[Music]` and `[Laughter]` are stripped first, then your glossary and a general D&D dictionary swap names, and only then does a model resolve the rest against your lore.
 
-1. A deterministic pass strips `[Music]` and `[Laughter]` markers and normalises
-   whitespace.
-2. A second deterministic pass applies your glossary's safe replacements and a
-   general D&D dictionary.
-3. Only then does a model pass over it, resolving the rest against your lore.
+![A transcript has two lines, "We reach hollow mirror" after a Music marker and "then Hollow Mear gate" after a Laughter marker. Before any model runs, with no AI and no cost, the markers are stripped and names are swapped using your glossary. Then a model pass, Phase 1, reads your lore, from the Tome of Lore or a vault, and corrects the names, so both misheard spellings become Hollowmere in the grounded transcript. The Audit, Phase 2, turns whatever it cannot settle into questions for you.](../assets/diagrams/how-names-get-corrected.svg)
 
 Your lore can come from either of two places. The **Tome of Lore** tab holds
 documents and a glossary you maintain in-app. The
@@ -126,7 +111,7 @@ prose. Answering them takes a few minutes and improves everything downstream.
 ## Stage 4 — Write it up
 
 Phase 3 turns the grounded transcript into continuous narrative. Phase 4 pulls
-the quotes, jests and combat highlights out as structured lists. Phase 6
+the quotes, jests and combat highlights out as structured lists. Phase 5
 optionally condenses the chronicle to whatever length you set with a slider.
 
 A three-hour session lands at roughly 16,000–18,000 words in full. At the
@@ -151,15 +136,14 @@ project's home page carries sample extracts from a real session.
 
 | Route | Per three-hour session |
 |---|---|
-| Paid Gemini key | [~$1–$5, by routing](../models/costs.md) |
+| Paid Gemini key | [By routing, from the costs page](../models/costs.md) |
 | Claude Code or Codex CLI subscription | $0 extra — draws on an allowance you already pay for |
-| Fully local (Ollama, LM Studio, Unsloth) | $0 |
-| Mixed — mechanical phases local, chronicle to cloud | Pennies |
+| Mixed — mechanical phases local, chronicle to cloud | Only the cloud phases are billed |
 
-The honest caveat on fully local: below roughly 15–20B parameters the chronicle
-phase tends to read like a log rather than a story, and grounding is less
-reliable too. Running the mechanical phases locally and sending only Phase 3 to
-a cloud model keeps most of the saving and all of the prose quality.
+Local models take the mechanical phases only (Ground, Audit, Extras), and below
+roughly 15–20B parameters grounding is less reliable. The chronicle (Phase 3)
+always goes to a cloud model or a subscription CLI, which keeps most of the
+saving and all of the prose quality.
 
 See [what it costs](../models/costs.md) for the full breakdown.
 

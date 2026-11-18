@@ -17,7 +17,7 @@ const PHASE_LABEL: Record<number, string> = {
   2: 'Phase 2 — Audit',
   3: 'Phase 3 — Chronicle',
   4: 'Phase 4 — Extras',
-  6: 'Phase 6 — Condense',
+  6: 'Phase 5 — Condense',
 }
 
 function fmtRelative(iso: string): string {

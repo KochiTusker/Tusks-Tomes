@@ -92,14 +92,14 @@ export function CondenseSlider({ value, onChange, estimatedChronicleWords, basis
         <span className="text-muted-foreground">
           {basis === 'actual'
             ? '(from this chronicle’s word count)'
-            : '(rough estimate; the real target is computed from the chronicle at Phase 6 start)'}
+            : '(rough estimate; the real target is computed from the chronicle at Phase 5 start)'}
         </span>
       </div>
 
       {showZeroNote && (
         <div className="mt-2 rounded border border-amber-500/30 bg-amber-50 p-2 text-xs text-amber-900 dark:bg-amber-950/20 dark:text-amber-100">
           0% disables the condense pass entirely — equivalent to unchecking the
-          Condensed checkbox above. Phase 6 will not run.
+          Condensed checkbox above. Phase 5 will not run.
         </div>
       )}
 

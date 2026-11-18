@@ -1,0 +1,11 @@
+Self-hosted web fonts, all under the SIL Open Font License 1.1 (OFL-1.1).
+Served from the app itself so opening it makes no third-party request.
+
+Subset: latin. Format: woff2. Files from the @fontsource npm packages, version 5.3.0.
+
+- Cinzel (500, 600, 700) - Natanael Gama. https://fonts.google.com/specimen/Cinzel
+- Fondamento (400, 400 italic) - Eduardo Tunni. https://fonts.google.com/specimen/Fondamento
+- Inter (400, 500, 600) - Rasmus Andersson. https://fonts.google.com/specimen/Inter
+
+Each font is distributed under the SIL Open Font License, Version 1.1.
+Full licence text: https://openfontlicense.org/

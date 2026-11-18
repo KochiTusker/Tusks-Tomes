@@ -1,8 +1,9 @@
 # Local LLMs
 
-Optional add-on that adds Ollama, LM Studio, and Unsloth Studio routing to
-Tusk's Tomes. Out of the box the pipeline runs cloud-only (Gemini or OpenRouter). Connect a runner if you want some or all phases to run on a
-local model instead.
+Built-in routing to Ollama, LM Studio and Unsloth Studio. Until you connect a
+runner the pipeline runs on your cloud or subscription route (Gemini,
+OpenRouter, Claude Code or Codex). Connect a runner if you want some phases to
+run on a local model instead.
 
 > [!NOTE]
 > **View in app:** this doc renders inside Tusk's Tomes too — open the **Help** tab and pick "Local LLMs", or click **Read docs** from the Local LLMs row in Settings.
@@ -27,7 +28,7 @@ local model instead.
 <div class="docs-section-body">
 
 
-This add-on doesn't install a local runner for you. Pick one (or more):
+Tomes doesn't install a local runner for you. Pick one (or more):
 
 - **Ollama** — `ollama serve` running on `localhost:11434`. Install from
   [ollama.com](https://ollama.com). After install: `ollama pull llama3.1`
@@ -40,9 +41,8 @@ This add-on doesn't install a local runner for you. Pick one (or more):
 - Any other OpenAI-compatible local runner (vLLM, llama.cpp server,
   koboldcpp). Point Tusk's Tomes at its base URL.
 
-Tusk's Tomes can launch Ollama / LM Studio / Unsloth for you (the Local LLM
-panel has a "Launch runner" button) but you still need the binary
-installed on `PATH`.
+Start the runner yourself: the Local LLMs panel detects a running Ollama,
+LM Studio, llama.cpp server or Unsloth Studio, but has no button to launch one.
 
 
 </div>
@@ -59,9 +59,10 @@ installed on `PATH`.
 
 1. Install and start a runner — [Ollama](https://ollama.com), [LM Studio](https://lmstudio.ai) or Unsloth Studio.
 2. Open **Settings → Providers & models** inside Tusk's Tomes.
-3. Use **Detect** on the runner's row. Tomes probes localhost on that
-   backend's default port and lists the models it finds. Enter auth
-   credentials here if your runner needs them, and run a capability probe.
+3. The Local LLMs panel probes localhost on each backend's default port when
+   it opens and lists the models it finds; **Detect again** repeats the check.
+   Enter auth credentials in the Unsloth section if your runner needs them,
+   and use **Run probe** on a model for its capability check.
 4. Assign individual phases to the model you want in the routing rows — for
    example Phase 1 on Ollama, Phase 3 on a cloud model.
 
@@ -81,10 +82,6 @@ routing rows say so rather than failing mid-run.
 Your `routing.json` stays on disk either way, so going back to a local model
 later restores your setup unchanged.
 
-If you previously had a local provider selected and then disable this
-add-on, Tusk's Tomes auto-switches the active provider back to Gemini and
-shows a toast explaining what happened.
-
 
 </div>
 </details>
@@ -94,7 +91,7 @@ shows a toast explaining what happened.
 <div class="docs-section-body">
 
 
-> ** Read this before you route Phase 3 locally.**
+> **Read this before you pick a local model.**
 >
 > **Testing coverage is limited: no local model above 4B parameters has been
 > run on the maintainer's hardware**, for want of VRAM. Everything larger is
@@ -103,13 +100,10 @@ shows a toast explaining what happened.
 > report what you find.
 >
 > **Prose quality is the real constraint.** Local models are not as good at
-> long-form narrative as the cloud models, and it shows most in the phase that
-> matters most:
+> long-form narrative as the cloud models, which is why the routing rows offer
+> no local model for the chronicle (Phase 3) or Condense (Phase 5):
 >
-> - Below roughly **15–20B parameters**, the chronicle tends to read like a
->   **log or bullet summary rather than a story** — events in sequence, little
->   narrative voice.
-> - **Grounding is also weaker at those sizes.** Correcting names and lore
+> - **Grounding is weaker at smaller sizes.** Correcting names and lore
 >   against a glossary is a demanding instruction-following task and smaller
 >   models drift from it more often.
 > - **Mileage varies considerably** between models of nominally similar size —
@@ -126,21 +120,21 @@ acceptable.
 **The recommended compromise:** run the mechanical phases (1 grounding,
 2 audit, 4 extras) locally and send **Phase 3 — the chronicle — to a cloud
 model or a Claude Code / Codex subscription**. Per-phase hybrid routing exists
-for exactly this. You keep most of the cost saving and all of the prose
-quality.
+for exactly this, and the grid under **Hybrid routing** shows which phases may go local. You keep most of the cost saving and all of the
+prose quality.
 
 Commonly-used models and what to expect. **These are starting points, not
 verified benchmarks** — see the coverage warning above:
 
 | Model | VRAM | Expectation |
 |---|---|---|
-| `qwen2.5:7b-instruct` | ~8 GB | Reasonable for Phases 1/2/4. Expect log-like, verbose Phase 3 prose. |
-| `qwen2.5:14b-instruct` | ~10–12 GB | Approaching the size where chronicle prose becomes acceptable; slower. |
+| `qwen2.5:7b-instruct` | ~8 GB | Reasonable for Phases 1/2/4. |
+| `qwen2.5:14b-instruct` | ~10–12 GB | More headroom for grounding; slower. |
 | `llama3.1:8b-instruct-q4_K_M` | ~6 GB | Faster; expect more drift on lore terms. |
 | `phi4` | ~10 GB | Structured extraction (Phase 4) is its strength; Phase 1 wants a fuller glossary. |
 
-The capability probe in the Local LLM panel runs a fixed Phase 1 / Phase 4
-fixture, so you can measure how a model actually performs on *your* hardware
+The capability probe in the Local LLM panel runs two fixed tests, structured
+JSON and grounding, so you can measure how a model actually performs on *your* hardware
 rather than relying on the table above — which is the right way to settle it.
 
 
@@ -155,14 +149,25 @@ rather than relying on the table above — which is the right way to settle it.
 Open **Settings → Providers & models** and use the per-phase routing rows.
 Each phase has a target:
 
-- **Cloud** — uses the cloud provider chosen at run start.
+- **Cloud** — uses the cloud provider set in Settings, or the phase's own provider when its row names one.
 - **Local** — uses the runner + model you specify per phase.
+
+| Phase | API key | Claude Code or Codex | Local model |
+|---|---|---|---|
+| 1 Ground | Yes | Yes | Yes, if the probe passes |
+| 2 Audit | Yes | Yes | Yes, if the probe passes |
+| 3 Chronicle | Yes | Yes | Never |
+| 3.5 Polish | Does not run | Does not run | Does not run |
+| 4 Extras | Yes | Yes | Yes, if the probe passes |
+| 5 Condense | Yes | Yes | Never |
+
+Polish runs only on a chronicle a local model wrote, and Chronicle never runs on a local model, so Polish does not run. Each phase picks its own route, so one run can use all three.
 
 Common patterns:
 
 - *All cloud* — default. Best quality, costs the most.
-- *All local* — pick a 14B+ instruct model; expect slower runs and some
-  accuracy loss on lore grounding.
+- *Local on the mechanical phases* — the local model column above. Expect slower
+  runs and some accuracy loss on lore grounding.
 - *Local Phase 1 + cloud rest* — grounding chunks are short and Phase 1
   is the longest phase. Saves the most cloud cost.
 - *Cloud Phase 1 + local Phase 4* — Phase 4 extras (jests, gore, quotes)
@@ -181,11 +186,6 @@ There is nothing to uninstall — Local LLMs ships with the app. Removing the
 runner itself (Ollama, LM Studio, Unsloth) is done through that tool's own
 uninstaller; Tomes never installed it and never touches it.
 
-> [!NOTE]
-> Older versions wrote a marker file at `{configDir}/local-llm.enabled`. It is
-> no longer read. It is deliberately not deleted either — this change altered
-> what you have to understand, not the contents of your disk.
-
 
 </div>
 </details>
@@ -197,10 +197,10 @@ uninstaller; Tomes never installed it and never touches it.
 
 | Symptom | Likely cause |
 |---|---|
-| "Runner offline" in the Local LLM panel | The runner isn't running on its default port. Click **Launch runner** or start it manually. |
+| "Offline" beside a runner in the Local LLM panel | The runner isn't running on its default port. Start it, then click **Detect again**. |
 | Unsloth probe returns 401 | Stored credentials are stale. Re-enter them in the Unsloth section of the Local LLM panel. |
 | Phase 1 result is gibberish on a local model | Glossary or KB content is too large for the model's context. Try a smaller KB or a model with a larger context window. |
-| Pipeline halfway through Phase 3 throws "fetch failed" | The local runner crashed or unloaded the model. Restart it, then resume from the last completed chunk. |
+| Pipeline halfway through a local phase throws "fetch failed" | The local runner crashed or unloaded the model. Restart it, then resume from the last completed chunk. |
 
 
 </div>

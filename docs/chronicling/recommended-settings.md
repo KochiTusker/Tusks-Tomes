@@ -4,9 +4,9 @@ This doc tells you which settings to keep on their defaults, which ones to tweak
 
 ## TL;DR
 
-Paste a **Paid Google Gemini API key** in **Settings → Providers & models** and you're done. The defaults are tuned for that combination and produce a flagship-quality chronicle on a 3-4 hour session in roughly 6-10 minutes. The table below carries the current cost for each routing.
+Paste a **Paid Google Gemini API key** in **Settings → Providers & models** and you're done. The defaults are tuned for that combination and produce a flagship-quality chronicle on a 3-4 hour session. The table below carries the current cost for each routing.
 
-> **Why paid?** Tomes ships as free, open-source software — there's no payment to the project. The only money involved is your chosen LLM provider's API fees. Google's free Gemini tier no longer includes Pro-class models, and free Flash on its own is too rate-limited to carry a 3-hour session's main pipeline within a sensible runtime. If you already hold a free-tier Gemini key, you can configure it as an optional secondary that handles Phase 4 extras under the Smart Budget preset; every other phase always uses your paid key. See [providers.md](../models/choosing-a-provider.md).
+> **Why paid?** Tomes ships as free, open-source software — there's no payment to the project. The only money involved is your chosen LLM provider's API fees. Google's free Gemini tier no longer includes Pro-class models, and free Flash on its own is too rate-limited to carry a 3-hour session's main pipeline within a sensible runtime. If you already hold a free-tier Gemini key, you can configure it as an optional secondary that can take Phase 4 extras in the Smart Budget recipe, which you set in the per-phase rows; a phase you leave on its default uses your paid key, and only moves to the free one if the paid key runs out of quota. See [providers.md](../models/choosing-a-provider.md).
 >
 > ** Better home for a free key:** [Tusk's Vault](https://github.com/KochiTusker/Tusks-Vault) is an upcoming AI-chatbot companion that queries your campaign lore — far lower per-query token use than Tomes' multi-phase pipeline, so a free quota fits comfortably. Vault is due to release soon; consider saving your free Gemini key for it.
 
@@ -57,13 +57,13 @@ by phase, or take a one-click rung from the guided routing ladder.
 <!-- COSTS:START -->
 | Profile | Per session | Routing |
 |---|---|---|
-| **Value** | $0.78 | Gemini measured hybrid — the cheapest routing that still reads well |
-| **Balanced** | $2.77 | Gemini Smart Budget — Pro on the prose, Flash on the rest |
-| **Quality** | $4.85 | Gemini Pro on every phase |
-| **One key, no Gemini** | $0.44 | OpenRouter everywhere, each phase on its measured best |
+| **Value** | $1.94 | Gemini measured hybrid — the cheapest routing that still reads well |
+| **Balanced** | $2.36 | Gemini Smart Budget — Pro on the prose, Flash on the rest |
+| **Quality** | $5.27 | Gemini Pro on every phase |
+| **One key, no Gemini** | $0.66 | OpenRouter everywhere, each phase on its measured best |
 | **Free** | $0.00 | A Claude Code or Codex plan you already pay for |
 
-Priced on **2026-08-24** against the live OpenRouter catalogue (411 models), and regenerated every time the site is published.
+Priced on **2026-11-17** against the live OpenRouter catalogue (466 models), and regenerated every time the site is published.
 <!-- COSTS:END -->
 
 > [!CAUTION]
@@ -76,15 +76,16 @@ Priced on **2026-08-24** against the live OpenRouter catalogue (411 models), and
 ### Value — Gemini measured hybrid
 
 The cheapest routing that still reads well, and the one to start from. It came
-out of a controlled A/B on a real session rather than from guesswork: Flash
-carries the phases where the work is mechanical, and the chronicle keeps
-enough model to stay readable.
+out of a controlled A/B on a real session rather than from guesswork: the
+latest Gemini Flash runs all five phases, because in the blind test it matched
+Pro on the chronicle with thinking left on.
 
 ### Balanced — Gemini Smart Budget
 
 Pro writes the chronicle, Flash handles grounding and audit, Flash-Lite
-condenses. If you have a free-tier Gemini key as well, this is the only
-routing that uses it, and only for Phase 4 extras.
+condenses. It is not one of the guided rungs, so you set it in the per-phase
+rows. If you have a free-tier Gemini key as well, this recipe sends Phase 4
+extras to it.
 
 ### Quality — Gemini Pro everywhere
 
@@ -103,7 +104,7 @@ OpenRouter key:
 | 2 — Audit | `qwen/qwen3-30b-a3b-instruct-2507` | JSON output, same reasoning as above |
 | 3 — Chronicle | `deepseek/deepseek-v4-pro` | Close to Gemini Pro on prose, at a fraction of the cost |
 | 4 — Extras | `z-ai/glm-5.2` | **Genuinely better than Gemini here** — the one phase where the OpenRouter route wins outright |
-| 6 — Condense | `deepseek/deepseek-v4-pro` | Short but high-stakes output |
+| 5 — Condense | `deepseek/deepseek-v4-pro` | Short but high-stakes output |
 
 The honest comparison: extras come out better than the Gemini route, and the
 chronicle is close but a step below. If prose is what you care about most,
@@ -112,8 +113,8 @@ Gemini Pro still has it.
 > [!TIP]
 > **Mixing a subscription in costs nothing extra.** If you already pay for
 > Claude or ChatGPT, putting the mechanical phases on that CLI and leaving only
-> the prose on a metered model is the biggest single saving available \u2014 see the
-> two hybrid rows in the table above.
+> the prose on a metered model spends no API credit on those phases \u2014 see the
+> two subscription-plus-prose rows on [the costs page](../models/costs.md).
 
 Reaching a Claude or GPT model for the chronicle means an OpenRouter key;
 per-phase routing lets you mix freely, and Gemini on grounding plus a strong
@@ -125,19 +126,19 @@ Every setting the UI exposes (or that ships with a sensible default), with the r
 | Setting | Default | Keep or change? |
 |---|---|---|
 | **Active provider** | `Gemini` | Keep, unless you've configured an OpenRouter key or a subscription CLI. The banner above the Chronicle controls tells you which connection a run will use. |
-| **Phase 1-4, 6 model** | `gemini-2.5-pro` (Phase 1/3/6), `gemini-2.5-flash` (Phase 2/4) | Keep. Swap individual phases in the routing rows only if you're chasing one of the three profiles above. |
-| **Phase 5 (Polish)** | Skipped on cloud providers | Keep. Polish is a local-LLM-only phase by design — cloud outputs don't need it. |
+| **Phase 1-5 model** | On Gemini: `gemini-2.5-pro` (Phase 1/3/5), `gemini-2.5-flash` (Phase 2/4) | Keep. Swap individual phases in the routing rows only if you're chasing one of the profiles above. |
+| **Phase 3.5 (Polish)** | Does not run | Keep. Polish is the clean-up pass for a locally written chronicle; it runs only when the whole run uses a local provider, which the app does not offer, so it does not run today. |
 | **Max output tokens** | `32,768` | Keep. Safe ceiling for all current models. Override via `.env` (`VITE_MAX_OUTPUT_TOKENS=…`) only if your model genuinely supports more. |
 | **Max retries** | `4` | Keep. Tuned to ride out a single bad chunk + a brief network blip. |
-| **Phase 6 condense target** | **Condense Slider** (0-100%, default 20% — set per run on the Output Picker) | v1.1.0+ replaced the static `min(2000, 25%)` formula with a user-controlled wand-themed slider. The slider shows the projected word count live as you drag; Phase 6 recomputes against the actual chronicle word count at runtime and instructs the model to aim within ±10%. 20% on a typical 14,000-word session lands around 2,800 words. |
-| **Phase 6 condense floor** | `200 words` (catastrophic-only warning) | Keep. Anything below 200 indicates a truncation / quota event, not under-condensation. |
+| **Phase 5 condense target** | **Condense Slider** (0-100%, default 20% — set per run on the Output Picker) | A wand-themed slider sets the target. The slider shows the projected word count live as you drag; Phase 5 recomputes against the actual chronicle word count at runtime and instructs the model to aim within ±10%. 20% on a typical 14,000-word session lands around 2,800 words. |
+| **Phase 5 condense floor** | `200 words` (catastrophic-only warning) | Keep. Anything below 200 indicates a truncation / quota event, not under-condensation. |
 | **Cloud chunk sizes** | Per-provider table in `src/features/pipeline/lib/chunking.ts` | Don't touch. Tuned empirically for each provider's TPM ceiling. |
-| **Rate-limit pacing** | Self-tuning from OpenRouter response headers, static table (Gemini) | Don't touch. The "Slow down" dialog gives you a runtime multiplier if you're hitting 429s — that's the right place to adjust. |
-| **Audio Transcription add-on** | Off by default | Install only if you record sessions with audio. Adds ~600MB of Python deps. See [extras/audio-transcription.md](../extras/audio-transcription.md). |
-| **Local LLMs add-on** | Off by default | Install only if you run Ollama / LM Studio / Unsloth and want to route phases through them. See [extras/local-llms.md](../extras/local-llms.md). |
-| **Personas add-on** | Off by default | Install for narrator-voice presets (Gandalf, Arnold, etc.). Cosmetic; doesn't affect grounding. |
-| **Whisper compute type** | `int8_float16` on CUDA, `float32` on CPU | Keep. Auto-detected at install time. |
-| **Knowledge Base soft limit** | `2 MB` of extracted text | Keep as warning threshold. The pipeline still runs above it, just costs more per chunk. |
+| **Rate-limit pacing** | Seeded figures for OpenRouter (20 requests a minute for `:free` models, a nominal 60 for others), static table (Gemini) | Don't touch. The "Slow down" dialog gives you a runtime multiplier if you're hitting 429s — that's the right place to adjust. |
+| **Audio Transcription add-on** | Off by default | Install only if you record sessions with audio. Downloads roughly 1.5–2.5 GB of Python dependencies. See [extras/audio-transcription.md](../extras/audio-transcription.md). |
+| **Local LLMs add-on** | Built in; used only when you route a phase to a local runner | Nothing to install. Start Ollama / LM Studio / Unsloth, open Settings → Providers & models (the panel detects it, and **Detect again** repeats the check), and route the phases you want through it. See [extras/local-llms.md](../extras/local-llms.md). |
+| **Personas add-on** | Built in | Nothing to install. Pick a narrator in Settings → Voice & content for narrator-voice presets (Gandalf, Arnold, etc.). Cosmetic; doesn't affect grounding. |
+| **Whisper compute type** | `int8_float16` on CUDA, `int8` on CPU | Keep. Chosen from the device when a transcription starts. |
+| **Knowledge Base file warning** | Files over `500 KB` | Keep. Tomes warns when you add a lore file this large, because lore is sent as context on Phases 1, 3 and 5. The pipeline still runs, it just costs more per chunk. |
 | **Halt → Resume checkpoint** | Auto-written on Halt + every phase boundary | Keep on. The 20MB cap protects your disk from a runaway transcript. |
 
 ## What NOT to touch
@@ -145,7 +146,7 @@ Every setting the UI exposes (or that ships with a sensible default), with the r
 These settings exist as constants in the codebase because they're tuned, not configurable through the UI. Touching them without a specific reason makes things worse:
 
 - **Chunk sizes** (`src/features/pipeline/lib/chunking.ts`). Sized to keep each chunk under the provider's TPM ceiling while leaving headroom for the system prompt and response. Smaller chunks = more round-trips = more cost + more 429s. Larger chunks = the model truncates output mid-paragraph.
-- **Rate-limit logic** (`src/features/providers/lib/rateLimit.ts`). Self-tunes from OpenRouter response headers. Gemini uses a static tier table; the tier is derived from which env-var seeded the key (`PAID_GEMINI_API_KEY` vs `VITE_GEMINI_API_KEY`). Changing these without re-reading the providers' published rate-limit docs will cause 429 storms.
+- **Rate-limit logic** (`src/features/providers/lib/rateLimit.ts`). OpenRouter is paced on seeded figures (20 requests a minute for `:free` models, a nominal 60 for others), because the browser cannot see its rate-limit headers. Gemini uses a static tier table; the paid or free row applies according to which key the call goes out on. Changing these without re-reading the providers' published rate-limit docs will cause 429 storms.
 - **`MAX_RETRIES = 4`**. More retries = longer hangs on permanent failures (bad model ID, billing not enabled). Fewer retries = transient 5xx errors abort the run.
 - **Phase 1 grounding prompt** (`src/features/pipeline/lib/prompts.ts`). The voice contract baked into Phase 3 (DM-as-narration, exhaustive chronicle, condense formula) was iterated on real-session output — see the in-repo iteration history. Edits here can quietly degrade chronicle quality across the board.
 - **`server_boot_id`** localStorage key. Auto-managed; the UI uses it to detect server restarts and refresh stale provider state.

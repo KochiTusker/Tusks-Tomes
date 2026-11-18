@@ -214,7 +214,7 @@ export function SpeakerEditor() {
                           <Label htmlFor={`character-${i}`}>Character name</Label>
                           <Input
                             id={`character-${i}`}
-                            placeholder="Nuray"
+                            placeholder="Ottilie"
                             value={speaker.characterName}
                             onChange={(e) =>
                               updateRow(i, { characterName: e.target.value })

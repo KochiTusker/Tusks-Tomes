@@ -12,16 +12,15 @@ Personas, Claude Code, Codex, Obsidian Vault lore) ship in the bundle and mount
 unconditionally — see §15 for why that distinction is a type, not a
 convention.
 
-A six-phase pipeline produces a clean grounded transcript, a narrative chronicle,
+A five-phase pipeline produces a clean grounded transcript, a narrative chronicle,
 a condensed retelling with catch-up bullets, and a curated extras list (jests,
-gore, quotes). Pacing between cloud calls is adaptive per provider — OpenRouter's
-rate-limit response headers drive the inter-chunk delay, Gemini uses a
-static tier map. Paid users routinely see 4–5× faster runs than the legacy
-fixed-pacing.
+gore, quotes). Pacing between cloud calls is set per provider — Gemini uses
+static limits for its key tier and model, OpenRouter a requests-per-minute
+figure, and the subscription CLIs and local runners are not paced.
 
 Everything except the chosen cloud LLM API runs on the user's machine. API keys
-are encrypted at rest, never leave the host, and never appear in plaintext over
-the wire. The server binds to `127.0.0.1` by default and a same-origin middleware
+are encrypted at rest and are sent only to the provider they belong to, and no
+other device on the network can fetch them. The server binds to `127.0.0.1` by default and a same-origin middleware
 on `/api/*` rejects cross-origin POSTs so a malicious page can't drive-by-trigger
 an add-on install. Finished chronicles are saved back into the repo tree as
 portable Markdown, and (when the optional sibling `Tusks-Lore/` folder is set
@@ -35,41 +34,9 @@ Tusk's Vault read from.
 <div class="docs-section-body">
 
 
-```
-                ┌────────────────────────────────────────────────────┐
-                │  User's machine                                    │
-                │                                                    │
-                │  Express server (Node, tsx) — binds 127.0.0.1      │
-                │  ├─ Encrypted keystore (AES-256-GCM, machine-bound)│
-                │  ├─ Same-origin /api/* middleware (CSRF gate)      │
-                │  ├─ Add-on registry + loader (configEnabled flag)  │
-                │  ├─ JSON APIs (glossary, speakers, addons, docs,   │
-                │  │             sessions, chronicle, lore, vault)   │
-                │  │                                                 │
-                │  ├─ [audio-addon, opt-in]                          │
-                │  │   ├─ Multi-track upload + extraction            │
-                │  │   ├─ Whisper sidecar (Python venv)              │
-                │  │   └─ faster-whisper large-v3                    │
-                │  └─ [local-llm-addon, opt-in]                      │
-                │      ├─ /api/local/* same-origin proxy             │
-                │      └─ /api/local-llm/detect + capability probes  │
-                │                                                    │
-                │  React 19 + Vite SPA  (same-origin)                │
-                │  ├─ Pipeline orchestrator                          │
-                │  │   └─ LLMProvider.generate(...) ────────────────────► Cloud
-                │  │       └─ RateLimitState paces per provider      │   (Gemini /
-                │  │                                                 │    OpenRouter)
-                │  │  Local LLM (only if add-on loaded)              │
-                │  │  ←──── /api/local/* proxy ────┘                 │
-                │  │                                                 │
-                │  └─ Help tab — /api/docs renders every .md in-app  │
-                │                                                    │
-                │  Finished chronicle → Sessions/<campaign>/….md     │
-                │  ──── optional: Tusks-Lore sibling ────────────────►─ ../Tusks-Lore/
-                │                                                    │   Sessions/
-                │                                                    │   <campaign>/*.docx
-                └────────────────────────────────────────────────────┘
-```
+![A drawing of how the pieces fit. A dashed box for your machine holds the browser app, which runs the pipeline and calls Gemini and OpenRouter itself. It talks to the local server on 127.0.0.1 through the /api routes. The server holds the keystore, which keeps your API keys encrypted on this machine, the Audio Transcription module for uploads and Whisper, and your sessions and saved chronicles. Below the server sit the local runners Ollama, LM Studio and Unsloth, and the claude or codex CLI, which uses your subscription. Beside the machine, a separate dashed box holds the cloud models: Gemini and OpenRouter, reached by the app directly, and Claude and OpenAI, reached through your own CLI.](../assets/diagrams/how-the-pieces-fit.svg)
+
+The server mounts JSON routes for the glossary, speakers, provider keys, routing, runs, sessions, chronicle, chronicle-library, lore and vault, behind three gates on `/api`: a host allowlist, a same-origin check and a LAN-write gate. The built-in modules (local runners, the Claude Code and Codex bridges, whisper.cpp, Personas, Obsidian) mount at start; Audio Transcription is the one module that installs. `RateLimitState` paces each provider. A finished chronicle is saved as Markdown under `Sessions/<campaign>/` and in `chronicle-library/`; **Save full .docx** writes into `../Tusks-Lore/Sessions/<campaign>/`. The Help tab renders these docs from `/api/docs`.
 
 The server is launched as `npm run dev` (Vite middleware in dev) or
 `npm start` (static `dist/` in prod). Both modes serve a single bundle to
@@ -138,12 +105,12 @@ All three converge on the same chunked, multi-phase generation in
 
 ### Whisper sidecar
 - **Python 3.10–3.12** in `vendor/python-venv/`.
-- **`faster-whisper` 1.0.3** with the **large-v3** model at
+- **`faster-whisper` `~=1.2.1`** (with `ctranslate2` `~=4.7.1`) and the **large-v3** model at
   `int8_float16` (CUDA) or `int8` (CPU).
-- **`torch` ≥ 2.2 < 3** matched to the user's CUDA toolkit. (The old `< 2.6`
-  upper bound was dropped: 2.6 is the first release with cp313 wheels, so
-  pinning below it would have hard-blocked Python 3.13. See
-  `scripts/whisper/requirements.txt`.)
+- **`torch` ≥ 2.2 < 3**: the CUDA 12.4 build on Windows when `nvidia-smi`
+  answers, the CPU build otherwise. macOS and Linux install the CPU build
+  unless `--cuda` is passed. The upper bound stays at 3 because 2.6 is the
+  first release with cp313 wheels. See `scripts/whisper/requirements.txt`.
 
 ---
 
@@ -162,7 +129,7 @@ server/
   addons/
     registry.ts           # ADDON_REGISTRY: the one installable module (audio-addon)
     featureRoutes.ts      # FEATURE_ROUTES: the built-in modules, mounted in order
-    loader.ts             # loadAddons(): mounts when isReady() && configEnabled
+    loader.ts             # loadAddons(): modules mount when isReady() && configEnabled; features always mount
   platform/               # Shared server foundations used by every feature
     appData.ts            # env-paths + atomic JSON IO
     documentStore.ts      # One reader/writer for each {configDir} document
@@ -220,7 +187,7 @@ src/
   maintenance, personas, pipeline, providers, reforge, routing, transcription.
 
   The Chronicle pipeline lives in features/pipeline/lib:
-    pipeline.ts           # Entry point for the six phases
+    pipeline.ts           # Entry point for the five phases
     phases/               # One file per phase (phase1Ground.ts … phase6Condense.ts)
     chunkedGenerate.ts    # The per-chunk driver every phase runs through
     prompts.ts            # All prompt builders (cloud + local + split forms)
@@ -252,7 +219,7 @@ src/
 <div class="docs-section-body">
 
 
-All durable state lives at the platform app-data root via `env-paths`. The
+Durable state lives at the platform app-data roots via `env-paths`, apart from the repo's `Sessions/` folder and the sibling `Tusks-Lore/` folder. The
 React app never touches the filesystem directly — it goes through Express
 APIs. `localStorage` is reserved for ephemeral UI state (refinement
 workflow position, KB documents, last-active-tab feel).
@@ -271,14 +238,18 @@ workflow position, KB documents, last-active-tab feel).
 | `{configDir}/personas.json`                                | Personas (seeded on first read, never deleted by the app) | JSON |
 | `{configDir}/model-availability.json`                      | Per-key probe results          | JSON         |
 | `{configDir}/openrouter-models.json`                       | Cached OpenRouter catalogue    | JSON         |
+| `{configDir}/openrouter-providers.json`                    | Cached provider data policies  | JSON         |
 | `{configDir}/addons.json`                                  | Module toggle (installable modules only) | JSON `{ [name]: { configEnabled } }` |
+| `{configDir}/runs/{runId}.json`                            | Pause/resume checkpoints       | JSON (20 MB cap) |
+| `{dataDir}/chronicle-library/{id}.json`                    | Saved Chronicles library       | JSON         |
 | `{cacheDir}/capability.json`                               | Local-model probe runner       | JSON         |
 | `{dataDir}/sessions/{id}/manifest.json`                    | Upload extractor + live queue (audio-addon) | JSON |
 | `{dataDir}/sessions/{id}/audio/{speakerId}/*.{wav,flac,…}` | Upload extractor (audio-addon) | per-speaker audio |
 | `{dataDir}/sessions/{id}/transcripts/{speakerId}/*.json`   | Whisper sidecar (audio-addon)  | JSON         |
 | `{dataDir}/sessions/{id}/session.sbv`                      | Live queue (audio-addon)       | SBV plaintext|
-| `<repo>/vendor/python-venv/`                               | audio-addon install            | Python venv (~1.5 GB) |
-| `<repo>/Sessions/<campaign>/Silence Beyond the Sea - <campaign> - Session <n>.md` | Chronicle auto-save | Markdown |
+| `<repo>/vendor/python-venv/`                               | audio-addon install            | Python venv (1.5–2.5 GB download) |
+| `<repo>/Sessions/<campaign>/<campaign> - Session <n>.md` | Chronicle auto-save | Markdown |
+| `~/.cache/huggingface/hub` (`HF_HOME` moves it)            | Whisper model weights, first transcription (Audio Transcription module) | Hugging Face cache |
 | `<parent>/Tusks-Lore/tusks-lore.json`                      | Lore detection marker          | JSON `{ version, createdAt, notes? }` |
 | `<parent>/Tusks-Lore/Sessions/<campaign>/Session-NN-YYYY-MM-DD-<full\|condensed>.docx` | Save-to-Lore button | Word `.docx` (via `docx` package) |
 
@@ -333,7 +304,7 @@ The pipeline never speaks to a vendor SDK directly. Every phase calls
 
 ```ts
 interface LLMProvider {
-  readonly name: 'gemini' | 'claude' | 'openai' | 'local'
+  readonly name: 'gemini' | 'openrouter' | 'claudeCode' | 'codex' | 'local'
   generate(req: GenerateRequest, opts?: GenerateOptions): Promise<GenerateResponse>
   listModels(): Promise<string[]>
   estimateCost?(usage: Usage, model: string): number
@@ -352,21 +323,29 @@ type GenerateRequest = {
 ```
 
 The `cacheablePrefix` split is what unlocks provider-native caching.
-Phases 1, 3, and 6 all emit a split `{ cacheablePrefix, userPrompt }` —
-Phase 1's prefix carries the KB + glossary; Phase 3's carries the
-speaker-attribution rules + DM Q&A; Phase 6's carries the KB + DM Q&A
-+ JSON format spec. The per-chunk userPrompt holds only the variable
-parts (transcript chunk, prior chronicle tail, etc.).
+Phases 1, 3, and 5 all emit a split `{ cacheablePrefix, userPrompt }` —
+Phase 1's prefix carries the system prompt, the KB and the rules;
+Phase 5's carries the KB, the DM Q&A and the JSON format spec. Phase 3's
+is drawn below: what is the same for every chunk goes in the prefix, and
+the per-chunk `userPrompt` holds only the variable parts.
 
-- **Claude** — attaches `cache_control: { type: 'ephemeral' }` to the
-  cacheable system block. The TTRPG framing + user system prompt is the
-  first (uncached) block.
-- **OpenAI** — the `instructions` field carries framing + system +
-  cacheable prefix as a stable string; OpenAI's automatic prefix cache
-  hits at ≥1024 tokens.
-- **Gemini** — concatenates the prefix into the system content. The
-  implicit prefix cache on Gemini 2.5 still rebates ~75% on a stable
-  prefix; explicit `cachedContent` wiring is a separate follow-up.
+![One request to write the chronicle, in two parts. The top part is the same for every chunk: the rules and speech policy, your answers to the questions, and your lore. Under it sit three chunks of the transcript, each carrying the end of the prose written so far; a bracket under them marks that part as different every chunk. Both parts go down into one box, the model, and are sent as one prompt.](../assets/diagrams/what-a-prompt-is-made-of.svg)
+
+- **OpenRouter** — framing, system prompt and cacheable prefix go into one
+  system message as a single block carrying
+  `cache_control: { type: 'ephemeral' }`; OpenRouter translates the
+  breakpoint for the upstream model. The per-chunk `userPrompt` is a
+  separate user message.
+- **Gemini** — at the start of a phase with more than one chunk left,
+  `createPrefixCache()` registers the system prompt + cacheable prefix as a
+  `cachedContent` (60-minute TTL); later chunks send only the
+  `userPrompt` and the handle. It is skipped for a prefix under about 4,000
+  characters (roughly 1,000 tokens), and if creation fails the prefix goes
+  inline. Cached input tokens are priced at about a quarter of normal input
+  (a ~75% discount) in `pricing.ts`.
+- **Claude Code, Codex and the local runners** — no cache primitive: the
+  framing, system prompt, prefix and user prompt are joined into one
+  prompt.
 
 Each implementation owns its own retry/backoff and surfaces token usage
 in a unified `Usage { inputTokens, cachedInputTokens?, outputTokens }`
@@ -388,16 +367,18 @@ dispatcher.
 ### Gemini Paid / Free tiers
 
 Gemini exposes two key slots in the keystore (`gemini` for Paid /
-billing-enabled, `geminiFallback` for the Free tier). The pipeline can
-run in three modes:
+billing-enabled, `geminiFallback` for the Free tier). The pipeline runs in one
+of three modes, `auto`, `paid` or `free`:
 
-- **`auto`** — Paid first, fail over to Free on hard-zero quota or
-  repeated exhaustion.
-- **`paid`** — Paid only; never touches the Free key.
-- **`free`** — Free only, except that any phase whose model is in the
-  pre-computed *paid-only* list (Gemini 3.x identifiers that 404 against
-  the Free key) is escalated to Paid for that phase, with a warning
-  banner shown before the run starts.
+| Mode | Tries first | Falls back to |
+|---|---|---|
+| `auto` (the default) | The paid key | The free key for the rest of the run, when the paid key reports a quota of zero or two quota errors in a row |
+| `paid` | The paid key only | Nothing: the free key is never used |
+| `free` | The free key only | Nothing, except that a phase whose model is on the paid-only list uses the paid key |
+
+The *paid-only* list is the set of models the Free key's probe marks as
+needing billing; a phase escalated to Paid because of it gets a toast naming
+the phase and model when the phase starts.
 
 ---
 
@@ -410,32 +391,29 @@ run in three modes:
 <div class="docs-section-body">
 
 
-Keys live in `{configDir}/providers.enc` under AES-256-GCM. The
-encryption key is derived from a stable machine identity
-(`hostname + username + platform`) via `scryptSync`, salted by a random
-16-byte value at `{configDir}/.salt`. This is **obfuscation**, not
-high-grade cryptography — keys are recoverable on the same machine. The
-Settings UI states this explicitly.
+Keys live in `{configDir}/providers.enc` under AES-256-GCM. The cipher is standard AES, but the key is built from values the machine already knows and there is no passphrase: `hostname + username + platform` and a random 16-byte salt at `{configDir}/.salt`, run through `scryptSync`.
+
+![A drawing of how the key to your stored API keys is made, and who can open the file. At the top, four boxes (host name, user name, platform and a random salt) feed one box, locked to this computer and this user. That produces providers.enc in your config folder. Below, under the question who can open that file, a purple padlock box labelled stays shut covers a providers.enc copied to another computer or account, such as a backup, cloud sync or a stray copy. An orange terminal box labelled opens covers a program running as you on this computer, because the app decrypts the keys for itself.](../assets/diagrams/what-the-keystore-protects.svg)
 
 ```
 File format (after decryption):
 {
   "gemini":         "AIza…",     // Paid / billing-enabled
   "geminiFallback": "AIza…",     // Free tier
-  "claude":         "sk-ant-…",
-  "openai":         "sk-…"
+  "openrouter":     "sk-or-…",
+  "unsloth":        "{ baseUrl, … }"   // local-runner credentials, JSON-encoded
 }
 ```
 
-The decrypted bundle is fetched **once** at React app boot via
-`/api/provider-keys` (server-internal, localhost-only). Cloud SDKs run
-in-browser. The keys never appear in any user-facing endpoint response —
-the public `/api/providers` only returns a summary of which slots are
-set.
+The decrypted bundle is fetched at React app boot via
+`/api/provider-keys`, which answers loopback callers only. Cloud SDKs run
+in-browser, so the browser sends each key straight to its own provider. No
+other route returns a key: `/api/providers` (also loopback-only) returns a
+summary of which slots are set.
 
-A built-in **Test** action runs a 1-token call (or, for Gemini, a free
-`ListModels` lookup) to verify the key works without persisting
-anything.
+A built-in **Test** action asks Gemini for a one-model listing, or
+OpenRouter for the key's status, to verify the key works without
+persisting anything or generating any text.
 
 ---
 
@@ -473,7 +451,7 @@ Keys are the four `CloudProvider` values — `gemini`, `openrouter`,
 with the direct-API integrations; those models are reached through OpenRouter
 now.
 
-Defaults: prose-heavy phases (1, 3, 5, 6) go to the mid-tier model;
+Defaults: prose-heavy phases (1, 3, 3.5, 5) go to the mid-tier model;
 JSON-shaped phases (2, 4) go to the cheapest model that holds the
 schema. For the subscription CLIs the defaults are bare aliases
 (`sonnet`, `haiku`, `default`) rather than pinned IDs, so a CLI upgrade
@@ -487,7 +465,7 @@ the single surface for choosing a model per phase.
 
 `{configDir}/routing.json` tracks both the last cloud provider used and
 optional per-phase hybrid overrides. Each of the five model phases
-(1–4, 6) can independently route to a specific local model:
+(1–5) can independently route to a specific local model:
 
 ```json
 {
@@ -508,7 +486,8 @@ optional per-phase hybrid overrides. Each of the five model phases
 When the user clicks **Run**, `RefinementTool` calls
 `autoResolveSession()`:
 
-- If no cloud keys are configured: error, with a pointer to Settings.
+- If no cloud keys are configured (and the active provider is not local): error,
+  with a pointer to Settings.
 - Otherwise the session is built directly from the persisted routing —
   `lastSelectedProvider` plus any per-phase overrides.
 
@@ -594,20 +573,24 @@ multer disk storage, then:
 3. For each chunk:
    - Extracts the zip (`adm-zip`) into a temp workdir, or accepts the
      loose audio files in place.
-   - Parses speaker identity from each filename (`{numericPrefix}-{name}`
-     handles Craig and most index-prefixed conventions; falls back to a
-     stable hash of the stem when no numeric prefix exists).
+   - Parses speaker identity from each filename (a `{discordUserId}-{name}`
+     prefix keeps the Discord ID; a short Craig track index is used only
+     for ordering and the ID becomes a stable hash of the name; with no
+     numeric prefix the ID is a stable hash of the stem).
    - Moves the audio file into
      `audio/{speakerId}/{utteranceId}.{ext}` (preserving the original
      codec — no FFmpeg re-encode at this stage).
-   - Probes the duration via FFmpeg (`-i`, parse the `Duration:` line)
-     and records a `UtteranceEntry` with chunk-relative timing.
+   - Measures the duration with FFmpeg (a stream-copy pass to `-f null`
+     that reads the last `time=` it reaches, falling back to the
+     `Duration:` header) and records a `UtteranceEntry` that starts at the
+     running `cumulativeMs` offset.
    - Appends the participant + utterance to the manifest.
-4. Maintains a running `cumulativeMs` so utterances in chunk N+1
-   start where chunk N ended — the time-stitching that lets four
-   sequential 1-hour zips replay as one 4-hour session.
+4. Maintains a running `cumulativeMs`, advanced by the longest track in
+   each chunk, so utterances in chunk N+1 start where chunk N ended.
 
-The response shape is `{ sessionId, chunks: [...], tracks: [...] }`.
+![Zips are dropped on the Sessions tab. Each zip holds one track per player, here PC-Alpha, PC-Beta and the DM, and the zips are laid end to end: each zip starts where the last one ends. Whisper transcribes one track at a time, on your GPU or the CPU, and the result is one transcript in time order, each line tagged with who said it.](../assets/diagrams/craig-to-transcript.svg)
+
+The response shape is `{ sessionId, chunks: [...], tracks: [...], totalDurationMs }`.
 The UI uses this to render a speaker preview table where the user can
 rename loose-file speakers before transcription begins. Zip-internal
 speakers are derived from filenames at extraction time and can be
@@ -670,18 +653,16 @@ button).
 
 ### Contract
 
-`scripts/whisper/transcribe.py` is invoked once per utterance:
+`scripts/whisper/transcribe.py` runs as a persistent worker, one per device. The server starts it the first time a transcription needs it and keeps it for as long as the server runs:
 
 ```
-python transcribe.py
-  --audio <file>
-  --speaker-id <speakerId>
-  --speaker-display "<Character (Player)>"
-  --initial-prompt "<glossary biasing string>"
+python transcribe.py --serve
   --model large-v3
   --device cuda          # or cpu
   --compute-type int8_float16
 ```
+
+The model loads once, at start-up. Each utterance then arrives as one JSON line on stdin (`id`, `audio`, `speakerId`, `speakerDisplay`, `initialPrompt`, `language`), and the worker answers with line-delimited JSON on stdout: `loading` and `ready` while it starts, `progress` during a request, and one `response` per request. Without `--serve` the script transcribes a single `--audio` file and exits.
 
 It runs `faster-whisper.transcribe(...)` with:
 
@@ -692,16 +673,16 @@ It runs `faster-whisper.transcribe(...)` with:
 - `temperature=[0.0, 0.2, 0.4]` (graceful fallback ladder)
 - `no_speech_threshold=0.6`
 
-Output is a single JSON document on stdout with
-`{speakerDisplay, durationMs, segments[{startMs, endMs, text, words, confidence}]}`.
-Errors go to stderr; non-zero exit code on failure.
+Each successful response carries
+`{speakerId, speakerDisplay, durationMs, elapsedMs, model, device, language, segments[{startMs, endMs, text, words, confidence}]}`.
+A failed request comes back as `ok: false` with an error message and leaves the worker running.
 
 ### Initial prompt (~200-token glossary bias)
 
 `server/features/transcription/services/whisper/invoke.ts → buildInitialPrompt(canonicalNames)` builds
 the biasing string from the glossary's `contextualHints[].canonical`
 and capitalised `safeReplacements[].to` entries. The string is capped
-at ~800 chars (Whisper's hard limit). Distinct names come first,
+at ~800 chars, an approximation of the ~200-token budget. Distinct names come first,
 truncated when full.
 
 ### Setup + readiness
@@ -721,19 +702,22 @@ stdout/stderr as Server-Sent Events so the UI can show live progress.
 a serial queue of utterances against the sidecar. Both the upload path
 and the legacy "process session" endpoint enqueue into the same queue,
 so there is only one downstream code path. On a single-GPU machine the
-serial drain is correct; on a multi-GPU machine the bottleneck is the
-sidecar's load-once-per-process model warm-up rather than the queue.
+serial drain is correct; on a multi-GPU machine it leaves the other cards
+idle, because there is one queue and one GPU worker.
 
 Per utterance:
 
 1. Resolve `speakerDisplay` via the speakers map
    (`Character (Player)` / `Character` / `Player` / filename fallback).
 2. Invoke the sidecar on CUDA through a worker process that stays up for
-   the whole session, so the model loads once. If a request fails with a
-   CUDA-class error the worker is restarted once and the utterance
-   retried; if that fails too, the utterance runs on a CPU worker at
-   `int8`, and every later utterance goes straight to CPU rather than
-   paying for the same discovery again. The engine and device in use are
+   as long as the server runs, so the model loads once. If a request fails,
+   the utterance is retried on the GPU once (after a CUDA-class error the
+   worker is restarted first); if that fails too, the utterance runs on a
+   CPU worker at `int8`, and every later utterance, in this session or any
+   other, goes straight to CPU until the server restarts, rather than
+   paying for the same discovery again. When the whisper.cpp bridge is
+   configured and its binary and model check out, every request goes to
+   that build instead of the sidecar. The engine and device in use are
    reported to the transcription view. CPU is several times slower but
    reliable.
 3. Persist the sidecar JSON to
@@ -745,7 +729,7 @@ Per utterance:
    confuses Phase 3 into reading it as the opening monologue.
 5. Append the resulting sub-segments to an in-memory timeline with
    `absStartMs = utterance.startedAtMs + segment.startMs` (the
-   utterance's chunk-relative start was set during extraction).
+   utterance's offset within the session was set during extraction).
 6. Re-emit `session.sbv` after every utterance, sorted by absolute
    start time, with cue bodies prefixed `[Character (Player)] <text>`.
 
@@ -776,18 +760,19 @@ forgotten on server restart).
 
 
 Lives in `src/features/pipeline/lib/phases/`, one file per phase, all exported
-through `pipeline.ts`. Five model-driven phases, plus
-deterministic pre-processing in Phase 1 and an optional sixth pass
-(Condense) that the user triggers from the finished chronicle view.
+through `pipeline.ts`. Four model-driven phases, a half-step
+Polish pass (Phase 3.5, local only), deterministic pre-processing in Phase 1
+and an optional fifth phase (Condense) that the user triggers from the
+finished chronicle view.
 
 Display order:
-**Phase 1 → Phase 2 → DM clarifications → Phase 3 → Phase 5 (polish, local only) → Phase 4 → Phase 6 (condense, optional)**
+**Phase 1 → Phase 2 → DM clarifications → Phase 3 → Phase 3.5 (polish, local only) → Phase 4 → Phase 5 (condense, optional)**
 
 ### Phase 1 — Grounding
 
 - **Input:** raw transcript (or uploaded multi-track SBV cue text).
-- **Chunk size:** 15,000 chars cloud / 5,000 chars local.
-- **Pre-processing (deterministic, before any LLM call):**
+- **Chunk size:** set per provider and model tier (table under Chunking +
+  pacing); 5,000 chars local., before any LLM call):**
   - `transcriptCleanup` strips `[Music]` / `[Laughter]` markers,
     collapses runaway fillers, normalises whitespace, quotes, and
     dashes.
@@ -797,15 +782,16 @@ Display order:
   censored expletives, preserve speaker tags exactly. The system
   prompt + KB + contextual hints are emitted as the
   **`cacheablePrefix`**; the per-chunk text is the **`userPrompt`**
-  — Claude's `cache_control` and OpenAI's automatic prefix cache hit
-  from chunk 2 onwards.
+  — Gemini's explicit prefix cache and OpenRouter's `cache_control`
+  breakpoint hit from chunk 2 onwards.
 - **Output:** grounded transcript.
 
 ### Phase 2 — Audit
 
-- **Input:** raw + grounded transcripts (paired by chunk index).
-- **Chunk size:** 15,000 chars cloud / 5,000 chars local.
-- **LLM step:** surface DM clarification questions when phonetic
+- **Input:** raw + grounded transcripts (paired by chunk index). A chunk
+  whose raw and grounded text match (ignoring whitespace) is skipped.
+- **Chunk size:** set per provider and model tier (table under Chunking +
+  pacing); 5,000 chars local. clarification questions when phonetic
   ambiguity, unresolvable attribution, consequential unclear plot
   beats, or canon contradictions remain. The cloud prompt is
   conservative ("only ask when necessary"); the local prompt is
@@ -818,7 +804,8 @@ them, and triggers Phase 3.
 ### Phase 3 — Chronicle
 
 - **Input:** grounded transcript + DM answers.
-- **Chunk size:** 35,000 chars cloud / 8,000 chars local.
+- **Chunk size:** set per provider and model tier (table under Chunking +
+  pacing); 8,000 chars local.
 - **LLM step:** novel-style narrative prose, ruthlessly filtering OOC
   chatter. Each chunk receives the last 2,000 chars of the previously
   emitted prose as a **`priorTail`** so continuity holds across
@@ -827,10 +814,9 @@ them, and triggers Phase 3.
   never printed verbatim.
 - **Output:** continuous chronicle text.
 
-### Phase 5 — Polish (local only)
+### Phase 3.5 — Polish (local only)
 
-- **Pass-through for cloud.** Runs only when the active provider is
-  local — cloud chronicles from Phase 3 are already coherent.
+- **Pass-through unless the whole run is local.** Runs only when the whole run uses a local provider. The app offers no such setting, so it does not run today.
 - **Input:** the rough chronicle from Phase 3.
 - **Chunk size:** 6,000 chars.
 - **LLM step:** spell-correct names against the (compact) KB, smooth
@@ -841,22 +827,23 @@ them, and triggers Phase 3.
 ### Phase 4 — Extras
 
 - **Input:** grounded transcript + DM answers.
-- **Chunk size:** 35,000 chars cloud / 8,000 chars local.
+- **Chunk size:** set per provider and model tier (table under Chunking +
+  pacing); 8,000 chars local.
 - **LLM step:** extract `{ jests, gore, quotes }` per chunk. Quotes
   are classified by `kind` (`funny` / `stupid` / `dark`). Hard skips
   on dice rolls, real-world refs, table chatter.
 - **Output:** merged `ExtrasOutput`.
 
-### Phase 6 — Condense (optional, user-triggered)
+### Phase 5 — Condense (optional, user-triggered)
 
 - **Input:** the finished chronicle + DM answers + campaign/session
   context.
-- **Chunk size:** 60,000 chars cloud / 10,000 chars local — the
-  chronicle is usually coherent enough to fit in one chunk so the
-  condenser can see the whole arc.
+- **Chunk size:** set per provider and model tier (table under Chunking +
+  pacing); 10,000 chars local.
 - **LLM step:** produce
-  `{ narrative, bulletPoints }` — a tightened retelling (~30–50% of
-  the source) plus 10–15 catch-up bullets covering events, NPC
+  `{ narrative, bulletPoints }` — a tightened retelling sized by the
+  Condense Slider (default 20% of the chronicle's word count) plus 10–15
+  catch-up bullets covering events, NPC
   interactions, and party state.
 - **Output:** `CondenseOutput`. The Chronicle view exposes new
   **Condensed** and **Recap** tabs once present, and the auto-save
@@ -871,7 +858,7 @@ them, and triggers Phase 3.
   `classifyModelTier(model, provider)` in `src/features/providers/lib/modelTier.ts` —
   Pro / Sonnet / GPT-5 land on `flagship`; Flash / Haiku / GPT-5-mini
   / GPT-5-nano land on `fast`; Opus lands on `frontier`. Numbers
-  (chars per chunk, Phase 1 / 2 / 3 / 4 / 6):
+  (chars per chunk, Phase 1 / 2 / 3 / 4 / 5):
 
   | Profile | flagship | fast |
   |---|---|---|
@@ -883,18 +870,24 @@ them, and triggers Phase 3.
   `frontier` mirrors flagship — Opus has comparable context but we
   don't push it past flagship sizes without data to justify it. Local
   LLMs share a single conservative table regardless of runner. The
-  default tier is `flagship`, so callers that omit the model fall back
-  to the same numbers as before A3 — byte-for-byte back-compat.
-- Chunk **pacing** is per-provider, derived from response headers (see
-  `src/features/providers/lib/rateLimit.ts`). OpenRouter populates `RateLimitState`
-  from its `x-ratelimit-*` headers each call;
-  Gemini seeds static `RPM` / `TPM` values from `GEMINI_STATIC_LIMITS`
-  based on which key is in play (`PAID_GEMINI_API_KEY` vs
-  `VITE_GEMINI_API_KEY`). The pipeline calls
-  `provider.getNextDelayMs(estimatedInputTokens)` between chunks; the
-  delay is `max(60_000 / RPM, tokens / TPM × 60_000) × 1.1`. 429
-  `Retry-After` overrides the calculated delay precisely. The legacy
-  fixed 65-second `INTER_CHUNK_DELAY_MS` constant is gone.
+  default tier is `flagship`, which applies when the model is not named.
+  Claude Code uses the `claude` row, Codex and OpenRouter the `openai`
+  row, and a Gemini key set to `auto` counts as `geminiPaid`. When every
+  phase of a run is on a fast-tier model the sizes shrink by a further 0.7.
+- Chunk **pacing** is per-provider (see
+  `src/features/providers/lib/rateLimit.ts`). Gemini seeds static `RPM` /
+  `TPM` values from `GEMINI_STATIC_LIMITS`, picked by the active key tier
+  (paid or free) and by model (Pro or Flash). OpenRouter paces on requests
+  per minute only: 20 for `:free` models, and for the rest a nominal 60
+  unless an `x-ratelimit-limit` header has set a figure. Claude Code, Codex
+  and local runners have no `getNextDelayMs` and are not paced. The pipeline
+  calls `provider.getNextDelayMs(estimatedInputTokens, multiplier, model)`
+  between chunks; the delay is
+  `max(60_000 / RPM, tokens / TPM × 60_000) × 1.1 × multiplier`, less the
+  time since the last call. The multiplier is 1 unless the rate-limit dialog's
+  **Slow down** sets it to 3. A `Retry-After` on an OpenRouter 429 holds every
+  OpenRouter model until it expires. A provider with no limit figures waits
+  `CONSERVATIVE_FLOOR_MS` (65 s × multiplier) between calls after the first.
 - Local providers return 0 from `getNextDelayMs` — no API rate limit
   to respect. Per-phase `target: 'local'` overrides skip pacing for
   just that phase even on a cloud-default run.
@@ -918,10 +911,10 @@ described in §5.
 
 | Phase | Provider | Caching mechanism                              |
 |-------|----------|-----------------------------------------------|
-| 1     | Claude   | `cache_control: ephemeral` on system block    |
-| 1     | OpenAI   | Automatic prefix cache (≥1024 tokens prefix) |
-| 1     | Gemini   | Implicit prefix cache (~75% rebate on stable prefix; explicit `cachedContent` deferred) |
-| 3     | All cloud providers | Same split as Phase 1 — speaker rules + DM Q&A live in `cacheablePrefix`, transcript + prior tail in `userPrompt` |
+| 1     | OpenRouter | `cache_control: ephemeral` on the system block |
+| 1     | Gemini   | Explicit `cachedContent` per phase (60-minute TTL, ~75% off cached input) |
+| 1     | Claude Code, Codex | None (no provider primitive) |
+| 3     | All cloud providers | Same split as Phase 1 — KB, DM Q&A and speaker/speech rules live in `cacheablePrefix`, transcript + prior tail in `userPrompt` |
 | 6     | All cloud providers | Same split as Phase 1 — KB + DM Q&A + JSON format spec live in `cacheablePrefix`, campaign + chronicle chunk in `userPrompt` |
 | 2, 4  | All      | No caching today; the audit and extras prompts pair raw + grounded inputs that can't share a stable prefix |
 | 1–6   | Local    | None (no provider primitive)                  |
@@ -934,11 +927,13 @@ cache rebate.
 
 ### Chronicle persistence
 
-When the chronicle reaches the "done" state (Phase 4 complete) and
-again whenever Phase 6 lands, `ChronicleView` posts the composed
-Markdown to `POST /api/chronicle/save`. The server writes it
+Whenever a chronicle with a campaign name is on screen and its composed
+Markdown changes (the run finishing, extras arriving, the condensed
+version landing), `ChronicleView` posts it to
+`POST /api/chronicle/save`. A Reforge copy carries a variant that is
+appended to the file name, so it lands as its own file. The server writes it
 atomically to
-`<repo>/Sessions/<campaign>/Silence Beyond the Sea - <campaign> - Session <n>.md`,
+`<repo>/Sessions/<campaign>/<campaign> - Session <n>.md`,
 sanitising the campaign segment for path safety. Auto-save de-dupes
 by content fingerprint so an unrelated re-render doesn't cause an
 extra write; failures clear the fingerprint so the next change
@@ -958,7 +953,7 @@ whether to commit individual chronicles.
 
 ### Detection
 
-`/api/local-llm/detect` probes three default backends in parallel:
+`/api/local-llm/detect` probes four default backends in parallel:
 
 | Backend     | Default URL              | Models endpoint |
 |-------------|--------------------------|-----------------|
@@ -968,10 +963,10 @@ whether to commit individual chronicles.
 | Unsloth     | `http://localhost:8888`  | `/v1/models`    |
 
 Each reports `{ reachable, models[], error? }`. The Local LLM panel
-shows reachable backends with their installed models, and the
-**Launch** button can spawn a runner (Ollama with FlashAttention +
-4-bit KV cache, LM Studio CLI, or Unsloth Studio with auto-open of
-the login page).
+shows reachable backends with their installed models. The server can
+also spawn a runner through `POST /api/local/launch` (Ollama with
+FlashAttention + 4-bit KV cache, the LM Studio CLI, or Unsloth Studio),
+but the panel has no button for it.
 
 ### Authentication
 
@@ -984,9 +979,10 @@ The local-LLM proxy supports three auth schemes per backend:
 3. `username` + `password` fallback to HTTP Basic when OAuth2 isn't
    available.
 
-The proxy refuses to forward to anything outside loopback or RFC-1918
-private LAN addresses (validated by `PRIVATE_HOST_RE` in
-`server/index.ts`) — it is not an open proxy.
+The proxy refuses to forward to anything outside loopback or private-network
+addresses (validated by `validateLocalBaseUrl` in
+`server/platform/validators.ts`; a hostname passes when it resolves to
+such an address) — it is not an open proxy.
 
 ### Mini-probe (2 tests)
 
@@ -1027,15 +1023,20 @@ on 8 GB VRAM gets a "won't fit" badge in the routing editor.
 
 ### Retry strategy
 
-- 4 retry attempts (`MAX_RETRIES`) before a phase fails.
-- Transient 429 / 5xx (when the response did **not** include a
-  `Retry-After` header): 35-second backoff (`TRANSIENT_RETRY_MS`).
-- Final attempt fallback: 65-second backoff (`EXHAUSTION_RETRY_MS`).
-- When a 429 response **does** include `Retry-After`, the provider
-  parses it via `retryAfterFromError` and waits
-  exactly that long instead of the static constant; the same delay is
-  also fed into `RateLimitState.noteRetryAfter()` so the next chunk
-  honours the window too.
+- Gemini and OpenRouter retry up to 4 times (`MAX_RETRIES`) after the
+  first attempt before a phase fails. Claude Code and Codex do not retry: a
+  usage limit pauses the run with a checkpoint instead.
+- Rate-limit and transient errors wait 35 seconds (`TRANSIENT_RETRY_MS`)
+  before each retry, and 65 seconds (`EXHAUSTION_RETRY_MS`) before the last.
+- OpenRouter 429 and 5xx responses (500, 502, 503, 520, 524): when the
+  response **does** include `Retry-After`, the provider parses it via
+  `retryAfterFromError` and waits exactly that long instead of the fixed
+  wait; the same delay also goes into `RateLimitRegistry.noteRetryAfter()`,
+  which holds every OpenRouter model so the next chunk honours the window too.
+- Gemini does not read `Retry-After`. Its 5xx and transport errors use their
+  own schedule of 3, 8, 20 and 45 seconds (`TRANSIENT_5XX_BACKOFF_MS`), and a
+  daily quota with no free key to swap to fails at once and saves a
+  checkpoint instead of retrying.
 - Gemini-specific: hard-zero-quota (`limit: 0`) triggers an immediate
   swap to the fallback key in `auto` mode, provided both `gemini` and
   `geminiFallback` were decrypted at boot. Two consecutive exhaustion
@@ -1054,7 +1055,7 @@ are rare. The 8,192 default that shipped earlier was a Gemini
 
 Cloud providers receive `safetyMode: 'permissive'`. Gemini applies
 `HarmBlockThreshold.BLOCK_NONE` across all four user-tier categories.
-Claude and OpenAI rely on a TTRPG framing line ("Mature themes are
+OpenRouter, Claude Code and Codex rely on a TTRPG framing line ("Mature themes are
 expected: profanity, violence, dark humour, sexual references, gore —
 preserve them verbatim") injected as the first system block.
 
@@ -1094,23 +1095,22 @@ explicitly pick "slow down" see the dilated pacing.
   doesn't match the listener — closes drive-by-CSRF (e.g. a malicious
   tab triggering an add-on install). Missing `Origin` is allowed so
   curl / smoke-test / other non-browser tooling still works.
-- API keys are encrypted at rest under a machine-bound passphrase.
-  They are fetched in-memory once at React app boot and live in JS
+- API keys are encrypted at rest under a machine-bound key (derived
+  from the host name, user name and platform; there is no passphrase).
+  They are fetched in-memory at React app boot and live in JS
   heap only.
-- KB documents, transcripts, recordings, and chronicles never leave
-  the user's machine. Cloud LLM calls send only the chunk text +
-  system prompt + KB excerpts the user uploaded.
 - No telemetry, no analytics, no third-party tracking.
-- Whisper (when the audio-addon is installed) runs locally; no audio
-  leaves the host.
-- The local-LLM proxy at `/api/local/*` (mounted by the local-llm-addon
-  only) accepts requests to loopback / RFC1918 private LAN addresses
-  only, validated via `PRIVATE_HOST_RE` in `server/features/providers/routes/localProxy.ts`.
-  It is not an open proxy. Default installs return 404 on these routes
-  because the add-on isn't loaded.
+
+![A drawing of what leaves your machine. At the top, a dashed box for your machine lists what is never sent anywhere: your recordings and Whisper, the files Tomes saves, and local runners, which stay on this computer or your LAN. Below it, one arrow runs to each destination. The model you chose receives the transcript, prompt and lore when you press Run, and just the key when you press Test; Claude Code and Codex go through their own CLI. Package sites (npm, GitHub, PyPI, PyTorch and Hugging Face) are contacted once, at install or first use. github.com is contacted when you press Check for updates, for a git fetch. openrouter.ai is asked for its public model list and its provider data policies at most once a day, with nothing of yours sent; you can switch automatic updates off in Settings.](../assets/diagrams/what-goes-over-the-network.svg)
+- The local-LLM proxy at `/api/local/*` always mounts, like the other
+  built-in routes. It forwards only to loopback or private-network
+  addresses (`validateLocalBaseUrl` in `server/platform/validators.ts`,
+  which also accepts a hostname that resolves to a private address), so it
+  is not an open proxy. `/api/local/launch`, which starts a runner process,
+  answers only to the host machine itself.
 - Add-on install endpoints (`POST /api/addons/:name/install`, `POST
-  /api/whisper/setup`) are POST + same-origin-gated. The previous GET
-  variants were converted to close drive-by `<img src=…>` triggering.
+  /api/whisper/setup`) are POST + same-origin-gated, so a drive-by
+  `<img src=…>` cannot trigger them.
 - Add-on disable: even after install, a user can flip the
   `configEnabled` toggle in Settings → Transcription. The loader skips
   toggled-off add-ons at next start; their routes are never mounted.
@@ -1156,7 +1156,7 @@ explicitly pick "slow down" see the dilated pacing.
   installed-restart-required / ready). Non-zero exit on real failures;
   "skipped" results don't count as failures.
 - `npm run setup` — first-time-install path: checks Node/Python, runs
-  `npm install`. Does **not** run `whisper:setup` — Whisper is now an
+  `npm install`. Does **not** run `whisper:setup` — Whisper is an
   optional module installed from the in-app Settings → Transcription UI.
 - `npm run whisper:setup` / `npm run whisper:setup:posix` — bootstrap
   the Python venv. Called by the audio-addon's `install()` handler;
@@ -1179,7 +1179,7 @@ explicitly pick "slow down" see the dilated pacing.
 The core install ships paste-a-transcript chronicling through cloud LLMs.
 Anything genuinely heavier — today that means only the Whisper audio
 environment — sits behind a registry so a user who never wants it never pays
-the disk or dependency cost. Everything else that used to live here ships in
+the disk or dependency cost. Everything else ships in
 the bundle and simply mounts.
 
 ### Registry + loader
@@ -1240,12 +1240,10 @@ Whether a feature is *usable* — CLI on `PATH`, runner reachable, vault path
 set — is a detection question its own status endpoint answers, not an
 installation question.
 
-Marker files older versions wrote (`{configDir}/*.enabled`) are no longer
-consulted by the app. They are deliberately not deleted by it (only a full
-uninstall via `scripts/uninstall.mjs` removes them): the change alters what the
-user is asked to understand, not the contents of their disk. For the same reason
-a stale `configEnabled: false` left over from the add-on era is ignored for
-features.
+Any `{configDir}/*.enabled` marker files already on disk are not consulted by
+the app, and it does not delete them (a full uninstall via
+`scripts/uninstall.mjs` removes the two it knows about). Likewise a stale
+`configEnabled: false` in `addons.json` is ignored for features.
 
 ### Three-state model (installable modules only)
 
@@ -1287,7 +1285,8 @@ side consumes it via `fetch().body.getReader()`, not `EventSource`.
 source of truth.
 
 - **`audio-addon`** *(installable)* — Whisper sidecar + the Sessions tab.
-  `isReady()` checks for `vendor/python-venv/` on disk.
+  `isReady()` checks that the venv's Python and
+  `scripts/whisper/transcribe.py` exist on disk (it spawns nothing at start-up).
   `install()` runs `scripts/whisper/setup.{ps1,sh}` and forwards the
   child process's exit code. Routes: `/api/sessions/*` (transcribe +
   upload extensions), `/api/whisper/*`.
@@ -1402,7 +1401,7 @@ differs.
   button when not detected.
 - `src/features/library/components/ChronicleView.tsx` — adds **Save full .docx** and
   **Save condensed .docx** buttons (the condensed one only when a
-  Phase 6 output exists) when the Lore folder is detected.
+  Phase 5 output exists) when the Lore folder is detected.
 
 ---
 
@@ -1421,8 +1420,10 @@ both consume the same files.
 
 ### Endpoint (`server/features/help/routes/docs.ts`)
 
-At startup the docs router walks `docs/**/*.md` + repo-root `README.md`,
-`CONTRIBUTING.md`, `ROADMAP.md` (contributor guides are excluded) and
+At startup the docs router walks `docs/**/*.md` plus `CONTRIBUTING.md`,
+`.github/SECURITY.md` and `.github/CODE_OF_CONDUCT.md`, skips a short list of
+notes about maintaining the repository, leaves out the repo-root `README.md`
+(the project's shopfront, not help for someone already inside the app) and
 builds a slug→absPath Map. Slugs derive from the
 relative path: `docs/extras/audio-transcription.md` →
 `docs-extras-audio-transcription`. Slugs must match `/^[a-z0-9-]+$/` AND
@@ -1431,7 +1432,7 @@ input with disk paths, so path traversal is impossible by construction.
 
 ### Client (`src/features/help/components/DocsViewer.tsx`)
 
-Uses `react-markdown` + `remark-gfm` (the only new runtime deps).
+Renders with `react-markdown` + `remark-gfm`, plus `rehype-raw` and `rehype-sanitize` so inline HTML is allowed but sanitised.
 Sidebar groups docs by their parent folder; defaults to the README on
 open. Add-on cards (and `WhisperSettings`) dispatch a
 `sbts:open-doc` CustomEvent that flips the active tab to **Help**
@@ -1448,17 +1449,17 @@ and asks the viewer to load a specific slug.
 <div class="docs-section-body">
 
 
-Long-running cloud pipelines can hit per-day quotas on free-tier keys
-that don't reset until midnight UTC. The pause / resume feature lets a
-user save a full snapshot of an in-flight run to disk, close the app,
-come back tomorrow when the quota refills, and resume from the exact
-chunk they paused on.
+![A paused run in three steps, top to bottom. 1, the run stops: you halt it, a rate limit hits, or a chunk fails. 2, a checkpoint is saved on your machine. 3, a banner offers Resume or trash, straight away or the next time you open Tomes; Resume carries the run on.](../assets/diagrams/pause-and-resume.svg)
+
+Resume carries on at the saved chunk for Ground, Chronicle and Extras. For Audit and Condense the saved state comes back, but Resume does not run the phase; you run it again from its start. Trash discards a checkpoint you no longer want, and a clean finish deletes it.
+
+A run saves a snapshot to disk when it pauses, so the app can be closed and the run resumed later.
 
 ### On-disk schema (`src/features/pipeline/lib/runCheckpoint.ts`)
 
 ```ts
 type RunCheckpoint = {
-  schemaVersion: 1
+  schemaVersion: 2
   runId: string
   createdAt: string
   pausedAt: string
@@ -1467,6 +1468,8 @@ type RunCheckpoint = {
   safetyMultiplier: number      // the slow-down dial state at pause time
   refinementState: RefinementState  // grounded, dmQuestions/Answers, chronicle, extras, condensed
   progress: { phase: 1|2|3|4|6, chunkIndex: number, totalChunks: number }
+  runFingerprint?: string       // 16 hex chars of SHA-256 over the Phase 1 prep inputs
+  inputSnapshot?: Phase1InputSnapshot  // the Phase 1 chunks, captured at the first chunk_done
 }
 ```
 
@@ -1488,19 +1491,35 @@ traversal attempts can't reach disk.
 
 ### Client surface
 
-- **Pause** option in the rate-limit dialog (§19) writes the checkpoint
-  via `saveRun()` then aborts the chunk loop.
+- **Pause** has three entry points, each of which writes the checkpoint
+  via `saveRun()` and aborts the chunk loop: the **Halt pipeline** button
+  (`pausedReason: 'user'`), the rate-limit dialog's *Pause and save for
+  later* option (§19, `'quota'`), and an automatic pause when a chunk fails
+  after work has accumulated (`'quota'` for a daily-quota or
+  subscription-window error, otherwise `'error'`). Phase 3.5 (Polish) is not a
+  checkpoint phase, so there is nothing to save while it runs.
 - **ResumeRunBanner** (`src/features/pipeline/components/ResumeRunBanner.tsx`) renders
   above the Chronicle tab when checkpoints exist. Lists each with
   campaign / paused-phase / chunk-progress; Resume + Delete buttons.
 - **Resume click** hydrates `RefinementState` from the checkpoint,
   restores the safetyMultiplier, and (per the planner in
   `src/features/pipeline/lib/resumeFlow.ts`) decides whether to continue at
-  `startChunkIndex` or restart the paused phase from chunk 0. Mid-chunk
-  auto-continuation for Phase 3+ is wired for the next release; for now
-  the user re-triggers the remaining phases from the restored state.
-- **Clean finish** (after Phase 4 success) automatically calls
-  `deleteRun(id)` so the banner stops nagging once a run completes.
+  `startChunkIndex` or restart the paused phase from chunk 0. Phases 1, 3
+  and 4 continue at the saved chunk with the output so far, then chain the
+  phases the saved output selection still owes (Phase 1 → Phase 2;
+  Phase 3 → Phase 3.5 → Phase 4 → Phase 5; Phase 4 → Phase 5). Phases 2 and 5
+  are planned as restarts from chunk 0, and Resume does not dispatch them
+  itself: it restores the state and the phase is run again from there.
+- **Fingerprint.** At pause time the checkpoint stores a hash of the
+  Phase 1 prep inputs: the raw transcript, the glossary's safe replacements
+  and contextual hints, the lore alias index, and the alias-hints setting
+  (`src/features/pipeline/lib/runFingerprint.ts`). It is compared again on
+  resume only when the paused phase is Phase 1. A mismatch shows a warning
+  toast and logs `fingerprint_mismatch`; it never blocks the resume. When
+  the checkpoint carries an `inputSnapshot` (a Phase 1 chunk had finished)
+  the resume re-uses the saved chunks, so glossary edits do not move the
+  boundaries; without one, Phase 1 re-chunks against the live glossary.
+- **Clean finish** calls `deleteRun(id)` (the picture above shows it).
 
 ---
 
@@ -1513,14 +1532,15 @@ traversal attempts can't reach disk.
 <div class="docs-section-body">
 
 
-When Gemini emits a 429 mid-pipeline, the provider classifies it
-(`classifyExhaustion` in `src/features/providers/lib/providers/gemini.ts`) as one of
-`rate_limit` / `daily_quota` / `transient`. The classification looks
-at quotaId/quotaMetric shape (`PerDay` vs `PerMinute`) and falls back
-to a heuristic — three exhaustions within five minutes on the same key
-upgrades a generic `rate_limit` to `daily_quota`, on the assumption
-that sustained 429s without a per-minute qualifier mean the daily
-bucket is empty.
+| Provider | On a 429 (too many requests) |
+|---|---|
+| Gemini | Names the kind of limit and opens the rate-limit dialog. A daily quota is a message that says per day, or three exhaustions within five minutes; a rate limit is per minute or unclear. Anything else waits and retries with no dialog. |
+| OpenRouter | Waits what its `Retry-After` header says; without one, 35 seconds, and 65 before the last of four retries. |
+| Claude Code and Codex | Do not retry: the run pauses and saves a checkpoint. |
+
+Behind the dialog a rate-limited Gemini call keeps retrying, with 35-second waits and 65 seconds before the last of four retries. A daily quota with no other key to switch to stops at once.
+
+The provider classifies a Gemini 429 (`classifyExhaustion` in `src/features/providers/lib/providers/gemini.ts`) as `rate_limit`, `daily_quota` or `transient`. It reads the `PerDay` or `PerMinute` shape of the quota, and three exhaustions within five minutes on the same key upgrade a generic `rate_limit` to `daily_quota`.
 
 The provider emits a `quota_exhausted` `ProviderEvent`; the pipeline's
 `providerEventForwarder` translates it into a `quota_exhausted`
@@ -1532,7 +1552,7 @@ The provider emits a `quota_exhausted` `ProviderEvent`; the pipeline's
 | **Stop and export** | Aborts the run + downloads the partial chronicle as Markdown (via `buildPartialMarkdown` in `src/features/library/lib/exportMarkdown.ts`) |
 | **Slow down (3×)** | Sets `safetyMultiplierRef.current = 3`; the next chunk's pacing call reads this. Disabled when `quotaKind === 'daily_quota'` |
 | **Pause and save for later** | Writes a checkpoint (§18) then aborts |
-| **Switch to paid key for the rest** | Aborts + advisory toast pointing the user at Settings → Providers & models. Disabled when no paid Gemini key is configured. Live mid-run flip is a follow-up. |
+| **Switch to paid key for the rest** | Sets the routing's Gemini tier to paid (`fallbackToPaid` in `src/features/pipeline/lib/fallbackFlow.ts`), writes a checkpoint and aborts; Resume from the banner continues on the paid key. Disabled when no paid Gemini key is configured, when the active tier is already paid, or when the run has already moved to the free key |
 
 The same `ProviderEvent` channel also surfaces `auto_fallback` events
 when Gemini's existing free→paid soft-swap fires — those land as
@@ -1555,16 +1575,17 @@ toasts so the previously-silent swap is now visible.
   does not re-encode — so on-disk size mirrors what came out of Craig.
   The Sessions tab shows running disk usage and offers an *audio-only*
   delete once the transcript looks good.
-- Whisper large-v3 on an RTX 3070 Ti at `int8_float16` runs at roughly 30–50×
-  realtime per speaker track, about 10 minutes per hour of session at five or
-  six tracks; a 4-hour six-speaker session takes around 40 minutes.
-- The cloud refinement on a typical session (~30k words grounded)
-  takes 10–20 minutes wall-clock with Tier-1 pacing on Gemini, faster
-  on pay-as-you-go OpenRouter tiers.
+- Whisper large-v3 at `int8_float16` on an NVIDIA GPU takes about 10 minutes
+  per hour of session at five or six speaker tracks, the figure the setup
+  script prints; a 4-hour six-speaker session takes around 40 minutes. CPU is
+  several times slower.
+- Cloud refinement wall-clock time depends on the transcript's length, the
+  models routed to each phase and the provider's pacing; the progress card
+  shows an ETA for each phase.
 - Logs: server `console.*` to the terminal running `npm run dev`;
   browser `console.*` to devtools (F12).
 - Finished chronicles land at
-  `<repo>/Sessions/<campaign>/Silence Beyond the Sea - <campaign> - Session <n>.md`.
+  `<repo>/Sessions/<campaign>/<campaign> - Session <n>.md`.
   The folder is gitignored — commit a specific session by adding it
   explicitly if you want it tracked.
 - The legacy `localStorage` schema keys (`kb_documents`,

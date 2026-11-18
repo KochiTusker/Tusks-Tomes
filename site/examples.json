@@ -57,7 +57,7 @@
       { "phase": "Phase 2 — audit", "engine": "Claude Code (Haiku)" },
       { "phase": "Phase 3 — chronicle", "engine": "Gemini API (paid key)" },
       { "phase": "Phase 4 — extras", "engine": "Gemini API (paid key)" },
-      { "phase": "Phase 6 — condense", "engine": "Gemini API (paid key)" }
+      { "phase": "Phase 5 — condense", "engine": "Gemini API (paid key)" }
     ],
     "routingNote": "A hybrid run: the two mechanical phases went through a signed-in Claude Code CLI, drawing on a subscription allowance rather than API credit, and the three writing phases went to a paid Google Gemini key. That split is the combination this project recommends, and it is what produced every word below.",
     "anonymisation": "Characters, NPCs, places and gods have been renamed — one-to-one, and consistently across every sample. Spell and rules names are untouched. Nothing else was edited: where an extract is cut, the remaining words are contiguous and exactly as generated.",
@@ -84,7 +84,7 @@
 
   "condensed": {
     "label": "The condensed version",
-    "note": "Phase 6 · you set the length",
+    "note": "Phase 5 · you set the length",
     "meta": "A whole session in one paragraph",
     "narrative": "The party departed Emberlight aboard the <em>Too Many Bruisers</em>, bound for Ashenreach by way of Kelvaris's Vein. After a chaotic captaincy vote, Halvard was crowned Captain and promptly reorganised the crew into corporate “departments.” On the pier, a town crier broke the news that two Solance Elders had been missing for a month, and Grendal's medallion delivered the first vision of Veera and Bridge's lost expedition. Fennel rejoined the crew at the docks. At sea, Ostyn received a matching vision through his father's gauntlets, and Halvard set about indoctrinating the terrified Pell into the family.",
     "bulletsLabel": "…and the same session again as catch-up bullets",

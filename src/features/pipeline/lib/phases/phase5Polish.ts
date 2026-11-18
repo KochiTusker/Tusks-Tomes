@@ -75,7 +75,7 @@ export async function runPhase5Polish(args: {
     onRetry: retryWaitingForwarder(phase, callbacks),
     safetyMultiplier: args.safetyMultiplier,
     contextLabel: (absoluteIndex) =>
-      `Phase 5 (Polish) — chunk ${absoluteIndex + 1}/${chunks.length}`,
+      `Phase 3.5 (Polish) — chunk ${absoluteIndex + 1}/${chunks.length}`,
     phaseId: phase,
     onPipelineEvent: callbacks.onEvent,
   })

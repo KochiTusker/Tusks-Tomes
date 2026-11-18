@@ -26,10 +26,9 @@ its login state on its own.
    rung in guided routing to put every phase on it at once.
 
 > [!CAUTION]
-> Make sure `OPENAI_API_KEY` is **not** set in your environment or `.env`.
-> Tomes strips it from the CLI's environment so Codex always uses your
-> subscription login — an API key present there would silently switch you to
-> per-token billing.
+> Nothing to unset. Tomes removes any OpenAI API key or base URL left in your
+> environment from the Codex call, so it always uses your subscription login
+> and billing stays on your plan.
 
 ## Model selection
 
@@ -42,12 +41,11 @@ the routing rows.
 
 ChatGPT subscriptions meter usage in rolling windows.
 
-> [!TIP]
-> **Exhausting your window mid-run is not a lost run.** When Codex reports the
-> window is spent, the pipeline **pauses itself and saves a checkpoint** — the
-> run appears in the paused-runs banner marked `quota hit`. Resume from the
-> banner once your window resets and it picks up at the exact chunk it stopped
-> on.
+![A paused run in three steps, top to bottom. 1, the run stops: you halt it, a rate limit hits, or a chunk fails. 2, a checkpoint is saved on your machine. 3, a banner offers Resume or trash, straight away or the next time you open Tomes; Resume carries the run on.](../assets/diagrams/pause-and-resume.svg)
+
+Resume carries on at the saved chunk for Ground, Chronicle and Extras. For Audit and Condense the saved state comes back, but Resume does not run the phase; you run it again from its start. Trash discards a checkpoint you no longer want, and a clean finish deletes it.
+
+When Codex reports the window is spent, the run pauses itself and the paused-runs banner marks it `quota hit`. Resume once your window resets.
 
 > [!WARNING]
 > Codex's limit messages include a human-readable reset time (shown in the

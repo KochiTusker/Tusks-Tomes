@@ -15,17 +15,17 @@ import type { ExtrasOutput } from '@/features/pipeline/lib/types'
  *  must round-trip this exactly into priorExtras. */
 export const PARTIAL_AFTER_3_CHUNKS: ExtrasOutput = {
   jests: [
-    "Janus's third pun this session",
-    'Ivo mishearing "doom" as "Zoom"',
-    'Viggo insisting the goblin was actually a Funko Pop',
+    "Ingrid's third pun this session",
+    'Ilias mishearing "doom" as "Zoom"',
+    'Verity insisting the goblin was actually a Funko Pop',
   ],
   gore: [
-    'Esen cleaves the ogre lengthwise',
-    'Lucian critically fumbles, drops his own sword on his foot',
+    'Eamon cleaves the ogre lengthwise',
+    'Maeve critically fumbles, drops his own sword on his foot',
   ],
   quotes: [
-    { speaker: 'Janus', line: 'It\'s half seven, let\'s start.' },
-    { speaker: 'Esen', line: 'Yeah.', kind: 'funny' },
+    { speaker: 'Ingrid', line: 'It\'s half seven, let\'s start.' },
+    { speaker: 'Eamon', line: 'Yeah.', kind: 'funny' },
   ],
 }
 

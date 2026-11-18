@@ -64,7 +64,7 @@
   "video": {
     "id": "",
     "title": "Tusk's Tomes — turning a D&D session recording into a chronicle",
-    "description": "A walkthrough of the six-phase AI pipeline: importing a session recording, grounding names and lore against a campaign glossary, and exporting a narrative chronicle plus a Discord-ready recap.",
+    "description": "A walkthrough of the five-phase AI pipeline: importing a session recording, grounding names and lore against a campaign glossary, and exporting a narrative chronicle plus a Discord-ready recap.",
     "uploadDate": "",
     "duration": "",
     "poster": "docs/assets/pipeline-six-phase-ai-dnd-chronicle.png",
@@ -98,7 +98,7 @@
         "label": "Map speakers to characters",
         "start": "0:00",
         "end": "",
-        "blurb": "Set once per campaign; persists across sessions",
+        "blurb": "Set once; persists across sessions",
         "poster": "docs/assets/speaker-character-mapping.png"
       },
       {
@@ -106,7 +106,7 @@
         "label": "Run the pipeline",
         "start": "0:00",
         "end": "",
-        "blurb": "Six phases, with pause and resume",
+        "blurb": "Five phases, with pause and resume",
         "poster": "docs/assets/pipeline-six-phase-ai-dnd-chronicle.png"
       },
       {
@@ -359,7 +359,7 @@
             },
             {
               "name": "Transcribe it on your own machine",
-              "text": "Drop the recording into the Upload tab. A local Whisper sidecar transcribes each track separately and interleaves them into one timestamped transcript with speakers attached. Nothing is uploaded.",
+              "text": "Drop the recording into the upload panel on the Sessions tab. A local Whisper sidecar transcribes each track separately and interleaves them into one timestamped transcript with speakers attached. Nothing is uploaded.",
               "anchor": "stage-2-transcribe-it-on-your-own-machine"
             },
             {
@@ -369,7 +369,7 @@
             },
             {
               "name": "Write it up",
-              "text": "Phase 3 writes the narrative chronicle, Phase 4 extracts quotes, jests and combat highlights, and Phase 6 optionally condenses the chronicle to a length you set. Export as .docx or Markdown.",
+              "text": "Phase 3 writes the narrative chronicle, Phase 4 extracts quotes, jests and combat highlights, and Phase 5 optionally condenses the chronicle to a length you set. Export as .docx or Markdown.",
               "anchor": "stage-4-write-it-up"
             }
           ]
@@ -417,7 +417,7 @@
             },
             {
               "name": "Get the transcript out",
-              "text": "Either copy the caption text straight into the Raw transcript box, or download the .sbv file and run it through the Caption Repair tab, which keeps the timestamps.",
+              "text": "Either copy the caption text straight into the Raw transcript box, or download the .sbv file and run it through Caption Repair on the Chronicle tab, which keeps the timestamps.",
               "anchor": "step-4-get-the-transcript-out"
             },
             {
@@ -441,11 +441,11 @@
     },
     {
       "q": "How much better is the Craig and Whisper route?",
-      "a": "Two ways, and the second one surprises people. <strong>Attribution:</strong> <a href=\"https://craig.chat\" rel=\"noopener\">Craig</a> records each player to a separate track, so Whisper transcribes one voice at a time and every line stays attached to the right character with nothing having to guess. A YouTube caption file is one undifferentiated stream with no speaker labels at all, so the pipeline reconstructs who spoke from context and asks you a good many more questions before it can. <strong>Language:</strong> YouTube’s automatic captions censor swearing — profanity comes back as <code>[ __ ]</code>, already gone by the time you download the file, and nothing downstream can put it back. Whisper transcribes what was actually said. If your table swears, and the way people really talk is part of what you want on the record, the multitrack route is the only one that keeps it."
+      "a": "Two ways, and the second one surprises people. <strong>Attribution:</strong> <a href=\"https://craig.chat\" rel=\"noopener\">Craig</a> records each player to a separate track, so Whisper transcribes one voice at a time and every line stays attached to the right character with nothing having to guess. A YouTube caption file is one undifferentiated stream with no speaker labels at all, so the pipeline reconstructs who spoke from context and asks you a good many more questions before it can. <strong>Language:</strong> YouTube’s automatic captions censor swearing — profanity comes back as <code>[ __ ]</code>, already gone by the time you download the file, and the best anything downstream can do is guess at it from context. Whisper transcribes what was actually said. If your table swears, and the way people really talk is part of what you want on the record, the multitrack route is the one that keeps it as it was said."
     },
     {
       "q": "I don’t have an NVIDIA GPU. Can I still transcribe audio?",
-      "a": "Today, in two ways: let YouTube transcribe the recording on Google’s hardware and bring the text back, or compile a <a href=\"/Tusks-Tomes/docs/extras/whisper-cpp/\">whisper.cpp build</a>, which can use an AMD, Intel or Apple GPU. Cloud transcription is also in progress and will remove the requirement entirely — it is measured at roughly $0.20 for a three-hour, five-speaker session, and will need only an OpenRouter key. See the <a href=\"/Tusks-Tomes/docs/about/roadmap/\">roadmap</a> for where that has got to."
+      "a": "Today, in three ways: let the processor do it, which Whisper falls back to but which takes hours for a three-hour session; let YouTube transcribe the recording on Google’s hardware and bring the text back, or compile a <a href=\"/Tusks-Tomes/docs/extras/whisper-cpp/\">whisper.cpp build</a>, which can use an AMD, Intel or Apple GPU. Cloud transcription is also in progress and will remove the requirement entirely — it is measured at roughly $0.20 for a three-hour, five-speaker session, and will need only an OpenRouter key. See the <a href=\"/Tusks-Tomes/docs/about/roadmap/\">roadmap</a> for where that has got to."
     },
     {
       "q": "What is OpenRouter, and why does Tusk’s Tomes use it?",
@@ -453,7 +453,7 @@
     },
     {
       "q": "How do I choose which model to use through OpenRouter?",
-      "a": "The picker does the narrowing for you. It offers three orderings — by measured performance, by what that particular phase would cost, and by the maintainer’s own ranking, which weighs speed and reliability that no grade captures — and they deliberately disagree. Two filters cut the catalogue down: <em>tested only</em> restricts it to models actually graded on real session material, and <em>handles mature content</em> to models measured relaying graphic violence and crude dialogue without softening them. If you would rather not choose at all, the guided routing presets are complete recipes you can apply in one click."
+      "a": "The picker does the narrowing for you. It offers four orderings — by measured quality, by quality per dollar, by what that particular phase would cost, and by the maintainer’s own ranking, which weighs speed and reliability that no grade captures — and they deliberately disagree. Filters cut the catalogue down, among them <em>tested only</em> restricts it to models actually graded on real session material, and <em>handles mature content</em> to models measured relaying graphic violence and crude dialogue without softening them. If you would rather not choose at all, the guided routing presets are complete recipes you can apply and then save."
     },
     {
       "q": "Is it actually better than a paid app, or just cheaper?",
@@ -461,11 +461,11 @@
     },
     {
       "q": "What actually gets put on my PC?",
-      "a": "The repository itself, plus <code>node_modules</code> inside it. Outside that folder it writes one configuration directory in the standard place for your operating system, holding your glossary, routing choices and encrypted keys, and a data directory for sessions if you transcribe audio. That is all, unless you install the transcription module — which adds a Python environment of about 1.5 GB, inside the repository folder. No PATH changes, no registry entries, no system-wide packages, and nothing installed as administrator. <a href=\"/Tusks-Tomes/docs/security/what-it-installs/\">The full list, file by file</a>."
+      "a": "The repository itself, plus <code>node_modules</code> inside it. Outside that folder it writes one configuration directory in the standard place for your operating system, holding your glossary, routing choices and encrypted keys, a data directory for your saved chronicles and, if you transcribe audio, your sessions, and a small cache. That is all, unless you install the transcription module — which adds a Python environment of roughly 1.5 to 2.5 GB inside the repository folder, and fetches about 3 GB of Whisper model weights into the Hugging Face cache in your user profile the first time you transcribe. No PATH changes, no registry entries, no system-wide packages, and nothing installed as administrator. <a href=\"/Tusks-Tomes/docs/security/what-it-installs/\">The full list, file by file</a>."
     },
     {
       "q": "How can I keep track of what it changes on my machine?",
-      "a": "Everything it writes outside its own folder is documented in one place, and there is an uninstall script that removes it. The design rule is that installing something must never change anything outside the repository working directory, and uninstalling must remove every byte the install wrote — your system Python, Node, PATH and registry are left alone. That is written down as a contract rather than a promise: see <a href=\"/Tusks-Tomes/docs/extras/isolation-contract/\">module isolation</a> for what a module may and may not touch, and <a href=\"/Tusks-Tomes/docs/security/what-it-installs/\">what it installs</a> for the complete inventory."
+      "a": "Everything it writes outside its own folder is documented in one place, and there is an uninstall script that removes it, apart from the files you would want to keep. The design rule is that installing something keeps its files inside the repository folder and the app’s own config, data and cache folders — the one exception is the Whisper model weights, which land in the Hugging Face cache in your user profile — and uninstalling removes what the install wrote, keeping your glossary and keys unless you choose to purge them. Your system Python, Node, PATH and registry are left alone. That is written down as a contract rather than a promise: see <a href=\"/Tusks-Tomes/docs/extras/isolation-contract/\">module isolation</a> for what a module may and may not touch, and <a href=\"/Tusks-Tomes/docs/security/what-it-installs/\">what it installs</a> for the complete inventory."
     },
     {
       "q": "How can I support the project?",

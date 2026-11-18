@@ -2,7 +2,7 @@
 
 Upload the session recording to YouTube as unlisted, let Google's automatic
 captions transcribe it, and bring the result back as a narrative chronicle
-written in your world's own vocabulary. No GPU, no Python, nothing to install
+written in your world's own vocabulary. No GPU, no Python, no add-on to install
 — the transcription happens on Google's hardware instead of yours.
 
 This is the easiest way to start, and it is the route to use if your graphics
@@ -19,10 +19,12 @@ than buried.
 |---|---|
 | **You start with** | A video or audio recording you can upload to YouTube |
 | **You end with** | A narrative chronicle, a condensed version, catch-up bullets, quotes, jests and combat highlights |
-| **You need** | Node.js, a YouTube account, and one way to reach an AI model. That is the whole list |
-| **Time** | However long YouTube takes to caption, then ~30 minutes unattended |
-| **Cost** | [Roughly $1–$5 of your own API credit](../models/costs.md), or $0 fully local |
+| **You need** | Node.js (to run Tusk's Tomes), a YouTube account, and one way to reach an AI model. That is the whole list |
+| **Time** | However long YouTube takes to caption, then the pipeline runs unattended |
+| **Cost** | [Your own API credit, by routing](../models/costs.md), or $0 extra on a subscription CLI |
 | **The catch** | Caption files carry no speaker labels at all — see below |
+
+![The round trip in two lanes, left to right. On your machine: 1, record the session. An orange arrow marked 'the audio leaves here' carries it to YouTube: 2, upload it, unlisted. 3, automatic captions, which take an hour or two. Back on your machine there are two ways in: download the .sbv and run it through Caption Repair, which is optional, or copy the text. Either way it lands in 4, the raw transcript, and goes on to 5, grounding the names.](../assets/diagrams/youtube-trip.svg)
 
 ---
 
@@ -74,7 +76,7 @@ You can also load the `.sbv` straight into the **Raw transcript** box.
 The `.sbv` route keeps the timestamps, which helps the pipeline segment the
 session sensibly, and Caption Repair does a grounding pass over the cues before
 they reach the chronicle pipeline. Pasting plain text is faster. Either way you
-end up in the same six-phase pipeline.
+end up in the same five-phase pipeline.
 
 ---
 
@@ -82,16 +84,11 @@ end up in the same six-phase pipeline.
 
 Identical to the audio route, and just as load-bearing here.
 
-Automatic captions have never heard of your setting. Unfamiliar proper nouns
-come out phonetically — a homebrew city ends up spelled three ways in one
-session, a character's name lands as whatever common word it sounds nearest.
-Hand that to a general-purpose model and it will pick a plausible spelling,
-commit to it, and stay consistently wrong for the length of the write-up.
+Automatic captions have never heard of your setting, so unfamiliar names come out phonetically. Hand that to a general-purpose model and it will pick a plausible spelling and stay consistently wrong for the length of the write-up.
 
-Phase 1 corrects the transcript before any prose is written, against a glossary
-you maintain in the **Tome of Lore** tab or against an existing vault via the
-[Obsidian Vault lore](../extras/obsidian-vault.md). Phase 2 then hands you the
-things it could not resolve as questions rather than guessing.
+![A transcript has two lines, "We reach hollow mirror" after a Music marker and "then Hollow Mear gate" after a Laughter marker. Before any model runs, with no AI and no cost, the markers are stripped and names are swapped using your glossary. Then a model pass, Phase 1, reads your lore, from the Tome of Lore or a vault, and corrects the names, so both misheard spellings become Hollowmere in the grounded transcript. The Audit, Phase 2, turns whatever it cannot settle into questions for you.](../assets/diagrams/how-names-get-corrected.svg)
+
+Phase 1 corrects the transcript before any prose is written, against the **Tome of Lore** tab or an existing vault via the [Obsidian Vault lore](../extras/obsidian-vault.md). Phase 2 hands you what it could not resolve as questions.
 
 Expect more questions on this route than on the audio one. That is the pipeline
 doing its job — see the next section for why.
@@ -100,13 +97,9 @@ doing its job — see the next section for why.
 
 ## The trade-off, stated plainly
 
-**A YouTube caption file contains no speaker labels whatsoever.** It is one
-undifferentiated stream of text. Everything about who said what has to be
-reconstructed from context.
+![Two panels with the same layout. In the first, three players talk into one microphone and the result is a single mixed file; every line in its transcript is tagged with a question mark, because who said it is guessed. In the second, each player has a headset and their own track, so every line is tagged with whoever recorded it, the Rogue or the DM, because who said it is known.](../assets/diagrams/one-mic-or-one-track.svg)
 
-Tomes does reconstruct it, and it asks you a fair number of clarifying questions
-in order to. Even after you answer them, attribution is a best guess in places —
-where the multitrack route simply knows, because each track held one person.
+**A YouTube caption file contains no speaker labels whatsoever.** Tomes reconstructs who said what from context, and asks you a fair number of clarifying questions to do it. Even after you answer them, attribution is a best guess in places.
 
 > [!WARNING]
 > **YouTube censors swearing, and the censorship is in the file.** Automatic
@@ -124,7 +117,7 @@ where the multitrack route simply knows, because each track held one person.
 | DM questions to answer | More | Fewer |
 | GPU needed | No | NVIDIA, realistically |
 | Audio leaves your machine | Yes, to YouTube | No |
-| Needs installing | Nothing | Audio Transcription |
+| Needs installing | No add-on | Audio Transcription |
 
 So: if you want the chronicle to reliably say which character did what, record
 multitrack. If you mainly want a readable account of the session and can live
@@ -136,11 +129,10 @@ now carry straight over.
 
 ## What this costs
 
-Nothing to install and nothing to subscribe to. YouTube's captioning is free.
-The only spend is whatever your chosen model provider charges: roughly $1–$5 per
-three-hour session depending on routing, $0 extra through a Claude Code or Codex
-subscription you already pay for, or $0 fully local. [What it costs](../models/costs.md)
-has the current figure for each routing.
+No add-on to install and nothing to subscribe to. YouTube's captioning is free.
+The only spend is whatever your chosen model provider charges, which depends on
+routing, or $0 extra through a Claude Code or Codex subscription you already pay
+for. [What it costs](../models/costs.md) has the current figure for each routing.
 
 See [what it costs](../models/costs.md) for the full breakdown, and
 [recommended settings](../chronicling/recommended-settings.md) for the routing that gives the

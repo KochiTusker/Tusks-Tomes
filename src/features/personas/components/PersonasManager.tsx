@@ -64,7 +64,7 @@ export function PersonasManager() {
         </CardTitle>
         <CardDescription>
           Switch the Chronicle narrator out of the locked Bard default. The Bard prompt
-          is always available and cannot be edited; personas defined here override phases 3, 5, and 6
+          is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5
           when selected from the Chronicle tab dropdown.
         </CardDescription>
       </CardHeader>

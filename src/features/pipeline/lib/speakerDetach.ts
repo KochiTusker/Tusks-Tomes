@@ -2,7 +2,7 @@
 //
 // Craig recordings come into the pipeline as
 //   [Dungeon Master (DM)] So the orc charges at you.
-//   [Nuray (Johanna)] I dodge and counter.
+//   [Ottilie (Jomo)] I dodge and counter.
 //
 // where `[CharacterName (PlayerName)]` is generated deterministically by
 // server/features/transcription/services/whisper/liveQueue.ts:rewriteSbv() from speakers.json + per-track
@@ -31,7 +31,7 @@
  *  Group 2 = the dialogue body (everything after the bracket + space)
  *
  *  Anchored to the start of a line. The bracket itself is greedy-up-to-
- *  the-next-`]` so `[Nuray (Johanna)]` matches even though the content has
+ *  the-next-`]` so `[Ottilie (Jomo)]` matches even though the content has
  *  nested parens — we don't try to validate the inner shape, just that
  *  the prefix exists. Trailing whitespace between bracket and body is
  *  collapsed to one space on reattachment. */

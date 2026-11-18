@@ -17,7 +17,7 @@ quiet.
 
 The existing options didn't fit. Meeting transcribers are built for standups:
 you get a transcript and a bulleted summary, for $15 a month, forever, in
-somebody else's cloud. And none of them have the faintest idea who Esen is —
+somebody else's cloud. And none of them have the faintest idea who Eamon is —
 they'd hear the name, invent a spelling, and confidently use the wrong one for
 three hours straight.
 
@@ -65,17 +65,19 @@ command, and stops.
 | You need | When | If it's missing |
 |---|---|---|
 | **Node.js 22+** (Node 20+ for releases before 2.7.0) | Always. Nothing runs without it. | Setup stops and prints `winget install OpenJS.NodeJS.LTS`. |
-| **Git** | To download the project in the first place. | Setup prints the install command. |
+| **Git** | To download the project in the first place; setup checks for it too. | Setup stops and prints the install command. |
 | **Python 3.10, 3.11 or 3.12** | **Only** for the audio-transcription add-on. | The core app is completely fine without it. |
 
 Two things worth knowing:
 
-- **Python 3.13 does not work** for transcription — the speech-to-text
-  libraries have no builds for it yet. If you have 3.13, install 3.12
-  alongside it. Setup checks your version and says so rather than letting you
-  discover it partway into a failed install.
+- **Python 3.10 to 3.12 are the versions I have verified** for transcription.
+  3.13 is untested: the PyTorch builds it needs arrived late, and nobody has
+  run the whole stack on it here. Setup checks your version and warns rather
+  than blocking, while the in-app Install check stops on anything outside
+  3.10–3.12. If a transcription install fails on 3.13, make 3.12 the first
+  `python` on your PATH and run it again.
 - **You do not need Visual Studio Build Tools**, whatever older guides say.
-  Nothing in the dependency tree compiles native code any more.
+  Nothing in the dependency tree compiles native code.
 
 So yes — realistically this is still a "you're comfortable installing Node and
 running a `.bat` file" project. I'd like that not to be true, and a proper
@@ -91,15 +93,16 @@ No MSI, no elevation prompt, nothing added to Windows itself.
 | Location | What | Size |
 |---|---|---|
 | `<the folder you cloned into>` | The program itself. | ~8 MB |
-| `…\node_modules` | JavaScript libraries, fetched by `npm install`. | ~360 MB (measured on Windows) |
+| `…\node_modules` | JavaScript libraries, fetched by `npm install`. | several hundred MB (about 450 MB on a Windows test machine) |
 | `…\dist`, `…\dist-server` | Built output, only if you run a build. | ~5 MB |
-| `…\vendor\python-venv` | Python + the speech-to-text model. **Only if you install the audio add-on.** | 1.5–2.5 GB |
+| `…\vendor\python-venv` | Python, PyTorch and the speech-to-text libraries. **Only if you install the audio add-on.** The model weights are fetched on first use into the Hugging Face cache, not here. | about 1.5–2.5 GB |
 | `…\Sessions\<campaign>\` | Your finished chronicles, as Markdown. | small |
-| `%APPDATA%\tusks-tomes` | Settings, glossary, speaker names, encrypted API key. | < 1 MB |
-| `%LOCALAPPDATA%\tusks-tomes` | Session recordings, transcripts, run checkpoints. | large, if you upload audio |
+| `%APPDATA%\tusks-tomes` | Settings, glossary, speaker names, encrypted API key, paused-run checkpoints. | small |
+| `%LOCALAPPDATA%\tusks-tomes` | Session recordings, transcripts, the saved-chronicle library, cached probe results. | large, if you upload audio |
 
-The first six live inside the folder you cloned. Delete that folder and they're
-gone.
+![Three places Tusk's Tomes keeps files. The program folder holds the program code and is replaced by an update, but your Sessions folder and .env file inside it are left alone. Your profile, outside the program folder, holds settings, keys, recordings and saved chronicles, and survives an update. Next to the program folder, Tusks-Lore holds lore notes and .docx exports, and also survives an update.](../assets/diagrams/where-files-live.svg)
+
+Delete the cloned folder and the first five go with it; the last two stay.
 
 ### Three things I think you should understand
 
@@ -113,11 +116,11 @@ and CI fails the build if a shipping dependency has a high-severity advisory.
 **The Whisper add-on is the heavy one.** It installs Python packages including
 PyTorch, plus a CUDA build if you have an NVIDIA card. It's big, it's fiddly,
 and it's the step most likely to fall over on your machine. It's also entirely
-optional and lives in exactly one folder.
+optional and, apart from the model weights it fetches on first use, lives in exactly one folder.
 
 **Your API key is encrypted, but it's still on your disk.** It's tied to this
-machine — hostname, username, platform — so copying the file to another
-computer won't decrypt it. That defends against someone stealing the file. It
+machine — hostname, username, platform — so a copy of the file won't decrypt on a
+computer with a different host name or user name. That covers a stray copy, such as a backup or a cloud-synced folder. It
 doesn't defend against someone already sitting at your computer.
 
 ---
@@ -129,10 +132,11 @@ isn't true. Every one of them happens because you asked for it.
 
 | What it writes | Where | When |
 |---|---|---|
-| Settings, keys, glossary | `%APPDATA%\tusks-tomes` | When you change a setting. |
-| Recordings, transcripts, checkpoints | `%LOCALAPPDATA%\tusks-tomes` | When you upload audio or pause a run. |
+| Settings, keys, glossary, paused-run checkpoints | `%APPDATA%\tusks-tomes` | When you change a setting or pause a run. |
+| Recordings, transcripts, saved chronicles | `%LOCALAPPDATA%\tusks-tomes` | When you upload audio or finish a run. |
 | Cached probe results | the platform cache folder | Throwaway; safe to delete any time. |
-| A `Tusks-Lore` folder **beside** the program folder | your chosen location | Only if you click "Create lore folder". |
+| Whisper model weights (about 3 GB) | `%USERPROFILE%\.cache\huggingface\hub`, or wherever `HF_HOME` points | The first time you transcribe audio. The uninstaller leaves them. |
+| A `Tusks-Lore` folder **beside** the program folder | your chosen location | Only if you click "Create Tusk's Lore". |
 | Files into a paired **Tusk's Vault** install | wherever you put Vault | Only if you pair them and send a chronicle across. |
 | **Into your Obsidian vault** | the folder you picked | Only via three specific, opt-in buttons — see below. |
 
@@ -140,14 +144,11 @@ isn't true. Every one of them happens because you asked for it.
 
 That folder is *your notes*. It's the only place this app writes to something
 you made, and I don't take that lightly. Reading is the normal mode. There are
-exactly three writes, all behind a button you have to press:
+exactly three writes, each one started by you:
 
-1. **Markdown conversion** — makes a `.md` copy of a Word or PDF file, beside
-   the original. It never modifies or deletes your original, and it refuses to
-   overwrite an existing `.md`.
-2. **`CLAUDE.md` generator** — writes a navigation guide into the vault root.
-   If one already exists it stops and asks before replacing it.
-3. **Graphify index** — writes a `graphify-out/` folder into the vault.
+![A drawing of what Tusk's Tomes does with an Obsidian vault. At the top right is Tusk's Tomes; at the top left is a disk labelled index cache, outside the vault, and an arrow from Tomes says it keeps its index there. A second arrow from Tomes, labelled reads, points into a dashed box for your Obsidian vault. Inside the box, under Read, always, are two boxes: names and aliases, which become the entity index for Phase 1, and note bodies, which become lore for the chronicle. Under Written, only when you ask, are three gold boxes: Word and PDF notes get a .md copy beside each, Build graphify map writes a graphify-out folder, and Generate CLAUDE.md writes a file at the vault root.](../assets/diagrams/what-tomes-does-in-your-vault.svg)
+
+The `.md` conversion is a step in Recommended Setup that copies each Word or PDF file you tick, beside the original. It never modifies or deletes your original and refuses to overwrite an existing `.md`. If a `CLAUDE.md` already exists, the generator stops and asks before replacing it.
 
 The code that reads your vault during a normal chronicle run cannot write at
 all. That's not me promising to be careful — there's a test that fails the
@@ -171,9 +172,7 @@ touches your notes, including mine.
 - No account, no login, no server of mine anywhere.
 - It listens on `127.0.0.1` — your machine only, not your network.
 
-The one thing that leaves your computer is transcript text going to whichever
-AI provider you set up, so it can write the chronicle. That's the entire
-network story. Point it at a local model and even that stops.
+The only part of your session that leaves your computer is transcript text, with the lore text each phase uses, going to whichever AI provider you set up so it can write the chronicle. The rest of the network traffic carries none of your session content: package installs, the Whisper model download, OpenRouter's public lists of models and provider data policies (at most once a day, and you can switch that off), and the update check when you press the button. [What goes over the network](overview.md#what-goes-over-the-network) lists each one. Local models can take the grounding, audit and extras phases, and the text for those stays on your machine; the chronicle and condensed recap always go to a cloud model or a subscription CLI.
 
 ---
 
@@ -216,7 +215,7 @@ It's the one part with real destructive power, so here's how it's fenced in. It
 refuses to run unless it's sitting in a real Tusk's Tomes folder. It resolves
 every path through the filesystem before deleting, so a symlink can't redirect
 it somewhere else. It refuses any path that isn't either inside the program
-folder or inside a folder with `tusks-tomes` in its name. It makes you type
+folder or under a folder named `tusks-tomes`. It makes you type
 `I UNDERSTAND` before it starts. It keeps everything you authored unless you
 explicitly tell it not to, and it never touches a lore folder or a custom
 session folder.
@@ -246,10 +245,9 @@ read your transcripts. Only do it on a network you control.
 ### It runs other programs
 
 Tusk's Tomes launches other software on your machine: Python for transcription,
-`ffmpeg` for audio, `nvidia-smi` to ask about your graphics card, and — if you
+`ffmpeg` (the copy bundled with the app) for audio, `nvidia-smi` to ask about your graphics card, and — if you
 turn those add-ons on — the `claude`, `codex` or `ollama` commands. All with
-your normal user permissions, never elevated, and all programs you installed
-yourself.
+your normal user permissions, never elevated, and all programs that are already on your machine or come with the app.
 
 ---
 
@@ -263,7 +261,7 @@ Things that genuinely limit what a bug of mine could reach:
   generator buttons, if it isn't in version control already.
 - **Run the uninstaller with `--dry-run` first.**
 - **Skip add-ons you don't need.** Everything past "paste a transcript" is
-  opt-in. Not installing Whisper skips ~1.5 GB and the most fragile step there is.
+  opt-in. Not installing Whisper skips a download of about 1.5–2.5 GB and the most fragile step there is.
 - **Keep your lore folder outside the program folder** — that's the default, and
   it means deleting the app can never reach your notes.
 
@@ -300,5 +298,4 @@ safe before you delete the folder.
 `npm run uninstall -- --list-locations` prints the same paths and deletes
 nothing at all.
 
-Then delete the folder. Nothing of mine is left outside the locations at the
-top of this page.
+Then delete the folder. What stays outside it is what you chose to keep, plus the items in the table of things it writes outside its own folder: the Whisper model weights, a `Tusks-Lore` folder, files in a paired Vault, and anything it wrote into your Obsidian vault.

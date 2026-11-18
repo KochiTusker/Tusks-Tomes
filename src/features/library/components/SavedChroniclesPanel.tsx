@@ -7,7 +7,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { BookOpen, ChevronDown, ChevronRight, Download, RefreshCw, Trash2, Wand2 } from 'lucide-react'
+import { BookOpen, ChevronDown, ChevronRight, Download, Pencil, RefreshCw, Trash2, Wand2 } from 'lucide-react'
 import { Button } from '@/platform/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/platform/ui/card'
 import {
@@ -15,10 +15,13 @@ import {
   deleteChronicle,
   getChronicle,
   listChronicles,
+  updateChronicle,
   type ChronicleSummary,
   type SavedChronicle,
 } from '@/features/library/lib/chronicleLibrary'
 import { downloadChronicleDocx } from '@/features/library/lib/exportDocx'
+import { buildMarkdown } from '@/features/library/lib/exportMarkdown'
+import { ChronicleEditor } from './ChronicleEditor'
 
 function download(name: string, text: string): void {
   const a = document.createElement('a')
@@ -48,6 +51,7 @@ export function SavedChroniclesPanel() {
   const [openRecord, setOpenRecord] = useState<SavedChronicle | null>(null)
   const [openLoading, setOpenLoading] = useState(false)
   const [confirmId, setConfirmId] = useState<string | null>(null)
+  const [editing, setEditing] = useState(false)
 
   const refresh = useCallback(async () => {
     setLoading(true)
@@ -69,6 +73,7 @@ export function SavedChroniclesPanel() {
 
   const toggleOpen = useCallback(
     async (id: string) => {
+      setEditing(false)
       if (openId === id) {
         setOpenId(null)
         setOpenRecord(null)
@@ -228,7 +233,18 @@ export function SavedChroniclesPanel() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => download(`${fileBase(openRecord)}.md`, openRecord.chronicle)}
+                          onClick={() =>
+                            download(
+                              `${fileBase(openRecord)}.md`,
+                              buildMarkdown({
+                                campaign: openRecord.campaign,
+                                sessionNumber: openRecord.sessionNumber,
+                                chronicle: openRecord.chronicle,
+                                extras: openRecord.extras ?? null,
+                                condensed: openRecord.condensed ?? null,
+                              }),
+                            )
+                          }
                         >
                           <Download className="mr-1 h-3.5 w-3.5" /> Chronicle (.md)
                         </Button>
@@ -260,6 +276,16 @@ export function SavedChroniclesPanel() {
                         >
                           <Wand2 className="mr-1 h-3.5 w-3.5" /> Reforge
                         </Button>
+                        {!editing && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setEditing(true)}
+                            disabled={!openRecord.chronicle?.trim()}
+                          >
+                            <Pencil className="mr-1 h-3.5 w-3.5" /> Edit
+                          </Button>
+                        )}
                         {openRecord.extras != null && (
                           <Button
                             variant="outline"
@@ -308,9 +334,27 @@ export function SavedChroniclesPanel() {
                           </>
                         )}
                       </div>
-                      <div className="max-h-96 overflow-auto whitespace-pre-wrap rounded bg-muted/40 p-3 text-sm">
-                        {openRecord.chronicle}
-                      </div>
+                      {editing ? (
+                        <ChronicleEditor
+                          value={openRecord.chronicle}
+                          onCancel={() => setEditing(false)}
+                          onSave={async (text) => {
+                            try {
+                              const updated = await updateChronicle(openRecord.id, { chronicle: text })
+                              setOpenRecord(updated)
+                              setEditing(false)
+                              toast.success('Chronicle edit saved.')
+                            } catch (err) {
+                              toast.error(`Couldn't save the edit: ${(err as Error).message}`)
+                              throw err
+                            }
+                          }}
+                        />
+                      ) : (
+                        <div className="max-h-96 overflow-auto whitespace-pre-wrap rounded bg-muted/40 p-3 text-sm">
+                          {openRecord.chronicle}
+                        </div>
+                      )}
                     </>
                   )}
                 </div>

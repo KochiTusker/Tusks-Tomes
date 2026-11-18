@@ -73,7 +73,7 @@ const PHASE_LABELS: Array<{ key: RoutablePhase; label: string }> = [
   { key: 'phase2', label: 'Phase 2 — Audit' },
   { key: 'phase3', label: 'Phase 3 — Chronicle' },
   { key: 'phase4', label: 'Phase 4 — Extras' },
-  { key: 'phase6', label: 'Phase 6 — Condense' },
+  { key: 'phase6', label: 'Phase 5 — Condense' },
 ]
 
 const DEFAULT_VALUE = '__default__'

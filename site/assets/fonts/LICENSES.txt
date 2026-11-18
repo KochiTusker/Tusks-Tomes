@@ -2,13 +2,17 @@ Self-hosted web fonts — all under the SIL Open Font License 1.1 (OFL-1.1).
 Bundled locally so the docs site makes no third-party requests at page load
 (consistent with the project's local-first, no-telemetry posture).
 
-Subset: latin. Format: woff2.
+Subset: latin. Format: woff2. Files from the @fontsource npm packages, version 5.3.0.
 
 - Cinzel — Natanael Gama. https://fonts.google.com/specimen/Cinzel
 - Cinzel Decorative — Natanael Gama. https://fonts.google.com/specimen/Cinzel+Decorative
 - Fondamento — Eduardo Tunni. https://fonts.google.com/specimen/Fondamento
 - Cormorant Garamond — Christian Thalmann / Catharsis Fonts. https://fonts.google.com/specimen/Cormorant+Garamond
 - Inter — Rasmus Andersson. https://fonts.google.com/specimen/Inter
+- Excalifont — Excalidraw. https://plus.excalidraw.com/excalifont
+  Not a file in this folder: the hand-drawn diagrams under assets/diagrams/
+  each embed the subset of Excalifont they use, so they render as images
+  without fetching anything.
 
 Each font is distributed under the SIL Open Font License, Version 1.1.
 Full licence text: https://openfontlicense.org/

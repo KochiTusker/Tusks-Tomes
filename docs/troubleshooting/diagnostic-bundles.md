@@ -3,19 +3,19 @@
 A single structured markdown file at `.diagnose/latest.md` that Claude Code
 reads with one Read call to get full diagnostic context for a Tusk's Tomes
 bug. Auto-built on every pipeline error; manual button in
-Settings → Diagnostics for proactive snapshots.
+Settings → Maintenance → Diagnostics for proactive snapshots.
 
 ## The user flow
 
-1. You hit a bug. Pipeline error fires (or you click "Build bundle now").
-2. A toast appears: *"Diagnosis ready — paste @.diagnose/latest.md into
-   Claude Code (N soft-errors matched)."*
-3. In Claude Code, type:
-   ```
-   @.diagnose/latest.md what's wrong?
-   ```
-4. Claude reads ONE file with everything it needs. No follow-up
-   "send me your routing.json" round-trips.
+![A pipeline error, which makes at most one bundle per 30 seconds, or the Build bundle now button, which skips the wait, starts a bundle. Each has its own arrow into a dashed box for your machine. There the last 80 events from the browser and server pass through a redactor that replaces keys, prompts and transcripts with [REDACTED]. The server then writes one file, .diagnose/latest.md, holding the state, matched errors, routing and git state; the newest 10 are kept. Another device on your network is refused. You hand the file to Claude Code by typing @.diagnose/latest.md what's wrong?](../assets/diagrams/diagnostic-bundles.svg)
+
+The auto toast reads *"Diagnosis ready — paste @.diagnose/latest.md into Claude Code (N soft-errors matched)."* The button shows its own toast, "Bundle written to .diagnose/latest.md", with the same instruction. In Claude Code, type:
+
+```
+@.diagnose/latest.md what's wrong?
+```
+
+Claude reads one file with everything it needs. No follow-up "send me your routing.json" round-trips.
 
 ## What's in a bundle
 
@@ -49,6 +49,9 @@ existing ones.
 | `provider_keys_mismatch_with_fingerprint` | critical | Quota event reports a fingerprint that no current probe slot knows. |
 | `hidden_500_retries` | info | ≥3 transient retries on one phase within 60s. |
 | `tier_escalated_silently` | critical | `tier_escalated` fired but next `chunk_started` used the old tier. |
+| `silent_model_substitution_to_lite` | warning | A configured model was swapped for a lite, experimental or "latest" variant. |
+| `free_tier_daily_quota_hit` | critical | The free-tier daily quota is exhausted; the daily bucket stays empty until midnight UTC. |
+| `prompt_blocked_prohibited_content` | warning | A chunk was rejected by Gemini's unconfigurable safety filter. |
 
 ## Adding a new signature
 
@@ -69,7 +72,7 @@ echoes new matches, and the toast surfaces them automatically.
 - Backup rotation: the most recent 10 timestamped bundles
   (`diagnose-<ISO>.md`) survive; older ones are pruned. `latest.md` is
   always the latest copy.
-- Explicit "Build bundle now" button in Settings → Diagnostics bypasses
+- Explicit "Build bundle now" button in Settings → Maintenance → Diagnostics bypasses
   the debounce (`force: true`).
 
 ## DevTools shortcuts
@@ -95,7 +98,7 @@ fetch('/api/diagnose/recent').then((r) => r.json()).then(console.log)
 - Bundle path: `.diagnose/latest.md` (in repo root, gitignored).
 - Sanitization: client-side `sanitizeForForwarding()` in `verboseLog.ts`
   redacts `apiKey`, `userPrompt`, `cacheablePrefix`, `rawTranscript`,
-  `groundedTranscript`, and `systemPrompt` at the forwarder boundary.
+  `groundedTranscript`, `systemPrompt`, and the generic `key` and `prompt` fields at the forwarder boundary.
   The bundle inherits those redactions.
 - Key references: 6-char SHA-256 fingerprints only — same convention
   used by the RateLimitDialog + DiagnosticsCard.

@@ -3,11 +3,10 @@
 //
 // v1.1.0 — adds a pre-flight WARNING that fires BEFORE attempting the
 // write when projected total localStorage usage would push past 90% of
-// a typical 5 MB browser quota. The UI listens and can pre-emptively
-// write a server-side disk checkpoint so the user's mid-run progress
-// survives even if the next setItem call fails. Both warning + failure
-// events include the serialized payload so the listener can persist it
-// elsewhere without re-fetching from state.
+// a typical 5 MB browser quota. The UI listens and warns the user once,
+// offering a backup download before a write actually fails. Both warning +
+// failure events include the serialized payload so a listener can persist
+// it elsewhere without re-fetching from state.
 
 export const STORAGE_QUOTA_EVENT = 'sbts:storage-quota'
 export const STORAGE_QUOTA_WARNING_EVENT = 'sbts:storage-quota-warning'

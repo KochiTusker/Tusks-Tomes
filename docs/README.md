@@ -25,13 +25,13 @@ contents page.
 
 ## Writing the chronicle
 
-- [How the phases work](chronicling/how-the-phases-work.md) — what each of the six phases does
+- [How the phases work](chronicling/how-the-phases-work.md) — what each of the five phases does
 - [Recommended settings](chronicling/recommended-settings.md) — sensible defaults, and when to move off them
 - [Reforging](chronicling/reforging.md) — redo the later phases on a different model without starting over
 
 ## Models & cost
 
-- [Choosing a provider](models/choosing-a-provider.md) — Gemini, OpenRouter, a subscription, or fully local
+- [Choosing a provider](models/choosing-a-provider.md) — Gemini, OpenRouter, a subscription, or local models for the mechanical phases
 - [Per-phase routing](models/per-phase-routing.md) — which model should run which phase, and why
 - [What it costs](models/costs.md) — per-session figures for every route
 

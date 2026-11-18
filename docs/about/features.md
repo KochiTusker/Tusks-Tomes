@@ -17,15 +17,15 @@ transcripts.
 The core app runs without Python or any local LLM runner installed. Seven modules extend it, and exactly one — Audio Transcription — is a real installation, with live install logs streamed over Server-Sent Events and a restart when it finishes. The other six ship with the app and mount unconditionally; whether one is *usable* is a detection question its own status row answers, not an installation question. See [add-ons/](../extras/README.md) for the catalogue.
 
 ### YouTube `.sbv` pipeline
-Drop a YouTube auto-caption file and the model cleans up hallucinations using your glossary as ground truth. Caption repair lives on the **Chronicle** tab, alongside the transcript input it feeds. The cleaned `.sbv` then goes through the same six-phase pipeline as any other transcript.
+Drop a YouTube auto-caption file and the model cleans up hallucinations using your glossary as ground truth. Caption repair lives on the **Chronicle** tab, alongside the transcript input it feeds. The cleaned `.sbv` then goes through the same five-phase pipeline as any other transcript.
 
-### 6-phase LLM pipeline
+### 5-phase LLM pipeline
 - **Phase 1 — Cleanup + grounding** (deterministic pre-pass + AI grounding against your glossary).
 - **Phase 2 — Audit** (compares raw vs grounded, surfaces DM questions).
 - **Phase 3 — Chronicle** (narrative prose in your campaign's voice).
+- **Phase 3.5 — Polish** *(the clean-up pass for a locally written chronicle; it runs only when the whole run uses a local provider, which the app does not offer, so it does not run today).*
 - **Phase 4 — Extras** (memorable quotes, jests, gore — curated).
-- **Phase 5 — Polish** *(local LLMs only — final review pass).*
-- **Phase 6 — Condense** *(optional — shorter narrative + bullet recap for absent players).*
+- **Phase 5 — Condense** *(optional — shorter narrative + bullet recap for absent players).*
 
 ### Pick any cloud LLM, switch live
 Gemini directly (with free + paid tier handling), or around 400 models through a single [OpenRouter](../models/choosing-a-provider.md) key — including every Anthropic and OpenAI model at pass-through rates. Hot-swap at any time from Settings; no restart required. Local routing (Ollama / LM Studio / Unsloth) and subscription routing through the [Claude Code](../extras/claude-code.md) or [Codex](../extras/codex.md) CLI are built in.
@@ -37,7 +37,7 @@ Re-run the later phases of a finished chronicle on a different model without sta
 When a provider declines a chunk and the in-run fallback can't recover it, the chunk is marked in the output (visible banner + hidden tag) and recorded. A **Review & Repair Refusals** panel re-processes only the marked chunks on another provider and splices the results back in — no full re-run.
 
 ### Adaptive per-provider pacing
-Every cloud call reads the provider's rate-limit response headers (`anthropic-ratelimit-*`, `x-ratelimit-*`) and paces the next chunk accordingly. Gemini uses a static tier map keyed on which key you populated (paid vs free). 429 `Retry-After` is honoured precisely. Paid users routinely see 4–5× faster runs than the prior fixed-65s-between-chunks pacing.
+Between chunks Tomes waits long enough to stay under the provider's limits. Gemini uses a static table keyed on the key tier (paid or free) and the model (Pro or Flash). OpenRouter is paced on requests per minute: 20 for `:free` models and a nominal 60 for the rest. Claude Code, Codex and local runners are not paced. When OpenRouter answers a 429 with `Retry-After`, Tomes waits exactly that long; Gemini retries on fixed waits.
 
 ### Per-provider chunk sizing
 Cloud chunks are sized for each provider's throughput budget — Gemini paid runs the largest chunks, since a 1M context absorbs them easily. Fast-tier models run chunks roughly half the flagship size: cheaper per call, and they degrade less on long inputs. Local LLMs use a single conservative table because consumer GPUs lose accuracy on long contexts. Editable in `src/features/pipeline/lib/chunking.ts` if you want to override.
@@ -60,10 +60,10 @@ One-time setup (edited in-app) keeps proper nouns spelled correctly forever. Spe
 Sibling-detect [Tusk's Vault](https://github.com/KochiTusker/Tusks-Vault) install; **Send to Vault** button on every finished chronicle pushes it into the Vault's `Lore/` for `@`-mentionable retrieval.
 
 ### In-app updater
-**Settings → Maintenance** → *Check for updates* → *Apply update*. Runs a guarded `git pull` + `npm install`. Refuses to clobber uncommitted edits.
+**Settings → Maintenance** → *Check for updates* → *Apply update*. Runs a guarded `git pull` and prints the `npm install` command when dependencies changed. Refuses to clobber uncommitted edits.
 
 ### Encrypted-at-rest keystore
-AES-256-GCM with a machine-bound scrypt key (hostname + username + platform). Even if `providers.enc` leaked, the keys are useless on another machine. The dashboard never shows raw keys back — only "configured / not configured" indicators.
+AES-256-GCM with a machine-bound scrypt key (hostname + username + platform). A copied `providers.enc` does not decrypt on a machine with a different host name or user name. The dashboard never shows raw keys back — only "configured / not configured" indicators.
 
 ### Localhost-only by default
 Server binds to `127.0.0.1` by default. Other devices on your LAN cannot reach the UI without explicit opt-in (`TUSKS_HOST=0.0.0.0`), and even then they get read-only access unless you also set `TUSKS_LAN_WRITES=1`. Cross-origin POSTs to `/api/*` are rejected by a same-origin middleware so a malicious page can't drive-by-trigger an install.
@@ -94,7 +94,7 @@ Drop one or more [Craig](https://craig.chat) zips, or per-speaker WAV / FLAC fil
 For long or chunked sessions: commit Part 1, then *Add another batch* for Part 2/3/…, then *All audio uploaded — start transcription*. Each batch saves independently and is restartable.
 
 ### Offline Whisper
-`faster-whisper` auto-detects CUDA via `nvidia-smi`. A three-hour session with five or six speaker tracks takes roughly half an hour on a mid-range NVIDIA card — about 10 minutes per hour of session — and several times longer on CPU. Audio never touches the network.
+`faster-whisper` runs on the GPU when it can and falls back to the processor; on Windows the installer uses `nvidia-smi` to choose the CUDA build of torch. A three-hour session with five or six speaker tracks takes roughly half an hour on a mid-range NVIDIA card — about 10 minutes per hour of session — and several times longer on CPU. Audio never touches the network.
 
 ### Speaker-aware merged SBV
 Every Whisper segment from every track is sorted into one chronological transcript with `[Character (Player)]` labels. The pipeline preserves these labels all the way into the final chronicle.
@@ -116,19 +116,19 @@ The Sessions tab lists every upload you've done — re-open old transcripts, re-
 See [add-ons/local-llm.md](../extras/local-llms.md) for the full deep-dive. The features it adds:
 
 ### Three local runner integrations
-Ollama (default port 11434), LM Studio / any OpenAI-compatible server (1234), Unsloth Studio (8888 with OAuth2 password auth). Each runner has a Detect button that probes the default port and lists available models.
+Ollama (default port 11434), LM Studio / any OpenAI-compatible server (1234), Unsloth Studio (8888 with OAuth2 password auth). The panel probes each default port when it opens, and **Detect again** repeats the check and lists available models.
 
-### One-click runner launch
-Tomes can spawn the local runner for you (detached, survives a Tomes restart). `ollama serve` is launched with `OLLAMA_FLASH_ATTENTION=1` + `OLLAMA_KV_CACHE_TYPE=q4_0` baked in for ~2× speedup.
+### Runner launch route
+The server can spawn the local runner (detached, survives a Tomes restart), launching `ollama serve` with `OLLAMA_FLASH_ATTENTION=1` and `OLLAMA_KV_CACHE_TYPE=q4_0` set. The Local LLMs panel has no button for it, so you start the runner yourself.
 
 ### Capability probe
-Runs a fixed Phase 1 + Phase 4 fixture against your selected model and reports a structured-JSON score + tokens/sec. Lets you compare models without spending cloud for a real run.
+Runs two fixed tests against your selected model, structured JSON and grounding, and reports both scores plus tokens/sec, then marks which of Phases 1, 2 and 4 it qualifies for. Lets you compare models without spending cloud for a real run.
 
 ### Per-phase routing
 **Settings → Providers & models** assigns each phase to a different target. Local Phase 1 plus cloud Phase 3 is a common pattern — Phase 1 is the chattiest phase and grounding is cheap; Phase 3 wants the best prose model.
 
 ### Same-origin proxy
-The browser can't reach `localhost:11434` directly — a different port is a different origin — so Tomes proxies via `/api/local/*`. The proxy validates that target URLs are localhost / RFC1918 only and never acts as an open proxy.
+Tomes proxies the browser's calls through `/api/local/*` instead of sending them straight to `localhost:11434`. The proxy only forwards to `localhost` or private-network addresses.
 
 
 </div>
@@ -142,7 +142,7 @@ The browser can't reach `localhost:11434` directly — a different port is a dif
 See [add-ons/claude-code.md](../extras/claude-code.md) for the full deep-dive. The features it adds:
 
 ### Bring-your-own Claude subscription
-Power the pipeline with your locally-installed [Claude Code](https://docs.claude.com/en/docs/claude-code) (Pro/Max) plan instead of a per-token API key. The app shells out to the `claude` CLI you've already logged into in headless mode — it never handles your credentials, and strips `ANTHROPIC_API_KEY` from the call so it always resolves to the subscription.
+Power the pipeline with your locally-installed [Claude Code](https://docs.claude.com/en/docs/claude-code) (Pro/Max) plan instead of a per-token API key. The app shells out to the `claude` CLI you've already logged into in headless mode — it never handles your credentials. Tomes has no Anthropic key slot, and it removes any Anthropic key or token left in your shell from the call, so it always resolves to the subscription.
 
 ### Per-phase routable
 Assign it to individual phases in the routing rows — e.g. Claude Code for grounding and chronicle, something cheaper for the rest.
@@ -166,10 +166,10 @@ The same shape as Claude Code, for an OpenAI plan: phases run through the locall
 Transcription on AMD, Intel and Apple GPUs, which the built-in Whisper sidecar can't accelerate — it only has CUDA and CPU backends. You compile the build; Tomes detects it, reads its capability line so it can tell you "this is a CPU-only build" rather than leaving you wondering why it's slow, and falls back to the built-in engine if anything stops checking out. Nothing is downloaded. See [add-ons/whisper-cpp.md](../extras/whisper-cpp.md).
 
 ### Chronicle Personas
-Swap the narrator out of the default bardic voice. Six presets ship; you can author your own from a template, from scratch, or generated by your active LLM. Personas only override the prose phases (3, 5 and 6) — grounding, audit and extras are voice-neutral and untouched. Found under **Settings → Voice & content**. See [add-ons/personas.md](../extras/personas.md).
+Swap the narrator out of the default bardic voice. Six presets ship; you can author your own from a template, from scratch, or generated by your active LLM. Personas only override the prose phases (3, 3.5 and 5) — grounding, audit and extras are voice-neutral and untouched. Found under **Settings → Voice & content**. See [add-ons/personas.md](../extras/personas.md).
 
 ### Obsidian Vault lore
-Ground chronicles against a read-only Obsidian vault instead of the Tusks-Lore folder. The app derives an entity index from your notes' frontmatter aliases and bodies, cached outside the vault — the vault itself is never written to. Stays inert until you pick it as your lore source. See [add-ons/obsidian-vault.md](../extras/obsidian-vault.md).
+Ground chronicles against a read-only Obsidian vault instead of the Tusks-Lore folder. The app derives an entity index from your notes' frontmatter aliases and bodies, cached outside the vault. Grounding never writes to the vault; three actions you start yourself (markdown copies of Word and PDF notes, a `CLAUDE.md` guide, a `graphify-out/` map) are its only writes. Stays inert until you pick it as your lore source. See [add-ons/obsidian-vault.md](../extras/obsidian-vault.md).
 
 
 </div>

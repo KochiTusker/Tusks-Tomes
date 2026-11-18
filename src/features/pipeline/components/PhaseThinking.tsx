@@ -142,7 +142,7 @@ export function PhaseThinking() {
           <div className="space-y-1 text-sm">
             <div className="font-medium">Condense hits its target length</div>
             <div className="text-xs text-muted-foreground">
-              Phase 6 · turns reasoning on. Flash-tier models land the condense target far more
+              Phase 5 · turns reasoning on. Flash-tier models land the condense target far more
               reliably — most of Pro's discipline at a fraction of its price.
             </div>
           </div>

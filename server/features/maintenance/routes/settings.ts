@@ -15,6 +15,7 @@
 
 import express, { type Router } from 'express'
 import { readJson, settingsFile, writeJson } from '../../../platform/appData.js'
+import { coerceAutoUpdateModelList } from '../../../platform/modelListSetting.js'
 import { loopbackOnly } from '../../../platform/loopbackGate.js'
 import { asyncRoute } from '../../../platform/asyncRoute.js'
 
@@ -98,6 +99,12 @@ export type Settings = {
    *  entities still present. Any note named in the text is always included,
    *  so this cannot silently drop grounding. */
   retrieveVaultKb: boolean
+  /** Default ON. Whether the server may fetch OpenRouter's public model list
+   *  (and its provider data policies) on its own, at most once a day. When
+   *  OFF no request is made to openrouter.ai unless the user presses the
+   *  re-check button; whatever list is saved keeps being used however old.
+   *  Feeds cost estimates, chunk sizing, output limits and the model picker. */
+  autoUpdateModelList: boolean
   /** Subscription tier of the user's Claude Code plan. Set manually on the
    *  routing preset panel — the CLI exposes no non-interactive way to query
    *  it (verified against docs + issue tracker 2026-08; open feature
@@ -143,6 +150,7 @@ const DEFAULTS: Settings = {
   phase1AliasHints: false,
   reassembleQuotes: false,
   retrieveVaultKb: false,
+  autoUpdateModelList: true,
   claudeCodePlan: 'unknown',
   codexPlan: 'unknown',
   perPhaseThinking: {},
@@ -160,6 +168,8 @@ function coerce(raw: unknown): Settings {
   const phase1AliasHints = obj.phase1AliasHints === true
   const reassembleQuotes = obj.reassembleQuotes === true
   const retrieveVaultKb = obj.retrieveVaultKb === true
+  // Default ON: only an explicit false turns the automatic model-list update off.
+  const autoUpdateModelList = coerceAutoUpdateModelList(obj)
   // Closed unions — an unrecognised value snaps back to 'unknown'.
   const claudeCodePlan =
     obj.claudeCodePlan === 'pro' || obj.claudeCodePlan === 'max5x' || obj.claudeCodePlan === 'max20x'
@@ -193,6 +203,7 @@ function coerce(raw: unknown): Settings {
     phase1AliasHints,
     reassembleQuotes,
     retrieveVaultKb,
+    autoUpdateModelList,
     claudeCodePlan,
     codexPlan,
     perPhaseThinking,

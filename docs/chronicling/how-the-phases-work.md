@@ -7,44 +7,31 @@ tells you what each phase is really asking of them.
 
 Two things are worth knowing before the detail:
 
-- **The phases are not equally hard.** Two of them ask a model to emit roughly
-  as many tokens as it was given, which is among the hardest things you can ask
-  a language model to do reliably. Two others ask for a few hundred tokens of
-  JSON, which almost anything can manage.
-- **They do not all get the knowledge base.** This surprises people. Only two
-  phases see your lore at all, and only one sees all of it.
+- **The phases are not equally hard.** One of them (Phase 1) asks a model to
+  emit as many tokens as it was given, which is among the hardest things you
+  can ask a language model to do reliably, and another (Phase 3) asks for
+  several thousand tokens of prose per chunk. Two others ask for a few hundred
+  tokens of JSON, which almost anything can manage.
+- **They do not all get the same knowledge base.** This surprises people. Only
+  two phases, Chronicle and Condense, see your lore in full; Ground, Audit and
+  Extras get a compact glossary of it.
 
 ---
 
 ## The shape of a run
 
-```
-raw transcript
-   │
-   ├─ cleanupTranscript()   strip [Music], [Laughter], normalise whitespace
-   ├─ preGround()           apply glossary safe-replacements + D&D dictionary
-   ├─ detachSpeakers()      «1» markers replace [Character (Player)] tags
-   │
-   ▼
- Phase 1  Ground      ── AI ──▶  grounded transcript   (output ≈ input length)
-   │
-   ├──────────────▶ Phase 2  Audit    ── AI ──▶  DM questions (JSON, usually [])
-   │                                                │
-   │                            your answers ◀──────┘
-   ▼
- Phase 3  Chronicle   ── AI ──▶  long-form narrative prose
-   │
-   ├──────────────▶ Phase 4  Extras   ── AI ──▶  quotes / jests / gore (JSON)
-   │
-   ▼
- Phase 5  Polish      ── local models only; cloud passes straight through
-   │
-   ▼
- Phase 6  Condense    ── AI ──▶  short narrative + bullet points   (optional)
-```
+![The raw transcript is first tidied without any AI: caption noise removed, your glossary's swaps applied, speaker tags shortened. Phase 1 grounds the names and produces the grounded transcript. Phase 2 audits it, reading it beside the raw transcript, and asks the DM questions; the answers go into Phase 3 and are read by Phases 4 and 5 too. Phase 3 writes the chronicle, and Phase 4 pulls quotes, jests and gore from the grounded transcript. Phase 3.5, polish, would follow the chronicle and is not used today. The chronicle goes on to Phase 5, condense, which is optional and produces a short narrative and bullet points.](../assets/diagrams/phases-run.svg)
 
 Phases 3 and 4 both read the **grounded transcript**, independently of each
-other. Phase 6 reads the **chronicle**, not the transcript.
+other. Phase 5 reads the **chronicle**, not the transcript.
+
+If the page closes or reloads during a run, the run stops, but every finished
+step is kept in the browser. The Chronicle tab shows "Run interrupted" with a
+**Continue** button that names the next step, such as "Continue from the
+Chronicle step". Continue skips the steps that finished and runs only the
+outputs you chose that do not exist yet, and the chronicle is saved to the
+library once, not twice. The step that was in progress starts again from its
+first chunk. **Start again from Phase 1** and **Reset** stay available.
 
 ---
 
@@ -104,9 +91,12 @@ stopping — and this is true of expensive models as well as cheap ones.
    third-party hosting and more often the longer the passage.
 
 All four are **mechanically detectable**, which is what makes this phase a good
-place to use a cheap model deliberately rather than hopefully. Compare output
-length against input length, check the glossary terms survived, and reject
-output containing characters outside the expected script.
+place to use a cheap model deliberately rather than hopefully. You can compare
+output length against input length, check the glossary terms survived, and
+reject output containing characters outside the expected script. Tomes does not
+run those three checks itself: it only rejects an empty reply, a refusal, or
+output that is almost nothing for a large input (under 2% of the prompt's
+size).
 
 **Choosing a model for it.** Wants: long output without drift, no prompt-level
 moderation (raw table dialogue contains what it contains), and no tendency to
@@ -154,12 +144,20 @@ keep.
 | | |
 |---|---|
 | Input | The full grounded transcript, in chunks, plus a 2,000-character tail of the previous chunk's prose for continuity |
-| Knowledge base | **The full text**, in the cacheable prefix. Ground fixes spelling and deliberately little else, so what the table said wrongly about a character arrives here intact, and the narrator is the pass that can put it right. When the lore would not fit the model's window, retrieval narrows it to the notes the transcript names, as Phase 6 does. Local models take the compact glossary. |
+| Knowledge base | **The full text**, in the cacheable prefix. Ground fixes spelling and deliberately little else, so what the table said wrongly about a character arrives here intact, and the narrator is the pass that can put it right. When the lore would not fit the model's window, retrieval narrows it to the notes the transcript names, as Phase 5 does. Local models take the compact glossary. |
 | Output | Continuous narrative prose |
-| Output/input ratio | **~0.9 — this is not a summary** |
+| Output/input ratio | **~0.3**, measured over completed runs — still not a summary: narration drops the disfluency, repetition and cross-talk that make spoken dialogue long |
 | Emits JSON | No |
 | Prompt scaffolding | ~8,030 characters — the largest of any phase |
-| Cacheable prefix | Yes — rules, speech-handling policy, your Phase 2 answers and the lore |
+| Cacheable prefix | Yes, as drawn below |
+
+![One request to write the chronicle, in two parts. The top part is the same for every chunk: the rules and speech policy, your answers to the questions, and your lore. Under it sit three chunks of the transcript, each carrying the end of the prose written so far; a bracket under them marks that part as different every chunk. Both parts go down into one box, the model, and are sent as one prompt.](../assets/diagrams/what-a-prompt-is-made-of.svg)
+
+| Provider | What it does with the shared part |
+|---|---|
+| Gemini | Stores it once and reuses it for an hour |
+| OpenRouter | Marks it as cacheable, for the hosts that cache |
+| Claude Code, Codex and the local runners | Sent as one prompt; Tomes asks for no caching |
 
 **The instruction that governs everything here** is explicit in the prompt:
 
@@ -168,9 +166,9 @@ keep.
 > faithful chronicle should read at roughly the same level of detail as the
 > transcript itself, not as a summary of it.
 
-So this phase, like Phase 1, asks for output on the same scale as its input —
-with the added difficulty that it must read as continuous prose across chunk
-boundaries.
+So this phase also asks for long output, several thousand tokens of prose per
+chunk, with the added difficulty that it must read as continuous prose across
+chunk boundaries.
 
 **Why chunk size behaves differently here.** For Phase 1, smaller chunks are
 almost pure gain. For Phase 3 they are a trade: every boundary is a seam where
@@ -186,6 +184,18 @@ model picker flags this.
 
 **Choosing a model for it.** This is where quality money is well spent. Wants:
 sustained coherent prose, no moderation filter, a large output ceiling.
+
+---
+
+## Phase 3.5 — Polish
+
+**The clean-up pass for a locally written chronicle.** It runs only when the
+whole run uses a local provider, which the app does not offer, so it does not
+run today. On a cloud or subscription route it returns the chronicle unchanged
+and makes **no API call at all**. It exists because smaller local models
+benefit from a review pass that frontier cloud models do not need.
+
+If you are costing a run, Phase 3.5 is zero.
 
 ---
 
@@ -216,17 +226,7 @@ is narrower than it sounds, and rules out several otherwise-obvious choices.
 
 ---
 
-## Phase 5 — Polish
-
-**Local models only.** On any cloud provider this phase returns the chronicle
-unchanged and makes **no API call at all**. It exists because smaller local
-models benefit from a review pass that frontier cloud models do not need.
-
-If you are costing a cloud run, Phase 5 is zero.
-
----
-
-## Phase 6 — Condense
+## Phase 5 — Condense
 
 **What it is for.** An optional shorter retelling — a condensed narrative plus
 bullet points, for a recap or a session-notes entry.
@@ -235,23 +235,20 @@ bullet points, for a recap or a session-notes entry.
 |---|---|
 | Input | **The chronicle**, not the transcript |
 | Knowledge base | **The entire vault** — Chronicle is the other cloud phase that takes it in full |
-| Output | Short narrative + bullets, ~30% of the chronicle |
-| Output/input ratio | ~0.3 of the chronicle |
+| Output | Short narrative + bullets, sized by the Condense Slider (default 20% of the chronicle) |
+| Output/input ratio | ~0.2 of the chronicle, as measured over completed runs |
 | Emits JSON | No |
 | Prompt scaffolding | ~3,790 characters |
 | Cacheable prefix | Yes — and it is enormous, because the vault is in it |
 
-**This is the phase with the unusual cost shape.** On a large Obsidian vault,
-the knowledge base alone is around 557,000 tokens attached to every call. A
-measured 6% of it is ever referenced by the chronicle being condensed.
+**This is the phase with the unusual cost shape.** On a large Obsidian vault, the knowledge base alone is around 557,000 tokens attached to every call, and a measured 6% of it is ever referenced by the chronicle being condensed.
 
-Two consequences:
+![Two bars inside one outline that stands for the one-million-token context window, so both share a scale. Without retrieval, every Chronicle and Condense chunk carries the whole vault, about 557 thousand tokens on the reference vault, over half the window. With “Send only relevant lore”, only the notes the text names plus core notes go in, about 45 thousand tokens, a small bar marked by an arrow, under 5 percent of the window and about 92 percent less.](../assets/diagrams/whole-vault-or-retrieval.svg)
 
-- **On a model with less than about a million tokens of context, the full vault
-  simply does not fit.** Not "is expensive" — does not fit. Selective retrieval
-  narrows it by around 92% while keeping the notes the chronicle actually
-  mentions, and turns itself on automatically when the vault will not fit.
-- **Chunking Phase 6 harder makes this worse, not better.** The chronicle is
+On a model with less than about a million tokens of context the full vault does not fit. Selective retrieval narrows it by around 92% while keeping the notes the chronicle mentions, and turns itself on automatically when the vault will not fit.
+
+A second consequence follows:
+- **Chunking Phase 5 harder makes this worse, not better.** The chronicle is
   what gets chunked; the vault rides along with every chunk. Four chunks means
   the vault is sent four times.
 
@@ -269,10 +266,10 @@ rescue a model whose window is too small. Only sending less can.
 |---|---|---|---|---|---|
 | 1 Ground | transcript | compact glossary | no | **~1.0** | yes |
 | 2 Audit | raw **+** grounded | compact glossary | **yes** | ~0.02 | no |
-| 3 Chronicle | grounded transcript | **full text**, narrowed when it would not fit | no | **~0.9** | yes |
+| 3 Chronicle | grounded transcript | **full text**, narrowed when it would not fit | no | **~0.3** | yes |
+| 3.5 Polish | chronicle | compact glossary (local only) | — | — | local only |
 | 4 Extras | grounded transcript | compact glossary | **yes** | ~0.05 | no |
-| 5 Polish | chronicle | — | — | — | local only |
-| 6 Condense | **chronicle** | **whole vault** | no | ~0.3 | yes (large) |
+| 5 Condense | **chronicle** | **whole vault**, narrowed when it would not fit | no | ~0.2 | yes (large) |
 
 ## Where the money goes
 
@@ -282,13 +279,13 @@ For a three-hour session on a single flagship model, roughly:
 |---|---|
 | 1 Ground | ~37% |
 | 3 Chronicle | ~33% |
-| 6 Condense | ~14% |
-| 2 Audit | ~10% |
+| 5 Condense | ~14% |
+| 2 Audit | ~9% |
 | 4 Extras | ~6% |
 
 Phases 1 and 3 are about 70% of the bill between them, for the same reason they
-are the hardest: they are the two that produce output on the scale of their
-input, and output tokens cost several times what input tokens do.
+are the hardest: they are the two that produce long output, and output tokens
+cost several times what input tokens do.
 
 That is also why they are the two worth thinking hardest about when choosing
 models — see [Choosing models per phase](../models/per-phase-routing.md).

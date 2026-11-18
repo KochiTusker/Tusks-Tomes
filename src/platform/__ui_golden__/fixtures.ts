@@ -203,6 +203,7 @@ export function buildRoutes(opts: ScenarioOptions): Record<string, Route> {
     phase1AliasHints: false,
     reassembleQuotes: false,
     retrieveVaultKb: false,
+    autoUpdateModelList: true,
     claudeCodePlan: 'unknown',
     codexPlan: 'unknown',
     perPhaseThinking: {},

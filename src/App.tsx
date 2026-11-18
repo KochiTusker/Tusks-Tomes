@@ -81,7 +81,8 @@ import { PersonasManager } from '@/features/personas'
 import { DocsViewer, AboutPage } from '@/features/help'
 import { ArcaneSigil } from '@/platform/components/ArcaneSigil'
 import { useAddons } from '@/platform/contexts/AddonContext'
-import { STORAGE_QUOTA_EVENT, dumpAllAsJson, safeGet, safeSet } from '@/platform/lib/storage'
+import { safeGet, safeSet } from '@/platform/lib/storage'
+import { useStorageQuotaToasts } from '@/platform/hooks/useStorageQuotaToasts'
 import { resolveTabValue } from '@/platform/lib/tabs'
 import { transitionOrJustDo, type TransitionCapableDocument } from '@/platform/lib/viewTransition'
 
@@ -272,28 +273,9 @@ export default function App() {
   const { source: loreSource } = useLoreDocuments()
   const obsidianActive = loreSource === 'obsidian-vault'
 
+  useStorageQuotaToasts()
+
   useEffect(() => {
-    function handleQuota(e: Event) {
-      const detail = (e as CustomEvent).detail as { key: string; bytes: number } | undefined
-      toast.error(
-        `localStorage full when saving "${detail?.key ?? '?'}" (~${detail?.bytes ?? '?'} bytes).`,
-        {
-          duration: 12000,
-          action: {
-            label: 'Download app-state backup (browser data)',
-            onClick: () => {
-              const blob = new Blob([dumpAllAsJson()], { type: 'application/json' })
-              const url = URL.createObjectURL(blob)
-              const a = document.createElement('a')
-              a.href = url
-              a.download = `sbts-backup-${new Date().toISOString().replace(/[:.]/g, '-')}.json`
-              a.click()
-              URL.revokeObjectURL(url)
-            },
-          },
-        }
-      )
-    }
     function handleLoadTranscript(e: Event) {
       // RefinementTool also listens for this event, but its <TabsContent>
       // unmounts when the Chronicle tab isn't active — and the Send to
@@ -379,7 +361,6 @@ export default function App() {
       if (running) setChroniclesOpen(true)
     }
     window.addEventListener(REFORGE_RUNNING_EVENT, handleReforgeRunning)
-    window.addEventListener(STORAGE_QUOTA_EVENT, handleQuota)
     window.addEventListener(LOAD_TRANSCRIPT_EVENT, handleLoadTranscript)
     window.addEventListener(REFORGE_COMPLETE_EVENT, handleReforgeComplete)
     window.addEventListener('sbts:open-doc', handleOpenDoc)
@@ -387,7 +368,6 @@ export default function App() {
     window.addEventListener(OPEN_SETUP_WIZARD_EVENT, handleOpenWizard)
     window.addEventListener('sbts:open-personas', handleOpenPersonas)
     return () => {
-      window.removeEventListener(STORAGE_QUOTA_EVENT, handleQuota)
       window.removeEventListener(LOAD_TRANSCRIPT_EVENT, handleLoadTranscript)
       window.removeEventListener(REFORGE_COMPLETE_EVENT, handleReforgeComplete)
       window.removeEventListener('sbts:open-doc', handleOpenDoc)

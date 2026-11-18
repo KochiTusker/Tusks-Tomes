@@ -75,7 +75,7 @@ const META: Record<string, Meta> = {
 
   // Reference
   'docs-settings-configuration': { icon: Cog, blurb: 'Every setting, env var, and file on disk.', tone: 'arcane' },
-  'docs-chronicling-how-the-phases-work': { icon: Layers, blurb: 'What each of the six phases actually does.', tone: 'arcane' },
+  'docs-chronicling-how-the-phases-work': { icon: Layers, blurb: 'What each of the five phases actually does.', tone: 'arcane' },
   'docs-about-how-its-built': { icon: Code2, blurb: 'How the pieces fit together, in detail.', tone: 'moon' },
 
   // Security

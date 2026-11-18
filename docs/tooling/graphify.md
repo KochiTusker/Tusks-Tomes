@@ -7,12 +7,12 @@ installed, Claude Code uses it to answer "where does X get called?" /
 "what depends on Y?" without having to grep the repo from scratch each
 time.
 
-Dev-only tooling — not a project dependency, not shipped to end users.
+Dev-only tooling — not a project dependency, and graphify itself is not shipped. Two optional features in the app call the `graphify` CLI when it is on your PATH (see [Why this is dev-only](#why-this-is-dev-only)).
 
 ## Prerequisites
 
-- Python ≥ 3.10 (this project already requires Python for the Whisper
-  transcription module; check with `python --version`).
+- Python ≥ 3.10 (check with `python --version`). Tusk's Tomes itself needs
+  Python only for the optional Audio Transcription module.
 - Claude Code CLI installed and working.
 
 ## Install (one-time, per machine)
@@ -35,7 +35,6 @@ On Windows, if `graphify` is not found after install, add Python's
 
 ```sh
 # From the repo root. AST-only extraction — no LLM needed for code files.
-# Takes ~30s on this codebase (~300 files, ~2500 nodes, ~5000 edges).
 graphify update .
 ```
 
@@ -70,8 +69,7 @@ otherwise need multiple Explore-agent passes.
 Run it:
 
 - After a substantial refactor that moved or renamed many symbols
-- After landing a new top-level feature (e.g. the optional-outputs
-  refactor in commit `92b3fdc` or the diagnostic stack in `5552a7d`)
+- After landing a new top-level feature
 - If `/graphify query` starts returning stale results
 
 For continuous live-rebuild during a feature branch:
@@ -85,12 +83,11 @@ every save.
 
 ## Why this is dev-only
 
-- Graph artefacts (~5 MB on this codebase) are derived data — committing
+- Graph artefacts are derived data — committing
   them creates merge noise on every file change.
 - The skill writes to `~/.claude/skills/graphify/SKILL.md` (per-user
   Claude Code config), not into the repo.
-- No production code depends on it. Removing it does not affect builds,
-  tests, or runtime.
+- Nothing in the app needs it. Two optional features call the `graphify` CLI when it is on your PATH: the Obsidian vault's **Build graphify map** button and the call-graph slice in the diagnostics bundle. Each checks for the CLI first and carries on without it. Removing it does not affect builds or the rest of the runtime.
 
 ## Uninstall
 

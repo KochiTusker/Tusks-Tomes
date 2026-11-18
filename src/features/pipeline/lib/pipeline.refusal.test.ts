@@ -85,8 +85,8 @@ function refusalEvents(events: PipelineEvent[]) {
 }
 
 const RAW =
-  '[Esen (Baptiste)] We march on the Crimson Cathedral at dawn, blades drawn.\n' +
-  '[Janus (Amara)] Aye, and the Sun Blade hums for blood this morning.\n'.repeat(40)
+  '[Eamon (Aurelio)] We march on the Crimson Cathedral at dawn, blades drawn.\n' +
+  '[Ingrid (Almira)] Aye, and the Sun Blade hums for blood this morning.\n'.repeat(40)
 
 describe('Claude Code refusal tracking (failsafe OFF)', () => {
   beforeEach(() => {
@@ -191,7 +191,7 @@ describe('Claude Code refusal tracking — JSON phases answer short by design', 
 
     const raw = Array.from({ length: 260 }, (_, i) =>
       i % 2
-        ? `[Esen (Player 1)] Line ${i}: we spin the reward wheel under the Crimson Cathedral.`
+        ? `[Eamon (Player 1)] Line ${i}: we spin the reward wheel under the Crimson Cathedral.`
         : `[Dungeon Master (DM)] Line ${i}: the wheel clicks past the Sun Blade and slows.`,
     ).join('\n')
     const grounded = raw.replace(/Crimson Cathedral/g, 'Obsidian Spire')

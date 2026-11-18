@@ -174,7 +174,7 @@ describe('argument construction (our responsibility)', () => {
   it('only passes a prompt when there is one', () => {
     expect(buildWhisperCppArgs(base)).not.toContain('--prompt')
     expect(buildWhisperCppArgs({ ...base, initialPrompt: '  ' })).not.toContain('--prompt')
-    expect(buildWhisperCppArgs({ ...base, initialPrompt: 'Esen, Lucian' })).toContain('--prompt')
+    expect(buildWhisperCppArgs({ ...base, initialPrompt: 'Eamon, Maeve' })).toContain('--prompt')
   })
 
   it('keeps paths with spaces as single argv entries', () => {
@@ -206,7 +206,7 @@ describe('safe invocation (our responsibility)', () => {
 
 describe('output contract — this is what makes the UI work unchanged', () => {
   it('returns every field TranscribeResult declares', async () => {
-    const r = await run({ speakerId: 'u_1', speakerDisplay: 'Lucian' })
+    const r = await run({ speakerId: 'u_1', speakerDisplay: 'Maeve' })
     // Same keys the faster-whisper sidecar produces. If this drifts, the
     // Sessions tab and speaker mapping break in places far from here.
     expect(Object.keys(r).sort()).toEqual(
@@ -215,9 +215,9 @@ describe('output contract — this is what makes the UI work unchanged', () => {
   })
 
   it('carries speaker identity through, so per-speaker attribution survives', async () => {
-    const r = await run({ speakerId: 'u_7', speakerDisplay: 'Esen' })
+    const r = await run({ speakerId: 'u_7', speakerDisplay: 'Eamon' })
     expect(r.speakerId).toBe('u_7')
-    expect(r.speakerDisplay).toBe('Esen')
+    expect(r.speakerDisplay).toBe('Eamon')
   })
 
   it('produces segments with word timings', async () => {

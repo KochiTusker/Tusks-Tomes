@@ -31,25 +31,23 @@ you know where you're likely to be the first person down a path.
 | **Local LLMs add-on** | **Partially tested — nothing above 4B parameters has been run**, for want of VRAM on the test machine. Everything larger is unverified for quality, timing and memory behaviour. Note the awkward gap this leaves: the sizes that produce genuinely good prose start well above the sizes that have been tested. See the prose-quality note below. |
 | **Audio Transcription (Whisper)** | Exercised on NVIDIA GPU. CPU-only transcription works but is very slow — see [workflows.md](../importing/README.md). |
 
-### Local LLM prose quality — set expectations before you route Phase 3
+### Local LLM prose quality — set expectations before you pick a model
 
 Local models are not generally as good at long-form narrative prose as the
-cloud models, and the gap is most obvious in exactly the phase you care about
-most. Concretely:
+cloud models, and the routing rows offer none for the chronicle (Phase 3) or
+Condense (Phase 5). They are offered for Ground, Audit and Extras where their
+probe passes. Concretely:
 
-- **Below roughly 15–20B parameters**, the chronicle tends to read like a
-  **log or a bullet summary rather than a story** — events in sequence, little
-  narrative voice.
-- **Grounding is also less reliable at those sizes.** Name and lore correction
+- **Grounding is less reliable at smaller sizes.** Name and lore correction
   is a genuinely hard instruction-following task, and smaller models drift
   from the glossary more often.
 - **Mileage varies a lot** between models of nominally similar size, far more
   than it does between cloud models.
 
-A reasonable compromise if you want to keep spend down: route the mechanical
-phases (grounding, audit, extras) locally and send **Phase 3 — the chronicle —
-to a cloud model or a Claude Code / Codex subscription**. That is what per-phase
-[hybrid routing](../about/roadmap.md) exists for, and it keeps the prose quality where
+A reasonable way to keep spend down: route the mechanical
+phases (grounding, audit, extras) locally; **Phase 3 — the chronicle —
+goes to a cloud model or a Claude Code / Codex subscription**. That is what per-phase
+[hybrid routing](../models/per-phase-routing.md) exists for, and it keeps the prose quality where
 it matters while cutting most of the token cost.
 
 ---
@@ -58,23 +56,23 @@ it matters while cutting most of the token cost.
 
 Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what changed.
 
-## Phase 6 condense ratio overshoot — now controllable via the Condense Slider
+## Phase 5 condense ratio overshoot — now controllable via the Condense Slider
 
-**Was:** Phase 6's static formula (`min(2000 words, 25% of chronicle)`) overshot on short chronicles (a 600-word chronicle returned a 270-word condense, ~45% of source instead of the documented 25%). On real 3-hour sessions the 2,000-word cap bound, so the issue only surfaced on test-fixture sizes.
+**Was:** Phase 5's static formula (`min(2000 words, 25% of chronicle)`) overshot on short chronicles (a 600-word chronicle returned a 270-word condense, ~45% of source instead of the documented 25%). On real 3-hour sessions the 2,000-word cap bound, so the issue only surfaced on test-fixture sizes.
 
-**Fixed:** v1.1.0 replaces the static formula with the **Condense Slider** — an animated-wand UI in the Output Picker that lets you pick the target length as a percentage of the chronicle's word count (0-100% in 5% steps, default 20%). The slider preview shows the projected word count live; Phase 6 recomputes the actual target at runtime against the real chronicle and instructs the model to aim within ±10%.
+**Fixed:** v1.1.0 replaces the static formula with the **Condense Slider** — an animated-wand UI in the Output Picker that lets you pick the target length as a percentage of the chronicle's word count (0-100% in 5% steps, default 20%). The slider preview shows the projected word count live; Phase 5 recomputes the actual target at runtime against the real chronicle and instructs the model to aim within ±10%.
 
-## Phase 6 bullet-point duplication on long sessions
+## Phase 5 bullet-point duplication on long sessions
 
 **Was:** When a notable event sat at a chunk boundary (last few lines of chunk N, first few of chunk N+1), both chunks' condensed bullet sets often mentioned it with slightly different phrasing. A long session could land 60-90 bullets where ~15 was intended.
 
 **Fixed:** `runPhase6()` now applies a two-pass dedup after chunk accumulation — exact-after-normalisation first, then Levenshtein-distance against already-kept bullets at the 0.8 similarity threshold. First-occurrence wins so chronological order is preserved.
 
-## Phase 6 overshoot — no warning when the model exceeded the slider target
+## Phase 5 overshoot — no warning when the model exceeded the slider target
 
 **Was:** The Condense Slider asks the model to aim within ±10% of a user-picked target word count, but the runtime check only warned when output was catastrophically *short* (`warnIfCondenseShort`, ≤200 words). If the user picked 10% (target 600 words on a 6,000-word chronicle) and the model returned 1,800 words, no warning fired — the user might not realise the recap was three times its intended length.
 
-**Fixed:** new `warnIfCondenseOvershoot` symmetric warning in `src/features/pipeline/lib/condenseWarnings.ts`. Fires above 1.5× the user-picked target with a toast showing the actual word count, the target, and the percentage overshoot. Called at all 4 Phase 6 completion sites (happy path + 2 resume paths + the standalone Regenerate Phase 6 button).
+**Fixed:** new `warnIfCondenseOvershoot` symmetric warning in `src/features/pipeline/lib/condenseWarnings.ts`. Fires above 1.5× the user-picked target with a toast showing the actual word count, the target, and the percentage overshoot. Called at all 4 Phase 5 completion sites (happy path + 2 resume paths + the standalone Regenerate Phase 5 button).
 
 ## Shell scripts shipped with CRLF line endings — broke macOS / Linux first run
 
@@ -88,11 +86,11 @@ Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what cha
 
 **Fixed:** new `scripts/whisper/run-setup.mjs` Node dispatcher selects `setup.ps1` on Windows and `setup.sh` on POSIX, streams the child's stdout/stderr inline. `npm run whisper:setup` now works on every OS. The legacy `npm run whisper:setup:posix` and a new explicit `whisper:setup:windows` remain available if users want platform-pinned scripts.
 
-## Walkthrough doc claimed Phase 6 was "user-triggered" — actually now auto-runs
+## Walkthrough doc claimed Phase 5 was "user-triggered" — actually now auto-runs
 
-**Was:** `docs/walkthrough.md` described Phase 6 Condense as *"Optional, user-triggered. One click after Phase 4 finishes."* That described the v1.0 behaviour. v1.1.0's OutputPicker runs Phase 6 automatically when the "Condensed" checkbox is checked at run-start. The walkthrough is the canonical first-time-user entry point linked from the README, so this drift was a real first-impression mismatch.
+**Was:** `docs/walkthrough.md` described Phase 5 Condense as *"Optional, user-triggered. One click after Phase 4 finishes."* That described the v1.0 behaviour. v1.1.0's OutputPicker runs Phase 5 automatically when the "Condensed" checkbox is checked at run-start. The walkthrough is the canonical first-time-user entry point linked from the README, so this drift was a real first-impression mismatch.
 
-**Fixed:** walkthrough.md table now describes Phase 6 as *"Length controlled by the Condense Slider on the Output Picker (default 20%). Runs automatically when Condensed is checked at run start."* The audio-addon install estimate was also corrected from "~2-minute" to a more honest "5-15 minutes" since the Whisper venv + `torch` wheels are ~1.5 GB.
+**Fixed:** walkthrough.md table now describes Phase 5 as *"Length controlled by the Condense Slider on the Output Picker (default 20%). Runs automatically when Condensed is checked at run start."* The audio-addon install estimate was also corrected from "~2-minute" to a more honest "5-15 minutes" since the Whisper venv + `torch` wheels are ~1.5 GB.
 
 ## Doc anchor in `SETUP.md` pointed at the old "Free tier available" heading
 
@@ -100,9 +98,9 @@ Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what cha
 
 **Fixed:** anchor corrected to `#google-gemini--paid-key-required-`. The link's surrounding copy ("Google Gemini — has a free tier; the path with the lowest barrier") was also rewritten to match the v1.1.0 positioning.
 
-## Stale Phase 6 `min(2000, 25%)` formula in recommended-settings + faq
+## Stale Phase 5 `min(2000, 25%)` formula in recommended-settings + faq
 
-**Was:** Two docs still described Phase 6 with the legacy static formula — `docs/recommended-settings.md:71` table row, and `docs/faq.md:30` end-to-end walkthrough. Users reading either would expect a static formula that no longer exists in the UI.
+**Was:** Two docs still described Phase 5 with the legacy static formula — `docs/recommended-settings.md:71` table row, and `docs/faq.md:30` end-to-end walkthrough. Users reading either would expect a static formula that no longer exists in the UI.
 
 **Fixed:** both lines now describe the **Condense Slider** (0-100%, default 20%, set per run on the Output Picker) and the ±10% target contract.
 
@@ -150,7 +148,7 @@ Bugs the v1.1.0 bug-hunt closed. Listed for transparency so you can see what cha
 
 ## Free-tier Gemini Pro is slow — repositioned, no longer a recommended workflow
 
-**Was:** A 3-hour session on Free Gemini Pro could take 30-60 minutes vs ~6-10 minutes on Paid Pro, because Free's per-minute quota is 2 RPM.
+**Was:** A 3-hour session on Free Gemini Pro could take several times longer than on Paid Pro, because Free's per-minute quota is 2 RPM.
 
 **Fixed (by repositioning):** Since Google moved Pro models behind billing, a fully free workflow is no longer viable for the main pipeline. v1.1.0 documents this honestly: Paid is required, Free remains as an optional secondary key used only by the Smart Budget preset for Phase 4 (extras) where the Free Flash quota is comfortable. The Free-tier-slow problem is now unreachable in normal use.
 
@@ -172,7 +170,7 @@ Bugs we know about and either haven't fixed yet, have a deliberate trade-off, or
 
 **What you'll see:** The editor card flashes "Loading…" briefly, then disappears. No error toast, no retry button.
 
-**Workaround:** Reload the page. If the failure persists, the diagnostics surface (Help → Diagnose) will tell you whether the server endpoint or the client request is the culprit.
+**Workaround:** Reload the page. If the failure persists, the diagnostics surface (Settings → Maintenance → Diagnostics) will tell you whether the server endpoint or the client request is the culprit.
 
 **Status:** Slated for the next release — error state + retry button.
 
@@ -196,7 +194,7 @@ Bugs we know about and either haven't fixed yet, have a deliberate trade-off, or
 
 **Affects:** First-time install of the Audio Transcription add-on via Settings → Transcription.
 
-**What you'll see:** Installing an add-on shows "Installed". But the Sessions tab doesn't appear until you restart `npm run dev`.
+**What you'll see:** When the install finishes, the add-on's row shows a **Restart required to activate** pill. The Sessions tab doesn't appear until you restart `npm run dev`.
 
 **Workaround:** Stop and restart the dev server after installing an add-on. The state persists; no re-install needed.
 
@@ -208,13 +206,13 @@ Bugs we know about and either haven't fixed yet, have a deliberate trade-off, or
 
 **Affects:** Pause/Resume flow specifically when you edit the glossary between pause and resume.
 
-**What you'll see:** Resume Banner switches to "Start over" instead of "Resume" if you edit the glossary mid-pause — even if your edit was just adding a trailing space.
+**What you'll see:** A warning toast saying the glossary or alias index has changed since the run was paused, even if your edit was just adding a trailing space. The resume still goes ahead.
 
-**Why:** The fingerprint is a hash of the canonical glossary JSON; whitespace counts. This is a load-bearing safety check (we don't want to resume Phase 3 with a chunk plan based on a stale glossary), so we err on the side of "restart" when in doubt.
+**Why:** The fingerprint is a SHA-256 hash, kept to 16 hex characters, of the Phase 1 prep inputs: the transcript, the glossary's safe replacements and contextual hints, the lore alias index and the alias-hints setting. Whitespace inside the glossary counts. It is compared only when the paused phase is Phase 1, because the Phase 1 chunk boundaries depend on those inputs.
 
-**Workaround:** If you genuinely want to resume after a glossary tweak, the unsaved transcript is still in localStorage — click Start over and it'll re-chunk and resume from chunk 0.
+**Workaround:** None needed. If a Grounding chunk had finished before the pause, the resume re-uses the chunk boundaries saved then, so the edit applies only to chunks not yet dispatched. If the pause came before the first chunk finished, the resume re-chunks against the live glossary; discard the paused run from the banner and start again if you would rather not.
 
-**Status:** Working as designed. Trading a small UX wart for a serious correctness guarantee.
+**Status:** Working as designed. The warning is advisory and never blocks a resume.
 
 ---
 
@@ -272,9 +270,9 @@ Bugs we know about and either haven't fixed yet, have a deliberate trade-off, or
 
 For transparency, a few common questions that aren't bugs:
 
-- **Phase 5 is always skipped on cloud providers.** This is by design — cloud outputs don't need a local-polish pass. If you see "Phase 5 skipped" in the run log, that's intentional.
+- **Phase 3.5 does not run today.** It is the clean-up pass for a chronicle written by a local model; it runs only when the whole run uses a local provider, which the app does not offer, so it makes no model call.
 - **A 3-hour session costs more than your friend's NotebookLM workflow.** True. We're an open-source app paying per-token at retail rates; NotebookLM is Google subsidising a free tier. We trade higher cost for local-first privacy and per-campaign grounding. See [comparison.md](../about/comparison.md).
-- **The chronicle is verbose.** Also by design — see [feedback-chronicle-voice in the FAQ](faq.md#what-running-one-session-actually-looks-like). The Phase 6 condense is the version to share; the chronicle is the canonical record.
-- **The app starts on `127.0.0.1`, not `localhost`.** Default for security. Set `TUSKS_HOST=0.0.0.0` in `.env` to expose to LAN; do so only on a trusted network.
+- **The chronicle is verbose.** Also by design — see [feedback-chronicle-voice in the FAQ](faq.md#what-running-one-session-actually-looks-like). The Phase 5 condense is the version to share; the chronicle is the canonical record.
+- **The app listens on `127.0.0.1`, and the launchers open `localhost`.** Both addresses reach the same place, and the default keeps the app to your own machine. To open it to your network, set the `TUSKS_HOST` environment variable to `0.0.0.0` in your shell or system environment (the app does not read it from `.env`), as described in [Installation](../getting-started/installation.md); do so only on a trusted network.
 
 If something not in this list is causing pain, please tell us through the [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header) or [open an issue](https://github.com/KochiTusker/Tusks-Tomes/issues/new/choose) — that's how this list gets shorter.

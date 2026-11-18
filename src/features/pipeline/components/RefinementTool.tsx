@@ -101,6 +101,7 @@ import {
   resolvePersonaTemplates,
   sessionPhaseArgs,
 } from '../lib/refinementRun'
+import { planContinue, type ContinuePlan, type ContinueResume } from '../lib/continuePlan'
 
 export function RefinementTool() {
   const { state, actions } = useRefinementState()
@@ -473,7 +474,7 @@ export function RefinementTool() {
    *  Phase 3 (Chronicle) because the condense prompt consumes the chronicle
    *  text; the picker UI enforces this so we can trust the selection here. */
   const continueWithSelectedOutputs = useCallback(
-    async (dmAnswers: DMAnswers, selection: OutputSelection) => {
+    async (dmAnswers: DMAnswers, selection: OutputSelection, resume?: ContinueResume) => {
       if (!state.groundedTranscript) {
         toast.error('No grounded transcript yet.')
         return
@@ -496,9 +497,24 @@ export function RefinementTool() {
       const personaTemplates = resolvePersonaTemplates(personasRef.current)
       const runSettings = await fetchRunSettings()
       try {
-        let chronicle = ''
+        // A continued run (resume) carries the outputs the interrupted run
+        // already finished; each step below skips what is already there.
+        let chronicle = resume?.chronicle ?? ''
         // ---- Phase 3 + Phase 5 (Chronicle + Polish) ----
-        if (selection.chronicle) {
+        if (selection.chronicle && resume?.chronicle.trim() && resume.polishPending) {
+          // The chronicle is written; only the Polish pass was cut short.
+          const polished = await runPhase5Polish({
+            chronicle: resume.chronicle,
+            kb,
+            callbacks: { ...callbacks, signal: ctrl.signal },
+            personaTemplate: personaTemplates.phase5,
+            safetyMultiplier: () => safetyMultiplierRef.current,
+          })
+          chronicle = polished
+          if (polished !== resume.chronicle) {
+            actions.completePhase3(polished)
+          }
+        } else if (selection.chronicle && !resume?.chronicle.trim()) {
           const rawChronicle = await runPhase3({
             groundedTranscript: state.groundedTranscript,
             dmQuestions: state.dmQuestions,
@@ -531,7 +547,7 @@ export function RefinementTool() {
         // ---- Phase 4 (Extras) ----
         // Independent of Phase 3 — operates on groundedTranscript + dmAnswers.
         // Confirmed in the exploration audit (pipeline.ts:1067-1082).
-        if (selection.extras) {
+        if (selection.extras && !resume?.extrasDone) {
           const extras = await runPhase4({
             kb,
             groundedTranscript: state.groundedTranscript,
@@ -549,7 +565,7 @@ export function RefinementTool() {
         // Depends on Chronicle. The picker enforces selection.chronicle
         // is true whenever selection.condensed is true, so this assertion
         // is defense-in-depth.
-        if (selection.condensed && chronicle.trim()) {
+        if (selection.condensed && !resume?.condensedDone && chronicle.trim()) {
           // v1.1.0 Condense Slider — target word count computed from the
           // actual generated chronicle (not the grounded-transcript
           // estimate the picker showed) so the user's % choice resolves
@@ -596,6 +612,89 @@ export function RefinementTool() {
       setPersistedSelection,
       state.dmQuestions,
       state.groundedTranscript,
+    ],
+  )
+
+  /** Phase 2 from the saved grounded transcript — the entry point the
+   *  interrupted screen uses when Phase 1 finished and the page died after. */
+  const runAuditFromGrounded = useCallback(
+    async (session: RunSession | null) => {
+      setRunning(true)
+      const ctrl = new AbortController()
+      abortRef.current = ctrl
+      try {
+        const questions = await runPhase2({
+          kb,
+          rawTranscript: state.rawTranscript,
+          groundedTranscript: state.groundedTranscript,
+          callbacks: { ...callbacks, signal: ctrl.signal },
+          ...sessionPhaseArgs(session, 'phase2'),
+          safetyMultiplier: () => safetyMultiplierRef.current,
+        })
+        actions.completePhase2(questions)
+        toast.success(`Phase 2 complete — ${questions.length} clarifications surfaced.`)
+      } catch (err) {
+        handlePipelineError(err)
+      } finally {
+        setRunning(false)
+        abortRef.current = null
+      }
+    },
+    [actions, callbacks, handlePipelineError, kb, state.groundedTranscript, state.rawTranscript],
+  )
+
+  /** The interrupted screen's Continue: carry on from the first step with no
+   *  saved output, reusing the normal entry points rather than a second
+   *  pipeline. Reopening a modal step needs no provider; running one does. */
+  const continueInterruptedRun = useCallback(
+    async (plan: ContinuePlan) => {
+      if (startingRunRef.current) return
+      startingRunRef.current = true
+      try {
+        if (plan.kind === 'questions') {
+          actions.setStatus('awaiting_dm')
+          return
+        }
+        if (plan.kind === 'picker') {
+          actions.setStatus('awaiting_outputs')
+          return
+        }
+        if (apiKeyMissing) {
+          toast.error('No cloud provider key configured. Add one in the Settings tab.')
+          return
+        }
+        let session: RunSession | null = null
+        if (!isLocalProvider()) {
+          session = await autoResolveSession()
+          if (!session) {
+            toast.error('No cloud API key configured. Add one in the Settings tab.')
+            return
+          }
+        }
+        sessionRef.current = session
+        surfaceSessionWarnings(session)
+        // A fresh checkpoint id, so a pause during the continued run writes
+        // one file and a clean finish deletes it.
+        currentRunIdRef.current = `run-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+        if (plan.kind === 'audit') {
+          await runAuditFromGrounded(session)
+        } else {
+          await continueWithSelectedOutputs(state.dmAnswers, plan.selection, plan.resume)
+        }
+      } catch (err) {
+        handlePipelineError(err)
+      } finally {
+        startingRunRef.current = false
+      }
+    },
+    [
+      actions,
+      apiKeyMissing,
+      continueWithSelectedOutputs,
+      handlePipelineError,
+      runAuditFromGrounded,
+      state.dmAnswers,
+      surfaceSessionWarnings,
     ],
   )
 
@@ -1388,6 +1487,9 @@ export function RefinementTool() {
   if (state.status === 'error') {
     const errText = state.lastError ?? 'Unknown error.'
     const interrupted = errText === INTERRUPTED_RUN_MESSAGE
+    // Only an interrupted run is offered Continue: its finished outputs are
+    // intact, and the page — not a failing step — is what stopped it.
+    const continuePlan = interrupted ? planContinue(state) : null
     return (
       <>
         {/* The checkpoint banner sat only on the idle view, so a run that
@@ -1432,7 +1534,16 @@ export function RefinementTool() {
             </pre>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button onClick={() => runFromPhase1(state.rawTranscript)}>
+            {continuePlan && (
+              <Button onClick={() => void continueInterruptedRun(continuePlan)}>
+                <Play className="mr-1 h-4 w-4" />
+                Continue from {continuePlan.label}
+              </Button>
+            )}
+            <Button
+              variant={continuePlan ? 'outline' : 'default'}
+              onClick={() => runFromPhase1(state.rawTranscript)}
+            >
               <Play className="mr-1 h-4 w-4" />
               {interrupted ? 'Start again from Phase 1' : 'Retry from Phase 1'}
             </Button>

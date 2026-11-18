@@ -6,8 +6,9 @@ exists if you're feeling generous, and that's the extent of it.
 
 The only money involved is whatever your chosen AI provider charges for the
 tokens. You pay only on the weeks you actually play, and there are two ways to
-get it to zero: run a local model, or draw on a Claude Code or ChatGPT
-subscription you already pay for.
+take it down: draw on a Claude Code or ChatGPT subscription you already pay
+for, or put the mechanical phases on a local model. The chronicle itself needs
+a cloud model or a subscription.
 
 ## What a session costs
 
@@ -15,18 +16,18 @@ subscription you already pay for.
 | Routing | Per session | What it is |
 |---|---|---|
 | **Subscription everywhere** | $0.00 | Every phase on a Claude Code or Codex plan you already pay for. |
-| **OpenRouter prose + subscription grounding** | $0.42 | A Claude Code plan on the mechanical phases, OpenRouter on the prose. |
-| **OpenRouter everywhere** | $0.44 | Every phase on OpenRouter, chosen for cost against measured quality. |
-| **Gemini measured hybrid** | $0.78 | Derived from a controlled A/B on a real session rather than from guesswork. |
-| **Gemini Flash everywhere** | $0.98 | The cheapest all-Gemini route. Prose is noticeably less polished than Pro. |
-| **Gemini Smart Budget** | $2.77 | Pro for the chronicle, Flash for the mechanical phases, Flash-Lite to condense. |
-| **Gemini Pro prose + subscription grounding** | $3.60 | A Claude Code plan carries the mechanical phases; Gemini writes the prose. |
-| **Gemini Pro everywhere** | $4.85 | The reference number. Every phase on the strongest Gemini model. |
-| **OpenRouter, strongest models** | $10.39 | The same catalogue, routed for quality rather than for price. |
+| **OpenRouter prose + subscription grounding** | $0.59 | A Claude Code plan on the mechanical phases, OpenRouter on the prose. |
+| **OpenRouter everywhere** | $0.66 | Every phase on OpenRouter, chosen for cost against measured quality. |
+| **Gemini Flash everywhere** | $1.05 | The cheapest all-Gemini route. Prose is noticeably less polished than Pro. |
+| **Gemini measured hybrid** | $1.94 | Derived from a controlled A/B on a real session rather than from guesswork. |
+| **Gemini Smart Budget** | $2.36 | Pro for the chronicle, Flash for the mechanical phases, Flash-Lite to condense. |
+| **Gemini Pro prose + subscription grounding** | $2.82 | A Claude Code plan carries the mechanical phases; Gemini writes the prose. |
+| **Gemini Pro everywhere** | $5.27 | The reference number. Every phase on the strongest Gemini model. |
+| **OpenRouter, strongest models** | $11.76 | The same catalogue, routed for quality rather than for price. |
 
 Figures are USD for a 3-hour session — about 190k characters of transcript with a furnished campaign’s lore in context.
 
-Priced on **2026-08-24** against the live OpenRouter catalogue (411 models), and regenerated every time the site is published.
+Priced on **2026-11-17** against the live OpenRouter catalogue (466 models), and regenerated every time the site is published.
 <!-- COSTS:END -->
 
 > [!NOTE]
@@ -73,7 +74,7 @@ The levers that do work, and are already applied:
 | Route | Cost | Trade-off |
 |---|---|---|
 | **A subscription you already pay for** — [Claude Code](../extras/claude-code.md) or [Codex](../extras/codex.md) | No API spend | Metered in rolling windows rather than per token. One session can use a large share of a five-hour window, so budget one or two per window. Exhausting it pauses the run rather than failing it. |
-| **A local model** — [Ollama, LM Studio or Unsloth](../extras/local-llms.md) | Electricity only | Prose quality below roughly 15B parameters is noticeably weaker. Mixing — local for the mechanical phases, cloud for the prose — is usually better than going fully local on modest hardware. |
+| **A local model** — [Ollama, LM Studio or Unsloth](../extras/local-llms.md) | Electricity only | Prose quality on smaller models is noticeably weaker; [Local LLMs](../extras/local-llms.md) says where it starts to matter. A local model takes Ground, Audit and Extras only; the chronicle and Condense go to a cloud model or a subscription. |
 
 ## What is never paywalled
 

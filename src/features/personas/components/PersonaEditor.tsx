@@ -28,15 +28,15 @@ const SLOT_META: Record<PromptSlot, { label: string; help: string }> = {
     help: 'Used when the active provider is Ollama, LM Studio, or Unsloth. Same voice, simpler structural guardrails for smaller models.',
   },
   phase5Local: {
-    label: 'Phase 5 — Polish (local LLM only)',
+    label: 'Phase 3.5 — Polish (local LLM only)',
     help: 'Surgical edit pass that smoothes chunk seams in local-LLM output. Cloud runs skip this.',
   },
   phase6Cloud: {
-    label: 'Phase 6 — Condense (cloud)',
+    label: 'Phase 5 — Condense (cloud)',
     help: 'Produces the condensed narrative + recap bullets when condensing on a cloud provider.',
   },
   phase6Local: {
-    label: 'Phase 6 — Condense (local LLM)',
+    label: 'Phase 5 — Condense (local LLM)',
     help: 'Same condense task, simpler instructions for local models.',
   },
 }
@@ -124,7 +124,7 @@ export function PersonaEditor({ open, onClose, existing, initialDraft, onSaved }
           <DialogTitle>{existing ? `Edit "${existing.name}"` : 'New persona'}</DialogTitle>
           <DialogDescription>
             Five prompts power the persona — one per affected phase. The locked Bard prompt
-            remains the default; this persona only overrides phases 3, 5, and 6 when selected.
+            remains the default; this persona only overrides phases 3, 3.5, and 5 when selected.
             Required placeholders are listed in each section.
           </DialogDescription>
         </DialogHeader>

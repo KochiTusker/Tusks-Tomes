@@ -138,7 +138,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -146,7 +146,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini
@@ -226,7 +226,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -234,7 +234,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini
@@ -348,7 +348,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -356,7 +356,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini
@@ -463,7 +463,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -471,7 +471,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini

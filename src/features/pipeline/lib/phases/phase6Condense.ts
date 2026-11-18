@@ -275,7 +275,7 @@ export async function runPhase6(args: {
     onRetry: retryWaitingForwarder(phase, callbacks),
     safetyMultiplier: args.safetyMultiplier,
     contextLabel: (absoluteIndex) =>
-      `Phase 6 (Condense) — chunk ${absoluteIndex + 1}/${chunks.length}` +
+      `Phase 5 (Condense) — chunk ${absoluteIndex + 1}/${chunks.length}` +
       (retryOnly ? ' (retry: previous output unreadable)' : ''),
     phaseId: phase,
     onPipelineEvent: callbacks.onEvent,
@@ -290,7 +290,7 @@ export async function runPhase6(args: {
   if (unreadable.size > 0) {
     const which = [...unreadable].sort((a, b) => a - b).map((i) => `${i + 1}/${chunks.length}`).join(', ')
     throw new Error(
-      `Phase 6 (Condense): the model's output for chunk ${which} could not be read, twice. ` +
+      `Phase 5 (Condense): the model's output for chunk ${which} could not be read, twice. ` +
         `Stopped rather than save a condensed chronicle and recap with that part of the session missing — run Condense again.`,
     )
   }

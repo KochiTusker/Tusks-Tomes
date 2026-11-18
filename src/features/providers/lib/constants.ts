@@ -12,8 +12,12 @@
 // edit env files at all.
 import { GEMINI_FLASH, GEMINI_PRO } from '@shared/models/catalogue'
 
-const ENV_MODEL_PRO = (import.meta.env.VITE_MODEL_PRO as string | undefined) ?? ''
-const ENV_MODEL_FLASH = (import.meta.env.VITE_MODEL_FLASH as string | undefined) ?? ''
+// Vite always defines `import.meta.env`; the site's cost script
+// (scripts/site/compute-costs.ts) imports this file under tsx, where it is
+// undefined, so read it defensively.
+const env: Record<string, unknown> = import.meta.env ?? {}
+const ENV_MODEL_PRO = (env.VITE_MODEL_PRO as string | undefined) ?? ''
+const ENV_MODEL_FLASH = (env.VITE_MODEL_FLASH as string | undefined) ?? ''
 
 export const MODEL_PRO = ENV_MODEL_PRO || GEMINI_PRO
 export const MODEL_FLASH = ENV_MODEL_FLASH || GEMINI_FLASH
@@ -34,7 +38,7 @@ export const PRIMARY_MODEL = MODEL_PRO
 // via VITE_MAX_OUTPUT_TOKENS if a future model supports more (or you want
 // to clamp lower to fail fast). 8,192 was the old default and turned out
 // to be too tight for grounding work where output ≈ input length.
-const ENV_MAX_OUT = Number(import.meta.env.VITE_MAX_OUTPUT_TOKENS ?? '')
+const ENV_MAX_OUT = Number(env.VITE_MAX_OUTPUT_TOKENS ?? '')
 export const MAX_OUTPUT_TOKENS =
   Number.isFinite(ENV_MAX_OUT) && ENV_MAX_OUT > 0 ? ENV_MAX_OUT : 32_768
 

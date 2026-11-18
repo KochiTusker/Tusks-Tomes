@@ -50,14 +50,14 @@ describe('annotateChunk — phonetic alias matching', () => {
     expect(result.candidates).toHaveLength(0)
   })
 
-  it('does NOT match different-first-sound names ("Janus" should NOT match "Bhargo")', () => {
+  it('does NOT match different-first-sound names ("Ingrid" should NOT match "Bhargo")', () => {
     // Both M-codes start with B+R = PR in metaphone. The first-sound
-    // discipline only rules out when the FIRST sound differs; Janus/Bhargo
+    // discipline only rules out when the FIRST sound differs; Ingrid/Bhargo
     // both start with B-R which IS the same first sound. So this case
     // tests that the ratio threshold catches it: PRT vs PRK = distance 1
     // on 3-char codes = 0.33 > 0.20 ratio.
     const idx = makeIndex([{ name: 'Bhargo' }])
-    const result = annotateChunk('[Janus] hit the goblin.', idx)
+    const result = annotateChunk('[Ingrid] hit the goblin.', idx)
     expect(result.candidates).toHaveLength(0)
   })
 

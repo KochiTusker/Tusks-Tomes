@@ -105,7 +105,9 @@ function shape(rec: SpawnRecord) {
   const env = rec.options.env
   return {
     command: rec.command,
-    args: rec.args,
+    // An empty option value is a real '' off Windows and the two-character
+    // '""' under the Windows shell; claudeCode.test.ts pins both spellings.
+    args: rec.args.map((a) => (a === '' || a === '""' ? '<none>' : a)),
     // The shell flag is true only on Windows; pin that it tracks the platform.
     shellIsWin32: rec.options.shell === (process.platform === 'win32'),
     stdio: rec.options.stdio,

@@ -9,7 +9,7 @@ import { docxBufferToMarkdown } from '../../lore/index.js'
 const EXTRAS = {
   jests: ['The bard tripped over a chicken.'],
   gore: ['The ogre was bisected.'],
-  quotes: [{ speaker: 'Esen', line: 'We do not negotiate with mimics.', kind: 'funny' as const }],
+  quotes: [{ speaker: 'Eamon', line: 'We do not negotiate with mimics.', kind: 'funny' as const }],
 }
 
 const CONDENSED = {

@@ -45,7 +45,7 @@ import { sessionsRouter, uploadGate as parseUploadGate } from './features/transc
 import { chronicleRouter, chronicleLibraryRouter } from './features/library/index.js'
 import { addonsRouter } from './platform/routes/addons.js'
 import { loadAddons } from './addons/loader.js'
-import { docsRouter } from './features/help/index.js'
+import { docsAssets, docsRouter } from './features/help/index.js'
 import { loopbackOnly } from './platform/loopbackGate.js'
 import { hostAllowlist } from './platform/hostAllowlist.js'
 import { lanWriteGate, parseLanWritesEnv } from './platform/lanWriteGate.js'
@@ -249,6 +249,8 @@ export function createApiApp(opts: {
   app.use('/api/chronicle-library', chronicleLibraryRouter())
   app.use('/api/addons', addonsRouter())
   app.use('/api/docs', docsRouter())
+  // The images those docs embed, at the same path the docs site uses.
+  app.use('/docs/assets', docsAssets(ROOT))
   app.use('/api/lore', loreRouter())
   app.use('/api/openrouter', openrouterModelsRouter())
   app.use('/api/settings', settingsRouter())

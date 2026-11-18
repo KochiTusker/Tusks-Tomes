@@ -4,7 +4,11 @@ Tusk's Tomes is a **local-first** application — it runs on your machine, binds
 
 ## Trust model in one paragraph
 
-Everything except the chosen cloud LLM API runs on the user's machine. API keys are encrypted at rest at `{configDir}/providers.enc` using AES-256-GCM with a scrypt-derived key bound to your machine identity (hostname + username + platform). The Express server binds to loopback by default; all `/api/*` state-changing routes are same-origin gated to block drive-by-CSRF; chronicle save paths are sanitised against traversal; the local-LLM proxy refuses any target outside loopback or RFC-1918 LAN. No audio leaves the host (Whisper runs in-process when the audio add-on is installed); the LLM provider is the only outbound destination Tomes talks to, and even then only the text it needs to refine.
+Apart from the model providers you choose, Tomes runs on your machine. API keys are encrypted at rest at `{configDir}/providers.enc` using AES-256-GCM with a scrypt-derived key bound to your machine identity (hostname + username + platform) and a salt kept beside the file. The Express server binds to loopback by default; all `/api/*` state-changing routes are same-origin gated to block drive-by-CSRF; chronicle save paths are sanitised against traversal; the local-LLM proxy refuses any target outside loopback or RFC-1918 LAN. No audio leaves the host: Whisper runs in a separate Python process on your machine when the audio module is installed.
+
+![A drawing of the moving parts and the wires between them. Inside your computer, the Tomes page in your browser gets your stored keys from a host-only route and talks over loopback, which never touches the network, to the Tomes server on 127.0.0.1. Beside the server sit the keystore, Whisper, the claude and codex command-line tools and a local runner. A dashed wire runs to your network, where another device and a runner on another machine sit. That wire is plain HTTP, so anyone on that network can read or change the traffic; a figure inside the network box marks someone who can listen. It is used only if you open Tomes to the LAN or point at a runner there. A solid wire with a padlock marked HTTPS runs to the internet, to Gemini and OpenRouter and to Anthropic and OpenAI: a listener on the way sees only scrambled traffic, and the provider reads what you send it.](../docs/assets/diagrams/threat-model-wires.svg)
+
+Session text goes only to the model providers you choose. The page in your browser calls Gemini and OpenRouter itself over HTTPS, with keys it fetches from a host-only route, and Claude Code or Codex make their own HTTPS calls. The rest of the outbound traffic carries none of your session: package installs, a one-off model download, the update check and OpenRouter's public lists of models and provider data policies, which you can switch to manual updates ([the full list](../docs/security/overview.md#what-goes-over-the-network)).
 
 > **Want the reasoning rather than the summary?** [Security architecture](https://github.com/KochiTusker/Tusks-Tomes/blob/main/.github/security-architecture.md)
 > documents the trust boundaries, the layered request gates, and a decision record for each
@@ -16,19 +20,23 @@ Tusk's Tomes is **not** a SaaS, **not** a multi-tenant service, and **not** a ha
 
 It also is not a substitute for keeping your provider account secure (rotate keys regularly; set spending caps) or your machine secure (full-disk encryption, OS updates, careful what you `pip install`).
 
+The risks we know about, which of them are deliberate trade-offs and which are gaps we intend to close, are listed in plain English at the top of [the security overview](../docs/security/overview.md#known-risks-and-limitations).
+
 ---
 
 ## STRIDE — base product, no add-ons
 
-The base install (paste-a-transcript chronicling with a cloud LLM) is the smallest attack surface. The table below names each STRIDE category, the realistic risk in this product, what the code does about it today, and what's still on you.
+The base install (paste-a-transcript chronicling with a cloud LLM) is the smallest attack surface. The drawing is the short version, by who might try something; the table below names each STRIDE category, the realistic risk in this product, what the code does about it today, and what's still on you.
+
+![A drawing of four would-be intruders around your computer, which holds Tomes and your stored API keys. Each has an arrow toward it that is either stopped at a barrier or gets through. A web page open in your browser is stopped: writes from another site are refused, and on the default address a Host-name check also turns away pages that point their domain at your computer. A device on your network is stopped by default, because by default Tomes cannot be reached from the network at all; if you open Tomes to the LAN it can read, and with LAN writes on it can change things, but it never reaches your stored keys, the provider test, updates, saving settings, or running Claude Code or Codex. A copy of your config folder stays shut: the key file does not open under another host name or user name. A program running as you gets in, drawn in orange because it gets through: it can read your keys, because the app decrypts them itself; rotate them at the provider if you suspect it.](../docs/assets/diagrams/threat-model-who.svg)
 
 | Category | Risk | Mitigation in place | Your responsibility |
 |---|---|---|---|
-| **Spoofing** | A malicious page in your browser tries to use Tomes's API to drive an action (install an add-on, save settings, exfil keys via a bug). | Server binds to `127.0.0.1` by default; same-origin middleware on `/api/*` rejects cross-origin POST/PUT/PATCH/DELETE; the keys endpoint returns nothing on the public summary route. The `/api/provider-keys` route (decrypted keystore) is also gated by a loopback-only middleware that checks the actual TCP peer (not the spoofable `Host` header) — visiting LAN devices get a 403 even when `TUSKS_HOST=0.0.0.0` is set. **A LAN-write gate (Phase 7) additionally blocks all non-GET requests from LAN sources unless the user explicitly sets `TUSKS_LAN_WRITES=1`** — so opting into LAN exposure gives visitors read-only access by default. | If you opt into LAN exposure (`TUSKS_HOST=0.0.0.0`), your keys are still safe and LAN visitors can only BROWSE (read chronicles, transcripts, lists); they can't upload or change anything unless you also set `TUSKS_LAN_WRITES=1`. Only do this on trusted home / office networks; never on public Wi-Fi. See [docs/security-quickref.md](../docs/security/overview.md) for the plain-English version. |
+| **Spoofing** | A malicious page in your browser tries to use Tomes's API to drive an action (install an add-on, save settings, exfil keys via a bug). | Server binds to `127.0.0.1` by default; same-origin middleware on `/api/*` rejects cross-origin POST/PUT/PATCH/DELETE; the keys endpoint returns nothing on the public summary route. The `/api/provider-keys` route (decrypted keystore) is also gated by a loopback-only middleware that checks the actual TCP peer (not the spoofable `Host` header) — visiting LAN devices get a 403 even when `TUSKS_HOST=0.0.0.0` is set. **A LAN-write gate additionally blocks all non-GET requests from LAN sources unless the user explicitly sets `TUSKS_LAN_WRITES=1`** — so opting into LAN exposure gives visitors read-only access by default. | If you opt into LAN exposure (`TUSKS_HOST=0.0.0.0`), your stored keys are still safe and LAN visitors can only BROWSE (read chronicles, transcripts, lists); they can't upload or change anything unless you also set `TUSKS_LAN_WRITES=1`. LAN traffic is plain HTTP, so only do this on trusted home / office networks; never on public Wi-Fi. See [the security overview](../docs/security/overview.md) for the plain-English version. |
 | **Tampering** | Browser script modifies persisted settings (routing, glossary, profiles). | Same-origin gate on every state-changing route; keystore is AES-256-GCM and the decrypted bundle never appears in any public response. | Keep your browser sandboxed — don't paste untrusted JS into the devtools console; don't install browser extensions you haven't vetted. |
 | **Repudiation** | A user denies having modified state. | N/A in a single-user local app — there's no auth boundary to repudiate within. | N/A. |
-| **Information disclosure** | An attacker who has read access to your config directory + your machine identity (hostname + username + platform) can decrypt `providers.enc`. | The decryption key is machine-bound — copying `providers.enc` to a different machine doesn't help an attacker. Atomic writes (rename-from-tmp) prevent half-written exposure during saves. | Don't share `{configDir}/providers.enc`; if your machine is compromised, **rotate your provider keys immediately** (revoke + reissue at each provider's console). The keystore is obfuscation, not high-grade crypto. |
-| **Denial of service** | An LLM provider exhausts its quota mid-run; the pipeline fails halfway through. | The rate-limit dialog catches quota errors mid-pipeline and offers four user-controlled paths (stop+export / slow-down 3× / pause+save / fallback). On-disk checkpoints let you resume tomorrow. | Watch your provider dashboard — Tomes can pause your run, but it won't alert you to billing surprises. Set spending caps at the provider for paid keys. |
+| **Information disclosure** | An attacker who has read access to your config directory + your machine identity (hostname + username + platform) can decrypt `providers.enc`. | The decryption key is machine-bound — a copied `providers.enc` does not decrypt on a machine with a different host name or user name. Atomic writes (rename-from-tmp) prevent half-written exposure during saves. | Don't share `{configDir}/providers.enc`; if your machine is compromised, **rotate your provider keys immediately** (revoke + reissue at each provider's console). The keystore is obfuscation, not high-grade crypto. |
+| **Denial of service** | An LLM provider exhausts its quota mid-run; the pipeline fails halfway through. | For Gemini, the rate-limit dialog catches quota errors mid-pipeline and offers four user-controlled paths (stop and export / slow down 3× / pause and save / switch to the paid key). On-disk checkpoints let you resume tomorrow. | Watch your provider dashboard — Tomes can pause your run, but it won't alert you to billing surprises. Set spending caps at the provider for paid keys. |
 | **Elevation of privilege** | An attacker tries to escalate from in-Tomes capability to OS capability. | No auth boundaries exist within the app (no users, no roles), so there is no "privilege" to escalate to within Tomes itself. The server runs as your user account, with your user account's filesystem permissions. | Run Tomes as a regular user, not root / admin. Don't `sudo bash setup.sh` — the script refuses sudo for exactly this reason. |
 
 ### Path-traversal + injection — the boring-but-important bits
@@ -36,7 +44,7 @@ The base install (paste-a-transcript chronicling with a cloud LLM) is the smalle
 - The chronicle save endpoint sanitises the campaign name (strips `\/:*?"<>|` + control characters) and resolves against `<repo>/Sessions/` before writing, so a malicious campaign string can't escape the directory.
 - The docs viewer (`/api/docs/:slug`) uses an allowlist-based slug→path Map built at startup; there is no string-concatenation of user input with disk paths.
 - Run-checkpoint IDs (`/api/runs/:id`) are validated against `/^[a-zA-Z0-9_-]{1,64}$/` — any other shape returns 400 before reaching disk.
-- The `/api/sessions/:id/*` endpoints (audio-addon only) validate `:id` against the same regex.
+- The `/api/sessions/:id/*` endpoints validate `:id` against the same regex.
 
 These don't appear in the STRIDE table because they're "doors stay closed" rather than distinct categories — but they're load-bearing pieces of the same baseline.
 
@@ -48,19 +56,19 @@ Installing Audio Transcription widens the surface in narrow, documented ways. It
 
 ### Audio Transcription
 
-Adds a Python venv at `<repo>/vendor/python-venv/` (~1.5 GB) and runs `faster-whisper` in-process for transcription. **No audio leaves the host.**
+Adds a Python venv at `<repo>/vendor/python-venv/` (about 1.5–2.5 GB) and runs `faster-whisper` in a separate Python process for transcription. **No audio leaves the host.**
 
-Additional risk: the venv has Python's normal filesystem capabilities — if the venv is tampered with, a compromised package could read anything your user account can read. Mitigation: install only via Settings → Transcription (which uses the bundled, version-pinned setup scripts at `scripts/whisper/setup.ps1` / `.sh`); don't `pip install` random packages into `vendor/python-venv/`. The bundled `requirements.txt` is the trust boundary.
+Additional risk: the venv has Python's normal filesystem capabilities — if the venv is tampered with, a compromised package could read anything your user account can read. Mitigation: install only via Settings → Transcription (which uses the bundled setup scripts at `scripts/whisper/setup.ps1` / `.sh`; PyTorch is installed from a version range, not one exact version); don't `pip install` random packages into `vendor/python-venv/`. The bundled `requirements.txt` is the trust boundary.
 
 ### Local LLMs
 
-Mounts `/api/local/*` as a localhost + RFC-1918 same-origin proxy so the browser can reach Ollama / LM Studio / Unsloth (which are different ports = different origins). The proxy validates every target URL through `validateLocalBaseUrl()` (`server/platform/validators.ts`) — anything outside loopback or private LAN ranges is rejected, along with URLs carrying userinfo (`http://1.2.3.4@127.0.0.1/`), IPv4 written in hex / octal / decimal-integer form, and hostnames that *resolve* to a public address. It is **not** an open proxy.
+Mounts `/api/local/*` as a localhost + RFC-1918 same-origin proxy so the browser can reach Ollama / LM Studio / Unsloth (which are different ports = different origins). The proxy validates every target URL through `validateLocalBaseUrl()` (`server/platform/validators.ts`) — anything that is not loopback or a private LAN address is rejected, however the address is written. It is **not** an open proxy.
 
-Additional risk: if you set `TUSKS_HOST=0.0.0.0` *and* expose Tomes on your LAN, another device on the same LAN could route requests through your local Ollama. Mitigation: keep `TUSKS_HOST=127.0.0.1` (the default) unless you genuinely need LAN access; never put Tomes on a public IP without an auth layer in front.
+Additional risk: if you set `TUSKS_HOST=0.0.0.0` *and* `TUSKS_LAN_WRITES=1`, another device on the same LAN could route requests through your local runner. Mitigation: keep `TUSKS_HOST=127.0.0.1` (the default) unless you genuinely need LAN access; never put Tomes on a public IP without an auth layer in front.
 
 ### Chronicle Personas
 
-Marker file only — `{configDir}/personas-addon.enabled` + the `personas.json` user-authored prompt store. No new attack surface: persona templates can interpolate chronicle text via the existing `{varName}` placeholder syntax (no code execution); the default bardic voice stays available and is never editable so a broken persona can't lock you out of the pipeline.
+Built in; its only state is the `personas.json` user-authored prompt store. No new attack surface: persona templates can interpolate chronicle text via the existing `{varName}` placeholder syntax (no code execution); the default bardic voice stays available and is never editable so a broken persona can't lock you out of the pipeline.
 
 ---
 
@@ -96,7 +104,7 @@ In scope:
 - The Whisper sidecar (`scripts/whisper/`) when the audio add-on is installed
 - The in-app updater (`scripts/update/`, `server/features/maintenance/routes/updater.ts`)
 - The React SPA (`src/`)
-- The local LLM proxy (`server/features/providers/routes/localProxy.ts`) when the local-llm add-on is installed
+- The local LLM proxy (`server/features/providers/routes/localProxy.ts`)
 - The run-checkpoint storage (`server/features/pipeline/routes/runs.ts`)
 
 Out of scope:

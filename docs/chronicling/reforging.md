@@ -22,35 +22,29 @@ redoes the rest somewhere more suitable:
   that's better at picking out memorable, in-character, and dark lines.
 
 It's also the recovery tool when the later phases failed outright — for example
-when running on a [Claude Code subscription](../extras/claude-code.md), where the
-audit and extras phases are the most likely to be declined or to exhaust your
-usage window.
+when running on a [Claude Code subscription](../extras/claude-code.md), where a
+chunk can be declined or the usage window can run out before the later phases
+finish.
 
 ## What you can do per run
 
-Reforge is a guided, three-step panel:
+Reforge is a guided, three-step panel.
 
-1. **Choose a chronicle** — pick one from your Saved Chronicles library, or
-   paste / upload a chronicle file (optionally with its grounded transcript).
-   The panel shows what the source carries (chronicle, grounded transcript, DM
-   Q&A), which determines what's available below.
-2. **Choose what to produce:**
-   - **Chronicle** — *Keep existing* (default) or *Rewrite on Gemini*. Rewriting
-     needs the grounded transcript; it regenerates the prose, applies the
-     selected narrator voice, and improves the distinction between a player
-     *describing their character's actions* and the character *speaking in
-     character*.
-   - **Extras** (quotes / jests / gore) — and where to read them from:
-     - *Grounded transcript* — most thorough (verbatim table dialogue), higher
-       token cost.
-     - *Chronicle prose* — cheaper, but limited to what the narrative preserved.
-   - **Condensed recap** — a tightened retelling plus catch-up bullets, in the
-     selected voice.
-   - **Voice** — any installed [Persona](../extras/personas.md) (or the default
-     Bard) for the rewritten chronicle and condense.
-3. **Review & run** — a plain-language summary of exactly what will happen, then
-   a progress bar. The result is **saved as a new entry** in Saved Chronicles —
-   your original is never overwritten, so you can compare or keep both.
+1. **Choose a chronicle**: saved, pasted or uploaded.
+2. **Choose what to produce**:
+
+   | Option | Choices |
+   |---|---|
+   | Chronicle | Keep existing, or Rewrite on Gemini (needs the grounded transcript) |
+   | Extras | Read from the transcript or from the chronicle |
+   | Condensed recap | Tick it and set the length |
+   | Voice | Bard, or any persona |
+
+3. **Review and run**: the panel shows what will happen, then a progress bar.
+
+The result is a new entry in Saved Chronicles; your original stays as it was.
+
+You can also paste or upload a chronicle file, optionally with its grounded transcript. The panel shows what the source carries (chronicle, grounded transcript, DM Q&A), which decides what is available. **Rewrite on Gemini** needs the grounded transcript; it regenerates the prose, applies the selected narrator voice, and improves the distinction between a player *describing their character's actions* and the character *speaking in character*. **Keep existing** is the default. For the extras, reading the *grounded transcript* is the most thorough (verbatim table dialogue) at a higher token cost; reading the *chronicle prose* is cheaper but limited to what the narrative preserved. The condensed recap is a tightened retelling plus catch-up bullets, in the selected voice. Any installed [Persona](../extras/personas.md), or the default Bard, supplies the voice for the rewritten chronicle and the condense.
 
 ## If a Reforge stops part-way
 
@@ -58,14 +52,16 @@ A Reforge can run for a long time, and it's paid per chunk — so when one stops
 late (a provider out of credits on the last chunk, a model that errors, or you
 pressing **Cancel**), the work it finished is kept rather than thrown away.
 
-The Reforge panel then shows what stopped it, what was kept, and what a resume
-will still run — for example *"Kept: Extras chunks 1–5 of 6. Resume runs Extras
-from chunk 6 and Condense."* **Resume Reforge** carries on from that point with
-the same settings and models, merges the new chunks with the kept ones, and
-saves the result as a new entry, as usual. **Discard** throws the kept work away.
+The Reforge panel then shows what stopped it, what was kept, and what a resume will still run — for example *"Kept: Extras chunks 1–5 of 6. Resume runs Extras from chunk 6 and Condense."*
+
+![A Reforge that stops because credits ran out, an error or Cancel keeps the chunks it finished. From there, Resume Reforge carries on where it stopped with the same settings, or Discard throws the kept work away. The list below says what each part of a resumed Reforge does.](../assets/diagrams/reforging-stopped.svg)
+
+**Resume Reforge** carries on from that point; **Discard** throws the kept work away.
 
 - A chronicle rewrite and extras resume from the chunk that stopped. Condense is
   short, so it starts over.
+- A resumed Reforge runs on the same settings and models, and its result is saved
+  as a new entry, as usual.
 - Starting a different Reforge discards the kept work.
 - The kept work survives a page reload when the source came from Saved
   Chronicles. A pasted or uploaded source is kept only until the page reloads.

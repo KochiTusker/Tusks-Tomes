@@ -136,3 +136,52 @@ describe('ModelListFreshness', () => {
     expect(screen.queryByRole('button')).toBeNull()
   })
 })
+
+describe('ModelListFreshness: automatic updates', () => {
+  const fetchMock = vi.fn()
+
+  function settings(autoUpdateModelList: boolean | undefined) {
+    fetchMock.mockImplementation((_url: string, init?: RequestInit) =>
+      Promise.resolve(
+        new Response(JSON.stringify(init?.method === 'POST' ? {} : { autoUpdateModelList }), { status: 200 }),
+      ),
+    )
+  }
+
+  beforeEach(() => {
+    fetchMock.mockReset()
+    vi.stubGlobal('fetch', fetchMock)
+    getCatalogue.mockResolvedValue({ fetchedAt: OLD, models: [], providerPolicies: [] })
+  })
+
+  it('says where the list comes from and that it updates itself, on by default', async () => {
+    settings(undefined)
+    render(<ModelListFreshness cloudKeyOptions={[opt('openrouter')]} availability={{}} catalogueFetchedAt={OLD} />)
+    expect(await screen.findByText(/From openrouter\.ai · updates automatically/)).toBeTruthy()
+    const box = screen.getByRole('checkbox', { name: 'Keep the model list up to date automatically' }) as HTMLInputElement
+    expect(box.checked).toBe(true)
+  })
+
+  it('turning it off saves the setting and says only Re-check contacts OpenRouter', async () => {
+    settings(true)
+    render(<ModelListFreshness cloudKeyOptions={[opt('openrouter')]} availability={{}} catalogueFetchedAt={OLD} />)
+    await userEvent.click(await screen.findByRole('checkbox', { name: 'Keep the model list up to date automatically' }))
+    await waitFor(() => expect(screen.getByText(/automatic updates off/)).toBeTruthy())
+    expect(screen.getByText(/only Re-check contacts openrouter\.ai/)).toBeTruthy()
+    const post = fetchMock.mock.calls.find(([, init]) => init?.method === 'POST')
+    expect(JSON.parse(post![1].body)).toEqual({ autoUpdateModelList: false })
+  })
+
+  it('reports a failed automatic update while still showing the saved list', async () => {
+    settings(true)
+    getCatalogue.mockResolvedValue({
+      fetchedAt: OLD,
+      models: [],
+      providerPolicies: [],
+      status: { source: 'openrouter.ai', autoUpdate: true, stale: true, lastAttemptAt: NEWER, lastError: 'offline' },
+    })
+    render(<ModelListFreshness cloudKeyOptions={[opt('openrouter')]} availability={{}} catalogueFetchedAt={OLD} />)
+    expect(await screen.findByText(/last update failed, showing the saved list/)).toBeTruthy()
+  })
+})
+

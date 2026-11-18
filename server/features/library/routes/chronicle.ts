@@ -3,11 +3,10 @@
 // project tree and can be browsed / committed like any other file.
 //
 // Layout (relative to repo root):
-//   Sessions/<campaign>/Silence Beyond the Sea - <campaign> - Session <n>.md
+//   Sessions/<campaign>/<campaign> - Session <n>.md
 //
-// The "Silence Beyond the Sea" prefix is a user-facing branding choice
-// (the app was renamed to "Tusk's Tomes" but the chronicle outputs keep
-// the original campaign label).
+// The file is named after the user's own campaign and nothing else, so two
+// campaigns never share a label.
 
 import express, { type Router } from 'express'
 import path from 'node:path'
@@ -23,9 +22,16 @@ import {
 } from '../services/docxRenderer.js'
 import { asyncRoute } from '../../../platform/asyncRoute.js'
 
-const FILENAME_PREFIX = 'Silence Beyond the Sea'
-
 const REPO_ROOT = repoRoot()
+
+/** The file name a saved chronicle is written under. Both segments must
+ *  already be sanitised. A variant (reforge / iteration copy) gets its own
+ *  name so it never overwrites the canonical Session N export or a prior
+ *  variant. */
+export function sessionFileName(safeCampaign: string, sessionNumber: number, safeVariant = ''): string {
+  const base = `${safeCampaign} - Session ${Math.floor(sessionNumber)}`
+  return safeVariant ? `${base} - ${safeVariant}.md` : `${base}.md`
+}
 
 export function chronicleRouter(): Router {
   const router = express.Router()
@@ -61,13 +67,8 @@ export function chronicleRouter(): Router {
     const dir = path.join(REPO_ROOT, 'Sessions', safeCampaign)
     await fs.mkdir(dir, { recursive: true })
 
-    // A variant (reforge / iteration copy) gets its own filename so it never
-    // overwrites the canonical Session N export or a prior variant.
     const safeVariant = typeof variant === 'string' ? sanitizeSegment(variant) : ''
-    const fileName = safeVariant
-      ? `${FILENAME_PREFIX} - ${safeCampaign} - Session ${Math.floor(sn)} - ${safeVariant}.md`
-      : `${FILENAME_PREFIX} - ${safeCampaign} - Session ${Math.floor(sn)}.md`
-    const absPath = path.join(dir, fileName)
+    const absPath = path.join(dir, sessionFileName(safeCampaign, sn, safeVariant))
 
     // Atomic write: a crash mid-flush leaves the previous file intact
     // rather than truncating it. Same pattern as appData.writeJson.

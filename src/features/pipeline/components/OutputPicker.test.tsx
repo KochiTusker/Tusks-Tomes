@@ -137,9 +137,9 @@ describe('OutputPicker — phase preview', () => {
       />,
     )
     expect(document.body.textContent).toContain('Phase 3 (Chronicle)')
-    // v1.1.0 — Phase 5 label now explicitly notes the cloud-skip behaviour
-    // so cloud users don't mistakenly expect a Phase 5 call to fire.
-    expect(document.body.textContent).toContain('Phase 5 (Polish — local-LLM only; cloud providers skip)')
+    // v1.1.0 — Phase 3.5 label now explicitly notes the cloud-skip behaviour
+    // so cloud users don't mistakenly expect a Phase 3.5 call to fire.
+    expect(document.body.textContent).toContain('Phase 3.5 (Polish — local-LLM only; cloud providers skip)')
     expect(document.body.textContent).toContain('Phase 4 (Extras)')
   })
 
@@ -153,14 +153,14 @@ describe('OutputPicker — phase preview', () => {
     expect(document.body.textContent).toContain('Select at least one output')
   })
 
-  it('includes Phase 6 only when Condensed is on', () => {
+  it('includes Phase 5 only when Condensed is on', () => {
     render(
       <OutputPicker
         initial={{ chronicle: true, extras: false, condensed: true, condensePercentage: 20 }}
         onConfirm={vi.fn()}
       />,
     )
-    expect(document.body.textContent).toContain('Phase 6 (Condense)')
+    expect(document.body.textContent).toContain('Phase 5 (Condense)')
   })
 })
 

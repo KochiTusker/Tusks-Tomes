@@ -21,8 +21,8 @@ Tusker community grows.
 - [Community-suggested features](#community-suggested-features) — ideas from the feedback form and GitHub
 - [How to suggest a feature](#how-to-suggest-a-feature)
 - [Recently shipped](#recently-shipped)
-- [Won't do (Player)](#wont-do-and-why) — politely declined, with reasoning
-- [Developer notes](#developer-notes) — decision log, security audit, QoL backlog, theming + animation specs
+- [Won't do (and why)](#wont-do-and-why) — politely declined, with reasoning
+- [Developer notes](#developer-notes) — decision log, QoL backlog, theming + animation specs
 
 ---
 
@@ -39,16 +39,18 @@ The active backlog — items on deck for the next handful of releases.
 Order is loose; community demand can promote things.
 
 - [ ] **Community Discord server** — a shared home for Tusk's Tomes and [Tusk's Vault](https://github.com/KochiTusker/Tusks-Vault). Setup help, feature-idea voting, chronicle showcase, dev talk. Will spin up once there's enough signalled interest via the [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdxdqOhb1SQvI3fs50gMJv_Cesh2MuxUm95QO2iZia5sFhyyQ/viewform?usp=header) — the form has a "would you join a community Discord?" question, and a yes there is the trigger.
-- [ ] **GPU transcription for non-NVIDIA cards** — currently impossible to ship as a one-click add-on, and worth recording why so it isn't re-investigated from scratch. `faster-whisper` (CTranslate2) implements only CUDA and CPU, so AMD, Intel Arc and Apple GPUs go unused. A survey of the alternatives in August 2026 found: **whisper.cpp** ships CPU, BLAS (still CPU) and CUDA builds — its Vulkan backend exists in source but is in *no* release asset; **sherpa-onnx** ships CPU and CUDA only, no DirectML; **Const-me/Whisper** genuinely does use any DirectX 11 GPU via DirectCompute and ships a 0.4 MB CLI, but has had no release since July 2023. So the only ready-made vendor-agnostic option is unmaintained. Re-open if any of these ships a Vulkan or DirectML release asset, or if hosting a self-built, signed Vulkan binary becomes worth the publisher burden. Note that whisper.cpp would still be attractive purely for dropping the Python 3.10–3.12 requirement and the ~2 GB PyTorch install — the sidecar already sits behind a stable JSON contract (`{segments, durationMs, language}`, see `server/features/transcription/services/whisper/invoke.ts`), so a second engine is a bootstrap + invoke path rather than a rewrite.
-- [ ] **More provider options — Kimi, DeepSeek and Grok** — add these alongside the existing Gemini / Claude / OpenAI cloud keys. DeepSeek and Kimi are attractive on price-per-token for the mechanical phases; Grok is being looked at for the narrative phase. Each needs the usual work: a provider adapter, chunk-size row, rate-limit handling, and a probe target list.
+- [ ] **GPU transcription for non-NVIDIA cards** — a whisper.cpp bridge already exists in **Settings → Transcription** (you point it at your own whisper.cpp binary and model), but a one-click add-on is currently impossible, and worth recording why so it isn't re-investigated from scratch. `faster-whisper` (CTranslate2) implements only CUDA and CPU, so AMD, Intel Arc and Apple GPUs go unused. A survey of the alternatives in August 2026 found: **whisper.cpp** ships CPU, BLAS (still CPU) and CUDA builds — its Vulkan backend exists in source but is in *no* release asset; **sherpa-onnx** ships CPU and CUDA only, no DirectML; **Const-me/Whisper** genuinely does use any DirectX 11 GPU via DirectCompute and ships a 0.4 MB CLI, but has had no release since July 2023. So the only ready-made vendor-agnostic option is unmaintained. Re-open if any of these ships a Vulkan or DirectML release asset, or if hosting a self-built, signed Vulkan binary becomes worth the publisher burden. A one-click install would also drop the Python 3.10–3.12 requirement and the about 1.5–2.5 GB Python environment. Both engines return the same result shape (`{segments, durationMs, language}`, see `server/features/transcription/services/whisper/invoke.ts`), and the engine is chosen per request.
 - [ ] **YouTube SRT/VTT parser** — sister formats to `.sbv`, same caption-repair pipeline
 - [ ] **Whisper diarisation for single-track audio** — recover speaker labels via pyannote when there's no per-speaker source
 - [ ] **In-PDF image OCR** — handle scanned session notes and handwritten lore
 - [ ] **Tusk's Tomes Launcher** — standalone Electron version manager (separate from the app); lets non-technical users download, install, switch versions, repair, and clean-reinstall from a desktop GUI; Windows installer via Inno Setup; distributed as a $1 Patreon convenience item (core app stays MIT/free on GitHub); Mac/Linux parity is a follow-on roadmap item
 - [ ] **In-browser audio trim** — clip out pre-game small-talk before transcription
 - [ ] **Live push-to-Vault on chronicle finalise** — today's flow is filesystem-based; make it event-driven
-- [ ] **Retrieval instead of whole-KB concat, for very large lore archives** — today every chunk's prompt carries the entire knowledge base. With a 100k-character KB and 13 transcript chunks per phase that is ~1.3M characters of input per phase, which works but is wasteful. Embedding the KB once and retrieving the top-K relevant passages per chunk makes the cost constant regardless of archive size. Deferred because most lore archives sit comfortably under 200k characters and Gemini's context caching already captures most of the saving without an embedding pipeline. When it does land, retrieval has to run locally — a bundled embedding model or an in-context scheme — because an embedding API we pay for would break the no-hosted-services rule. Re-open when someone turns up with a KB that genuinely does not fit in context.
+- [ ] **Embedding-based retrieval, for very large lore archives** — Chronicle and Condense (Phases 3 and 5) carry the whole knowledge base in every chunk's prompt, while Ground, Audit and Extras carry a compact glossary. The **Send only relevant lore to Chronicle and Condense** setting in **Settings → Pipeline tuning** (off by default) already narrows the lore to the notes whose titles or aliases the text mentions, and the app switches it on by itself when a known model window cannot hold the whole vault. What is not built is embedding the knowledge base once and retrieving the top-K relevant passages per chunk. Deferred because title and alias matching already removes most of the lore a session never mentions. When embedding does land, retrieval has to run locally — a bundled embedding model or an in-context scheme — because an embedding API we pay for would break the no-hosted-services rule. Re-open when someone turns up with a KB where title and alias matching still sends too much.
 - [ ] **Verified Linux and macOS support** — the stack (Node, Vite, Express, React) is cross-platform and the POSIX launcher scripts exist, but neither OS has actually been run end to end here, so the docs say "untested" rather than "supported". Closing this means a real run on each: launcher, Whisper setup, config paths, and the add-on install flow. No per-OS forks — one codebase or it does not ship.
+- [ ] **Campaign book export** — one Word file, plus a print view so it can be saved as a PDF, holding every session of a campaign in order, with a title page, a contents page and a quotes appendix. Reforged versions currently save as separate, ungrouped entries, so this needs a way to choose which version of each session goes in: reforges grouped under their original.
+- [ ] **Real campaigns** — pick the campaign from a list instead of typing it into a free-text box. Each campaign keeps its own speaker mappings, glossary and lore, and saved chronicles can be filtered by campaign. This stops a typo splitting one campaign into two, and stops speaker names from two different games clashing.
+- [ ] **Run Extras alongside the Chronicle** — the Extras step does not need the chronicle. When the two steps use different connections, running them at the same time shortens a run by about the length of the Extras step. It gives no gain when both use the same provider, because they share its rate limit. Pausing, progress display and saved progress all assume one step at a time, so they need reworking first. It would ship switched off at first.
 
 The accessibility goal stays paramount: **every "installer" / "launcher" / "in-app" item above is in service of making Tusk's Tomes usable by people who have never cloned a Git repository.**
 
@@ -104,7 +106,7 @@ assumption.
 
 ---
 
-## Recently shipped
+**Recently shipped**
 
 ### OpenRouter replaces the direct Anthropic and OpenAI keys
 
@@ -169,12 +171,12 @@ ordered opinion that weighs speed and reliability, which no grade encodes.
 untouched catalogue entry is not. *Handles mature content* narrows to models
 measured carrying graphic violence and crude dialogue without softening it.
 
-### The explicit-content failsafe is no longer Gemini-only
+### The explicit-content failsafe works without a Gemini key
 
-When the subscription CLI refuses a chunk, the repair model is now a choice,
-restricted to models measured carrying explicit content. Previously it was
-Gemini, hardcoded — so a user without a Gemini key got no repair at all and the
-refusal became a permanent hole in the chronicle.
+When the subscription CLI refuses a chunk, the repair model is a choice,
+restricted to models measured carrying explicit content: Gemini Flash on your
+Gemini key by default, or one of several models on OpenRouter. A user without a
+Gemini key still gets a repair.
 
 ### Extras tells NPC dialogue from narration
 
@@ -188,19 +190,8 @@ narration, and nothing downstream recovers it.
 ### Two OpenRouter routing presets
 
 **All OpenRouter** runs every phase on one key. **OpenRouter hybrid** keeps the
-mechanical phases on a subscription CLI and — the part that was previously
-impossible — repairs refused chunks on OpenRouter too. Both failsafes used to
-name Gemini directly, so a user without a Gemini key got no repair at all and
-the refusal became a permanent hole in the chronicle.
-
-### Extras now tells NPC dialogue from narration
-
-The extras prompt had no rule for DM speech, so scene description narrated by
-the DM was routinely captured as though a character had said it aloud. The rule
-that fixes it defaults to **keeping** the quote: an earlier version defaulted to
-excluding, and deleted a five-turn conversation with a named butler because it
-could not tell which NPC was speaking. Losing a real line costs far more than
-keeping a stray piece of narration, and nothing downstream can recover it.
+mechanical phases on a subscription CLI and repairs refused chunks on
+OpenRouter too, so it needs no Gemini key.
 
 ---
 
@@ -266,9 +257,8 @@ Three paths, all good — pick whichever feels lighter:
 - Things that make Tusk's Tomes **easier for non-developers** to install / use
 - Things that **integrate with tools DMs already use** (VTTs, lore wikis, recording bots)
 - Things that **improve chronicle quality** without burning more LLM tokens
-- Things that require a cloud account
-- Things that require telemetry or phone-home
-- Things that lock features behind a paywall
+
+Ideas that need a cloud account, telemetry or a paywall are covered under [Won't do](#wont-do-and-why).
 
 If your idea doesn't pass the heuristics but you think it should, **say so** — these aren't laws, they're priors. Community feedback shifts them.
 
@@ -287,26 +277,26 @@ The headline ship-it items, newest first. For the full code-level
 history see `git log`.
 
 - **Codex add-on** — route phases through a signed-in OpenAI Codex CLI and draw on that plan's allowance instead of metered API credit. Mirrors the Claude Code add-on and is fully independent of it; exhausting the allowance pauses the run rather than failing it.
-- **Guided routing presets** — a preset ladder (maximum quality → balanced → measured hybrid → free) with measured cost savings shown against the Pro-tier baseline, behind an "Advanced routing" toggle for anyone who wants the per-phase controls directly.
-- **Cross-provider routing within one run** — previously listed as won't-do. Per-phase routing now carries an explicit (provider, tier, model) tuple, so Claude can run phase 1 while Gemini runs phase 3 and OpenAI runs phase 4.
+- **Guided routing presets** — a ladder of six one-click recipes (the latest flagship everywhere, Gemini Pro prose with free grounding, OpenRouter prose with free grounding, OpenRouter everywhere, Gemini Flash prose with free grounding, and your subscription CLI everywhere), each showing its saving against the flagship baseline and whether that figure is measured or estimated. Per-phase controls sit under a **Customise phases** disclosure in Settings → Providers & models.
+- **Cross-provider routing within one run** — per-phase routing carries an explicit (provider, tier, model) target, so a subscription CLI can run Phases 1 and 2 while OpenRouter runs Phases 3, 4 and 5. The OpenRouter hybrid preset does exactly that.
 - **Obsidian Vault lore source** — point Tomes at an existing Obsidian vault and ground chronicles against those notes, read-only. Includes a vault CLAUDE.md generator; the context toggle is off by default.
 - **Claude Code add-on** — same idea as the Codex add-on, against a signed-in Claude Code CLI.
 - **Chronicle Reforge** — re-run a finished chronicle through a different model or persona without re-running the whole pipeline.
-- **Dynamic model dropdowns for every provider** — "Probe models" now covers Gemini Paid, Gemini Free, Claude and OpenAI, and local backends list their own models. Dropdowns mark each entry verified or unverified based on what the key can actually call.
+- **Dynamic model dropdowns for every provider** — "Probe models" covers the Gemini paid and free keys. Dropdowns mark each entry verified or unverified based on what the key can actually call.
 - **Settings + Tome of Lore reorganisation** — collapsible sections with persisted state, a sticky section rail, and inline help popovers.
-- **Cost optimisation pass** — Budget mode preset in Hybrid Routing + Phase 3/6 prompt-cache extension + (provider, model-tier)-keyed chunk sizes + Flash rate-limit tier wiring. A 3-hour session on Pro lands around a fifth of the cost on Flash with caching.
+- **Cost optimisation pass** — Budget mode preset in Hybrid Routing + Phase 3/5 prompt-cache extension + (provider, model-tier)-keyed chunk sizes + Flash rate-limit tier wiring. A 3-hour session on Pro lands around a fifth of the cost on Flash with caching; [what it costs](../models/costs.md) carries the current figures.
 - **Free-tier resilience** — rate-limit dialog (stop / slow-down 3× / pause-and-save / fallback) + on-disk run checkpoints (`/api/runs/*`) + Resume banner above the Chronicle tab. Partial Markdown export at any pipeline phase. Hitting a free-tier daily quota mid-3hr-session is now a non-event.
-- **Whisper opt-in install** — Whisper is no longer in the default `npm run setup` path. Audio Transcription is opt-in via Settings → Add-ons. Users who only paste transcripts no longer need Python.
+- **Whisper opt-in install** — Whisper is not in the default `npm run setup` path. Audio Transcription is opt-in via Settings → Transcription. Users who only paste transcripts do not need Python.
 - **Chronicle Personas add-on** — six character preset narrators + an editor for your own. Phases 1/2/4 stay neutral; persona affects only the prose phases.
-- **In-app self-updater** — Settings → Updates → Apply
+- **In-app self-updater** — Settings → Maintenance → Updates
 - **Tusk's Vault pairing** — auto-detect sibling install + one-click Send-to-Vault
 - **GUI overhaul** — deep void violet arcane theme with dramatic animations
 - **Chronicle auto-save** — every finished chronicle lands at `Sessions/<campaign>/<file>.md`
 - **Multitrack upload pipeline** — Craig zip ingest, chunked auto-stitching, staged batch uploads
 - **Live Discord transcription via faster-whisper** — sidecar with CUDA auto-detection
-- **Six-phase pipeline** — cleanup → ground → narrate → curate (+ optional polish + condense)
+- **Five-phase pipeline** — ground → audit → chronicle → polish (local models only) → extras → condense
 - **Encrypted-at-rest keystore** — AES-256-GCM, machine-bound scrypt key
-- **Multi-provider LLM abstraction** — Claude / OpenAI / Gemini / Claude Code / Codex / Ollama / LM Studio / Unsloth, with Hybrid Mode
+- **Multi-provider LLM abstraction** — Gemini / OpenRouter / Claude Code / Codex / Ollama / LM Studio / Unsloth, with Hybrid Mode
 - **Cross-platform first-time-setup script** — `setup.bat` / `setup.sh` with dependency checks
 - **Vestigial Discord-bot code removal** — the in-app voice-channel bot path is gone (Craig handles recording externally). Old `BotPanel.tsx`, `server/bot/`, and `DISCORD_SETUP.md` retired.
 
@@ -329,7 +319,7 @@ your situation invalidates the reasoning** — these aren't permanent.
 - **Dedicated humor-extraction pass.** `phase4Extras` already extracts jests, gore, and quotes with kind classification.
 - **Lore → structured glossary compilation via one-time cloud Tier-3 call.** The existing KB concat works for all frontier providers; the extra cost isn't justified.
 - **9-test capability probe for local models.** Replaced with a 2-test mini-probe (structured JSON + grounding fidelity). The longer probe was slower without producing better routing decisions.
-- **NVIDIA Parakeet / Canary-Qwen as alternative transcription engines.** `faster-whisper` large-v3 with `int8_float16` was chosen for better community support, faster install, and fewer GPU memory edge cases. Worth noting what that comparison did *not* cover: whisper.cpp was never evaluated, and `faster-whisper`'s CUDA-only backend is the reason AMD and Intel GPUs get no acceleration at all. That gap is now a backlog item rather than a settled decision.
+- **NVIDIA Parakeet / Canary-Qwen as alternative transcription engines.** `faster-whisper` large-v3 with `int8_float16` was chosen for better community support, faster install, and fewer GPU memory edge cases. Worth noting what that comparison did *not* cover: `faster-whisper`'s CUDA-only backend is the reason AMD and Intel GPUs get no acceleration through the bundled engine. The whisper.cpp bridge in **Settings → Transcription** is the route for those cards when you bring your own build; why it is not a one-click add-on is recorded under [What's coming next](#whats-coming-next).
 - **Live streaming transcription from a bot in voice channels.** The in-app bot path is retired; Craig handles recording. Post-session batch transcription is more accurate and simpler.
 - **Fully lazy add-ons (code only downloaded on Install click).** Considered an architecture where add-on source — server modules and React UI alike — lived outside the public clone and downloaded on Install via sha256-verified tarballs from GitHub Releases, with the SPA loading add-on UI as separate Vite chunks. Goal: a fresh clone ships zero add-on code, single source of truth stays in the canonical repo. Spiked the colocation pass (all three add-ons reorganised under `server/addons/<name>/` + `src/components/addons/<name>/` + `src/lib/addons/<name>/`, tests green) and then declined the rest. The Python venv — the only large disk footprint at ~1.5 GB — is *already* lazy via the Whisper opt-in card; the remaining JS/TS savings would be ~120 KB built + ~5,500 LOC source, which doesn't justify the architectural surface (Vite library-mode chunks, importmap for externalised React, dynamic SPA loader, tarball pipeline, sha256 verification, postinstall sandbox, release-script exclusion logic). Re-open if a future add-on with substantial native deps changes the disk-footprint calculus.
 - **API keys stored in `.env` for end-user distribution.** Keys go into an encrypted file managed via GUI — `.env` is a developer convenience only.
@@ -348,12 +338,12 @@ your situation invalidates the reasoning** — these aren't permanent.
 <div class="docs-section-body">
 
 
-The rest of this document is the technical decision log — security
-audit findings, QoL backlog with file references, theming + animation
-specs, project conventions, and a glossary of pipeline terms. Useful
+The rest of this document is the technical decision log — the QoL
+backlog with file references, theming + animation specs, project
+conventions, and a glossary of pipeline terms. Useful
 if you're contributing code; safe to skip otherwise.
 
-### Original roadmap history
+### Shipped steps and current conventions
 
 The original 16 numbered steps shipped. For the current shape of the
 system, read [architecture.md](how-its-built.md). The remainder of this
@@ -364,14 +354,11 @@ Since the original roadmap was written:
 - The in-app **Discord voice-channel bot is retired**. Recording happens
   externally (Craig Bot is the recommended recorder); the app is a pure
   post-processor that consumes multi-track zips / loose WAVs. The
-  defunct bot UI + server code is still in the repo but no longer
-  rendered (`server/bot/client.ts`, `voiceCapture.ts`, `commands.ts`,
-  `BotPanel.tsx`, `src/lib/bot.ts`, the `/api/bot/*` routes); see
-  §"Code cleanup" below for the removal plan.
-- The **Phase 5 (Polish, local-only)** and **Phase 6 (Condense)** passes
+  bot UI and server code are gone (QoL-4 below lists what was removed).
+- The **Phase 3.5 (Polish, local-only)** and **Phase 5 (Condense)** passes
   shipped.
 - Finished chronicles **auto-save** to
-  `<repo>/Sessions/<campaign>/Silence Beyond the Sea - <campaign> - Session <n>.md`
+  `<repo>/Sessions/<campaign>/<campaign> - Session <n>.md`
   via `POST /api/chronicle/save`.
 - The five-step provider abstraction matured to support **Gemini Paid /
   Free tier escalation** at run start.
@@ -380,7 +367,7 @@ Since the original roadmap was written:
 
 Folded in from the old `milestones.md`, which was retired once most of
 what it planned had shipped. Two of its seven milestones are still live
-and now sit in the backlog above (retrieval, and verified Linux/macOS
+and now sit in the backlog above (embedding-based retrieval, and verified Linux/macOS
 support); the rest were either delivered or abandoned. The abandoned one
 is worth naming explicitly: that file described the goal as a
 **one-time-purchase desktop tool** with offline licence-key enforcement.
@@ -390,7 +377,7 @@ That is not the project. Tusk's Tomes is MIT-licensed and free, and the
 These constraints still bind, whatever you are working on:
 
 1. **Provider isolation.** Anything provider-specific stays inside its
-   own module under `src/lib/providers/`. The pipeline only ever calls
+   own module under `src/features/providers/lib/providers/`. The pipeline only ever calls
    `generate(req, opts)` through the `LLMProvider` interface. Do not
    sprinkle a vendor's SDK types across the pipeline.
 
@@ -432,16 +419,16 @@ The shipped surface delivers:
    from refinement.
 2. A **persistence layer + GUI editor** for the glossary and speaker
    mappings.
-3. A **multi-provider abstraction** (Gemini / Claude / OpenAI / local)
-   with per-provider model profiles and **single-active-provider**
-   selection at run start.
+3. A **multi-provider abstraction** (Gemini / OpenRouter / Claude Code /
+   Codex / local) with per-provider model profiles and per-phase
+   provider selection.
 4. An **encrypted local key store** with a GUI for entering and
    managing API keys.
 5. **Hybrid Mode** that detects local LLMs (Ollama / LM Studio /
    llama-server / Unsloth) and routes individual phases to them based
    on a 2-test capability probe.
-6. **Six-phase pipeline** (1 ground → 2 audit → DM clarifications → 3
-   chronicle → 5 polish [local only] → 4 extras → 6 condense).
+6. **Five-phase pipeline** (1 ground → 2 audit → DM clarifications → 3
+   chronicle → 3.5 polish [local only] → 4 extras → 5 condense).
 7. **Chronicle auto-save** to disk as Markdown in a repo-relative,
    git-ignored `Sessions/` tree.
 
@@ -471,20 +458,15 @@ re-opening any of them:
   mini-probe (structured JSON + grounding fidelity).
 - **NVIDIA Parakeet / Canary-Qwen as alternative transcription
   engines.** `faster-whisper` large-v3 with `int8_float16` is the
-  single chosen engine.
+  bundled engine; the whisper.cpp bridge is for your own build.
 - **Live streaming transcription from a bot in voice channels.** The
   bot path is retired; Craig handles recording. Post-session batch
   transcription is more accurate and simpler.
-- ~~**Cross-provider routing within one run**~~ — **decision reversed, and
-  shipped.** Per-phase routing now carries an explicit (provider, tier, model)
-  tuple, so Claude can run Phase 1 while Gemini runs Phase 3. Kept here as a
-  record that the original call was wrong. See `src/features/routing/lib/routing.ts`.
 - **Python-style `src/` tree with `providers/`, `router/`, etc.** This
   project is TypeScript. The Python sidecar is scoped to
   `faster-whisper` invocation only.
 - **API keys in `.env` for end-user distribution.** Keys go into an
-  encrypted file managed via GUI. (See P1-3 below about removing the
-  `PAID_` Vite env prefix for the same reason.)
+  encrypted file managed via GUI.
 
 ---
 
@@ -501,86 +483,14 @@ re-opening any of them:
 Concrete items found while auditing the current code. Each is a
 specific change at a specific surface.
 
-### QoL-1 — Upload-state persistence across tab switches  *(user-flagged)*
+### QoL-1 — Upload-state persistence across a reload  *(user-flagged)*
 
-**Symptom:** the user uploads a Craig zip in the Bot tab, sees the
-speaker-assignment table, switches to another tab to check the KB or
-Settings, then switches back — and the entire upload preview is gone.
-They have to drag the file in again.
-
-**Root cause:** `UploadPanel`'s state (`phase`, `entries`, `extracted`,
-`uploadFraction`, …) lives in component-local `useState`. Radix Tabs
-unmounts inactive `<TabsContent>` by default, so the entire component
-is destroyed on every tab switch. The `App.tsx:48` comment already
-acknowledges this exact behaviour for `RefinementTool`.
-
-**Two viable fixes:**
-- **(a) `forceMount` on Bot / Sessions tabs.** Pass `forceMount` to
-  Radix's `<Tabs.Content>` for the surfaces that hold long-lived work.
-  Cheapest fix — keeps the React state alive because the panel stays in
-  the DOM (hidden via `data-state` + CSS). Drawback: no localStorage
-  durability across reloads.
-- **(b) Lift in-flight upload state to a context provider** at
-  `App.tsx` and rehydrate from `/api/sessions/:id/live` on mount. More
-  refactor but survives a hard reload mid-transcription.
-
-Recommendation: **(a) immediately**, **(b) as a follow-up** once we
-know the user reaches for it after refreshes too. The `File` objects
-in `entries` can't be re-hydrated from disk, so (b) only covers the
-post-upload `transcribing` / `ready` phases.
-
-### QoL-2 — Merge Sessions into the Bot tab  *(user-flagged)*
-
-The Bot tab is currently the *upload* surface and the Sessions tab is
-the *historical session list*. They're the same conceptual workflow,
-split awkwardly across two tabs:
-
-- Bot → "I'm starting a new session"
-- Sessions → "I'm continuing/reviewing an existing session"
-
-Proposed layout:
-
-```
-Bot tab → renamed to "Sessions"
-  ├─ New session card (the current UploadPanel)
-  └─ Past sessions list (the current SessionsList)
-```
-
-The list of past sessions sits below the upload card; clicking one
-expands the same `LiveTranscript` view the post-upload flow already
-uses. A subtle visual divider (use the existing `.ornament` class)
-separates "new" from "past". Drop the standalone Sessions tab from
-`App.tsx`.
-
-### QoL-3 — Rename the Bot tab
-
-Even without QoL-2, "Bot" is a misleading label now that the upload
-panel sits there. Rename to **Sessions** (preferred — sets up QoL-2)
-or **Recordings**. Update `App.tsx:92-94`.
-
-### QoL-4 — Remove vestigial Discord bot code *(shipped)*
-
-Now done. The bot code, `DISCORD_SETUP.md`, and the dependency cleanup
-all landed. Kept for historical reference of what was removed:
-
-- `server/bot/client.ts`, `commands.ts`, `consent.ts`,
-  `voiceCapture.ts`, `speakerDiscovery.ts`.
-- `server/api/bot.ts` + the `app.use('/api/bot', botRouter())` line in
-  `server/index.ts`.
-- `src/components/BotPanel.tsx`, `src/lib/bot.ts`.
-- `DISCORD_SETUP.md`.
-- The `discord` slot in the keystore schema
-  (`server/features/providers/services/crypto/keyStore.ts`).
-- The `discord.js`, `@discordjs/voice`, `@discordjs/opus`,
-  `prism-media`, `@stablelib/xchacha20poly1305`, `@noble/ciphers`
-  dependencies in `package.json`.
-
-**Keep**: `server/bot/sessionManifest.ts` (the upload pipeline uses it
-as the manifest schema owner) — rename to `server/sessions/manifest.ts`
-in the same change, fix imports.
-
-This is mostly tree-shake; the win is reduced attack surface (six fewer
-dependencies, fewer endpoints) and clearer architecture.
+Switching tabs keeps an upload: the Sessions tab stays mounted.
+What is left is surviving a hard reload mid-transcription. Lift the
+in-flight upload state to a context provider at `App.tsx` and rehydrate it
+from `/api/sessions/:id/live` on mount. The `File` objects in `entries`
+can't be re-hydrated from disk, so this only covers the post-upload
+`transcribing` / `ready` phases.
 
 ### QoL-5 — Kill the `state.campaign` / `state.sessionNumber` zombie fields
 
@@ -589,14 +499,8 @@ that nothing in the UI ever calls; `state.campaign` is always `''` and
 `state.sessionNumber` is always `1`. The chronicle-save wiring already
 read directly from the Header's `LS_CAMPAIGN` / `LS_SESSION`. Drop the
 dead fields from `RefinementState` and the matching actions; the
-ChronicleView, Phase 6 prompt, and download filename then have a
+ChronicleView, Phase 5 prompt, and download filename then have a
 single source of truth.
-
-### QoL-6 — README + DISCORD_SETUP cleanup *(shipped)*
-
-`DISCORD_SETUP.md` is gone. The README no longer walks through any bot
-setup; the Craig path lives in [AddOns.md](../extras/README.md) +
-[docs/add-ons/audio-transcription.md](../extras/audio-transcription.md).
 
 ### QoL-7 — Surface the chronicle save path in the success toast
 
@@ -609,16 +513,14 @@ absPath)`. Quality-of-life equivalent of "Show in Finder" on Mac.
 
 When a session is mid-transcription (live queue is draining), surface
 that in the Header — a small pulsing rune + "Whisper · 47 / 132
-utterances". One click jumps to the new Sessions tab and scrolls to the
-in-flight session. Reuses the existing `/api/sessions/:id/live` poll.
+utterances". One click jumps to the Sessions tab and scrolls to the
+in-flight session. Reuses the existing `/api/sessions/:id/live` poll. Not built: the Header has no active-session indicator today.
 
 ### QoL-9 — Phase-by-phase replay from the Sessions list
 
-Every Sessions row should expose **Send to Refinement**, **Re-run
-Phase 6 only**, and **Open chronicle .md** actions. Right now the
-"send to refinement" affordance only lives inside the LiveTranscript
-component; surface it as a row-level button so the user doesn't have
-to expand the session first.
+Each processed Sessions row already has **Download SBV** and **Send to Refinement**. Still missing at row
+level: **Re-run Phase 5 only** and **Open chronicle .md**, so the user
+doesn't have to open the session or switch tabs first.
 
 ### QoL-10 — Cost dashboard
 
@@ -629,16 +531,9 @@ list; promoting it because the data is already there.
 
 ### QoL-11 — Drag-and-reorder the upload chunk list
 
-`UploadPanel.tsx:158` moves chunks one row at a time via up/down
+`UploadPanel.tsx` moves chunks one row at a time via up/down
 arrows. For 4× hour-long Craig zips this is fine; for >6 chunks it's
 tedious. Add HTML5 drag-and-drop reorder.
-
-### QoL-12 — DM-question rich text
-
-The DMQuestionsModal currently expects single-line text answers. Some
-clarifications need paragraphs ("In Session 12 Az actually used the
-Cloak before the trap, here's the full beat: …"). Swap the input for a
-small textarea.
 
 ---
 
@@ -687,9 +582,9 @@ icon:
 | 1     | A quill nib drawing a circle         |
 | 2     | A magnifier over runes                |
 | 3     | An open tome with a flame             |
-| 5     | A polishing cloth over a sigil        |
+| 3.5   | A polishing cloth over a sigil        |
 | 4     | Three coins (jests / gore / quotes)   |
-| 6     | A scroll with a tied ribbon           |
+| 5     | A scroll with a tied ribbon           |
 
 Render as inline SVG so the gold colour pulls from `var(--color-gold)`.
 
@@ -792,12 +687,6 @@ The DMQuestionsModal's per-question card flips with a Y-axis rotate
 (160ms) when answered — visual confirmation that the answer landed
 before the next card slides in.
 
-### A-9 — Tab indicator slide
-
-A 1px gold underline slides between active tab triggers via
-`layoutId="tab-indicator"` in Framer Motion. Currently the active tab
-state is purely a colour change.
-
 ### A-10 — Toast brass slide-in
 
 The sonner toast already slides; replace the slide with an "unfurl"
@@ -828,9 +717,9 @@ suggesting a small scroll unrolling.
 - **Express routes for new persistent state.** The React app talks to
   disk through the Express API, not by reaching into the filesystem
   from the browser.
-- **One cloud provider per pipeline run.** If the user has multiple
-  API keys configured, the `ProviderSelectModal` at run start forces
-  selection.
+- **Provider choice is per phase.** The routing document names a default
+  provider and any phase can override it, so one run can mix providers;
+  there is no run-start selection prompt.
 - **No emojis in code or docs unless explicitly requested.**
 - **Don't add error handling for impossible cases.** Validate at
   boundaries (user input, file IO, network), trust internal types.
@@ -853,11 +742,11 @@ const paths = envPaths('tusks-tomes', { suffix: '' })
 ```
 
 Resolves to:
-- Windows: `%APPDATA%\tusks-tomes\`
-- macOS: `~/Library/Application Support/tusks-tomes/`
-- Linux: `~/.config/tusks-tomes/`
+- Windows: config `%APPDATA%\tusks-tomes\Config\`, data `%LOCALAPPDATA%\tusks-tomes\Data\`, cache `%LOCALAPPDATA%\tusks-tomes\Cache\`
+- macOS: config `~/Library/Preferences/tusks-tomes/`, data `~/Library/Application Support/tusks-tomes/`, cache `~/Library/Caches/tusks-tomes/`
+- Linux: config `~/.config/tusks-tomes/`, data `~/.local/share/tusks-tomes/`, cache `~/.cache/tusks-tomes/`
 
-All persistent files live under these roots. `server/platform/appData.ts`
+App state lives under these roots, apart from the repo's `Sessions/` folder and the sibling `Tusks-Lore/` folder. `server/platform/appData.ts`
 exposes the canonical accessor functions.
 
 The project was previously named "Silence Beyond the Sea" and used the
@@ -876,16 +765,16 @@ exactly once.
 <div class="docs-section-body">
 
 
-- **Phase 1 / 2 / 3 / 4 / 5 / 6** — pipeline stages defined in
+- **Phase 1 / 2 / 3 / 3.5 / 4 / 5** — pipeline stages defined in
   `src/features/pipeline/lib/phases/`. Don't renumber.
 - **Grounding** — Phase 1; correcting transcript text against the KB
   and the glossary.
 - **Audit** — Phase 2; surfacing DM clarification questions.
 - **Chronicle** — the Phase 3 output: narrative prose of the session.
-- **Polish** — Phase 5; local-only smoothing of the chronicle. Cloud
+- **Polish** — Phase 3.5; local-only smoothing of the chronicle. Cloud
   providers skip this phase (pass-through).
 - **Extras** — the Phase 4 output: jests, gore, quotes.
-- **Condense** — Phase 6 (optional, user-triggered): tightened
+- **Condense** — Phase 5 (optional, user-triggered): tightened
   retelling + 10–15 catch-up bullets.
 - **Glossary** — the structured corrections data
   (`safeReplacements` + `contextualHints`) in
@@ -895,8 +784,8 @@ exactly once.
   `{configDir}/speakers.json`. The `discordUserId` is a Craig-derived
   identifier — usually the Discord user ID Craig embedded in the
   filename, or a stable hash of the filename for non-Craig sources.
-- **Provider** — a cloud LLM (`gemini` | `claude` | `openai`) or a
-  local LLM backend (`local`).
+- **Provider** — a cloud connection (`gemini` | `openrouter` |
+  `claudeCode` | `codex`) or a local LLM backend (`local`).
 - **Profile** — per-provider configuration: which model to use for
   which phase.
 - **Routing** — for a given pipeline run, which provider/profile
@@ -905,7 +794,7 @@ exactly once.
   JSON + grounding fidelity).
 - **Session** — one recorded D&D session, identified by `sessionId`
   (UUID). Source is a Craig zip or loose audio uploaded via the
-  Sessions / Bot tab.
+  Sessions tab.
 - **Utterance** — a single audio file (one speaker, one continuous
   stretch). For Craig uploads, the whole per-speaker track becomes one
   long "utterance" before the live queue splits it on word-gaps.

@@ -4,3 +4,4 @@
 // they use; an import that would loop back through here stays deep and is
 // listed, with its reason, in engineering/tests/boundaries.allowlist.json.
 export { docsRouter } from './routes/docs.js'
+export { docsAssets } from './routes/docsAssets.js'

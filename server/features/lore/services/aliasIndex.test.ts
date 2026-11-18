@@ -9,21 +9,21 @@ describe('parseInlineList', () => {
   it('returns [] for empty / non-bracketed input', () => {
     expect(parseInlineList('')).toEqual([])
     expect(parseInlineList('  ')).toEqual([])
-    expect(parseInlineList('Janus')).toEqual([])
+    expect(parseInlineList('Ingrid')).toEqual([])
   })
 
   it('parses bare bracketed list', () => {
-    expect(parseInlineList('[Janus, Lucian, Esen]')).toEqual([
-      'Janus',
-      'Lucian',
-      'Esen',
+    expect(parseInlineList('[Ingrid, Maeve, Eamon]')).toEqual([
+      'Ingrid',
+      'Maeve',
+      'Eamon',
     ])
   })
 
   it('strips double quotes from quoted items', () => {
-    expect(parseInlineList('["Granite Vanguard", Janus]')).toEqual([
+    expect(parseInlineList('["Granite Vanguard", Ingrid]')).toEqual([
       'Granite Vanguard',
-      'Janus',
+      'Ingrid',
     ])
   })
 

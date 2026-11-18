@@ -6,6 +6,63 @@ what something used to do, this is the page for it.
 
 ## 2026-11 — Runs that finish what they start
 
+**Version 2.8.0: pick up where a run stopped, edit a chronicle, and
+documentation with drawings.** The updater asks you to run `npm install` once
+after it pulls this version, because Vite and the test tools are on their
+current releases.
+
+**Continue a run after the page closes.** If the page closes or reloads
+mid-run, the **Run interrupted** screen offers **Continue from** the step it
+reached. It skips the steps that finished and runs only the outputs that are
+still missing, without a second entry in Saved Chronicles. **Start again from
+Phase 1** and **Reset** are still there.
+
+**Edit a chronicle.** An **Edit** button beside the chronicle, in the result
+view and in a chronicle opened from **Saved Chronicles**, turns the prose into a
+text box with **Save** and **Cancel**. Saving updates your saved copy and, from
+the result view, the Markdown file in your campaign's sessions folder. Both
+Markdown downloads give the same file.
+
+**Chronicle files take your campaign's name.** The Markdown copy in
+`Sessions/<campaign>/` is named `<campaign> - Session N.md`. Files already on
+disk keep their names.
+
+**A warning before browser storage fills up.** When browser storage passes 90%
+of its usual limit, a notice says so once per page load and offers the same
+backup download as the storage-full message.
+
+**Choose whether the model list keeps itself up to date.** New models and price
+changes reach the cost estimates and the model picker without you doing
+anything: the app checks OpenRouter's public lists at most once a day. Untick
+**Keep the model list up to date automatically** in the Model lists strip under
+**Settings → Providers & models** to keep using the saved lists until you press
+**Re-check**.
+
+**Claude Code phases run on the prompt alone.** A phase gives the same result
+whatever is set up in your own Claude Code; its personal settings, MCP servers
+and slash commands play no part.
+
+**The app's typefaces come with it.** Headings and text appear in their
+intended faces offline and on the very first load.
+
+**Keys kept by uninstall work after a reinstall.** `npm run uninstall` keeps
+your keys unless you pass `--purge-user-data`, and they now open again once you
+reinstall.
+
+**Setup checks the ffmpeg download.** If npm skipped it, setup says how to fetch
+it, so audio import does not fail later.
+
+**Condense is now Phase 5.** Polish, which does not run today, is numbered 3.5,
+between Chronicle and Extras where it would run, so the numbers count the passes
+that do run. Saved settings and routing are unaffected.
+
+**Drawings in the documentation and the Help tab.** 25 hand-drawn diagrams
+explain the pipeline, the ways in, routing, pausing and resuming, and where
+files live, and the Help tab now shows them as GitHub and the docs site do. The
+documentation was checked page by page against the app, and the security
+overview opens with a plain-English list of known risks and what you can do
+about each.
+
 **Version 2.7.0 needs Node.js 22.** Earlier releases run on Node.js 20; from
 2.7.0 the app needs Node 22 or newer. Setup refuses an older Node. An install
 that is already set up still starts on one, but warns with the install command

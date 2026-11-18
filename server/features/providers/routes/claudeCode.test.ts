@@ -10,6 +10,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockSpawn, resetSpawnMock, spawnCalls, whenCommand } from '../../../testing/spawnMock.js'
+import { claudeCodeArgs } from './claudeCode.js'
 import { withRouter } from '../../../testing/httpFixture.js'
 
 vi.mock('node:child_process', () => mockSpawn())
@@ -105,6 +106,7 @@ describe('POST /generate', () => {
     // The model is the only req-derived argv value; prompt goes via stdin.
     expect(call?.args).toContain('--output-format')
     expect(call?.args).toContain('sonnet')
+    expect(call?.args).toEqual(claudeCodeArgs('sonnet', process.platform))
     // Hardening: the child runs in a neutral sandbox cwd, never the repo root,
     // so a prompt-injected tool call can't reach the project tree.
     expect(call?.options.cwd).toBeTruthy()
@@ -157,6 +159,22 @@ describe('POST /generate', () => {
         body: JSON.stringify({ model: 'sonnet' }),
       })
       expect(res.status).toBe(400)
+    })
+  })
+
+  it('tells the user to update when the CLI is too old for the options it is given', async () => {
+    whenCommand('claude', () => ({ code: 1, stderr: "error: unknown option '--tools'" }))
+    const { claudeCodeRouter } = await import('./claudeCode.js')
+    await withRouter('/api/claude-code', claudeCodeRouter(), async (baseUrl) => {
+      const res = await fetch(`${baseUrl}/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'sonnet', prompt: 'hello' }),
+      })
+      expect(res.status).toBe(502)
+      const json = await res.json()
+      expect(json.code).toBe('cli_outdated')
+      expect(json.error).toMatch(/claude update/)
     })
   })
 
@@ -415,5 +433,22 @@ describe('cliErrorMessage', () => {
     const { cliErrorMessage } = await import('./claudeCode.js')
     expect(cliErrorMessage('not json')).toBeNull()
     expect(cliErrorMessage(JSON.stringify({ is_error: false, result: 'ok' }))).toBeNull()
+  })
+})
+
+describe('claudeCodeArgs', () => {
+  const flags = (none: string) => [
+    '-p', '--output-format', 'json', '--model', 'sonnet',
+    '--tools', none,
+    '--strict-mcp-config',
+    '--disable-slash-commands',
+    '--setting-sources', none,
+  ]
+  it('passes a real empty string for "no tools / no setting sources" off Windows', () => {
+    expect(claudeCodeArgs('sonnet', 'linux')).toEqual(flags(''))
+    expect(claudeCodeArgs('sonnet', 'darwin')).toEqual(flags(''))
+  })
+  it('passes a literal pair of quotes on Windows so cmd.exe keeps the empty value', () => {
+    expect(claudeCodeArgs('sonnet', 'win32')).toEqual(flags('""'))
   })
 })

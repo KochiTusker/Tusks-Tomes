@@ -1131,11 +1131,27 @@ tbody tr:nth-child(even) td {
   font-size: 0.86rem;
   color: oklch(0.88 0.03 285);
 }
+/* Paths and variable names in running text have no spaces to break at; on a
+   phone they may break anywhere rather than widen the page. Code blocks keep
+   their lines and scroll inside their own box instead. */
+.prose :not(pre) > code {
+  overflow-wrap: anywhere;
+}
 .prose img {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   display: block;
   margin: 1.5rem 0;
+}
+/* Each drawing links to its own file (build-site.mjs), so a phone reader can
+   open it full size and zoom into the smallest labels. */
+.prose a.diagram-open {
+  display: block;
+  cursor: zoom-in;
+}
+.prose a.diagram-open:focus-visible img {
+  outline: 2px solid var(--arcane-bright);
+  outline-offset: 3px;
 }
 .prose table {
   min-width: 0;
@@ -1913,7 +1929,12 @@ tbody tr:nth-child(even) td {
 .leaf-body .measure strong { color: var(--fg); font-weight: 600; }
 
 .outro { margin-top: 2rem; }
+/* An outro link stays on one line where there is room, and wraps on a phone
+   rather than pushing the page wider than the screen. */
 .outro a { white-space: nowrap; }
+@media (max-width: 30rem) {
+  .outro a { white-space: normal; }
+}
 
 /* A note in the maintainer's voice, set as marginalia would be: rubricated,
    in the book's own serif, and never the same weight as the body. */
@@ -2098,7 +2119,10 @@ tbody tr:nth-child(even) td {
 .matrix-wrap {
   /* The grid is wider than a phone and must stay a grid — reflowing a
      comparison into stacked cards loses the comparison. So it scrolls
-     sideways inside its own box, and the page never does. */
+     sideways inside its own box, and the page never does. Positioned so the
+     cells' visually-hidden labels (absolute) are clipped by this box; without
+     it they escape to the page and widen it on a phone. */
+  position: relative;
   margin-top: 1.75rem;
   overflow-x: auto;
   border: 1px solid var(--border);
@@ -2271,6 +2295,44 @@ tbody tr:nth-child(even) td {
   color: var(--ember);
 }
 
+/* The hand-drawn overview above the list. It takes the whole column rather
+   than --leaf-measure: the six-across drawing needs every pixel to stay
+   legible. The stacked drawing that narrow screens get is held near its
+   natural size, because past that it reads as a poster rather than a page. */
+.diagram {
+  margin: 2.25rem 0 2.5rem;
+}
+
+.diagram img {
+  display: block;
+  width: 100%;
+  max-width: 32rem;
+  height: auto;
+}
+
+/* Matches the <picture> source: the six-across drawing is only offered once
+   the column is near its full width. Any narrower and its smallest notes fall
+   below about 13px, where the hand-drawn face stops being readable. */
+@media (min-width: 68rem) {
+  .diagram img { max-width: 100%; }
+}
+
+/* A portrait drawing ships as one version for every width. It reads at its
+   own size on a phone and stops growing on a desktop, where a tall drawing at
+   full column width would push the rest of the section off the screen. The
+   extra class outranks the wide-screen rule above without a media query. */
+.diagram.is-portrait img {
+  max-width: 30rem;
+}
+
+.diagram figcaption {
+  max-width: var(--leaf-measure);
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
 /* ---------- VI · the one place cards belong ---------- */
 
 .choice {
@@ -2303,33 +2365,6 @@ tbody tr:nth-child(even) td {
   font-size: 0.97rem;
   line-height: 1.6;
   color: var(--muted);
-}
-
-.option-flow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.3rem 0.45rem;
-  margin: 0 0 0.9rem !important;
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.option-flow span:last-child { color: var(--arcane-bright); }
-
-.option-flow span:not(:last-child)::after {
-  content: '';
-  display: inline-block;
-  width: 0.32rem;
-  height: 0.32rem;
-  margin-left: 0.5rem;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  transform: rotate(45deg) translateY(-0.06rem);
-  opacity: 0.65;
 }
 
 .option-needs {
@@ -2389,109 +2424,9 @@ tbody tr:nth-child(even) td {
 
 .ledger-row.is-them .ledger-cost { color: var(--ember); }
 
-/* ---------- VIII · the boundary ---------- */
-/* The privacy question, drawn. Two enclosures and exactly one thing crossing
-   between them, which is the whole answer. */
-
-.boundary {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  gap: 1.25rem;
-  margin: 2rem 0 0;
-  max-width: var(--leaf-measure);
-}
-
-.boundary-box {
-  padding: 1.3rem 1.4rem;
-  border: 1px solid oklch(0.42 0.12 293);
-  border-radius: var(--panel-r);
-  background: oklch(0.15 0.05 288 / 0.75);
-}
-
-/* Not yours, so it is drawn as a dashed outline with no ground of its own. */
-.boundary-box.is-remote {
-  border-style: dashed;
-  border-color: var(--border);
-  background: none;
-}
-
-.boundary-title {
-  margin: 0 0 0.7rem;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--arcane-bright);
-}
-
-.boundary-box.is-remote .boundary-title { color: var(--muted); }
-
-.boundary-items {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  font-size: 0.92rem;
-  color: var(--muted);
-}
-
-.boundary-items li { position: relative; padding-left: 0.85rem; }
-
-.boundary-items li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.6em;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: oklch(0.5 0.12 293);
-}
-
-.boundary-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  width: 9.5rem;
-}
-
-.boundary-arrow {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, oklch(0.55 0.16 295 / 0.8), oklch(0.42 0.12 293 / 0.4));
-  position: relative;
-}
-
-.boundary-arrow::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: -3px;
-  width: 6px;
-  height: 6px;
-  border-top: 1px solid oklch(0.5 0.14 293);
-  border-right: 1px solid oklch(0.5 0.14 293);
-  transform: rotate(45deg);
-}
-
-.boundary-what {
-  font-size: 0.68rem;
-  line-height: 1.4;
-  text-align: center;
-  color: var(--muted);
-}
-
-.boundary figcaption {
-  grid-column: 1 / -1;
-  margin-top: 0.5rem;
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: var(--muted);
-}
+/* ---------- VIII · what leaves your machine ---------- */
+/* The boundary itself is a drawing (.diagram, under IV). What stays here is
+   the list of things the app never does. */
 
 .nevers {
   list-style: none;
@@ -2547,14 +2482,6 @@ tbody tr:nth-child(even) td {
     padding-bottom: 3.5rem;
   }
   .landing .hero h1 { max-width: 18ch; }
-  .boundary { grid-template-columns: minmax(0, 1fr); }
-  .boundary-link {
-    width: 100%;
-    flex-direction: row;
-    justify-content: center;
-    gap: 0.75rem;
-  }
-  .boundary-arrow { width: 3rem; transform: rotate(90deg); }
 }
 
 @media (max-width: 48rem) {

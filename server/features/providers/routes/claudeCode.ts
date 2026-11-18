@@ -281,6 +281,35 @@ export function childEnvWithoutApiKeys(env: NodeJS.ProcessEnv): NodeJS.ProcessEn
   return stripEnvKeys(env, ['ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN', 'ANTHROPIC_BASE_URL'])
 }
 
+/** argv for one plain text completion. The call carries other people's
+ *  transcript text, so it runs with no built-in tools, no MCP servers, no
+ *  slash commands/skills, and no user or local settings (allow rules, hooks).
+ *  The scratch cwd has no project settings either. An empty option value is
+ *  how the CLI spells "none" for --tools and --setting-sources; under the
+ *  Windows shell an empty argument vanishes and would swallow the next flag,
+ *  so there it is passed as a literal pair of quotes. */
+export function claudeCodeArgs(model: string, platform: NodeJS.Platform): string[] {
+  const none = platform === 'win32' ? '""' : ''
+  return [
+    '-p', '--output-format', 'json', '--model', model,
+    '--tools', none,
+    '--strict-mcp-config',
+    '--disable-slash-commands',
+    '--setting-sources', none,
+  ]
+}
+
+/** A Claude Code too old to know one of the options above refuses the whole
+ *  call with "unknown option" on stderr. Recognising it lets the app say what
+ *  fixes it rather than passing on the CLI's own parser message. Only stderr is
+ *  checked: stdout holds the model's reply, which could contain any words. */
+export function isUnknownCliOption(stderr: string): boolean {
+  return /\bunknown option\b/i.test(stderr)
+}
+
+export const OUTDATED_CLI_MESSAGE =
+  'Your Claude Code is older than Tusk’s Tomes needs: it does not recognise an option the app uses. Update it (run `claude update`), then run again.'
+
 export function claudeCodeRouter(): Router {
   const router = express.Router()
 
@@ -315,7 +344,7 @@ export function claudeCodeRouter(): Router {
     // voice ever degrades, the fix is a shell:false + resolved-binary path
     // that lets us pass `--system-prompt` safely cross-platform.
     // AUDIT: shell:true safe — literal inputs (model validated by MODEL_RE)
-    const args = ['-p', '--output-format', 'json', '--model', chosenModel]
+    const args = claudeCodeArgs(chosenModel, process.platform)
 
     // Run in a neutral sandbox dir, not the repo root (see CLI_SANDBOX_DIR).
     // Best-effort: if temp isn't writable, fall back to the default cwd rather
@@ -368,6 +397,9 @@ export function claudeCodeRouter(): Router {
               error: promptTooLongMessage(prompt.length, chosenModel),
               code: 'prompt_too_long',
             })
+          }
+          if (isUnknownCliOption(stderr)) {
+            return res.status(502).json({ error: OUTDATED_CLI_MESSAGE, code: 'cli_outdated' })
           }
           return res.status(502).json({
             error: `Claude Code CLI failed: ${cliErrorMessage(stdout) ?? detail.slice(0, 600)}`,

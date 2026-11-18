@@ -121,7 +121,7 @@ describe('buildMarkdown (full export — back-compat)', () => {
         gore: [],
         quotes: [
           {
-            speaker: 'Esen, Lucian & Viggo',
+            speaker: 'Eamon, Maeve & Verity',
             line: 'flattened fallback',
             kind: 'funny',
             // Deliberately does NOT open with a character name. Rendered, this
@@ -131,20 +131,64 @@ describe('buildMarkdown (full export — back-compat)', () => {
             // would then move on while this expectation kept the old name.
             context: 'The mule had gone missing two days earlier.',
             exchange: [
-              { speaker: 'Esen', line: 'Did you feed the mule this morning?' },
-              { speaker: 'Lucian', line: 'I always feed the mule.' },
-              { speaker: 'Viggo', line: "You can't even see the mule from here." },
+              { speaker: 'Eamon', line: 'Did you feed the mule this morning?' },
+              { speaker: 'Maeve', line: 'I always feed the mule.' },
+              { speaker: 'Verity', line: "You can't even see the mule from here." },
             ],
           },
         ],
       },
       condensed: null,
     })
-    expect(md).toContain('- **Esen, Lucian & Viggo** — _The mule had gone missing two days earlier._')
-    expect(md).toContain('  - **Esen:** "Did you feed the mule this morning?"')
-    expect(md).toContain('  - **Lucian:** "I always feed the mule."')
-    expect(md).toContain('  - **Viggo:** "You can\'t even see the mule from here."')
+    expect(md).toContain('- **Eamon, Maeve & Verity** — _The mule had gone missing two days earlier._')
+    expect(md).toContain('  - **Eamon:** "Did you feed the mule this morning?"')
+    expect(md).toContain('  - **Maeve:** "I always feed the mule."')
+    expect(md).toContain('  - **Verity:** "You can\'t even see the mule from here."')
     // The flattened fallback is for legacy consumers, not the markdown export.
     expect(md).not.toContain('flattened fallback')
+  })
+})
+
+describe('buildMarkdown (pinned full output)', () => {
+  // Both Markdown downloads (result view and saved-chronicles list) use this
+  // builder, so the exact file is pinned here.
+  it('renders the chronicle, condensed, recap, jests, gore and quotes in order', () => {
+    const md = buildMarkdown({
+      campaign: 'Acme',
+      sessionNumber: 2,
+      chronicle: '  prose  ',
+      extras: {
+        jests: ['j1'],
+        gore: ['g1'],
+        quotes: [
+          { speaker: 'A', line: 'one', kind: 'funny' },
+          { speaker: 'B', line: 'two', kind: 'dark', context: 'late' },
+        ],
+      },
+      condensed: { narrative: 'short', bulletPoints: ['b1'] },
+    })
+    expect(md).toBe(
+      [
+        '# Acme — Session 2',
+        '',
+        '## Chronicle',
+        '',
+        'prose',
+        '\n## Condensed Chronicle',
+        '',
+        'short',
+        '\n## Catch-up Recap',
+        '- b1',
+        '\n## Jests',
+        '- j1',
+        '\n## Gore',
+        '- g1',
+        '\n## Quotes',
+        '\n### Funny',
+        '- **A:** "one"',
+        '\n### Dark',
+        '- **B:** "two" — _late_',
+      ].join('\n'),
+    )
   })
 })

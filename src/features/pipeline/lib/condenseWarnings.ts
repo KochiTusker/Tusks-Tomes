@@ -29,9 +29,9 @@ export function warnIfCondenseShort(condensed: CondenseOutput | null | undefined
   const wc = narrative.trim().split(/\s+/).filter(Boolean).length
   if (wc < CONDENSE_FLOOR_WC) {
     toast.warning(
-      `Phase 6 condense produced only ${wc} words. Even a tiny chronicle should yield more than ` +
+      `Phase 5 condense produced only ${wc} words. Even a tiny chronicle should yield more than ` +
         `${CONDENSE_FLOOR_WC} words at any slider position. Likely cause: truncated model response, ` +
-        'malformed JSON, or quota mid-flight. Regenerate Phase 6 from the chronicle card to retry.',
+        'malformed JSON, or quota mid-flight. Regenerate Phase 5 from the chronicle card to retry.',
       { duration: 12_000 },
     )
   }
@@ -53,9 +53,9 @@ export function warnIfCondenseOvershoot(
   if (wc > targetWordCount * CONDENSE_OVERSHOOT_RATIO) {
     const pct = Math.round((wc / targetWordCount) * 100)
     toast.warning(
-      `Phase 6 condense returned ${wc.toLocaleString()} words — about ${pct}% of your chosen target ` +
+      `Phase 5 condense returned ${wc.toLocaleString()} words — about ${pct}% of your chosen target ` +
         `(${targetWordCount.toLocaleString()} words). The model overshot the Condense Slider's ` +
-        '±10% contract. You can rerun Phase 6 at a tighter slider position, or edit the output directly. ' +
+        '±10% contract. You can rerun Phase 5 at a tighter slider position, or edit the output directly. ' +
         `This warning fires above ${Math.round(CONDENSE_OVERSHOOT_RATIO * 100)}% of the target.`,
       { duration: 12_000 },
     )

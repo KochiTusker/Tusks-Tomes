@@ -1,6 +1,6 @@
 import { useEffect, useRef, type RefObject } from 'react'
 import { toast } from 'sonner'
-import { saveChronicle, updateChronicle } from '@/features/library'
+import { CHRONICLE_LIBRARY_EVENT, getChronicle, saveChronicle, updateChronicle } from '@/features/library'
 import { getRouting } from '@/features/routing'
 import type { RefinementState } from '@/features/pipeline/lib/types'
 import type { RefinementActions } from './useRefinementState'
@@ -25,7 +25,13 @@ export function useChronicleAutoSave({
   // state.savedChronicleId). reset() clears savedChronicleId, so the next
   // run gets its own entry and the previous one stays on disk (auto-keep
   // both). Best-effort — a save failure surfaces a toast but never blocks.
+  //
+  // The chronicle text can also be edited from Saved Chronicles, so the run
+  // sends its chronicle only when the run itself changed it since the last
+  // save. A run that is already saved when the page loads counts its current
+  // text as saved; resending it would write the older run copy over an edit.
   const chronicleSavingRef = useRef(false)
+  const lastSavedChronicleRef = useRef<string | null>(state.savedChronicleId ? state.chronicle : null)
   useEffect(() => {
     if (state.status !== 'done') return
     if (!state.chronicle.trim()) return
@@ -36,8 +42,9 @@ export function useChronicleAutoSave({
       try {
         const existingId = stateRef.current.savedChronicleId
         if (existingId) {
+          const chronicleChanged = state.chronicle !== lastSavedChronicleRef.current
           await updateChronicle(existingId, {
-            chronicle: state.chronicle,
+            ...(chronicleChanged ? { chronicle: state.chronicle } : {}),
             extras: state.extras ?? undefined,
             condensed: state.condensed ?? undefined,
             groundedTranscript: state.groundedTranscript || undefined,
@@ -45,6 +52,7 @@ export function useChronicleAutoSave({
             dmQuestions: stateRef.current.dmQuestions ?? undefined,
             dmAnswers: stateRef.current.dmAnswers ?? undefined,
           })
+          lastSavedChronicleRef.current = state.chronicle
         } else {
           let provider: string | undefined
           try {
@@ -64,6 +72,7 @@ export function useChronicleAutoSave({
             dmQuestions: stateRef.current.dmQuestions ?? undefined,
             dmAnswers: stateRef.current.dmAnswers ?? undefined,
           })
+          lastSavedChronicleRef.current = state.chronicle
           if (!cancelled) {
             actions.setSavedChronicleId(saved.id)
             toast.success('Chronicle saved to your library (Tome of Lore → Saved Chronicles).')
@@ -80,4 +89,34 @@ export function useChronicleAutoSave({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.status, state.chronicle, state.extras, state.condensed])
+
+  // An edit made in Saved Chronicles to this run's own entry is taken into
+  // the run, so the result view, its Markdown export and any later save all
+  // carry the edited text. Skipped while a save is in flight: the server copy
+  // may be about to change, and the save's own change event re-checks.
+  // `actions` is a fresh object every render; the callback inside it is stable.
+  const { completePhase3 } = actions
+  useEffect(() => {
+    let disposed = false
+    async function syncFromLibrary() {
+      const id = stateRef.current.savedChronicleId
+      if (!id || chronicleSavingRef.current) return
+      try {
+        const record = await getChronicle(id)
+        const text = record.chronicle ?? ''
+        if (disposed || chronicleSavingRef.current || !text.trim()) return
+        if (text === lastSavedChronicleRef.current || text === stateRef.current.chronicle) return
+        lastSavedChronicleRef.current = text
+        completePhase3(text)
+      } catch {
+        // The entry was deleted or the server is unreachable; nothing to take in.
+      }
+    }
+    const onChange = () => void syncFromLibrary()
+    window.addEventListener(CHRONICLE_LIBRARY_EVENT, onChange)
+    return () => {
+      disposed = true
+      window.removeEventListener(CHRONICLE_LIBRARY_EVENT, onChange)
+    }
+  }, [completePhase3, stateRef])
 }

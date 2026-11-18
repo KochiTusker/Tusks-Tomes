@@ -107,11 +107,11 @@ agreed to that" in about ten seconds. Use responsibly.
 
 | You bring | It handles |
 |---|---|
-| A recording — Craig multitrack zip, per-speaker WAVs, or a YouTube `.sbv` | Transcription, speaker labelling, grounding against your glossary |
+| A recording — Craig multitrack zip, per-speaker WAVs, or a YouTube `.sbv` | Transcription, speaker labelling (from per-speaker tracks; a YouTube `.sbv` has none), grounding against your glossary |
 | A glossary of your campaign's proper nouns (set up once, edited in-app) | Cleaning, narrating, and pulling out the quotes, jests and grislier moments |
 | One API key, **or** a [local model](../extras/local-llms.md) — built in, you just supply the runner | Encrypted key storage, per-phase routing, sensible fallbacks |
 | Optionally, your lore documents | Extracting the text and using it as grounding |
-| Optionally, a GPU | Using it if it's there, falling back to the processor if not — though see [the honest timings](../importing/README.md) before relying on CPU |
+| Optionally, a GPU | Using it if it's there, falling back to the processor if not — though see [the honest timings](../importing/session-audio.md) before relying on CPU |
 
 
 </div>

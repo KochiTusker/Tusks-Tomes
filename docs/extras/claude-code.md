@@ -12,7 +12,9 @@ you logged into.
 
 It never touches your login, and it strips any API key out of the call before
 running, specifically so the work can't quietly land on a metered bill by
-accident.
+accident. Each call also runs with Claude Code's tools, your MCP servers and
+your personal settings switched off, so a phase is a plain text request: the
+transcript can only shape the words that come back.
 
 ## Usage limits — chronicling burns through your plan fast
 
@@ -24,7 +26,7 @@ Claude subscriptions (Pro / Max) meter headless usage in rolling **~5-hour windo
 Ways to stretch it:
 
 - If a run stops with a usage / limit message, wait for the window to reset, or move the remaining phases to another connection in the routing rows.
-- **Pair it with [Chronicle Reforge](../chronicling/reforging.md):** let Claude Code do the phases it's strongest at (grounding and the chronicle prose), then re-run the cheaper extras and condensed recap elsewhere. That keeps the heaviest, most refusal-prone phases off your Claude allowance entirely.
+- **Pair it with [Chronicle Reforge](../chronicling/reforging.md):** let Claude Code do the phases it's strongest at (grounding and the chronicle prose), and put the extras and condensed recap on another connection, in the routing rows or by reforging afterwards. Their tokens then stay off your Claude allowance.
 - The lighter audit / extras phases default to `haiku`, which is cheaper against your plan than `sonnet` / `opus`.
 
 ## What you need
@@ -35,7 +37,6 @@ Ways to stretch it:
    claude login
    ```
    and choose your Pro/Max plan when prompted.
-3. **Make sure `ANTHROPIC_API_KEY` is not set.** If that environment variable is present, the CLI uses it (API billing) instead of your subscription. Tusk's Tomes strips it from the call it makes, but it's cleanest to leave it unset in your shell.
 
 ## Enabling it
 
@@ -56,13 +57,15 @@ Per-phase models are set in the routing rows, exactly like every other connectio
 |---|---|---|
 | Auth | API key stored in the app's encrypted keystore | Your own `claude login` session — nothing stored by the app |
 | Billing | Per-token API credit | Your Claude subscription |
-| Rate limiting | Header-driven pacing | None — the subscription self-throttles; the CLI surfaces its own limit messages |
+| Rate limiting | Paced between chunks, retried on a rate-limit error | None — not paced and not retried; a limit message from the CLI pauses the run and saves a checkpoint |
 | Cost estimate | Per-token estimate | Shown as **$0**, covered by your subscription |
 
 ## Troubleshooting
 
 - **"CLI not found"** — `claude` isn't on your `PATH`. Reinstall Claude Code or restart your terminal/app so the updated `PATH` is picked up.
 - **"Login not detected"** — run `claude login`. On macOS the session may live in the Keychain and not be detectable from here; if runs work anyway, you can ignore the warning.
+- **"Your Claude Code is older than Tusk's Tomes needs"** — the options that switch off tools, MCP servers and personal settings need a recent Claude Code. Run `claude update`, then run again.
+- **Signed in through your Claude Code settings file instead of `claude login`** — personal settings are switched off for these calls, so a sign-in kept there (an API key helper, for example) is not used. Run `claude login` with your plan.
 - **A run fails with a usage/limit message** — you've reached your subscription's limit for headless usage. Wait for it to reset, or switch a phase to another connection in the routing rows. The run pauses and checkpoints rather than failing, so you can resume at the exact chunk it stopped on.
 
 ## A note on terms of use

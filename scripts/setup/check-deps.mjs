@@ -27,6 +27,7 @@
 import { spawnSync, spawn } from 'node:child_process'
 import { existsSync, copyFileSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs'
 import { join, resolve, dirname } from 'node:path'
+import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import { platform } from 'node:os'
 import { MIN_NODE_MAJOR, NODE_PACKAGES, installCommands, isSupportedNode } from './node-version.mjs'
@@ -144,9 +145,10 @@ function checkGpu() {
  *  This used to warn that MSVC was needed because `pdf-parse` compiled a
  *  native node-gyp addon at install time. `pdf-parse` was replaced by
  *  `pdfjs-dist` (pure JavaScript) and there is now NO dependency in the tree
- *  that compiles anything: the only packages with install scripts are
- *  `esbuild` and `ffmpeg-static`, both of which download a prebuilt binary,
- *  plus `fsevents` (macOS-only, optional).
+ *  that compiles anything: the packages with install scripts are `esbuild`
+ *  and `ffmpeg-static` (each fetches a prebuilt binary), `protobufjs` (prints
+ *  a notice) and `fsevents` (macOS-only, optional). `allowScripts` in
+ *  package.json records which of them may run.
  *
  *  The old warning told people to install a multi-gigabyte C++ toolchain they
  *  don't need, which is a real deterrent for exactly the non-technical users
@@ -232,6 +234,36 @@ async function npmInstall() {
   return false
 }
 
+/** ffmpeg-static downloads its binary from an install script. npm can skip
+ *  dependency install scripts (an ignore-scripts setting, or the allowScripts
+ *  policy in package.json), and the install still reports success, so audio
+ *  import would only fail later with a missing-binary error. Check the binary
+ *  now and say how to fetch it. */
+function checkFfmpegBinary() {
+  let binary = null
+  try {
+    binary = createRequire(join(REPO_ROOT, 'package.json'))('ffmpeg-static')
+  } catch {
+    // Package not installed at all; npm install already reported why.
+    return true
+  }
+  if (typeof binary === 'string' && existsSync(binary)) {
+    ok('ffmpeg binary present.')
+    return true
+  }
+  // ffmpeg-static exports null where it has no build for this platform and
+  // architecture; rebuilding cannot help there, so say what will.
+  if (binary === null) {
+    warn(`ffmpeg-static has no ffmpeg build for ${process.platform}-${process.arch}.`)
+    info('Audio import needs ffmpeg. Install it with your system package manager so it is on your PATH, or set FFMPEG_PATH to an ffmpeg binary.')
+    return false
+  }
+  warn('The ffmpeg binary was not downloaded, because npm skipped the ffmpeg-static install script.')
+  info('Audio import needs it. To fetch it, run:')
+  console.log(`      ${cyan('npm rebuild ffmpeg-static')}`)
+  info(`If npm says the script is not approved, run ${cyan('npm install-scripts approve ffmpeg-static')} first.`)
+  return false
+}
 
 // ---------- Pre-flight checks ----------
 
@@ -367,6 +399,7 @@ async function main() {
   header('3. Node dependencies')
   const installOk = await npmInstall()
   if (!installOk) process.exit(1)
+  checkFfmpegBinary()
 
   header('4. Done')
   console.log(`

@@ -3,7 +3,7 @@
 ← Back to [add-on README](README.md) · Also lives at [the same path in Tusk's Vault](https://github.com/KochiTusker/Tusks-Vault/blob/main/docs/add-ons/node-isolation.md) so both repos enforce the same contract.
 
 > [!IMPORTANT]
-> **The promise to the user:** installing a module must never change anything outside this repo's working directory. Uninstalling must remove every byte the install wrote. The host computer's Python, Node, PATH, registry, and home directory stay untouched.
+> **The promise to the user:** installing a module must never change anything outside this repo's working directory. Uninstalling must remove every byte the install wrote. The host computer's Python, Node, PATH, registry, and home directory stay untouched. Apart from the download caches that pip and faster-whisper keep in your user profile (described below), the one thing a module keeps outside the repo is its on/off switch in `{configDir}/addons.json`, written only when you flip it.
 
 > [!NOTE]
 > **This contract binds installable modules only.** Today that is Audio
@@ -41,10 +41,10 @@ The audio-transcription add-on (Whisper + Craig) is the canonical Python example
 | Venv created | `vendor/python-venv/` — inside this repo | One directory; uninstall deletes it. |
 | Python deps installed | `vendor/python-venv/Lib/site-packages/` | Isolated. The user's global `site-packages` is untouched. |
 | Bootstrap probe | `server/features/transcription/services/whisper/bootstrap.ts` spawns the venv's Python to `import faster_whisper` | If venv is missing or the import fails, `whisperStatus()` reports `ready: false` and the UI surfaces a clear error. |
-| Toggle state | `{configDir}/addons.json` | Per-user config dir (`%APPDATA%\tusks-tomes\Config\` on Windows — Roaming; `~/.config/tusks-tomes/` on Linux; `~/Library/Application Support/tusks-tomes/` on macOS). Records whether you have switched the module off, which is distinct from whether it is installed. |
-| Uninstall | `fs.rm('vendor/python-venv', { recursive: true, force: true })` + removes the marker | Idempotent. |
+| Toggle state | `{configDir}/addons.json` | Per-user config dir (`%APPDATA%\tusks-tomes\Config\` on Windows — Roaming; `~/.config/tusks-tomes/` on Linux; `~/Library/Preferences/tusks-tomes/` on macOS). Records whether you have switched the module off, which is distinct from whether it is installed. Written only when you flip the switch. |
+| Uninstall | `fs.rm('vendor/python-venv', { recursive: true, force: true })` | Idempotent. Leaves the `addons.json` toggle as it is. |
 
-**State written outside the repo on install:** exactly one entry in `{configDir}/addons.json`. Nothing else. No PATH change, no registry entry, no env var, no symlink, no home-directory dotfile.
+**State written outside the repo on install:** none. `{configDir}/addons.json` is written only when you switch a module off or on, never by the install itself, and the setup scripts write only under `vendor/python-venv/`. No PATH change, no registry entry, no env var, no symlink, no home-directory dotfile. Two caches live outside the repo from ordinary tool use: pip keeps its usual download cache in your user profile, and the model weights `faster-whisper` fetches on your first transcription go to its Hugging Face cache (`~/.cache/huggingface` by default). Uninstalling does not remove them.
 
 </div>
 </details>
@@ -114,35 +114,33 @@ async uninstall() {
 }
 ```
 
-One `fs.rm` call deletes the entire add-on tree. The marker in `{configDir}/addons.json` is removed by the host's existing uninstall flow.
+One `fs.rm` call deletes the entire add-on tree. One `fs.rm` call deletes the entire add-on tree. The host's uninstall route does not edit `{configDir}/addons.json`; it records only the on/off switch, and a toggle you set there stays.
 
 ### Gitignore
 
-Add `vendor/addons/*/node_modules/` to the repo `.gitignore` so add-on caches don't leak into git.
+The repo `.gitignore` already ignores all of `vendor/`, so add-on trees and their `node_modules/` stay out of git.
 
 </div>
 </details>
 
 <details class="docs-section">
-<summary><h2>External binaries (Ollama, LM Studio, ffmpeg, …)</h2></summary>
+<summary><h2>External binaries (Ollama, LM Studio, Unsloth, …)</h2></summary>
 <div class="docs-section-body">
 
-Add-ons that depend on an *external program* the user installs separately (Ollama, LM Studio, Unsloth via uv, ffmpeg, …) follow a thinner contract:
+Add-ons that depend on an *external program* the user installs separately (Ollama, LM Studio, Unsloth via uv, …) follow a thinner contract. ffmpeg is not one of them: it comes with the `ffmpeg-static` package, and `FFMPEG_PATH` points the app at a binary of your choice instead.
 
 - **The add-on does not install the binary.** Period. The user installs Ollama from `ollama.com/download` themselves.
-- **The add-on probes for the binary** via HTTP (`localhost:11434/api/tags` for Ollama) or version check (`ffmpeg -version`). If the probe fails, the add-on's `isReady()` returns `false` and the UI shows a friendly "Install Ollama from … to enable" panel.
+- **The add-on probes for the binary** via HTTP (`localhost:11434/api/tags` for Ollama) or a version check of the program. If the probe fails, the module reports itself as not usable through its own status endpoint, and its panel in Settings shows what to install or start.
 - **Nothing is written to mark it enabled.** Modules of this shape are built
   in: they mount unconditionally and answer "am I usable?" by probing. There is
   no marker file, because there is no installation state to record.
 
 > [!TIP]
-> **Marker files are gone from this pattern.** They existed so that probing
-> modules had the same install/uninstall shape as the heavy ones — ceremony
-> borrowed from a lifecycle they never had. Older versions wrote
-> `{configDir}/<name>.enabled`; those files are no longer read, and are
-> deliberately left in place rather than deleted.
+> **This pattern writes no marker files.** A module that only probes has no
+> install state to record. Any `{configDir}/<name>.enabled` files already on
+> disk are not read, and are left in place rather than deleted.
 
-The local-llm module in `server/addons/registry.ts` is the reference for this pattern.
+The Local LLMs entry in `server/addons/featureRoutes.ts` is the reference for this pattern; its detection lives in `server/features/providers/routes/localLLM.ts`.
 
 </div>
 </details>
@@ -162,7 +160,7 @@ These are blockers on PR review:
 7. Download a binary into `/usr/local/bin`, `C:\Program Files`, or anywhere on the system PATH.
 8. Symlink anything outside the repo working tree.
 9. Run any operation that requires sudo / admin elevation. (If your add-on needs admin, redesign it.)
-10. Use `child_process.spawn(cmd, args, { shell: true })` with un-quoted args — see [DEP0190 fix](../../server/features/maintenance/routes/updater.ts) for the cmd.exe-quoting helper.
+10. Use `child_process.spawn(cmd, args, { shell: true })` with un-quoted args — see `runGraphifyBuild` in [`vaultTools.ts`](../../server/features/lore/services/obsidian/vaultTools.ts) for the pattern: literal arguments only, with any untrusted value passed through `cwd`.
 
 </div>
 </details>
@@ -175,13 +173,13 @@ Before merging an add-on PR, the reviewer runs through these:
 
 - [ ] Fresh clone on a clean Windows VM that has Node 22 + Python 3.11 + nothing else. App starts and the new module shows up as "not installed."
 - [ ] Clicking *Install* in the AddonsManager succeeds. Log stream shows the install running.
-- [ ] After install, the only new bytes on disk are inside the repo working tree + at most one line added to `{configDir}/addons.json`. (Spot-check with `git status` and a recursive diff of `{configDir}`.)
+- [ ] After install, the only new bytes on disk are inside the repo working tree + at most the module's on/off entry in `{configDir}/addons.json`, which only the on/off switch writes. (Spot-check with `git status` and a recursive diff of `{configDir}`.)
 - [ ] System Python's `site-packages` is unchanged. System Node's globals (`npm ls -g`) are unchanged.
 - [ ] PATH, env vars, registry entries: unchanged.
 - [ ] Clicking *Uninstall* removes the entire `vendor/addons/<name>/` tree (or `vendor/python-venv/` for Python modules). User data created through the module — sessions, transcripts, authored files — is NOT removed.
 - [ ] After uninstall, *re-installing* works (idempotent).
 - [ ] The module's `isReady()` returns the correct value on every state (not-installed, installed-but-pending-restart, fully-active).
-- [ ] If it installs nothing, it is declared `kind: 'builtin'` and has no `install()` / `uninstall()` at all — the type makes a destructive uninstall unexpressible rather than merely discouraged.
+- [ ] If it installs nothing, it is listed in `FEATURE_ROUTES` (`server/addons/featureRoutes.ts`), not `ADDON_REGISTRY`, and has no `install()` / `uninstall()` at all — the type makes a destructive uninstall unexpressible rather than merely discouraged.
 
 </div>
 </details>

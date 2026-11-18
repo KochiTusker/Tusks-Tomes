@@ -153,7 +153,7 @@ const { KB_LARGE_FILE_THRESHOLD_BYTES } = await import(
   '../../lore/components/KnowledgeBaseManager'
 )
 
-describe('warnIfCondenseShort — Phase 6 floor', () => {
+describe('warnIfCondenseShort — Phase 5 floor', () => {
   beforeEach(() => {
     mockToastWarning.mockClear()
   })
@@ -163,7 +163,7 @@ describe('warnIfCondenseShort — Phase 6 floor', () => {
     warnIfCondenseShort({ narrative: tooShort, bulletPoints: [] })
     expect(mockToastWarning).toHaveBeenCalledTimes(1)
     const [message] = mockToastWarning.mock.calls[0]
-    expect(message).toMatch(/Phase 6 condense produced only \d+ words/)
+    expect(message).toMatch(/Phase 5 condense produced only \d+ words/)
     // v1.1.0 — Phase 6 target is now slider-driven, not the legacy
     // `min(2000, 25%)` formula. The catastrophic-floor warning instead
     // tells the user that ≤200 words at any slider position implies a

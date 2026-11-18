@@ -33,9 +33,9 @@ const RAIL_PHASES: Array<{ key: RailPhaseKey; ordinal: string; name: string }> =
   { key: 'phase1', ordinal: 'Phase 1', name: 'Ground' },
   { key: 'phase2', ordinal: 'Phase 2', name: 'Audit' },
   { key: 'phase3', ordinal: 'Phase 3', name: 'Chronicle' },
-  { key: 'phase5', ordinal: 'Phase 5', name: 'Polish' },
+  { key: 'phase5', ordinal: 'Phase 3.5', name: 'Polish' },
   { key: 'phase4', ordinal: 'Phase 4', name: 'Extras' },
-  { key: 'phase6', ordinal: 'Phase 6', name: 'Condense' },
+  { key: 'phase6', ordinal: 'Phase 5', name: 'Condense' },
 ]
 
 /** Short human label for where a phase's calls go. */

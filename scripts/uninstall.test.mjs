@@ -504,6 +504,8 @@ function runRealUninstallInSandbox(extraArgs = []) {
   writeFileSync(join(repo, 'package.json'), JSON.stringify({ name: 'tusks-tomes', version: '0.0.0' }))
   writeFileSync(join(cfg, 'glossary.json'), '{"a":1}')
   writeFileSync(join(cfg, 'routing.json'), '{"b":2}')
+  writeFileSync(join(cfg, 'providers.enc'), 'enc')
+  writeFileSync(join(cfg, '.salt'), 'salt')
   writeFileSync(join(data, 'sessions', 's1', 'session.txt'), 'audio')
 
   const sandboxScript = join(repo, 'scripts', 'uninstall.mjs')
@@ -567,6 +569,57 @@ test('the note does NOT claim user data was deleted when it was preserved', () =
   } finally {
     rmSync(root, { recursive: true, force: true })
   }
+})
+
+test('default uninstall keeps the keystore AND its salt together', () => {
+  const { root, cfg, result } = runRealUninstallInSandbox()
+  try {
+    if (result.status !== 0) throw new Error(`uninstall exited ${result.status}`)
+    if (!existsSync(join(cfg, 'providers.enc'))) throw new Error('keystore was deleted without --purge-user-data')
+    if (!existsSync(join(cfg, '.salt'))) throw new Error('salt was deleted while the keystore was kept — keystore would be undecryptable')
+    if (existsSync(join(cfg, 'routing.json'))) throw new Error('machine-bound state should still be removed')
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+  }
+})
+
+test('--purge-user-data removes the keystore and its salt together', () => {
+  const { root, cfg, result } = runRealUninstallInSandbox(['--purge-user-data'])
+  try {
+    if (result.status !== 0) throw new Error(`uninstall exited ${result.status}`)
+    if (existsSync(join(cfg, 'providers.enc'))) throw new Error('keystore survived --purge-user-data')
+    if (existsSync(join(cfg, '.salt'))) throw new Error('salt survived --purge-user-data')
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+  }
+})
+
+test('a salt with no keystore is still removed', () => {
+  const { root, cfg, result } = runRealUninstallInSandbox(['--purge-user-data'])
+  try {
+    // Re-run against the now keystore-less sandbox with a stray salt.
+    mkdirSync(cfg, { recursive: true })
+    writeFileSync(join(cfg, '.salt'), 'salt')
+    const again = spawnSync(process.execPath, [join(root, 'repo', 'scripts', 'uninstall.mjs'), '--i-accept-the-risk', '--force'], {
+      cwd: join(root, 'repo'),
+      env: { ...process.env, NO_COLOR: '1', TUSKS_CONFIG_DIR: cfg, TUSKS_DATA_DIR: join(root, 'data', 'tusks-tomes'), TUSKS_CACHE_DIR: join(root, 'cache', 'tusks-tomes') },
+      encoding: 'utf8',
+      timeout: 30_000,
+    })
+    if (result.status !== 0 || again.status !== 0) throw new Error('uninstall failed')
+    if (existsSync(join(cfg, '.salt'))) throw new Error('orphan salt was kept')
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+  }
+})
+
+test('--list-locations says the salt travels with the keystore', () => {
+  const result = spawnSync(process.execPath, [SCRIPT, '--list-locations'], {
+    env: { ...process.env, NO_COLOR: '1' },
+    encoding: 'utf8',
+    timeout: 10_000,
+  })
+  if (!/\.salt.*together with it/.test(result.stdout)) throw new Error('salt line does not describe the pairing')
 })
 
 test('--no-notes suppresses the note', () => {

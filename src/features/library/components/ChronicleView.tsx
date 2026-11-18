@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-import { BookHeart, BookOpen, Copy, Download, RotateCcw, ShieldAlert, Sparkles, Wrench } from 'lucide-react'
+import { BookHeart, BookOpen, Copy, Download, Pencil, RotateCcw, ShieldAlert, Sparkles, Wrench } from 'lucide-react'
 import { Button } from '@/platform/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/platform/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/platform/ui/tabs'
@@ -29,6 +29,7 @@ import {
   buildKbConcat,
 } from '@/features/pipeline'
 import { downloadChronicleDocx } from '@/features/library/lib/exportDocx'
+import { ChronicleEditor } from './ChronicleEditor'
 import type { GeminiTier } from '@/features/providers'
 import {
   Dialog,
@@ -127,6 +128,7 @@ export function ChronicleView(props: Props) {
     autoSaveVariant,
   } = props
 
+  const [editing, setEditing] = useState(false)
   const [fallbackModalOpen, setFallbackModalOpen] = useState(false)
   const hasFallbacks = (fallbacks?.length ?? 0) > 0
   const [repairModalOpen, setRepairModalOpen] = useState(false)
@@ -376,7 +378,7 @@ export function ChronicleView(props: Props) {
                     ? 'Condense needs a chronicle — start a fresh run with Chronicle checked.'
                     : condensed
                     ? 'Re-run the condense pass — replaces the existing Condensed / Recap output.'
-                    : 'Run an optional Phase 6 pass that condenses the chronicle and produces a catch-up recap.'
+                    : 'Run an optional Phase 5 pass that condenses the chronicle and produces a catch-up recap.'
                 }
               >
                 {condensing ? (
@@ -589,19 +591,41 @@ export function ChronicleView(props: Props) {
           </TabsList>
 
           <TabsContent value="chronicle">
-            <div className="flex justify-end pb-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => copy(chronicle, 'Chronicle')}
-              >
-                <Copy className="mr-1 h-4 w-4" />
-                Copy
-              </Button>
-            </div>
-            <article className="chronicle-prose whitespace-pre-wrap rounded-md border border-border/70 bg-[oklch(0.16_0.025_245)] p-6 shadow-inner">
-              {chronicle || '(empty)'}
-            </article>
+            {editing ? (
+              <ChronicleEditor
+                value={chronicle}
+                onCancel={() => setEditing(false)}
+                onSave={(text) => {
+                  // Updating the run state is the whole save: the library
+                  // auto-save and the Sessions-folder export both follow it.
+                  onChronicleRestored?.(text, null)
+                  setEditing(false)
+                  toast.success('Chronicle edit saved.')
+                }}
+              />
+            ) : (
+              <>
+                <div className="flex justify-end gap-1 pb-2">
+                  {onChronicleRestored && (
+                    <Button variant="ghost" size="sm" onClick={() => setEditing(true)}>
+                      <Pencil className="mr-1 h-4 w-4" />
+                      Edit
+                    </Button>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => copy(chronicle, 'Chronicle')}
+                  >
+                    <Copy className="mr-1 h-4 w-4" />
+                    Copy
+                  </Button>
+                </div>
+                <article className="chronicle-prose whitespace-pre-wrap rounded-md border border-border/70 bg-[oklch(0.16_0.025_245)] p-6 shadow-inner">
+                  {chronicle || '(empty)'}
+                </article>
+              </>
+            )}
           </TabsContent>
 
           <TabsContent value="jests">

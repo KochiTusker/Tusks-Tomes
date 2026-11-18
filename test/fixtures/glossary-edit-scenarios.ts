@@ -17,12 +17,12 @@ import type { GlossaryDocument } from '@/features/corrections/lib/glossary'
 export const GLOSSARY_AT_PAUSE: GlossaryDocument = {
   version: 1,
   safeReplacements: [
-    { from: 'broady', to: 'Janus' },
-    { from: 'kazle', to: 'Esen' },
+    { from: 'broady', to: 'Ingrid' },
+    { from: 'kazle', to: 'Eamon' },
   ],
   contextualHints: [
     {
-      canonical: 'Janus',
+      canonical: 'Ingrid',
       commonMishears: ['Broady', 'Brodie'],
       notes: 'Halfling rogue.',
     },
@@ -35,22 +35,22 @@ export const GLOSSARY_AT_PAUSE: GlossaryDocument = {
 export const GLOSSARY_AT_RESUME: GlossaryDocument = {
   version: 1,
   safeReplacements: [
-    { from: 'broady', to: 'Janus' },
-    { from: 'kazle', to: 'Esen' },
-    { from: 'broogo', to: 'Lucian' }, // NEW: another safe replacement
+    { from: 'broady', to: 'Ingrid' },
+    { from: 'kazle', to: 'Eamon' },
+    { from: 'broogo', to: 'Maeve' }, // NEW: another safe replacement
   ],
   contextualHints: [
     {
-      canonical: 'Janus',
+      canonical: 'Ingrid',
       commonMishears: ['Broady', 'Brodie'],
       notes: 'Halfling rogue.',
     },
     {
-      canonical: 'Lucian',
-      commonMishears: ['Brewgo', 'Broogo', 'Lucian'],
+      canonical: 'Maeve',
+      commonMishears: ['Brewgo', 'Broogo', 'Maeve'],
       // 500-char block guarantees the preGround output diverges if applied.
       notes:
-        'Lucian is a half-orc barbarian recruited from the slums of Waterdeep. He carries a greataxe inherited from his grandfather, who fought in the wars of the southern reaches. Common mishearings include Brewgo and Broogo. Always treat any mention of a half-orc warrior with a greataxe as a probable Lucian reference even if the transcript spells it differently. Lucian speaks in short sentences and rarely uses complex vocabulary. He is fiercely loyal to Janus despite their cultural differences.',
+        'Maeve is a half-orc barbarian recruited from the slums of Waterdeep. He carries a greataxe inherited from his grandfather, who fought in the wars of the southern reaches. Common mishearings include Brewgo and Broogo. Always treat any mention of a half-orc warrior with a greataxe as a probable Maeve reference even if the transcript spells it differently. Maeve speaks in short sentences and rarely uses complex vocabulary. He is fiercely loyal to Ingrid despite their cultural differences.',
     },
   ],
 }
@@ -63,7 +63,7 @@ export const TRANSCRIPT_FOR_DRIFT_TEST = (() => {
   const lines: string[] = []
   // Realistic-ish dialogue that will be affected by the glossary above:
   // mishearings ("broady", "broogo") get replaced via preGround.
-  const speakers = ['Esen', 'Janus', 'Lucian', 'Viggo', 'Ivo']
+  const speakers = ['Eamon', 'Ingrid', 'Maeve', 'Verity', 'Ilias']
   for (let i = 0; i < 240; i++) {
     const speaker = speakers[i % speakers.length]
     // Sprinkle the mishearings the glossary will replace.

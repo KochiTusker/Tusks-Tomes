@@ -4679,10 +4679,10 @@ exports[`golden: Reforge > 7b. keep the chronicle, extras from the chronicle on 
         "chars": 737,
         "head": "{
   "jests": [
-    "Passage dec3c677d1a8: PC-Beta forgot the rope again."
+    "Passage abea710ca263: PC-Beta forgot the rope again."
   ],
  ",
-        "sha1": "aa1a5c9a39bc",
+        "sha1": "e66aa8070437",
       },
       "phase": "phase4_extras",
       "totalChunks": 1,
@@ -4736,10 +4736,10 @@ exports[`golden: Reforge > 7b. keep the chronicle, extras from the chronicle on 
           "chars": 737,
           "head": "{
   "jests": [
-    "Passage dec3c677d1a8: PC-Beta forgot the rope again."
+    "Passage abea710ca263: PC-Beta forgot the rope again."
   ],
  ",
-          "sha1": "aa1a5c9a39bc",
+          "sha1": "e66aa8070437",
         },
         "phase": "phase4",
         "totalChunks": 1,
@@ -4748,22 +4748,22 @@ exports[`golden: Reforge > 7b. keep the chronicle, extras from the chronicle on 
     {
       "extras": {
         "gore": [
-          "Passage dec3c677d1a8: a sentry fell from the wall of Place-Delta.",
+          "Passage abea710ca263: a sentry fell from the wall of Place-Delta.",
         ],
         "jests": [
-          "Passage dec3c677d1a8: PC-Beta forgot the rope again.",
+          "Passage abea710ca263: PC-Beta forgot the rope again.",
         ],
         "quotes": [
           {
             "context": "Before the gate.",
             "kind": "funny",
-            "line": "We hold the line, dec3c677d1a8.",
+            "line": "We hold the line, abea710ca263.",
             "speaker": "PC-Alpha",
           },
           {
             "exchange": [
               {
-                "line": "You were warned, dec3c677d1a8.",
+                "line": "You were warned, abea710ca263.",
                 "speaker": "NPC-Gamma",
               },
               {
@@ -4772,7 +4772,7 @@ exports[`golden: Reforge > 7b. keep the chronicle, extras from the chronicle on 
               },
             ],
             "kind": "dark",
-            "line": "NPC-Gamma: "You were warned, dec3c677d1a8." / PC-Beta: "And yet here we are."",
+            "line": "NPC-Gamma: "You were warned, abea710ca263." / PC-Beta: "And yet here we are."",
             "speaker": "NPC-Gamma & PC-Beta",
           },
         ],
@@ -4781,22 +4781,22 @@ exports[`golden: Reforge > 7b. keep the chronicle, extras from the chronicle on 
     {
       "extras": {
         "gore": [
-          "Passage dec3c677d1a8: a sentry fell from the wall of Place-Delta.",
+          "Passage abea710ca263: a sentry fell from the wall of Place-Delta.",
         ],
         "jests": [
-          "Passage dec3c677d1a8: PC-Beta forgot the rope again.",
+          "Passage abea710ca263: PC-Beta forgot the rope again.",
         ],
         "quotes": [
           {
             "context": "Before the gate.",
             "kind": "funny",
-            "line": "We hold the line, dec3c677d1a8.",
+            "line": "We hold the line, abea710ca263.",
             "speaker": "PC-Alpha",
           },
           {
             "exchange": [
               {
-                "line": "You were warned, dec3c677d1a8.",
+                "line": "You were warned, abea710ca263.",
                 "speaker": "NPC-Gamma",
               },
               {
@@ -4805,7 +4805,7 @@ exports[`golden: Reforge > 7b. keep the chronicle, extras from the chronicle on 
               },
             ],
             "kind": "dark",
-            "line": "NPC-Gamma: "You were warned, dec3c677d1a8." / PC-Beta: "And yet here we are."",
+            "line": "NPC-Gamma: "You were warned, abea710ca263." / PC-Beta: "And yet here we are."",
             "speaker": "NPC-Gamma & PC-Beta",
           },
         ],
@@ -4821,22 +4821,22 @@ exports[`golden: Reforge > 7b. keep the chronicle, extras from the chronicle on 
     {
       "extras": {
         "gore": [
-          "Passage dec3c677d1a8: a sentry fell from the wall of Place-Delta.",
+          "Passage abea710ca263: a sentry fell from the wall of Place-Delta.",
         ],
         "jests": [
-          "Passage dec3c677d1a8: PC-Beta forgot the rope again.",
+          "Passage abea710ca263: PC-Beta forgot the rope again.",
         ],
         "quotes": [
           {
             "context": "Before the gate.",
             "kind": "funny",
-            "line": "We hold the line, dec3c677d1a8.",
+            "line": "We hold the line, abea710ca263.",
             "speaker": "PC-Alpha",
           },
           {
             "exchange": [
               {
-                "line": "You were warned, dec3c677d1a8.",
+                "line": "You were warned, abea710ca263.",
                 "speaker": "NPC-Gamma",
               },
               {
@@ -4845,7 +4845,7 @@ exports[`golden: Reforge > 7b. keep the chronicle, extras from the chronicle on 
               },
             ],
             "kind": "dark",
-            "line": "NPC-Gamma: "You were warned, dec3c677d1a8." / PC-Beta: "And yet here we are."",
+            "line": "NPC-Gamma: "You were warned, abea710ca263." / PC-Beta: "And yet here we are."",
             "speaker": "NPC-Gamma & PC-Beta",
           },
         ],
@@ -4984,7 +4984,7 @@ correctly. It does NOT license editing a quote: quoted speech stays verbatim.
 
 # SOURCE — NARRATIVE CHRONICLE PROSE 1/1
 This is finished third-person prose, NOT a raw transcript. Spoken lines appear
-inline as attributed quoted speech (e.g. Esen said, "We march."). Pull the
+inline as attributed quoted speech (e.g. Eamon said, "We march."). Pull the
 verbatim quoted lines for "quotes", and read the surrounding narration for the
 funny / dark beats. (Quotes here are necessarily limited to what the prose
 preserves — that's expected.)
@@ -5157,8 +5157,8 @@ Empty arrays are fine if a category has nothing standout in this chunk.",
       },
       "responseText": {
         "chars": 407,
-        "head": "{"jests":["Passage dec3c677d1a8: PC-Beta forgot the rope again."],"gore":["Passa",
-        "sha1": "6ce166ec7a9c",
+        "head": "{"jests":["Passage abea710ca263: PC-Beta forgot the rope again."],"gore":["Passa",
+        "sha1": "98ad4cadc34d",
       },
       "segment": "main",
       "seq": 0,
@@ -5528,22 +5528,22 @@ Chapter beat 9. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-
     },
     "extras": {
       "gore": [
-        "Passage dec3c677d1a8: a sentry fell from the wall of Place-Delta.",
+        "Passage abea710ca263: a sentry fell from the wall of Place-Delta.",
       ],
       "jests": [
-        "Passage dec3c677d1a8: PC-Beta forgot the rope again.",
+        "Passage abea710ca263: PC-Beta forgot the rope again.",
       ],
       "quotes": [
         {
           "context": "Before the gate.",
           "kind": "funny",
-          "line": "We hold the line, dec3c677d1a8.",
+          "line": "We hold the line, abea710ca263.",
           "speaker": "PC-Alpha",
         },
         {
           "exchange": [
             {
-              "line": "You were warned, dec3c677d1a8.",
+              "line": "You were warned, abea710ca263.",
               "speaker": "NPC-Gamma",
             },
             {
@@ -5552,7 +5552,7 @@ Chapter beat 9. Under the Place-Delta sky, PC-Alpha pressed the matter while PC-
             },
           ],
           "kind": "dark",
-          "line": "NPC-Gamma: "You were warned, dec3c677d1a8." / PC-Beta: "And yet here we are."",
+          "line": "NPC-Gamma: "You were warned, abea710ca263." / PC-Beta: "And yet here we are."",
           "speaker": "NPC-Gamma & PC-Beta",
         },
       ],

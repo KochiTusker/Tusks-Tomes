@@ -16,7 +16,7 @@ Vault to get value from this — but paired, the loop closes.
 
 > **play → record → transcribe (Tomes) → chronicle (Tomes) → ingest as lore (Vault) → query in Discord (Vault)**
 
-> ** Free-tier Gemini key?** Vault is the better home for it. Vault is a single retrieval-augmented query per turn (a few KB of indexed lore in, one citation-grounded paragraph out) — orders of magnitude lower token use than Tomes' six-phase generation pipeline across a 3-hour transcript. A free Gemini quota carries Vault's per-query workload comfortably. Tomes itself requires a paid Gemini key for the main pipeline; a free key in Tomes is optional and routes only to Phase 4 extras under Smart Budget. If you have one key to spend, Vault is where it earns its keep.
+> ** Free-tier Gemini key?** Vault is the better home for it. Vault is a single retrieval-augmented query per turn (a few KB of indexed lore in, one citation-grounded paragraph out) — orders of magnitude lower token use than Tomes' five-phase generation pipeline across a 3-hour transcript. A free Gemini quota carries Vault's per-query workload comfortably. Tomes does not need a Gemini key at all: an OpenRouter key, a Claude Code or Codex subscription, or a local runner each carry the pipeline, and on the Gemini route the main pipeline wants a paid key. A free key in Tomes is optional, and the Smart Budget preset uses it for Phase 4 extras only. If you have one key to spend, Vault is where it earns its keep.
 
 <details class="docs-section">
 <summary><h2>At a glance</h2></summary>
@@ -26,7 +26,7 @@ Vault to get value from this — but paired, the loop closes.
 | Tusk's Tomes (this repo) | Tusk's Vault |
 |---|---|
 | Records → transcribes → chronicles each session | Indexes the whole campaign and answers questions about it |
-| Whisper + 6-phase LLM pipeline | Local semantic retrieval + citation-grounded Discord answers |
+| Whisper + 5-phase LLM pipeline | Local semantic retrieval + citation-grounded Discord answers |
 | **Output**: Markdown chronicles in `Sessions/<campaign>/...` | **Input**: anything you drop in `Lore/` |
 | Use case: "We just finished Session 17, write me a recap" | Use case: "`@Tusk` who is Vellichor the Pale and what did the party last hear about him?" |
 
@@ -58,7 +58,7 @@ For Tusk's Lore the lookup is the same shape: `Tusks-Lore`, `tusks-lore`, `tusks
 
 > **About this repo's folder name:** keep this checkout named **`Tusks-Tomes`** (the default `git clone` directory name). The Vault repo's mirror-side detector looks for that exact name as a sibling. Renaming this folder to anything else breaks the Vault-side auto-discovery.
 
-If your repos live somewhere other than as siblings, set `TUSKS_VAULT_DIR` (Vault) and `TUSKS_LORE_DIR` (shared lore folder) in `.env` to absolute paths.
+If your repos live somewhere other than as siblings, set the `TUSKS_VAULT_DIR` (Vault) and `TUSKS_LORE_DIR` (shared lore folder) environment variables to absolute paths. The app reads them from your shell or system environment, not from `.env`.
 
 
 </div>

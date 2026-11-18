@@ -11,6 +11,8 @@ lying about.
 with A or B and move up later. Nothing is locked in — you can use a different
 route every week if you like.
 
+![Two questions pick the route, and the routes are lettered top to bottom. Already have a transcript? Then A: paste it in, with nothing to install; it is the easiest. If not: do you play on Discord and want every line attributed? If not, B: YouTube captions, with nothing to install but no speaker labels at all. If so, C: a Craig multitrack recording, which needs the audio module and gives the best result, every line attached to its speaker. All three routes join one line down the right edge into the same five-phase pipeline.](../assets/diagrams/ways-in.svg)
+
 | Route | Needs installing | Who said what? | Suits you if… |
 |---|---|---|---|
 | **[A — Paste a transcript](a-transcript.md)** | Nothing | Whatever's already in the text | You've got a transcript from somewhere already |
@@ -20,7 +22,7 @@ route every week if you like.
 ## What the routes have in common
 
 Whichever way the text gets in, everything downstream is identical: the same
-six-phase pipeline, the same grounding against your glossary and lore, the same
+five-phase pipeline, the same grounding against your glossary and lore, the same
 outputs. The route only decides how good the speaker attribution is before the
 pipeline starts.
 
@@ -46,7 +48,7 @@ populated the glossary, picked your route — the recurring work per session is:
 
 1. Hit a download link or paste a transcript (60 seconds).
 2. Click **Run** (zero seconds).
-3. Walk away while the pipeline runs (10–20 minutes hands-off with a GPU).
+3. Walk away while the pipeline runs; each phase shows its own ETA.
 4. Open the finished chronicle when you're back.
 
 **Same three clicks per week, forever.** That's the design goal — minimal

@@ -1,6 +1,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Typefaces are served from /fonts (public/fonts, OFL-1.1) so opening the app
+   makes no third-party request. Cinzel ships 500, 600 and 700; a 400 request
+   resolves to the 500 file. */
+@font-face { font-family: "Cinzel"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/cinzel-500.woff2") format("woff2"); }
+@font-face { font-family: "Cinzel"; font-weight: 600; font-style: normal; font-display: swap; src: url("/fonts/cinzel-600.woff2") format("woff2"); }
+@font-face { font-family: "Cinzel"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/cinzel-700.woff2") format("woff2"); }
+@font-face { font-family: "Fondamento"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/fondamento-400.woff2") format("woff2"); }
+@font-face { font-family: "Fondamento"; font-weight: 400; font-style: italic; font-display: swap; src: url("/fonts/fondamento-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/inter-400.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/inter-500.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; font-style: normal; font-display: swap; src: url("/fonts/inter-600.woff2") format("woff2"); }
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

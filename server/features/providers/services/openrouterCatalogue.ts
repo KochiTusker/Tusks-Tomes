@@ -23,6 +23,7 @@
 // transcription response returns, never precomputed from this table.
 
 import { readJson, writeJson, openrouterCatalogueFile } from '../../../platform/appData.js'
+import type { CatalogueStatus } from '../../../../shared/contracts/openrouterModels.js'
 
 export const OPENROUTER_MODELS_URL = 'https://openrouter.ai/api/v1/models'
 
@@ -222,49 +223,196 @@ export function isCatalogueFresh(
   return age >= 0 && age < ttlMs
 }
 
+/** A list that was fetched but could not be written to disk. It is newer than
+ *  the file, so readers use it for the rest of this process. */
+let unsaved: OpenRouterCatalogue | null = null
+
 export async function readCachedCatalogue(): Promise<OpenRouterCatalogue | null> {
-  const cached = await readJson<OpenRouterCatalogue | null>(openrouterCatalogueFile(), null)
-  if (!cached || !Array.isArray(cached.models)) return null
-  return cached
+  const raw = await readJson<OpenRouterCatalogue | null>(openrouterCatalogueFile(), null)
+  const saved = raw && Array.isArray(raw.models) ? raw : null
+  if (unsaved && (!saved || unsaved.fetchedAt > saved.fetchedAt)) return unsaved
+  return saved
 }
 
 export async function writeCachedCatalogue(cat: OpenRouterCatalogue): Promise<void> {
   await writeJson(openrouterCatalogueFile(), cat)
 }
 
+/** First wait after a failed refresh; each further failure doubles it, up to
+ *  the TTL, so an offline machine is not asked to reach OpenRouter on every
+ *  page load. */
+export const BACKOFF_BASE_MS = 60 * 60 * 1000
+
+/** Wait before the next automatic attempt after `failures` consecutive misses. */
+export function backoffDelayMs(failures: number): number {
+  if (failures <= 0) return 0
+  return Math.min(CATALOGUE_TTL_MS, BACKOFF_BASE_MS * 2 ** (failures - 1))
+}
+
+/** Tracks consecutive failures of one upstream and when an automatic attempt
+ *  may next be made. An explicit refresh ignores the wait but still feeds it. */
+export class RefreshBackoff {
+  private failures = 0
+  private nextAt = 0
+  private lastAttempt = 0
+  private lastErr: string | null = null
+
+  allows(now: number = Date.now()): boolean {
+    return now >= this.nextAt
+  }
+  succeeded(now: number = Date.now()): void {
+    this.failures = 0
+    this.nextAt = 0
+    this.lastAttempt = now
+    this.lastErr = null
+  }
+  failed(message: string, now: number = Date.now()): void {
+    this.failures += 1
+    this.nextAt = now + backoffDelayMs(this.failures)
+    this.lastAttempt = now
+    this.lastErr = message
+  }
+  get lastAttemptAt(): string | null {
+    return this.lastAttempt > 0 ? new Date(this.lastAttempt).toISOString() : null
+  }
+  get lastError(): string | null {
+    return this.lastErr
+  }
+  /** True while the most recent attempt failed, i.e. what we hold is stale. */
+  get failing(): boolean {
+    return this.failures > 0
+  }
+}
+
+const catalogueBackoff = new RefreshBackoff()
+let inFlight: Promise<OpenRouterCatalogue> | null = null
+
+export const CATALOGUE_SOURCE = 'openrouter.ai'
+
+/** What the status reports when the last check failed. The raw error stays in
+ *  the server log: this route can be read from the LAN, and an error from the
+ *  file system names a path in the user's profile. */
+export const LAST_CHECK_FAILED = 'The last check for a newer list did not complete.'
+
+export function catalogueStatus(
+  cached: OpenRouterCatalogue | null,
+  autoUpdate: boolean,
+  now: number = Date.now(),
+): CatalogueStatus {
+  return {
+    source: CATALOGUE_SOURCE,
+    autoUpdate,
+    stale: catalogueBackoff.failing || (cached !== null && !isCatalogueFresh(cached, now)),
+    lastAttemptAt: catalogueBackoff.lastAttemptAt,
+    lastError: catalogueBackoff.lastError ? LAST_CHECK_FAILED : null,
+  }
+}
+
+/** Resolves once any refresh already under way has settled. Tests only. */
+export async function settleCatalogueRefresh(): Promise<void> {
+  await inFlight?.catch(() => undefined)
+}
+
+function refreshCatalogue(timeoutMs: number): Promise<OpenRouterCatalogue> {
+  // Concurrent callers share one request rather than each hitting the endpoint.
+  if (inFlight) return inFlight
+  const run = (async () => {
+    try {
+      const res = await fetch(OPENROUTER_MODELS_URL, {
+        headers: { Accept: 'application/json' },
+        signal: AbortSignal.timeout(timeoutMs),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const models = normaliseCatalogue(await res.json())
+      if (models.length === 0) throw new Error('catalogue parsed to zero models')
+      const next: OpenRouterCatalogue = { fetchedAt: new Date().toISOString(), models }
+      try {
+        await writeCachedCatalogue(next)
+      } catch (err) {
+        // The list itself is good: keep it in memory and hand it back.
+        // Recording the failed save in the back-off spaces out the next
+        // attempt, rather than refetching on every request while the file
+        // cannot be written.
+        unsaved = next
+        catalogueBackoff.failed(`could not save the model list: ${(err as Error)?.message ?? String(err)}`)
+        return next
+      }
+      unsaved = null
+      catalogueBackoff.succeeded()
+      return next
+    } catch (err) {
+      catalogueBackoff.failed((err as Error)?.message ?? String(err))
+      throw err
+    }
+  })()
+  inFlight = run
+  const clear = () => {
+    if (inFlight === run) inFlight = null
+  }
+  run.then(clear, clear)
+  return run
+}
+
 /**
- * Return the catalogue, fetching only when the cache is missing or stale.
+ * Return the catalogue.
  *
- * A failed fetch falls back to the stale cache rather than throwing: an
- * out-of-date price is a far better outcome than a model picker that cannot
- * render because OpenRouter had a bad minute.
+ * - `force` (the explicit re-check) always asks OpenRouter, whatever the
+ *   automatic-update setting or back-off say.
+ * - Otherwise, with `autoUpdate` off the saved copy is returned as it is,
+ *   however old, and OpenRouter is never contacted.
+ * - With `autoUpdate` on, a fresh copy is returned as is. A stale copy is
+ *   returned straight away and refreshed in the background, so the caller
+ *   never waits on the network while it has something to serve. With no copy
+ *   at all the caller does wait, since there is nothing to show.
+ * - A failed refresh keeps the last good copy and pushes the next automatic
+ *   attempt back (1 h, doubling, capped at the TTL). With no copy to fall
+ *   back on, the error is thrown.
  */
-export async function getCatalogue(opts: { force?: boolean } = {}): Promise<OpenRouterCatalogue> {
+export async function getCatalogue(
+  opts: { force?: boolean; autoUpdate?: boolean } = {},
+): Promise<OpenRouterCatalogue> {
   const cached = await readCachedCatalogue()
-  if (!opts.force && isCatalogueFresh(cached)) return cached as OpenRouterCatalogue
+  const hasCopy = cached !== null && cached.models.length > 0
+  const autoUpdate = opts.autoUpdate !== false
+
+  if (!opts.force) {
+    if (hasCopy && isCatalogueFresh(cached)) return cached as OpenRouterCatalogue
+    if (!autoUpdate) {
+      if (hasCopy) return cached as OpenRouterCatalogue
+      throw new Error('No saved model list yet, and automatic updates are off. Use Check to fetch it.')
+    }
+    if (!catalogueBackoff.allows()) {
+      if (hasCopy) return cached as OpenRouterCatalogue
+      // The raw error stays in the log; it can name a path in the profile.
+      throw new Error(LAST_CHECK_FAILED)
+    }
+    if (hasCopy) {
+      refreshCatalogue(AUTO_TIMEOUT_MS).catch((err) =>
+        console.warn(
+          '[openrouter] catalogue refresh failed, serving cached copy:',
+          (err as Error)?.message ?? err,
+        ),
+      )
+      return cached as OpenRouterCatalogue
+    }
+  }
 
   try {
-    const res = await fetch(OPENROUTER_MODELS_URL, {
-      headers: { Accept: 'application/json' },
-      signal: AbortSignal.timeout(20_000),
-    })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    const models = normaliseCatalogue(await res.json())
-    if (models.length === 0) throw new Error('catalogue parsed to zero models')
-    const next: OpenRouterCatalogue = { fetchedAt: new Date().toISOString(), models }
-    await writeCachedCatalogue(next)
-    return next
+    return await refreshCatalogue(opts.force ? FORCE_TIMEOUT_MS : AUTO_TIMEOUT_MS)
   } catch (err) {
-    if (cached && cached.models.length > 0) {
+    if (hasCopy) {
       console.warn(
         '[openrouter] catalogue refresh failed, serving cached copy:',
         (err as Error)?.message ?? err,
       )
-      return cached
+      return cached as OpenRouterCatalogue
     }
     throw err
   }
 }
+
+const AUTO_TIMEOUT_MS = 10_000
+const FORCE_TIMEOUT_MS = 20_000
 
 /**
  * Parse prompt-length pricing bands.

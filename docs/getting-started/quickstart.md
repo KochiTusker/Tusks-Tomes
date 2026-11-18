@@ -26,9 +26,9 @@ If you already upload sessions to YouTube (public, private, or unlisted), the au
 
 Per-speaker audio tracks survive end-to-end into the chronicle, so every line of dialogue is attributed to the right character. Requires the **Audio Transcription** add-on.
 
-**How:** **Settings → Transcription → Install** (one-time setup that downloads the Whisper sidecar — **5-15 minutes** depending on your connection, since `torch` and CUDA wheels are around 1.5 GB). Restart the server when prompted. Then the **Sessions** tab → drop the Craig `.zip` → edit speaker mappings while Whisper grinds → **Use this transcript for refinement**.
+**How:** **Settings → Transcription → Install** (one-time setup that downloads the Whisper sidecar — roughly **5–15 minutes** depending on your connection, since the Python environment, including `torch` and the CUDA wheels, is about 1.5–2.5 GB). Restart the server when prompted. Then the **Sessions** tab → drop the Craig `.zip` → edit speaker mappings while Whisper grinds → **Use this transcript for refinement**.
 
-Deep dive: [AddOns.md → Audio Transcription](../extras/README.md#audio-transcription--the-only-one-that-installs).
+Deep dive: [Extras & integrations → Audio Transcription](../extras/README.md#audio-transcription--the-only-one-that-installs).
 
 ---
 
@@ -38,7 +38,7 @@ You only do this for the first session; after that it sticks.
 
 ### Add an LLM API key (required)
 
-**Settings → Providers & models** → paste at least one. Paid Google Gemini is the easiest start ([sign-up walkthrough](../models/choosing-a-provider.md#google-gemini--paid-key-required)). OpenRouter is the other route — one key, around 400 models including every Anthropic and OpenAI model.
+**Settings → Providers & models** → paste at least one (a signed-in Claude Code or Codex CLI also works without a key). Paid Google Gemini is the easiest start ([sign-up walkthrough](../models/choosing-a-provider.md#google-gemini--paid-key-required)). OpenRouter is the other route — one key, around 400 models including every Anthropic and OpenAI model.
 
 Keys are encrypted at rest. The keystore is machine-bound and the GUI is the only way to manage them — they never appear in `.env`, never appear in logs, and never leave the host except when calling the provider itself.
 
@@ -56,19 +56,20 @@ Without lore: the chronicle is still good but uses generic fantasy phrasings. Wi
 
 ## Step 3 — Click Run
 
-The pipeline runs through six phases. Each one has a progress card with an ETA.
+The pipeline runs through five phases. Each one has a progress card with an ETA.
 
-| # | Phase | What it does | Roughly how long |
+| # | Phase | What it does | How long |
 |---|---|---|---|
-| 1 | **Ground** | Cleans up `[Music]`/`[Laughter]` markers, applies your glossary, runs an LLM pass to fix misheard names against the KB. | ~3-5 min on cloud |
-| 2 | **Audit** | Looks for ambiguous moments and surfaces clarification questions for you to answer. Most chunks return zero questions. | ~1-2 min |
-| — | **DM clarifications** | The app pauses. A dialog shows the questions; answer what you can, skip what you can't. | 0–5 min (you) |
-| 3 | **Chronicle** | The big one — turns the grounded transcript into novel-style prose, attributing dialogue to characters. | ~5-10 min |
-| 5 | **Polish** | Local-only smoothing pass. Skipped for cloud providers (their Phase 3 output doesn't need it). | ~2 min, local-only |
-| 4 | **Extras** | Extracts jests, gore, and memorable quotes (tagged funny / stupid / dark; single lines or multi-speaker exchanges). | ~1-2 min |
-| 6 | **Condense** | Tightened prose + 10-15 catch-up bullets for someone who missed the session. Length controlled by the **Condense Slider** on the Output Picker (default 20%). Runs automatically when "Condensed" is checked at run start. | ~2 min |
+| 1 | **Ground** | Cleans up `[Music]`/`[Laughter]` markers, applies your glossary, runs an LLM pass to fix misheard names against the KB. | Scales with the transcript |
+| 2 | **Audit** | Looks for ambiguous moments and surfaces clarification questions for you to answer. Most chunks return zero questions. | Small output |
+| — | **DM clarifications** | The app pauses. A dialog shows the questions; answer what you can, skip what you can't. | You |
+| — | **Output picker** | Choose which outputs you want (Chronicle, Extras, Condensed) and the condense length before the model-heavy phases start. | You |
+| 3 | **Chronicle** | The big one — turns the grounded transcript into novel-style prose, attributing dialogue to characters. | Scales with the transcript |
+| 3.5 | **Polish** | Smoothing pass for a locally written chronicle. It runs only when the whole run uses a local provider, which the app does not offer, so it does not run today. | Local only |
+| 4 | **Extras** | Extracts jests, gore, and memorable quotes (tagged funny / stupid / dark; single lines or multi-speaker exchanges). | Small output |
+| 5 | **Condense** | Tightened prose + 10-15 catch-up bullets for someone who missed the session. Length controlled by the **Condense Slider** on the Output Picker (default 20%). Runs automatically when "Condensed" is checked at run start. | Small output |
 
-Total wall-clock for a 3-hour session: roughly **10–15 minutes** on cloud providers, longer on local LLMs depending on hardware.
+Wall-clock time depends on the transcript's length, the models you route to and your provider's pacing; each phase's progress card shows an ETA. Local LLMs are slower, depending on hardware. The table is in run order: Polish (3.5) comes straight after the chronicle, before Extras (4), which reads the grounded transcript.
 
 The page shows a live progress card during each phase, and you can scroll down to see the partial output as it lands.
 
@@ -76,10 +77,10 @@ The page shows a live progress card during each phase, and you can scroll down t
 
 ## Step 4 — Review the chronicle
 
-When Phase 4 finishes the page switches to the **Chronicle view** with tabs across the top:
+When the run finishes the page switches to the **Chronicle view** with tabs across the top:
 
 - **Chronicle** — the main narrative prose.
-- **Condensed** — appears after you run Phase 6 (one click from the same view). A shorter retelling.
+- **Condensed** — appears after you run Phase 5 (one click from the same view). A shorter retelling.
 - **Recap** — 10-15 bullet points; what to send the player who missed the session.
 - **Jests / Gore / Quotes** — the standout moments from Phase 4. Quotes are tagged Funny / Stupid / Dark. A quote can be a single line or a short back-and-forth: when the joke is the volley rather than any one line, the whole exchange is kept together and shown with each speaker's turn in order.
 
@@ -91,7 +92,7 @@ If anything feels off, you can re-run the whole pipeline from the same transcrip
 
 ### Auto-save to disk
 
-Tomes writes the chronicle to `<repo>/Sessions/<campaign>/Tusk's Tomes - <campaign> - Session <n>.md` the moment Phase 4 (and again Phase 6) lands. The folder is gitignored — you decide whether to commit individual chronicles.
+Tomes writes the chronicle to `<repo>/Sessions/<campaign>/<campaign> - Session <n>.md` once the run finishes, and again whenever extras or the condensed version arrive; it needs a campaign name in the header. The folder is gitignored — you decide whether to commit individual chronicles.
 
 ### Save to Tusk's Lore (`.docx`)
 
@@ -105,14 +106,22 @@ If you've also installed [Tusk's Vault](https://github.com/KochiTusker/Tusks-Vau
 
 ## If it gets stuck — the rate-limit dialog
 
-Every LLM provider rate-limits API calls — paid keys have generous limits but they're not unlimited, and an optional free-tier Gemini key (configured as a Smart Budget secondary) has tighter per-minute and per-day quotas that a long Phase 4 can trip. When the provider returns a 429, Tomes opens a four-option dialog:
+Every LLM provider rate-limits API calls — paid keys have generous limits but they're not unlimited, and an optional free-tier Gemini key has tighter per-minute and per-day quotas that a long run can trip. When Gemini returns a 429, Tomes opens a four-option dialog.
 
-- **Stop and export what we have** — aborts the run, downloads whatever the pipeline produced so far as Markdown. Use this when you've decided to call it a night.
-- **Slow down (3× longer between calls)** — keeps the same key but paces calls more conservatively. Useful when you're hitting per-minute limits and just need to back off.
-- **Pause and save for later** — writes a full on-disk checkpoint. Close the app, come back tomorrow when the daily quota refills, click **Resume** in the banner that appears above the Chronicle card. The pipeline picks up at the exact chunk it stopped on — none of the previous work is lost.
-- **Switch keys for the rest** — only available when you've configured a fallback. Most commonly used in Smart Budget mode for Phase 4 extras: if your optional free-tier Gemini key stalls, this jumps the rest of Phase 4 onto your paid key.
+| Provider | On a 429 (too many requests) |
+|---|---|
+| Gemini | Names the kind of limit and opens the rate-limit dialog. A daily quota is a message that says per day, or three exhaustions within five minutes; a rate limit is per minute or unclear. Anything else waits and retries with no dialog. |
+| OpenRouter | Waits what its `Retry-After` header says; without one, 35 seconds, and 65 before the last of four retries. |
+| Claude Code and Codex | Do not retry: the run pauses and saves a checkpoint. |
 
-Daily quota exhausted? The dialog tells you so and **disables the slow-down option** (waiting longer won't help an empty bucket). Pause + resume tomorrow is usually the right call.
+The dialog offers four exits:
+
+- **Stop and export what we have**: use it when you have decided to call it a night. The partial chronicle downloads as Markdown.
+- **Slow down (3× longer between calls)**: same key, wider gaps. It is disabled for a daily quota.
+- **Pause and save for later**: writes a checkpoint. Close the app and click **Resume** in the banner above the Chronicle card once the quota refills.
+- **Switch to paid key for the rest**: needs a paid key. It saves a checkpoint, then **Resume** continues on the paid key.
+
+Pausing and resuming tomorrow is usually the right call for a daily quota. Behind the dialog a rate-limited Gemini call keeps retrying, with 35-second waits and 65 seconds before the last of four retries. A daily quota with no other key to switch to stops at once.
 
 ---
 
@@ -122,7 +131,7 @@ Once you've set up Tomes the way you like it, the recurring per-week work is:
 
 1. Drop a transcript / recording (60 seconds)
 2. Click **Run** (zero seconds)
-3. Walk away for ~15 minutes
+3. Walk away while it runs
 4. Open the finished chronicle when you're back
 
 **Same three clicks per week, forever.** That's the design goal — minimal recurring effort, maximum recurring value.

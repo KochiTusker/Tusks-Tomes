@@ -172,6 +172,8 @@ exports[`audio add-on absent, everything configured > Settings: each section, op
       [button "Re-check Gemini paid key"]
       OpenRouterchecked <relative> ago
       [button "Re-check OpenRouter"]
+      From openrouter.ai · updates automatically, at most once a day
+      [checkbox "Keep the model list up to date automatically" checked] Keep the model list up to date automatically
       GroundOverridden
       Corrects transcription errors against your lore. Near 1:1 in and out.
       Wants: Accuracy and obedience, not flair. The most calls of any phase, so price shows up here.
@@ -205,9 +207,9 @@ exports[`audio add-on absent, everything configured > Settings: each section, op
       [checkbox "Sharper quotes, jests and gore Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy." unchecked]
       Sharper quotes, jests and gore
       Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy.
-      [checkbox "Condense hits its target length Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
+      [checkbox "Condense hits its target length Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
       Condense hits its target length
-      Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
+      Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
       Overrides saved. [button "Save" disabled]
     [summary "Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above." closed] Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above."
 `;
@@ -236,7 +238,7 @@ exports[`audio add-on absent, everything configured > Settings: each section, op
 exports[`audio add-on absent, everything configured > Settings: each section, opened > Settings > Voice & content 1`] = `
 "  [summary "Voice & contentThe voice your chronicle is written in, and what the models may filter." open] Voice & contentThe voice your chronicle is written in, and what the models may filter.
   Chronicle Personas
-  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 5, and 6 when selected from the Chronicle tab dropdown.
+  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5 when selected from the Chronicle tab dropdown.
   [button "From preset"] [button "From template"] [button "From scratch"] [button "Generate with AI"]
   Presets
   Persona-OnePreset
@@ -393,7 +395,7 @@ exports[`audio add-on absent, everything configured > Tome of Lore: each section
   Player name
   [textbox "Player name" value="Player-One" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Alpha" placeholder="Nuray"]
+  [textbox "Character name" value="PC-Alpha" placeholder="Ottilie"]
   Track: Handle-Two
   [button "Remove speaker"]
   Speaker ID
@@ -403,7 +405,7 @@ exports[`audio add-on absent, everything configured > Tome of Lore: each section
   Player name
   [textbox "Player name" value="Player-Two" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Bravo" placeholder="Nuray"]"
+  [textbox "Character name" value="PC-Bravo" placeholder="Ottilie"]"
 `;
 
 exports[`audio add-on absent, everything configured > every tab, in order > Chronicle panel 1`] = `
@@ -435,7 +437,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -443,7 +445,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini
@@ -496,7 +498,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -504,7 +506,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini
@@ -688,6 +690,8 @@ Walks through the configuration that works best, and shows you exactly what it w
       [button "Re-check Gemini paid key"]
       OpenRouterchecked <relative> ago
       [button "Re-check OpenRouter"]
+      From openrouter.ai · updates automatically, at most once a day
+      [checkbox "Keep the model list up to date automatically" checked] Keep the model list up to date automatically
       GroundOverridden
       Corrects transcription errors against your lore. Near 1:1 in and out.
       Wants: Accuracy and obedience, not flair. The most calls of any phase, so price shows up here.
@@ -721,9 +725,9 @@ Walks through the configuration that works best, and shows you exactly what it w
       [checkbox "Sharper quotes, jests and gore Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy." unchecked]
       Sharper quotes, jests and gore
       Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy.
-      [checkbox "Condense hits its target length Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
+      [checkbox "Condense hits its target length Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
       Condense hits its target length
-      Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
+      Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
       Overrides saved. [button "Save" disabled]
     [summary "Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above." closed] Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above.
   [summary "Pipeline tuningOptional quality and cost adjustments. All default to off.1" closed] Pipeline tuningOptional quality and cost adjustments. All default to off.1
@@ -734,7 +738,7 @@ Walks through the configuration that works best, and shows you exactly what it w
   [checkbox "Use lore aliases to catch misheard namesno extra costGrounding gets phonetic hints from your lore index, for names transcription mangles." unchecked] Use lore aliases to catch misheard namesno extra cost [button "About alias hints" expanded=false] Grounding gets phonetic hints from your lore index, for names transcription mangles.
   [summary "Voice & contentThe voice your chronicle is written in, and what the models may filter.2" closed] Voice & contentThe voice your chronicle is written in, and what the models may filter.2
   Chronicle Personas
-  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 5, and 6 when selected from the Chronicle tab dropdown.
+  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5 when selected from the Chronicle tab dropdown.
   [button "From preset"] [button "From template"] [button "From scratch"] [button "Generate with AI"]
   Presets
   Persona-OnePreset
@@ -902,6 +906,8 @@ Walks through the configuration that works best, and shows you exactly what it w
       [button "Re-check Gemini paid key"]
       OpenRouterchecked <relative> ago
       [button "Re-check OpenRouter"]
+      From openrouter.ai · updates automatically, at most once a day
+      [checkbox "Keep the model list up to date automatically" checked] Keep the model list up to date automatically
       GroundOverridden
       Corrects transcription errors against your lore. Near 1:1 in and out.
       Wants: Accuracy and obedience, not flair. The most calls of any phase, so price shows up here.
@@ -935,9 +941,9 @@ Walks through the configuration that works best, and shows you exactly what it w
       [checkbox "Sharper quotes, jests and gore Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy." unchecked]
       Sharper quotes, jests and gore
       Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy.
-      [checkbox "Condense hits its target length Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
+      [checkbox "Condense hits its target length Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
       Condense hits its target length
-      Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
+      Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
       Overrides saved. [button "Save" disabled]
     [summary "Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above." open] Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above.
     The catalogue [button "Refresh"]
@@ -961,7 +967,7 @@ Walks through the configuration that works best, and shows you exactly what it w
   [checkbox "Use lore aliases to catch misheard namesno extra costGrounding gets phonetic hints from your lore index, for names transcription mangles." unchecked] Use lore aliases to catch misheard namesno extra cost [button "About alias hints" expanded=false] Grounding gets phonetic hints from your lore index, for names transcription mangles.
   [summary "Voice & contentThe voice your chronicle is written in, and what the models may filter." open] Voice & contentThe voice your chronicle is written in, and what the models may filter.
   Chronicle Personas
-  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 5, and 6 when selected from the Chronicle tab dropdown.
+  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5 when selected from the Chronicle tab dropdown.
   [button "From preset"] [button "From template"] [button "From scratch"] [button "Generate with AI"]
   Presets
   Persona-OnePreset
@@ -1127,7 +1133,7 @@ exports[`audio add-on absent, everything configured > every tab, in order > Tome
   Player name
   [textbox "Player name" value="Player-One" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Alpha" placeholder="Nuray"]
+  [textbox "Character name" value="PC-Alpha" placeholder="Ottilie"]
   Track: Handle-Two
   [button "Remove speaker"]
   Speaker ID
@@ -1137,7 +1143,7 @@ exports[`audio add-on absent, everything configured > every tab, in order > Tome
   Player name
   [textbox "Player name" value="Player-Two" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Bravo" placeholder="Nuray"]"
+  [textbox "Character name" value="PC-Bravo" placeholder="Ottilie"]"
 `;
 
 exports[`audio add-on absent, everything configured > every tab, in order > Tome of Lore panel, every section expanded 1`] = `
@@ -1240,7 +1246,7 @@ exports[`audio add-on absent, everything configured > every tab, in order > Tome
   Player name
   [textbox "Player name" value="Player-One" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Alpha" placeholder="Nuray"]
+  [textbox "Character name" value="PC-Alpha" placeholder="Ottilie"]
   Track: Handle-Two
   [button "Remove speaker"]
   Speaker ID
@@ -1250,7 +1256,7 @@ exports[`audio add-on absent, everything configured > every tab, in order > Tome
   Player name
   [textbox "Player name" value="Player-Two" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Bravo" placeholder="Nuray"]"
+  [textbox "Character name" value="PC-Bravo" placeholder="Ottilie"]"
 `;
 
 exports[`audio add-on absent, everything configured > every tab, in order > requests after expanding Chronicle 1`] = `""`;
@@ -1357,7 +1363,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -1365,7 +1371,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini
@@ -1567,6 +1573,8 @@ exports[`audio add-on installed, everything configured > Settings: each section,
       [button "Re-check Gemini paid key"]
       OpenRouterchecked <relative> ago
       [button "Re-check OpenRouter"]
+      From openrouter.ai · updates automatically, at most once a day
+      [checkbox "Keep the model list up to date automatically" checked] Keep the model list up to date automatically
       GroundOverridden
       Corrects transcription errors against your lore. Near 1:1 in and out.
       Wants: Accuracy and obedience, not flair. The most calls of any phase, so price shows up here.
@@ -1600,9 +1608,9 @@ exports[`audio add-on installed, everything configured > Settings: each section,
       [checkbox "Sharper quotes, jests and gore Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy." unchecked]
       Sharper quotes, jests and gore
       Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy.
-      [checkbox "Condense hits its target length Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
+      [checkbox "Condense hits its target length Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
       Condense hits its target length
-      Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
+      Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
       Overrides saved. [button "Save" disabled]
     [summary "Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above." closed] Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above."
 `;
@@ -1636,7 +1644,7 @@ exports[`audio add-on installed, everything configured > Settings: each section,
 exports[`audio add-on installed, everything configured > Settings: each section, opened > Settings > Voice & content 1`] = `
 "  [summary "Voice & contentThe voice your chronicle is written in, and what the models may filter." open] Voice & contentThe voice your chronicle is written in, and what the models may filter.
   Chronicle Personas
-  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 5, and 6 when selected from the Chronicle tab dropdown.
+  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5 when selected from the Chronicle tab dropdown.
   [button "From preset"] [button "From template"] [button "From scratch"] [button "Generate with AI"]
   Presets
   Persona-OnePreset
@@ -1793,7 +1801,7 @@ exports[`audio add-on installed, everything configured > Tome of Lore: each sect
   Player name
   [textbox "Player name" value="Player-One" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Alpha" placeholder="Nuray"]
+  [textbox "Character name" value="PC-Alpha" placeholder="Ottilie"]
   Track: Handle-Two
   [button "Remove speaker"]
   Speaker ID
@@ -1803,7 +1811,7 @@ exports[`audio add-on installed, everything configured > Tome of Lore: each sect
   Player name
   [textbox "Player name" value="Player-Two" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Bravo" placeholder="Nuray"]"
+  [textbox "Character name" value="PC-Bravo" placeholder="Ottilie"]"
 `;
 
 exports[`audio add-on installed, everything configured > every tab, in order > Chronicle panel 1`] = `
@@ -1835,7 +1843,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -1843,7 +1851,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini
@@ -1896,7 +1904,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -1904,7 +1912,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini
@@ -2152,6 +2160,8 @@ Walks through the configuration that works best, and shows you exactly what it w
       [button "Re-check Gemini paid key"]
       OpenRouterchecked <relative> ago
       [button "Re-check OpenRouter"]
+      From openrouter.ai · updates automatically, at most once a day
+      [checkbox "Keep the model list up to date automatically" checked] Keep the model list up to date automatically
       GroundOverridden
       Corrects transcription errors against your lore. Near 1:1 in and out.
       Wants: Accuracy and obedience, not flair. The most calls of any phase, so price shows up here.
@@ -2185,9 +2195,9 @@ Walks through the configuration that works best, and shows you exactly what it w
       [checkbox "Sharper quotes, jests and gore Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy." unchecked]
       Sharper quotes, jests and gore
       Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy.
-      [checkbox "Condense hits its target length Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
+      [checkbox "Condense hits its target length Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
       Condense hits its target length
-      Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
+      Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
       Overrides saved. [button "Save" disabled]
     [summary "Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above." closed] Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above.
   [summary "Pipeline tuningOptional quality and cost adjustments. All default to off.1" closed] Pipeline tuningOptional quality and cost adjustments. All default to off.1
@@ -2198,7 +2208,7 @@ Walks through the configuration that works best, and shows you exactly what it w
   [checkbox "Use lore aliases to catch misheard namesno extra costGrounding gets phonetic hints from your lore index, for names transcription mangles." unchecked] Use lore aliases to catch misheard namesno extra cost [button "About alias hints" expanded=false] Grounding gets phonetic hints from your lore index, for names transcription mangles.
   [summary "Voice & contentThe voice your chronicle is written in, and what the models may filter.2" closed] Voice & contentThe voice your chronicle is written in, and what the models may filter.2
   Chronicle Personas
-  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 5, and 6 when selected from the Chronicle tab dropdown.
+  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5 when selected from the Chronicle tab dropdown.
   [button "From preset"] [button "From template"] [button "From scratch"] [button "Generate with AI"]
   Presets
   Persona-OnePreset
@@ -2371,6 +2381,8 @@ Walks through the configuration that works best, and shows you exactly what it w
       [button "Re-check Gemini paid key"]
       OpenRouterchecked <relative> ago
       [button "Re-check OpenRouter"]
+      From openrouter.ai · updates automatically, at most once a day
+      [checkbox "Keep the model list up to date automatically" checked] Keep the model list up to date automatically
       GroundOverridden
       Corrects transcription errors against your lore. Near 1:1 in and out.
       Wants: Accuracy and obedience, not flair. The most calls of any phase, so price shows up here.
@@ -2404,9 +2416,9 @@ Walks through the configuration that works best, and shows you exactly what it w
       [checkbox "Sharper quotes, jests and gore Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy." unchecked]
       Sharper quotes, jests and gore
       Phase 4 · turns reasoning on. ~3× the extras output cost, but extras are small, so pennies in practice. Worth trying when the quotes feel noisy.
-      [checkbox "Condense hits its target length Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
+      [checkbox "Condense hits its target length Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price." unchecked]
       Condense hits its target length
-      Phase 6 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
+      Phase 5 · turns reasoning on. Flash-tier models land the condense target far more reliably — most of Pro's discipline at a fraction of its price.
       Overrides saved. [button "Save" disabled]
     [summary "Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above." open] Browse OpenRouter models— Prices, grades and policies for the whole catalogue. Reference only: pick phase models in the routing rows above.
     The catalogue [button "Refresh"]
@@ -2430,7 +2442,7 @@ Walks through the configuration that works best, and shows you exactly what it w
   [checkbox "Use lore aliases to catch misheard namesno extra costGrounding gets phonetic hints from your lore index, for names transcription mangles." unchecked] Use lore aliases to catch misheard namesno extra cost [button "About alias hints" expanded=false] Grounding gets phonetic hints from your lore index, for names transcription mangles.
   [summary "Voice & contentThe voice your chronicle is written in, and what the models may filter." open] Voice & contentThe voice your chronicle is written in, and what the models may filter.
   Chronicle Personas
-  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 5, and 6 when selected from the Chronicle tab dropdown.
+  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5 when selected from the Chronicle tab dropdown.
   [button "From preset"] [button "From template"] [button "From scratch"] [button "Generate with AI"]
   Presets
   Persona-OnePreset
@@ -2601,7 +2613,7 @@ exports[`audio add-on installed, everything configured > every tab, in order > T
   Player name
   [textbox "Player name" value="Player-One" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Alpha" placeholder="Nuray"]
+  [textbox "Character name" value="PC-Alpha" placeholder="Ottilie"]
   Track: Handle-Two
   [button "Remove speaker"]
   Speaker ID
@@ -2611,7 +2623,7 @@ exports[`audio add-on installed, everything configured > every tab, in order > T
   Player name
   [textbox "Player name" value="Player-Two" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Bravo" placeholder="Nuray"]"
+  [textbox "Character name" value="PC-Bravo" placeholder="Ottilie"]"
 `;
 
 exports[`audio add-on installed, everything configured > every tab, in order > Tome of Lore panel, every section expanded 1`] = `
@@ -2714,7 +2726,7 @@ exports[`audio add-on installed, everything configured > every tab, in order > T
   Player name
   [textbox "Player name" value="Player-One" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Alpha" placeholder="Nuray"]
+  [textbox "Character name" value="PC-Alpha" placeholder="Ottilie"]
   Track: Handle-Two
   [button "Remove speaker"]
   Speaker ID
@@ -2724,7 +2736,7 @@ exports[`audio add-on installed, everything configured > every tab, in order > T
   Player name
   [textbox "Player name" value="Player-Two" placeholder="Wyldfyre"]
   Character name
-  [textbox "Character name" value="PC-Bravo" placeholder="Nuray"]"
+  [textbox "Character name" value="PC-Bravo" placeholder="Ottilie"]"
 `;
 
 exports[`audio add-on installed, everything configured > every tab, in order > requests after expanding Chronicle 1`] = `""`;
@@ -2839,7 +2851,7 @@ Phase 3
 Chronicle
 model-large
 OpenRouter
-Phase 5
+Phase 3.5
 Polish
 local runs only
 skipped
@@ -2847,7 +2859,7 @@ Phase 4
 Extras
 model-small
 OpenRouter
-Phase 6
+Phase 5
 Condense
 gemini-2.5-pro
 Gemini
@@ -3067,7 +3079,7 @@ exports[`first run: no keys, no audio, no content > Settings: each section, open
 exports[`first run: no keys, no audio, no content > Settings: each section, opened > Settings > Voice & content 1`] = `
 "  [summary "Voice & contentThe voice your chronicle is written in, and what the models may filter." open] Voice & contentThe voice your chronicle is written in, and what the models may filter.
   Chronicle Personas
-  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 5, and 6 when selected from the Chronicle tab dropdown.
+  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5 when selected from the Chronicle tab dropdown.
   [button "From preset"] [button "From template"] [button "From scratch"] [button "Generate with AI"]
   Presets
   Persona-OnePreset
@@ -3370,7 +3382,7 @@ Walks through the configuration that works best, and shows you exactly what it w
   [checkbox "Use lore aliases to catch misheard namesno extra costGrounding gets phonetic hints from your lore index, for names transcription mangles." unchecked] Use lore aliases to catch misheard namesno extra cost [button "About alias hints" expanded=false] Grounding gets phonetic hints from your lore index, for names transcription mangles.
   [summary "Voice & contentThe voice your chronicle is written in, and what the models may filter.2" closed] Voice & contentThe voice your chronicle is written in, and what the models may filter.2
   Chronicle Personas
-  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 5, and 6 when selected from the Chronicle tab dropdown.
+  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5 when selected from the Chronicle tab dropdown.
   [button "From preset"] [button "From template"] [button "From scratch"] [button "Generate with AI"]
   Presets
   Persona-OnePreset
@@ -3543,7 +3555,7 @@ Walks through the configuration that works best, and shows you exactly what it w
   [checkbox "Use lore aliases to catch misheard namesno extra costGrounding gets phonetic hints from your lore index, for names transcription mangles." unchecked] Use lore aliases to catch misheard namesno extra cost [button "About alias hints" expanded=false] Grounding gets phonetic hints from your lore index, for names transcription mangles.
   [summary "Voice & contentThe voice your chronicle is written in, and what the models may filter." open] Voice & contentThe voice your chronicle is written in, and what the models may filter.
   Chronicle Personas
-  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 5, and 6 when selected from the Chronicle tab dropdown.
+  Switch the Chronicle narrator out of the locked Bard default. The Bard prompt is always available and cannot be edited; personas defined here override phases 3, 3.5, and 5 when selected from the Chronicle tab dropdown.
   [button "From preset"] [button "From template"] [button "From scratch"] [button "Generate with AI"]
   Presets
   Persona-OnePreset

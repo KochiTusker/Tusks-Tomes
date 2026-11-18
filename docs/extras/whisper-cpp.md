@@ -25,11 +25,13 @@ the integration.
 > [!TIP]
 > **It downloads and installs nothing.** The bridge ships with the app and is
 > always on — there is no install step, no marker file and no switch to flip.
-> Set the two paths, and once both check out (the binary runs, the model file
-> is real weights) every transcription goes through your whisper.cpp build.
-> If either stops checking out, transcription falls back to the built-in
-> engine rather than failing. Your whisper.cpp build and model files are
+> Set the two paths and, once both check out, every transcription goes through
+> your whisper.cpp build. Your whisper.cpp build and model files are
 > yours and are never touched.
+
+![A flowchart for each track Whisper transcribes. First question: is whisper.cpp set up? If yes, your own whisper.cpp build transcribes, and it uses the GPU only if you built it with Vulkan, CUDA or Metal. If no, the built-in engine, faster-whisper, tries the GPU. If an NVIDIA GPU works, it runs on the GPU. If not, it is tried twice and then runs on the CPU until you restart Tomes.](../assets/diagrams/which-engine-transcribes.svg)
+
+The first question is answered yes only when the bridge is set up: both paths are saved, the whisper.cpp program runs and the model file is a real model, 20 MB or more.
 
 ---
 
@@ -37,8 +39,9 @@ the integration.
 
 1. A **whisper.cpp build compiled with a GPU backend** for your card.
 2. A **model file** in GGML format.
+3. The **Audio Transcription** module installed, because uploads and the **Sessions** tab come with it and the bridge only runs inside that pipeline.
 
-Both live wherever you like. Tusk's Tomes only stores the paths.
+The build and the model live wherever you like. Tusk's Tomes only stores the paths.
 
 > [!CAUTION]
 > **Downloading an official release will not give you GPU acceleration.**
@@ -131,13 +134,14 @@ invariably a Git-LFS pointer rather than real weights.
 
 ## Setting it up in Tusk's Tomes
 
-1. **Settings → whisper.cpp bridge.** There is no install step and no
-   restart — the bridge is always mounted and simply waits for a path.
+1. **Settings → Transcription**, then the **whisper.cpp bridge (your own
+   build)** row. There is no install step and no restart — the bridge is
+   always mounted and simply waits for a path.
 2. Set two paths:
    - the binary, e.g. `C:\dev\whisper.cpp\build\bin\Release\whisper-cli.exe`
    - the model, e.g. `C:\dev\whisper.cpp\models\ggml-large-v3.bin`
 
-   Both must be absolute paths.
+   Both must be absolute paths. Press **Save and check**.
 3. The panel then reports what it found. You're looking for
    **"Ready, with GPU acceleration via Vulkan"**. From that moment every
    transcription runs through your build; there is nothing further to enable.

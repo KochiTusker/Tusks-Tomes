@@ -44,8 +44,10 @@ costs about **$0.0013** extra on Gemini Pro, because Phase 1's cacheable prefix
 is small. What it really spends is *request count*, which matters only if you
 are on a rate-limited free tier.
 
-**Recommended:** Ground at ~8,000–10,000 characters per chunk rather than
-15,000–30,000. Chronicle is a different case — see below.
+**What you can do:** Tomes sets chunk sizes itself and no setting changes them.
+Ground chunks are 30,000 characters on Gemini Pro, 15,000 on Gemini Flash, and
+start at 15,000 on OpenRouter models, so a fast-tier model already gets the
+smaller chunk. Chronicle is a different case — see below.
 
 ### Why Chronicle cannot simply follow suit
 
@@ -144,10 +146,11 @@ carry a prompt-level filter, and this phase routinely handles violence and
 profanity. Google, DeepSeek, NVIDIA, Z-AI, Moonshot and xAI models generally do
 not.
 
-**Recommendation: keep a strong model here.** If you are optimising, optimise
-Phases 1, 2, 4 and 6 and leave this one alone. The measured saving from moving
-Ground to a cheap model is about 37% of the run; moving Chronicle as well saves
-another 33% but is where quality risk concentrates.
+**Recommendation: keep a strong model here by default.** If you are optimising,
+start with Phases 1, 2, 4 and 5. The measured saving from moving Ground to a
+cheap model is about 37% of the run; moving Chronicle as well saves another 33%
+but is where quality risk concentrates, so treat it as an experiment (see *What
+to test first, in order* below) rather than a setting to change blind.
 
 ### Phase 4 — Extras
 
@@ -158,14 +161,18 @@ out most Anthropic and OpenAI options.
 Watch chunk boundaries here: the unit of capture is a multi-speaker exchange,
 and one split across a boundary is lost from both sides.
 
-### Phase 6 — Condense
+### Phase 5 — Condense
 
 Context window is the binding constraint, not quality. With the full vault
-attached this phase needs roughly 560,000 tokens of context; with retrieval on
-it needs about 70,000, which nearly everything can serve.
+attached this phase needs roughly 560,000 tokens of context; with retrieval the lore
+shrinks by around 92% on that vault, which nearly everything can serve.
 
-Turn retrieval on and the model choice opens up enormously. Leave it off and
-you are restricted to million-token-context models regardless of budget.
+Retrieval is the **Send only relevant lore to Chronicle and Condense** switch in
+**Settings → Pipeline tuning**, off by default. It also turns itself on when the
+model's context window is known and cannot hold the vault. Turn it on and the
+model choice opens up enormously. Leave it off on a model whose window the app
+cannot look up and you are restricted to million-token-context models regardless
+of budget. Local runners always take the compact glossary instead.
 
 ---
 
@@ -206,21 +213,27 @@ cheap to recover from.
 These matter more than they sound, and several are the difference between a
 model working and not.
 
-**Pin the provider.** The same model ID on OpenRouter is served by many hosts
+**The host matters.** The same model ID on OpenRouter is served by many hosts
 with wildly different output ceilings — one model ranges from 7,168 to 1,048,576
 tokens depending on who answers. Routing is price-weighted, so it *prefers* the
 cheapest host, which is often the most aggressively quantised one. Character
 corruption and repetition loops are both reported far more on low-bit
-quantisation.
+quantisation. Tomes cannot pin a model to one host yet: every OpenRouter request
+asks for zero-data-retention endpoints, denies prompt storage and sorts by
+price, and nothing in Settings names an upstream. Pinning is on the
+[roadmap](../about/roadmap.md).
 
 **Set `max_tokens` explicitly.** Besides bounding output, it restricts routing to
 providers that support that length — which is a free way to avoid the 7,168-token
-host above.
+host above. Tomes sends it on every OpenRouter call: 32,768 by default, lowered
+to the model's advertised output ceiling when that is smaller.
 
 **Require the parameters you depend on.** OpenRouter passes structured-output
 requests upstream rather than enforcing them, and its own documentation notes
 some providers "treat it as a strong hint" rather than a guarantee. For the JSON
 phases, require the parameter so routing only considers hosts that honour it.
+Tomes asks for `json_object` output on the JSON phases but does not send
+`require_parameters`.
 
 **Decide the reasoning setting deliberately.** Defaults vary and none of them are
 chosen for this pipeline. Some models reason by default at high effort; a few
@@ -228,6 +241,9 @@ cannot be stopped at all. Reasoning tokens bill as output and count against the
 budget before your actual text starts. For mechanical phases, off is usually
 right — but note that on at least one family, disabling it also substantially
 reduces long-context accuracy, so it is a real trade rather than a free win.
+In Tomes the switch is a Gemini thinking budget that can be turned off on
+Phases 1, 4 and 5 only; Audit and Chronicle always use the model's default, and
+OpenRouter requests carry no reasoning setting.
 
 **Validate JSON and retry.** No vendor publishes a JSON-reliability benchmark for
 any of the candidate models. Assume one-shot reliability is not guaranteed.
@@ -238,7 +254,8 @@ any of the candidate models. Assume one-shot reliability is not guaranteed.
 
 On cost, comfortably. On quality, it depends entirely on which phase you move.
 
-For a three-hour session:
+For one three-hour session at Gemini's default chunk sizes (the same session
+priced phase by phase in *Where the savings actually are* below):
 
 | Arrangement | Cost | Where the risk sits |
 |---|---|---|
@@ -288,7 +305,9 @@ and a read-through. That will out-predict every leaderboard mentioned here.
 Worth being precise, because "cost" and "call count" point at different phases
 and the free tier rations the second one.
 
-One three-hour session on a single Pro-tier model:
+One three-hour session on a single Pro-tier model, at Gemini's default chunk
+sizes. This is a worked example with fixed token counts, not a generated
+estimate; [what it costs](costs.md) carries the generated figures.
 
 | Phase | Calls | Input tokens | Output tokens | Cost | Share of cost |
 |---|---|---|---|---|---|
@@ -296,7 +315,7 @@ One three-hour session on a single Pro-tier model:
 | 2 Audit | 8 | **114,000** | 1,104 | $0.15 | 9% |
 | 3 Chronicle | 4 | 57,000 | 49,500 | $0.56 | **33%** |
 | 4 Extras | 4 | 57,000 | 2,752 | $0.10 | 6% |
-| 6 Condense | 2 | 75,500 | 14,850 | $0.23 | 14% |
+| 5 Condense | 2 | 75,500 | 14,850 | $0.23 | 14% |
 
 Two readings, both true:
 
@@ -320,7 +339,8 @@ count and the input volume, not the bill.
 
 Audit currently does two jobs in one call: it compares the raw and grounded text
 *and* it composes questions for the game master. That is why it ships both
-copies of the chunk, and why its input is double everything else.
+copies of the chunk, and why it reads far more input than Ground does over the
+same stretch of transcript: 114,000 tokens against 69,000 in the table above.
 
 Separating them is worth doing:
 
@@ -386,7 +406,7 @@ chronicle.
 
 The grades in the picker will stay blank for the prose phases until something is
 actually run, and the useful question is not "which model is best" but which of
-three buckets each model falls into:
+four buckets each model falls into:
 
 | Bucket | What it means | How to tell |
 |---|---|---|
@@ -408,7 +428,10 @@ first-hand read has already found a clear difference between providers.
 
 Reference workload throughout: one three-hour session with 10,000 words of lore,
 at the conservative chunk sizes the OpenRouter provider falls back to (15 calls
-on Ground, 8 on Chronicle). Gemini rates are the direct-API ones.
+on Ground, 8 on Chronicle). Gemini rates are the direct-API ones. This is a
+different workload from the one priced in *Where the savings actually are*, so
+its totals do not line up with that table. Both are worked examples; the generated
+figures are on [what it costs](costs.md).
 
 **Cost per phase:**
 
