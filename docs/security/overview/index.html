@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security and privacy — Tusk's Tomes</title>
+<meta name="description" content="A plain-English primer for users, not developers. It tells you what's safe by default, what you can change that could make things less safe, and what…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/security/overview/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Security and privacy — Tusk's Tomes">
+<meta property="og:description" content="A plain-English primer for users, not developers. It tells you what's safe by default, what you can change that could make things less safe, and what…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/security/overview/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Security and privacy — Tusk's Tomes">
+<meta name="twitter:description" content="A plain-English primer for users, not developers. It tells you what's safe by default, what you can change that could make things less safe, and what…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Security and privacy",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/security/overview/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Security and privacy",
+  "description": "A plain-English primer for users, not developers. It tells you what's safe by default, what you can change that could make things less safe, and what…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/security/overview/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/" aria-current="page">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Security and privacy</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#the-short-version">The short version</a></li><li><a href="#known-risks-and-limitations">Known risks and limitations</a></li><li><a href="#out-of-the-box-youre-fine-if">Out of the box, you're fine if…</a></li><li><a href="#whats-automatically-protected">What's automatically protected</a></li><li><a href="#things-you-might-change-that-have-trade-offs">Things you might change that have trade-offs</a></li><li><a href="#what-goes-over-the-network">What goes over the network</a></li><li><a href="#what-the-encrypted-keystore-protects-you-from">What the encrypted keystore protects you from</a></li><li><a href="#tusks-vault-interop-is-purely-filesystem-based">Tusk's Vault interop is purely filesystem-based</a></li><li><a href="#residual-risks-we-cannot-fix-in-code">Residual risks we cannot fix in code</a></li><li><a href="#what-you-need-to-do">What you need to do</a></li><li><a href="#next">Next</a></li></ul></aside>
+    <article class="prose">
+<h1>Security and privacy</h1>
+<p>A plain-English primer for users, not developers. It tells you what's safe by default, what you can change that <em>could</em> make things less safe, and what residual risks cannot be fixed in code.</p>
+<p>Tusk's Tomes was built on the conviction that your campaign — and your players' voices — belong on your hardware. Everything below follows from that.</p>
+<h2 id="the-short-version">The short version</h2>
+<ul>
+<li><strong>Session audio never leaves your computer.</strong> Only the text transcript, the prompt and the lore text each phase uses go to the model you chose.</li>
+<li><strong>Your API keys are encrypted at rest and bound to this machine.</strong> A copied file does not decrypt under another host name or user account.</li>
+<li><strong>The server listens only on your own computer</strong> unless you explicitly opt into LAN access.</li>
+<li><strong>No telemetry, no analytics, no phone-home.</strong> Ever.</li>
+<li><strong>A fresh clone holds zero credentials and zero recordings</strong> — only source and templates.</li>
+</ul>
+<h2 id="known-risks-and-limitations">Known risks and limitations</h2>
+<p>These are the risks we know about, set out before you install so you can judge them for yourself. Most are deliberate trade-offs of a local-first app built for one person on their own machine; each says why, and what you can do about it. When an update closes a gap, it comes off this list. The detail behind every item is further down this page.</p>
+<h3 id="on-a-default-install">On a default install</h3>
+<ul>
+<li><strong>You trust everything you install.</strong> Setup installs about 686 npm packages (345 of them are what a built copy needs at run time), and four of them have install scripts on Windows and Linux, five on macOS; <code>package.json</code> approves only ffmpeg-static's, which downloads an ffmpeg program from GitHub. The optional Audio Transcription module adds PyTorch, installed from a version range rather than one exact version, more Python packages from PyPI, and about 3 GB of Whisper model weights from Hugging Face the first time you transcribe. Updates arrive only when you click to check for them and apply them.
+<em>What you can do:</em> install from a release you have looked at, and read what an update brings before you apply it. <em>Status:</em> a deliberate trade-off; this is how most open-source software installs.</li>
+<li><strong>The app has no login.</strong> It listens only on <code>127.0.0.1</code>, so other devices cannot reach it, but every program and every user account on this computer can, including the route that hands your stored keys to the page.
+<em>What you can do:</em> run Tomes under your own account on a computer you do not share, and keep that computer free of malware. <em>Status:</em> a deliberate trade-off for a single-user app on your own machine.</li>
+<li><strong>Your sessions are stored as ordinary files.</strong> Audio, transcripts, chronicles, your glossary and your speaker names, which can include players' real names, sit unencrypted in your user profile and in the <code>Sessions/</code> folder inside the program folder.
+<em>What you can do:</em> turn on full-disk encryption, and delete sessions you no longer need. <em>Status:</em> a deliberate trade-off; your operating system's disk encryption is the protection here.</li>
+<li><strong>Your API keys have no passphrase.</strong> They are encrypted with a key built from this computer's host name, user name and platform and a salt kept beside them. A copied file does not open on another computer, but anything running as you can read them.
+<em>What you can do:</em> set a spending cap at each provider, and rotate your keys if anything looks wrong. <em>Status:</em> a deliberate trade-off, so the app can start without asking you for a password.</li>
+<li><strong>Two requests leave without you pressing Run.</strong> Tomes checks two public lists from OpenRouter at most once a day: its models, so new models and current prices reach the cost estimates and the model picker, and each provider's data policy. The requests carry nothing of yours.
+<em>What you can do:</em> untick <strong>Keep the model list up to date automatically</strong> in the Model lists strip under <strong>Settings → Providers &#x26; models</strong>. Tomes then keeps using the list it has and only contacts openrouter.ai when you press Re-check. <em>Status:</em> on by default; your choice.</li>
+<li><strong>What you send, the provider reads.</strong> When you press Run, the transcript, the prompts and the lore each phase needs go over HTTPS to the providers you chose, under their own privacy terms. Audio never leaves your computer.
+<em>What you can do:</em> route Ground, Audit and Extras to a local model, so that text stays here; the chronicle and the condensed recap always go to a cloud model or a subscription. <em>Status:</em> how the app works.</li>
+<li><strong>Codex can read files on your computer.</strong> When a phase runs through Codex, it works in its read-only sandbox, which stops it writing files but not reading them, so a transcript with planted instructions could try to make it read something. (Claude Code runs these calls with its tools, its MCP servers and your personal settings switched off.)
+<em>What you can do:</em> read a chronicle before you share it. <em>Status:</em> a deliberate trade-off.</li>
+<li><strong>Players can plant instructions in what they say.</strong> With Gemini, OpenRouter or Claude Code, that can only change the text that comes back; the app shows model output as plain text, so it cannot run anything in the page.
+<em>What you can do:</em> read a chronicle before you post it. <em>Status:</em> inherent in sending a transcript to a language model.</li>
+</ul>
+<h3 id="if-you-turn-on-lan-access">If you turn on LAN access</h3>
+<p>LAN access is off by default. These apply only once you set <code>TUSKS_HOST</code>.</p>
+<ul>
+<li><strong>Traffic on your network is plain HTTP.</strong> Anyone on the network can read it, and a device that gets in the middle can change it. With <code>TUSKS_HOST=0.0.0.0</code>, any device on the network can read your sessions; with <code>TUSKS_LAN_WRITES=1</code> as well, it can change them, start the Audio Transcription install and send prompts through your local runner. Your stored keys and the host-only routes stay on the host either way.
+<em>What you can do:</em> use LAN access only on a network you trust, and turn it off when you leave; for anything wider, put an authenticating, encrypted proxy in front. <em>Status:</em> a deliberate trade-off.</li>
+<li><strong>Web pages you visit can reach Tomes through your network address.</strong> On the default address a Host-name check turns such pages away; with LAN access on, that check is not active.
+<em>What you can do:</em> turn LAN access off when you are not using it. <em>Status:</em> a deliberate trade-off; LAN access is off by default.</li>
+<li><strong>Keys placed in <code>.env</code> are built into the page.</strong> <code>VITE_</code> and <code>PAID_</code> values from <code>.env</code> become part of the page your browser loads, and with LAN access on, other devices load the same page.
+<em>What you can do:</em> save your keys in <strong>Settings → Providers &#x26; models</strong> rather than in <code>.env</code>. <em>Status:</em> a deliberate trade-off; Settings is the normal place for keys.</li>
+</ul>
+<p>More detail: <a href="#what-goes-over-the-network">what goes over the network</a>, <a href="#what-the-encrypted-keystore-protects-you-from">what the keystore protects you from</a>, <a href="#cross-device-lan-access-tusks_host--tusks_lan_writes--i-want-to-use-tomes-from-my-tablet--phone--laptop-on-the-same-wi-fi">LAN access step by step</a> and <a href="#residual-risks-we-cannot-fix-in-code">residual risks</a>.</p>
+<h2 id="out-of-the-box-youre-fine-if">Out of the box, you're fine if…</h2>
+<ul>
+<li>You installed by running <code>setup.bat</code> (Windows) or <code>bash setup.sh</code> (macOS/Linux).</li>
+<li>You open the app at <a href="http://localhost:5173" rel="noopener">http://localhost:5173</a> on the same machine you installed it on.</li>
+<li>You added your API keys via <strong>Settings → Providers &#x26; models</strong>.</li>
+</ul>
+<p>There's nothing else to configure. The app talks to the LLM provider(s) you configured and to any local LLM runner you run (Ollama / LM Studio / Unsloth). The only other traffic is the short list under <a href="#what-goes-over-the-network">What goes over the network</a>: package installs, one-off model downloads, the update check and a public list of models.</p>
+<h2 id="whats-automatically-protected">What's automatically protected</h2>
+<ul>
+<li><strong>Your API keys are encrypted and locked to this machine.</strong> The decryption key is derived from your hostname + username + platform, so a copy of the keystore file does not decrypt on a computer with a different host name or user name.</li>
+<li><strong>The web interface only listens on your own computer by default.</strong> Other devices on your Wi-Fi cannot see it.</li>
+<li><strong>Even if you opt into LAN exposure, your keys stay private.</strong> The route that returns the decrypted keys is loopback-only — visiting devices on the LAN can see the UI but get a 403 (refused) on the keys route. Inference still runs on your host machine.</li>
+<li><strong>Documents loaded into the Help tab are HTML-sanitised.</strong> A future hostile update couldn't slip a <code>&#x3C;script></code> tag in and steal your keys via the UI.</li>
+</ul>
+<h2 id="things-you-might-change-that-have-trade-offs">Things you might change that have trade-offs</h2>
+<h3 id="cross-device-lan-access-tuskshost-tuskslanwrites-i-want-to-use-tomes-from-my-tablet-phone-laptop-on-the-same-wi-fi">Cross-device LAN access (<code>TUSKS_HOST</code> + <code>TUSKS_LAN_WRITES</code>) — "I want to use Tomes from my tablet / phone / laptop on the same Wi-Fi"</h3>
+<p>Tusk's Tomes binds to <code>127.0.0.1</code> by default — only the machine running it can reach the UI. Two environment variables let you opt into broader access on your own network. They're independent toggles; the second only matters if the first is set.</p>
+<h4 id="step-1-should-you-turn-this-on-at-all">Step 1 — should you turn this on at all?</h4>
+<p><strong>Turn it ON if any of these apply:</strong></p>
+<ul>
+<li>Your Tomes machine is in another room (basement PC, study desktop) and you want to read chronicles from your phone / tablet on the couch.</li>
+<li>You have a home server and want every device in the house to reach it.</li>
+<li>A different machine on your network has the audio recording you want to upload (e.g. you record on a laptop, run Tomes on a desktop).</li>
+<li>You want a player to view session transcripts in real time from their own device while you GM.</li>
+</ul>
+<p><strong>Keep it OFF (the default) if any of these apply:</strong></p>
+<ul>
+<li>You only use Tomes on the same machine it's installed on.</li>
+<li>You're on a network you don't fully control: shared apartment Wi-Fi, dorm network, hotel / café / airport / library / conference Wi-Fi.</li>
+<li>You have IoT devices, smart TVs, or guest devices on your network that you wouldn't want browsing your chronicle.</li>
+<li>You're not sure. The default is safe; you can always flip it on later.</li>
+</ul>
+<h4 id="step-2-how-to-set-it-on-windows-powershell">Step 2 — how to set it on (Windows, PowerShell)</h4>
+<pre><code class="language-powershell"># Permanent for this user account (persists across reboots):
+[Environment]::SetEnvironmentVariable("TUSKS_HOST", "0.0.0.0", "User")
+
+# OR — just for the current PowerShell session (resets when you close the window):
+$env:TUSKS_HOST = "0.0.0.0"
+
+# Then restart the Tomes server. Open from your other device at:
+#   http://&#x3C;your-host-machine-IP>:5173
+# To find your host machine's IP: open PowerShell on it and run `ipconfig`.
+</code></pre>
+<p>On macOS / Linux: <code>export TUSKS_HOST=0.0.0.0</code> then restart the server. To make it permanent, add the line to <code>~/.bashrc</code> / <code>~/.zshrc</code>.</p>
+<p>When Tomes restarts with this set, the boot banner spells out exactly what's enabled (read-only or read+write) so you can confirm.</p>
+<h4 id="step-3-tuskshost0000-alone-read-only-lan-access-recommended-starting-point">Step 3 — <code>TUSKS_HOST=0.0.0.0</code> alone (read-only LAN access — recommended starting point)</h4>
+<p><a href="/Tusks-Tomes/docs/assets/diagrams/who-on-your-network.svg" class="diagram-open" title="Open the drawing full size"><img src="/Tusks-Tomes/docs/assets/diagrams/who-on-your-network.svg" alt="A drawing in two parts. At the top, a dashed box for this computer, the host, says that by default only this computer opens Tomes. It lists what always stays on the host whatever you set: API keys and the Test button, the in-app updater, saving app settings, and starting a local runner. Below it, a dashed box for devices on your Wi-Fi holds two boxes side by side, and a dashed arrow runs from each up to the host, labelled that devices get a 403 for that list. The first box, with a laptop and an eye, is TUSKS_HOST=0.0.0.0: a device can read chronicles, transcripts, live progress and .sbv downloads. The second, in orange, with a laptop and a pencil, is TUSKS_LAN_WRITES=1 as well: a device can also write, meaning upload audio, save, edit, delete, install Audio Transcription and download .docx files." loading="lazy" decoding="async"></a></p>
+<p>A device can also browse the session list, the system info, the add-ons list and the Help / Docs tab. Writes, including the <code>.docx</code> download, answer 403 in this mode, and the host-only list never opens to the network.</p>
+<p>This is the "view from the couch" mode. It's the right setting for the vast majority of cross-device use cases.</p>
+<h4 id="step-4-tuskshost0000-tuskslanwrites1-readwrite-lan-access-only-if-you-actually-need-it">Step 4 — <code>TUSKS_HOST=0.0.0.0</code> + <code>TUSKS_LAN_WRITES=1</code> (read+write LAN access — only if you actually need it)</h4>
+<p>Add this second variable only if you genuinely need to <strong>upload, save, or modify content</strong> from another device:</p>
+<pre><code class="language-powershell">[Environment]::SetEnvironmentVariable("TUSKS_LAN_WRITES", "1", "User")
+# Restart Tomes. The boot banner reads "LAN writes (uploads, settings edits, saves): ENABLED".
+</code></pre>
+<p>With both flags on:</p>
+<p>The second lane in the drawing adds the writes. Two details it does not carry: running the pipeline from another device works with a local runner only (phases routed to a cloud model need the stored keys, which only the host can fetch, and the Claude Code and Codex routes answer the host only), and installing or removing Audio Transcription runs the install on your host.</p>
+<p>The host-only list is the architectural backstop: even with full LAN-write access, anything that reads your stored credentials, uses them, starts a local runner on your host, or runs the updater stays loopback-only, as do Unsloth credentials, the dev-mode toggle and saving app settings. The boot banner explicitly tells you this.</p>
+<h4 id="step-5-security-implications-in-plain-language">Step 5 — security implications, in plain language</h4>
+<p>Setting <strong><code>TUSKS_HOST=0.0.0.0</code> alone</strong> means: anyone connected to your Wi-Fi who knows your machine's IP can BROWSE everything Tomes shows you. They can read your campaign chronicles, see the players' real names if you've captured them, and watch live transcription as it happens. They cannot break anything or take anything — but <strong>they can read the prose</strong>.</p>
+<p>Setting <strong>both flags</strong> means: anyone connected to your Wi-Fi who knows your machine's IP can also CHANGE everything. They can upload garbage audio, delete chronicles, edit your glossary so the next chronicle calls everyone by the wrong name, or push their own prompts through your local runner.</p>
+<p><strong>In both modes</strong>, your stored API keys stay on the host — they're encrypted with AES-256-GCM under a machine-bound key AND the route that hands them out is loopback-only AND the route that triggers an outbound provider test is loopback-only. A device on your network cannot read them, even with write access to everything else.</p>
+<p><strong>The threat model that makes LAN exposure safe:</strong> you trust every device that's allowed on your Wi-Fi. That includes the smart TV, the smart speakers, the kid's tablet, the visiting friend's laptop, and any IoT thing you've connected. If you're not confident about all of those, leave the toggle off.</p>
+<h4 id="step-6-turning-it-off">Step 6 — turning it off</h4>
+<p>When you're done (e.g. you took the laptop to a coffee shop):</p>
+<pre><code class="language-powershell"># Wipe the persistent setting:
+[Environment]::SetEnvironmentVariable("TUSKS_HOST", $null, "User")
+[Environment]::SetEnvironmentVariable("TUSKS_LAN_WRITES", $null, "User")
+
+# Restart Tomes. The boot banner should NOT mention LAN exposure.
+</code></pre>
+<p>The toggle is binary; there's no "trust this device only" partial mode. If you need that level of granularity, put an authenticating reverse proxy (Caddy with basic auth, Tailscale with ACLs) in front of Tomes — but that's beyond the scope of the default install.</p>
+<h3 id="running-on-a-server-cloud-vm">Running on a server / cloud VM</h3>
+<p>Tusk's Tomes was not designed for this. There is no login system, no audit log, no user accounts. If you put it on a public IP, <strong>anyone on the internet</strong> who finds the address can use the app, browse transcripts, and burn through your LLM credits. We do not have a deployment guide for this configuration. If you go ahead anyway, put an authenticating reverse proxy (Caddy with basic auth, Cloudflare Tunnel with access policies, etc.) in front of it.</p>
+<h3 id="local-llm-with-a-non-default-backend-url">Local-LLM with a non-default backend URL</h3>
+<p>If you point Unsloth/LM Studio/Ollama at a custom URL via Settings, that URL is validated to be a local / private LAN address. We refuse to send credentials to a public IP. There is a small TOCTOU window where DNS-rebinding can theoretically slip past — see "Residual risks" below.</p>
+<h2 id="what-goes-over-the-network">What goes over the network</h2>
+<p><a href="/Tusks-Tomes/docs/assets/diagrams/what-goes-over-the-network.svg" class="diagram-open" title="Open the drawing full size"><img src="/Tusks-Tomes/docs/assets/diagrams/what-goes-over-the-network.svg" alt="A drawing of what leaves your machine. At the top, a dashed box for your machine lists what is never sent anywhere: your recordings and Whisper, the files Tomes saves, and local runners, which stay on this computer or your LAN. Below it, one arrow runs to each destination. The model you chose receives the transcript, prompt and lore when you press Run, and just the key when you press Test; Claude Code and Codex go through their own CLI. Package sites (npm, GitHub, PyPI, PyTorch and Hugging Face) are contacted once, at install or first use. github.com is contacted when you press Check for updates, for a git fetch. openrouter.ai is asked for its public model list and its provider data policies at most once a day, with nothing of yours sent; you can switch automatic updates off in Settings." loading="lazy" decoding="async"></a></p>
+<p>Two more cases are not in the drawing. Opening the Local LLMs panel or pressing <strong>Detect again</strong> sends a capability probe to a loopback or private-LAN address only (validated). <code>npm run smoke-test</code> sends a small health-check prompt to every provider you have configured.</p>
+<p><strong>That is the entire outbound list.</strong> No background pings, no usage stats, no
+"anonymous" metrics.</p>
+<div class="docs-alert docs-alert-tip">
+<div class="docs-alert-label">Streamlined</div>
+<p><strong>Local runners and Whisper send nothing out while they work.</strong> Audio decoding,
+transcription and segment timing all happen on your own CPU or GPU. Whisper's
+only network use is the one-off package and model downloads in the table above,
+and the local-model proxy validates that every target URL is loopback or private LAN
+before it will forward anything. It is not an open proxy.</p>
+</div>
+<h2 id="what-the-encrypted-keystore-protects-you-from">What the encrypted keystore protects you from</h2>
+<p><a href="/Tusks-Tomes/docs/assets/diagrams/what-the-keystore-protects.svg" class="diagram-open" title="Open the drawing full size"><img src="/Tusks-Tomes/docs/assets/diagrams/what-the-keystore-protects.svg" alt="A drawing of how the key to your stored API keys is made, and who can open the file. At the top, four boxes (host name, user name, platform and a random salt) feed one box, locked to this computer and this user. That produces providers.enc in your config folder. Below, under the question who can open that file, a purple padlock box labelled stays shut covers a providers.enc copied to another computer or account, such as a backup, cloud sync or a stray copy. An orange terminal box labelled opens covers a program running as you on this computer, because the app decrypts the keys for itself." loading="lazy" decoding="async"></a></p>
+<p>Because the key comes from the host name, user name and platform, a <code>providers.enc</code> copied by a backup, cloud sync or anything else does not open where those differ. The file lives in the config directory, not the repo.</p>
+<div class="docs-alert docs-alert-caution">
+<div class="docs-alert-label">Warning</div>
+<p>It does <strong>not</strong> protect you from someone with a live shell on your machine as
+your user. At that point they can simply ask the running app for the keys.
+That is the standard threat-model boundary for any local-first app that stores
+credentials, and no amount of encryption at rest moves it.</p>
+</div>
+<h2 id="tusks-vault-interop-is-purely-filesystem-based">Tusk's Vault interop is purely filesystem-based</h2>
+<p>Sending a finished chronicle to Tusk's Vault copies the markdown into
+<code>&#x3C;vault>/Lore/Tomes/&#x3C;campaign>/&#x3C;file>.md</code>. That is a copy operation — no
+network, no API, no third party. The two projects find each other by sibling
+directory detection; see <a href="/Tusks-Tomes/docs/extras/tusks-vault/">the Vault guide</a>.</p>
+<h2 id="residual-risks-we-cannot-fix-in-code">Residual risks we cannot fix in code</h2>
+<ul>
+<li><strong>The keystore is a lock against copied files, not a password.</strong> The cipher is AES-256-GCM, but the key comes from your host name, user name and platform plus a salt kept beside the file, so the app opens it without asking you. If your computer is compromised (malware running as you, or another user with admin access), the attacker can read the decrypted keys at runtime — the app decrypts them itself and hands them to the browser to make LLM calls. Rotate your API keys at the provider's dashboard immediately if you suspect compromise. This is true of every local-first app that stores credentials.</li>
+<li><strong>DNS rebinding has a small (≤60 s) window</strong> for the local-LLM proxy. We resolve the hostname once and cache it; the actual <code>fetch()</code> re-resolves. A hostile DNS server answering 127.0.0.1 to our lookup, then a public IP to the fetch, could in theory slip through. Mitigated by pointing local-LLM at a literal IP (<code>192.168.1.42</code>) or <code>localhost</code> rather than a hostname.</li>
+<li><strong>Prompt injection</strong> through the transcript content is on the LLM, not on us. A player who knows the app is being used could put adversarial text in the chat that tricks the model into producing weird chronicle content. Read chronicles before sharing them publicly.</li>
+<li><strong>You ARE the security boundary</strong> between Tomes and the public internet. No login, no audit log, no per-IP rate-limits. Keep your machine secure (OS updates, antivirus on Windows, full-disk encryption); Tomes inherits your machine's security posture.</li>
+</ul>
+<h2 id="what-you-need-to-do">What you need to do</h2>
+<p>Three things, total:</p>
+<ol>
+<li><strong>Add API keys</strong> at <strong>Settings → Providers &#x26; models</strong>. The app won't generate chronicles without one.</li>
+<li><strong>Keep your machine secure</strong> — OS updates, antivirus on Windows, full-disk encryption. Tomes inherits your machine's security.</li>
+<li><strong>Rotate your API keys at the provider's dashboard</strong> every few months, or immediately if anything weird happens (charges you don't recognise, a colleague using your laptop without permission, suspected malware).</li>
+</ol>
+<h2 id="next">Next</h2>
+<ul>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs, and what could go wrong</a> — the honest version</li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a> — threat model in STRIDE form, and how to report a vulnerability</li>
+<li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a> — exactly where every file lives</li>
+</ul>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/security/overview.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>

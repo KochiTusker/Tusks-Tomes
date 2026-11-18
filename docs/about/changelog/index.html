@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog — Tusk's Tomes</title>
+<meta name="description" content="What changed between versions. The rest of the documentation describes how the current version works and does not carry version history — if you want to know…">
+<link rel="canonical" href="https://kochitusker.github.io/Tusks-Tomes/docs/about/changelog/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tusk's Tomes">
+<meta property="og:title" content="Changelog — Tusk's Tomes">
+<meta property="og:description" content="What changed between versions. The rest of the documentation describes how the current version works and does not carry version history — if you want to know…">
+<meta property="og:url" content="https://kochitusker.github.io/Tusks-Tomes/docs/about/changelog/">
+<meta property="og:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Changelog — Tusk's Tomes">
+<meta name="twitter:description" content="What changed between versions. The rest of the documentation describes how the current version works and does not carry version history — if you want to know…">
+<meta name="twitter:image" content="https://kochitusker.github.io/Tusks-Tomes/docs/assets/tusks-tomes-social-card.jpg">
+<meta name="theme-color" content="#12100c">
+<meta name="google-site-verification" content="Cz-7x7YO8xZdvh-X7LbaRQmhOZkzZRbAqyNqzwCDR5g">
+<meta name="msvalidate.01" content="42A2DDA3BEE46C5A6B41E7FE5ED3BF7D">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/Tusks-Tomes/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/Tusks-Tomes/styles.css">
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-decorative-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/Tusks-Tomes/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Tusk's Tomes",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Docs",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Changelog",
+      "item": "https://kochitusker.github.io/Tusks-Tomes/docs/about/changelog/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Changelog",
+  "description": "What changed between versions. The rest of the documentation describes how the current version works and does not carry version history — if you want to know…",
+  "url": "https://kochitusker.github.io/Tusks-Tomes/docs/about/changelog/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Tusk's Tomes",
+    "url": "https://kochitusker.github.io/Tusks-Tomes/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Tusk's Tomes"
+  },
+  "inLanguage": "en-GB"
+}
+</script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="tt-tusk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 21.5 L 19 5.5"/><path d="M19 5.5 C 16.5 4.5, 14.2 5.4, 13.2 8"/>
+    <path d="M8 6 C 8 3.8, 9.8 2.5, 12 2.5 C 14.2 2.5, 16 3.8, 16 6 L 16 9.5 L 8 9.5 Z"/>
+    <path d="M9.8 6.8 Q 12 8.4, 14.2 6.8"/>
+    <path d="M8 9.5 L 6 19.5 M 16 9.5 L 18 19.5"/><path d="M6 19.5 Q 12 21, 18 19.5"/>
+    <path d="M8.5 13.5 L 12 12.5 L 15.5 13.5 L 15.5 17 L 12 16 L 8.5 17 Z"/>
+    <line x1="12" y1="12.5" x2="12" y2="16"/>
+  </symbol>
+  <symbol id="tt-star" viewBox="0 0 20 20"><path d="M10 1 L11.5 8.5 L19 10 L11.5 11.5 L10 19 L8.5 11.5 L1 10 L8.5 8.5 Z" fill="currentColor"/></symbol>
+  <symbol id="tt-gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+<div class="ember-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<header class="site-head">
+  <a class="brand" href="/Tusks-Tomes/"><svg aria-hidden="true"><use href="#tt-tusk"/></svg> Tusk's Tomes</a>
+  <nav aria-label="Primary">
+    <a href="/Tusks-Tomes/docs/">Docs</a>
+    <a href="/Tusks-Tomes/docs/getting-started/installation/">Install</a>
+    <a class="gh" href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener"><svg aria-hidden="true"><use href="#tt-gh"/></svg> GitHub</a>
+  </nav>
+</header>
+<div class="docs-layout">
+  <nav class="docs-nav" aria-label="Documentation"><h2>Getting started</h2>
+<ul><li><a href="/Tusks-Tomes/docs/getting-started/installation/">Installation</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/requirements/">Requirements</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/without-a-terminal/">Setting up without a terminal</a></li>
+<li><a href="/Tusks-Tomes/docs/getting-started/quickstart/">Your first chronicle</a></li></ul>
+<h2>Bringing a session in</h2>
+<ul><li><a href="/Tusks-Tomes/docs/importing/">Bringing a session in</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/a-transcript/">Import a transcript</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/session-audio/">Import session audio</a></li>
+<li><a href="/Tusks-Tomes/docs/importing/youtube-captions/">Import YouTube captions</a></li></ul>
+<h2>Writing the chronicle</h2>
+<ul><li><a href="/Tusks-Tomes/docs/chronicling/how-the-phases-work/">How the phases work</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/recommended-settings/">Recommended settings</a></li>
+<li><a href="/Tusks-Tomes/docs/chronicling/reforging/">Reforging a chronicle</a></li></ul>
+<h2>Models &amp; cost</h2>
+<ul><li><a href="/Tusks-Tomes/docs/models/choosing-a-provider/">Choosing a provider</a></li>
+<li><a href="/Tusks-Tomes/docs/models/per-phase-routing/">Per-phase routing</a></li>
+<li><a href="/Tusks-Tomes/docs/models/costs/">What it costs</a></li></ul>
+<h2>Extras &amp; integrations</h2>
+<ul><li><a href="/Tusks-Tomes/docs/extras/audio-transcription/">Audio Transcription</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/personas/">Chronicle Personas</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/claude-code/">Claude Code</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/codex/">Codex</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/">Extras &amp; integrations</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/local-llms/">Local LLMs</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/isolation-contract/">Module isolation</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/obsidian-vault/">Obsidian vault lore</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/tusks-vault/">Tusk's Vault</a></li>
+<li><a href="/Tusks-Tomes/docs/extras/whisper-cpp/">whisper.cpp bridge</a></li></ul>
+<h2>Settings &amp; files</h2>
+<ul><li><a href="/Tusks-Tomes/docs/settings/configuration/">Configuration</a></li></ul>
+<h2>Privacy &amp; safety</h2>
+<ul><li><a href="/Tusks-Tomes/docs/security/overview/">Security and privacy</a></li>
+<li><a href="/Tusks-Tomes/docs/security/what-it-installs/">What it installs</a></li></ul>
+<h2>Troubleshooting</h2>
+<ul><li><a href="/Tusks-Tomes/docs/troubleshooting/diagnostic-bundles/">Diagnostic bundles</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/known-issues/">Known issues</a></li>
+<li><a href="/Tusks-Tomes/docs/troubleshooting/faq/">Questions I get asked</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/" aria-current="page">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Developer tooling</h2>
+<ul><li><a href="/Tusks-Tomes/docs/tooling/graphify/">Graphify</a></li></ul>
+<h2>About Tusk's Tomes</h2>
+<ul><li><a href="/Tusks-Tomes/docs/about/changelog/" aria-current="page">Changelog</a></li>
+<li><a href="/Tusks-Tomes/docs/about/features/">Everything it does</a></li>
+<li><a href="/Tusks-Tomes/docs/about/comparison/">How it compares</a></li>
+<li><a href="/Tusks-Tomes/docs/about/how-its-built/">How it's built</a></li>
+<li><a href="/Tusks-Tomes/docs/about/roadmap/">Roadmap</a></li>
+<li><a href="/Tusks-Tomes/docs/about/who-its-for/">Who it's for</a></li></ul>
+<h2>Docs</h2>
+<ul><li><a href="/Tusks-Tomes/docs/contributing/">Contributing to Tusk's Tomes</a></li>
+<li><a href="/Tusks-Tomes/docs/">Documentation</a></li>
+<li><a href="/Tusks-Tomes/docs/security-policy/">Security policy</a></li>
+<li><a href="/Tusks-Tomes/docs/code-of-conduct/">Tuskers' Code of Conduct</a></li></ul></nav>
+  <main id="main">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/Tusks-Tomes/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/Tusks-Tomes/docs/">Docs</a> <span aria-hidden="true">/</span>
+      <span>Changelog</span>
+    </nav>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#2026-11-runs-that-finish-what-they-start">2026-11 — Runs that finish what they start</a></li><li><a href="#2026-09-reforge-picks-a-model-per-phase-and-a-letter-means-one-thing">2026-09 — Reforge picks a model per phase, and a letter means one thing</a></li><li><a href="#2026-08-openrouter-and-a-smaller-set-of-things-to-configure">2026-08 — OpenRouter, and a smaller set of things to configure</a></li><li><a href="#2026-08-documentation">2026-08 — Documentation</a></li><li><a href="#earlier">Earlier</a></li></ul></aside>
+    <article class="prose">
+<h1>Changelog</h1>
+<p>What changed between versions. The rest of the documentation describes how the
+current version works and does not carry version history — if you want to know
+what something used to do, this is the page for it.</p>
+<h2 id="2026-11-runs-that-finish-what-they-start">2026-11 — Runs that finish what they start</h2>
+<p><strong>Version 2.8.0: pick up where a run stopped, edit a chronicle, and
+documentation with drawings.</strong> The updater asks you to run <code>npm install</code> once
+after it pulls this version, because Vite and the test tools are on their
+current releases.</p>
+<p><strong>Continue a run after the page closes.</strong> If the page closes or reloads
+mid-run, the <strong>Run interrupted</strong> screen offers <strong>Continue from</strong> the step it
+reached. It skips the steps that finished and runs only the outputs that are
+still missing, without a second entry in Saved Chronicles. <strong>Start again from
+Phase 1</strong> and <strong>Reset</strong> are still there.</p>
+<p><strong>Edit a chronicle.</strong> An <strong>Edit</strong> button beside the chronicle, in the result
+view and in a chronicle opened from <strong>Saved Chronicles</strong>, turns the prose into a
+text box with <strong>Save</strong> and <strong>Cancel</strong>. Saving updates your saved copy and, from
+the result view, the Markdown file in your campaign's sessions folder. Both
+Markdown downloads give the same file.</p>
+<p><strong>Chronicle files take your campaign's name.</strong> The Markdown copy in
+<code>Sessions/&#x3C;campaign>/</code> is named <code>&#x3C;campaign> - Session N.md</code>. Files already on
+disk keep their names.</p>
+<p><strong>A warning before browser storage fills up.</strong> When browser storage passes 90%
+of its usual limit, a notice says so once per page load and offers the same
+backup download as the storage-full message.</p>
+<p><strong>Choose whether the model list keeps itself up to date.</strong> New models and price
+changes reach the cost estimates and the model picker without you doing
+anything: the app checks OpenRouter's public lists at most once a day. Untick
+<strong>Keep the model list up to date automatically</strong> in the Model lists strip under
+<strong>Settings → Providers &#x26; models</strong> to keep using the saved lists until you press
+<strong>Re-check</strong>.</p>
+<p><strong>Claude Code phases run on the prompt alone.</strong> A phase gives the same result
+whatever is set up in your own Claude Code; its personal settings, MCP servers
+and slash commands play no part.</p>
+<p><strong>The app's typefaces come with it.</strong> Headings and text appear in their
+intended faces offline and on the very first load.</p>
+<p><strong>Keys kept by uninstall work after a reinstall.</strong> <code>npm run uninstall</code> keeps
+your keys unless you pass <code>--purge-user-data</code>, and they now open again once you
+reinstall.</p>
+<p><strong>Setup checks the ffmpeg download.</strong> If npm skipped it, setup says how to fetch
+it, so audio import does not fail later.</p>
+<p><strong>Condense is now Phase 5.</strong> Polish, which does not run today, is numbered 3.5,
+between Chronicle and Extras where it would run, so the numbers count the passes
+that do run. Saved settings and routing are unaffected.</p>
+<p><strong>Drawings in the documentation and the Help tab.</strong> 25 hand-drawn diagrams
+explain the pipeline, the ways in, routing, pausing and resuming, and where
+files live, and the Help tab now shows them as GitHub and the docs site do. The
+documentation was checked page by page against the app, and the security
+overview opens with a plain-English list of known risks and what you can do
+about each.</p>
+<p><strong>Version 2.7.0 needs Node.js 22.</strong> Earlier releases run on Node.js 20; from
+2.7.0 the app needs Node 22 or newer. Setup refuses an older Node. An install
+that is already set up still starts on one, but warns with the install command
+at every start, and the updater says so after it pulls, until you upgrade. The
+<a href="/Tusks-Tomes/docs/getting-started/installation/">installation guide</a> has the steps.</p>
+<p><strong>A finished transcription says so.</strong> When every track of a recording has been
+transcribed, the transcript panel now reads <strong>Transcription finished</strong>, with how
+many tracks were transcribed and what to press next, instead of leaving a
+progress bar at 100%.</p>
+<p><strong>Saving from two tabs at once no longer fails on Windows.</strong> With Tomes open in
+two tabs, a chronicle saved from both at the same moment could now and then be
+refused by Windows, which showed as an error in the browser console. A save that
+is briefly refused is now retried. Nothing was lost either way.</p>
+<p><strong>Current Gemini and OpenAI libraries.</strong> The Gemini and OpenAI connections, and
+the libraries that handle uploads and web requests, are on their current
+releases. Runs behave as before. Because the dependencies changed, the updater
+asks you to run <code>npm install</code> once after it pulls this version.</p>
+<p><strong>The Help pages describe the app as it is.</strong> Pages that still mentioned an
+Upload tab, a <strong>Test connection</strong> button or old file locations now match the
+current app.</p>
+<p><strong>Under the hood.</strong> The code is organised by feature, duplicated code is merged
+and code nothing used is gone. Nothing changes on screen, and the settings,
+chronicles and sessions saved by earlier versions load as they did. Six local
+server endpoints that the app itself never called were removed with it:
+<code>POST /api/parse/pdf</code>, <code>POST /api/diagnostics/clear-ring</code>,
+<code>POST /api/lore/index/rebuild</code>, <code>GET /api/obsidian/preview</code>,
+<code>GET /api/sessions/:id</code> and <code>POST /api/local/list-models</code>.</p>
+<p><strong>A stopped Reforge keeps its work.</strong> When a Reforge stops part-way — a
+provider out of credits, a model error, or <strong>Cancel</strong> — the chunks it finished
+are kept. The panel says what stopped it, what was kept and what a resume will
+still run, and <strong>Resume Reforge</strong> carries on from that point on the same
+models.</p>
+<p><strong>The condensed recap no longer drops part of the session.</strong> A Condense chunk
+whose answer could not be read used to be skipped without a word, so the
+Condensed and Recap tabs could begin partway through the session. Slightly
+malformed answers are now recovered, an unreadable chunk is re-run once, and
+if it still fails the phase stops and says so rather than returning a recap
+with a gap in it.</p>
+<p><strong>Audit questions survive on Claude Code.</strong> A short, valid answer — a handful
+of DM questions, or none — was being read as a refusal, which left Claude Code
+runs with no DM questions at all. An answer that parses as the expected JSON
+now counts as an answer, however short.</p>
+<p><strong>Paid OpenRouter models run at full speed.</strong> They were waiting about a minute
+before every chunk after the first; they now pause only when OpenRouter asks
+them to.</p>
+<p><strong>Claude Code's model list stays current.</strong> New Claude releases appear in the
+picker without an update, models chosen from the OpenRouter catalogue are no
+longer flagged as possible typos, and a failed Claude Code call shows the
+CLI's own reason, with a sign-in hint when the login has expired.</p>
+<p><strong>Model lists say when they were last checked.</strong> <strong>Customise phases</strong> now
+shows when the Gemini key test last ran and when the OpenRouter catalogue was
+last fetched, with a button beside each to check again. The catalogue row
+covers Claude Code too, since its model list is drawn from the same
+catalogue. A check that gets no answer says so and keeps the list it had,
+rather than reporting an update.</p>
+<p><strong>Your own models are no longer buried in the picker.</strong> Recommended now opens
+on its top six with the rest one click away, so the Gemini key, Claude Code
+and Codex folders sit just below it rather than under hundreds of OpenRouter
+models, and the picker opens on the folder holding the model already chosen.</p>
+<p><strong>A running Reforge stays in sight.</strong> Collapsing the panel used to hide a run
+without a trace; the header now shows that it is running, the current step and
+its progress, and the panel opens itself when a run starts.</p>
+<h2 id="2026-09-reforge-picks-a-model-per-phase-and-a-letter-means-one-thing">2026-09 — Reforge picks a model per phase, and a letter means one thing</h2>
+<p><strong>Reforge chooses a model per phase, from the whole catalogue.</strong> Chronicle,
+Extras and Condense can each run on their own model, graded for that phase
+rather than for the run as a whole, and the finished result lands on the
+Chronicle screen as the chronicle on show. Phases you kept are carried over
+exactly as they were.</p>
+<p><strong>The lore now reaches Audit, Chronicle and Extras.</strong> Only Ground used to see
+the Knowledge Base, so the audit was weighing candidates against canon it
+could not read, and the narrator had no way to put right what the table had
+said wrongly about a character. Audit and Extras take the compact form;
+Chronicle takes the full text in its cacheable prefix, narrowed by retrieval
+when it would not fit the model's window. The cost estimate and the structural
+check both account for it.</p>
+<p><strong>A letter grade is capability, and nothing else.</strong> A grade used to be quality
+passed through a cost rule, so a cheap model could gain a step and the
+strongest model in the catalogue read as middling. The letter now says how
+well a model did; cost is a column beside it, and "quality per dollar" is a
+sort the picker offers against today's prices. The Ground rubric is written
+down as thresholds, so a run scores the same way next year.</p>
+<p><strong>Most models carry a prediction.</strong> Where nothing has been measured, a grade
+is inferred from a model's purpose, its declared size, or how its own line has
+scored, and drawn dashed so it can never be mistaken for a run. A measurement
+of the same line and size outranks a prediction, and a prediction never hides
+a model from the default list.</p>
+<p><strong>The routing dropdowns start shorter.</strong> Models measured poorly, models
+declaring fewer than 10B parameters, and free models are held back behind a
+single tick, with the same note about what free models cost instead of money
+wherever the tick applies — the Reforge picker included.</p>
+<p><strong>A tab switch no longer throws work away.</strong> An in-flight run keeps running
+when you leave the Chronicle tab, and a routing change you have not saved is
+still there when you come back to Settings. If the routing was changed
+elsewhere in the meantime, by the setup wizard or a fallback, the unsaved edit
+is dropped rather than restored over it, and says so.</p>
+<p><strong>Saving a route accepts every configured connection.</strong> A per-phase route
+pointing at Claude Code, Codex or OpenRouter was rejected on save; each is
+accepted now.</p>
+<p><strong>A transcription stays in view.</strong> Leaving the Sessions tab while Whisper
+worked used to drop the upload panel back to an empty dropzone with no way
+back into the running transcript; the panel now stays mounted across tab
+switches, remembers the session across a reload, and every session in the
+list has a <em>View transcript</em> toggle, whether it is running or finished. A
+reforge finishing no longer pulls you off whatever tab you were on; it offers
+the switch instead. A chronicle run interrupted by a reload says so, with
+the resume banner where the checkpoint is.</p>
+<p><strong>You can tell slow from stuck.</strong> The transcription view shows how much of
+the audio is done in hours and minutes, which speaker track is in progress
+and when it started, the rate against real time and an estimate of what is
+left, and which engine and device are doing the work. A counter shows when
+the server last reported progress; it turns amber after a minute of silence
+with a note that long tracks take several minutes, and red only after far
+longer than a track has been taking. A run the server lost to a restart says
+it was interrupted rather than sitting at zero for ever.</p>
+<p><strong>The app answers as soon as it starts.</strong> The port is bound first and a
+numbered list of start-up steps prints with elapsed times, ending in a READY
+line. Opening the address early shows a starting page that names the current
+step and turns into the app on its own, and the launchers open the browser on
+READY instead of on a timer, so the first start after an update no longer
+lands on a connection error.</p>
+<p><strong>Whisper reports the device it actually ran on</strong>, and the model load no
+longer counts against the request timeout on a first-run download. A machine
+without a working GPU pays for that discovery once, then runs every track on
+a CPU engine that stays loaded instead of reloading the model per track. The
+whisper.cpp bridge is used as soon as its binary and model check out, with no
+separate install step. The speed figures in the documentation now match what
+a mid-range NVIDIA card measures: about ten minutes per hour of session with
+five or six speaker tracks.</p>
+<h2 id="2026-08-openrouter-and-a-smaller-set-of-things-to-configure">2026-08 — OpenRouter, and a smaller set of things to configure</h2>
+<p><strong>One key reaches around 400 models.</strong> OpenRouter is now a first-class
+connection. Any model in its catalogue can be assigned to any phase, and the
+model picker is populated from the public catalogue before you have pasted a key
+at all.</p>
+<p><strong>The direct Anthropic and OpenAI key slots were retired.</strong> OpenRouter fronts
+both vendors at pass-through rates — the same models, the same prices, reached
+with one key. Three keys bought nothing over two except more to configure, two
+more adapters to keep current as vendor SDKs move, and two more rate-limit
+header formats to parse. Routing that names a retired provider is rewritten on
+read to the same model in the OpenRouter namespace, matched by model and never
+swapped for something cheaper, and the change is logged rather than made
+silently.</p>
+<p><strong>Gemini stays a separate, direct connection.</strong> It is measurably cheaper direct
+— the same Pro model lists roughly a fifth dearer through OpenRouter — and the
+only generation that collapsed into a repetition loop during the comparison was
+Gemini routed through OpenRouter, while the same model on the direct key was
+clean on identical input. The cause was not content filtering: a deliberately
+graphic passage sent three ways produced identical uncensored output on all
+three.</p>
+<p><strong>Six of the seven optional modules stopped being installations.</strong> Their install
+step only ever wrote a marker file and then asked for a server restart —
+install-shaped ceremony for code that already shipped in the bundle. Only Audio
+Transcription installs anything now. Whether one of the others is <em>usable</em> is a
+detection question its own status row answers.</p>
+<p><strong>Uninstalling Personas can no longer delete your work.</strong> The old uninstall
+removed <code>personas.json</code>, the file holding personas you had written yourself.
+Personas is built in now and has no uninstall path, so that way of losing your
+own authoring is gone by construction rather than by remembering not to click
+the button.</p>
+<p><strong>Routing became one surface.</strong> It had been split across a model profiles
+editor, a hybrid routing panel and two generations of preset buttons. It is now
+a single list of phases with a ladder of complete presets above it, and the
+per-phase detail one disclosure deep.</p>
+<p><strong>Run-start provider selection was removed.</strong> Choosing a provider at the moment
+you press Run asked the question at the point of least context. A banner above
+the Chronicle controls now states which connection the next run will use.</p>
+<p><strong>Cost estimates were recalibrated against real billing.</strong> Thinking tokens bill
+at the output rate, and on the chronicle phase they run near the model's
+ceiling on every call — none of which was being counted. Two real bills put the
+old estimate at roughly a fifth of actual. The estimator now accounts for them,
+so the figures it shows are several times higher than before and considerably
+closer to the truth.</p>
+<h2 id="2026-08-documentation">2026-08 — Documentation</h2>
+<p><strong>Reorganised by what a reader is trying to do.</strong> Pages sit on shelves —
+getting started, bringing a session in, writing the chronicle, models and cost,
+extras, settings, privacy, troubleshooting — and are named for the task rather
+than for the file. Every previously published URL still resolves; the site
+emits a forwarding page at each old path.</p>
+<p><strong>Costs are generated, not typed.</strong> Every publish prices each routing against
+the live OpenRouter catalogue using the same estimator the app shows before a
+run, so a model getting cheaper updates the docs without anyone editing them.</p>
+<p><strong>Emoji were replaced by colour.</strong> Red marks a warning, orange a notice, green
+something that got simpler. Sections render open rather than collapsed.</p>
+<h2 id="earlier">Earlier</h2>
+<p>Version history before this point was not kept separately; the
+<a href="/Tusks-Tomes/docs/about/roadmap/">roadmap</a> records what shipped and when.</p>
+    </article>
+    <p class="edit-link"><a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/docs/about/changelog.md" rel="noopener">Improve this page on GitHub →</a></p>
+  </main>
+</div>
+<footer class="site-foot">
+  <p>Tusk's Tomes — free, open source, MIT licensed. Runs on your own machine.</p>
+  <p><a href="https://github.com/KochiTusker/Tusks-Tomes" rel="noopener">GitHub</a> · <a href="/Tusks-Tomes/docs/">Documentation</a> · <a href="https://github.com/KochiTusker/Tusks-Tomes/blob/main/LICENSE" rel="noopener">Licence</a></p>
+</footer>
+
+</body>
+</html>
